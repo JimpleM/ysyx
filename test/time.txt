@@ -1,0 +1,6 @@
+9月 07 19:35:14 jimple-ubuntu systemd[1055]: Startup finished in 860ms.
+9月 07 19:35:34 jimple-ubuntu systemd[1]: Startup finished in 15.672s (firmware) + 2.051s (loader) + 7.793s (kernel) + 22.334s (userspace) = 47.851s.
+9月 07 09:28:00 jimple-ubuntu systemd[1038]: Startup finished in 717ms.
+9月 07 09:28:20 jimple-ubuntu systemd[1]: Startup finished in 15.488s (firmware) + 2.154s (loader) + 4.119s (kernel) + 22.004s (userspace) = 43.767s.
+9月 07 08:58:47 jimple-ubuntu systemd[1041]: Startup finished in 810ms.
+9月 07 08:59:07 jimple-ubuntu systemd[1]: Startup finished in 15.268s (firmware) + 2.118s (loader) + 4.143s (kernel) + 21.945s (userspace) = 43.475s.
