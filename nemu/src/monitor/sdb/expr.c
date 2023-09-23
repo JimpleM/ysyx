@@ -42,26 +42,29 @@ static struct rule {
   int token_type;
 } rules[] = {
 
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
+    /* TODO: Add more rules.
+     * Pay attention to the precedence level of different rules.
+     */
+    /*
+    the first \ is to tranfer the second \(special char) into \(normal char), 
+    \(normal char) is to tranfer * is mul but not a matched pattern which is(贪婪匹配)
+    */
+    {" +", TK_NOTYPE},                        // spaces
+    {"0[xX][0-9a-fA-F]+", TK_HNUM},           // hnum
+    {"[0-9]+", TK_DNUM},                      // dnum
+    {"(\\$[0a-zA-Z]+)|([xX][0-9]+)", TK_REG}, // reg
+    {"\\|\\|", TK_OR},                        // or
+    {"&&", TK_AND},                           // and
+    {"==", TK_EQ},                            // equal
+    {"!=", TK_NEQ},                           // not equal
+    {"\\+", TK_ADD},                          // plus
+    {"-", TK_SUB},                            // sub
+    {"\\*", TK_MUL},                          // mul
+    {"/", TK_DIV},                            // div
+    {"!", TK_NOT},                            // not
+    {"\\(", TK_LBAR},                         // lbar
+    {"\\)", TK_RBAR},                         // rbar
 
-  {" +", TK_NOTYPE},                        // spaces
-  {"0[xX][0-9a-fA-F]+", TK_HNUM},           // hnum
-  {"[0-9]+", TK_DNUM},                      // dnum
-  {"(\\$[0a-zA-Z]+)|([xX][0-9]+)",TK_REG},  // reg
-  {"\\|\\|", TK_OR},                        // or
-  {"&&", TK_AND},                           // and
-  {"==", TK_EQ},                            // equal
-  {"!=", TK_NEQ},                           // not equal
-  {"\\+", TK_ADD},                          // plus
-  {"-", TK_SUB},                            // sub
-  {"\\*", TK_MUL},                          // mul
-  {"/", TK_DIV},                            // div
-  {"!", TK_NOT},                            // not
-  {"\\(", TK_LBAR},                         // lbar
-  {"\\)", TK_RBAR},                         // rbar
-  
 };
 
 #define NR_REGEX ARRLEN(rules)
