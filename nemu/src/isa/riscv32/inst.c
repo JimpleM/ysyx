@@ -37,7 +37,7 @@ enum {
 //#define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | SEXT(BITS(i,  7,  7), 1) << 10 | SEXT(BITS(i, 30, 25), 6) <<  4 | SEXT(BITS(i, 11,  8), 4)) << 1;} while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i,  7,  7) << 10 | BITS(i, 30, 25) <<  4 | BITS(i, 11,  8)) << 1;} while(0)
 //#define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 10 | SEXT(BITS(i, 30, 21), 10)) << 1; } while(0)
-#define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | BITS(i, 19, 12) << 11 | BITS(i, 20, 20) << 10 | BITS(i, 30, 21)) << 1; } while(0)
+#define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | BITS(i, 19, 12) << 11 | BITS(i, 20, 20) << 10 | BITS(i, 30, 21)); } while(0)
 #define immI64() do { *imm = SEXT(BITS(i, 25, 20), 6); } while(0)
 
 // rd目的操作数的寄存器号码, src1, src2两个源操作数和imm立即数.
