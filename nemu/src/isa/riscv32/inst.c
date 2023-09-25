@@ -30,12 +30,13 @@ enum {
 #define src1R() do { *src1 = R(rs1); } while (0)
 #define src2R() do { *src2 = R(rs2); } while (0)
 #define immI() do { *imm = SEXT(BITS(i, 31, 20), 12); } while(0)
-#define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0)
+#define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0) //取出立即数
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 
+// rd目的操作数的寄存器号码, src1, src2两个源操作数和imm立即数.
 static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
-  uint32_t i = s->isa.inst.val;
-  int rs1 = BITS(i, 19, 15);
+  uint32_t i = s->isa.inst.val;//指令
+  int rs1 = BITS(i, 19, 15);//指令译码
   int rs2 = BITS(i, 24, 20);
   *rd     = BITS(i, 11, 7);
   switch (type) {
@@ -57,12 +58,13 @@ static int decode_exec(Decode *s) {
 }
 
   INSTPAT_START();
+//INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
   INSTPAT("??????? ????? ????? 100 ????? 00000 11", lbu    , I, R(rd) = Mr(src1 + imm, 1));
   INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb     , S, Mw(src1 + imm, 1, src2));
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
-  INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
+  INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));  //非法指令
   INSTPAT_END();
 
   R(0) = 0; // reset $zero to 0

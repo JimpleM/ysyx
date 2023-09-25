@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdint.h>
 int main(){
-	for(int i = 0; i< 26; i++){
-		for(int j=0; j<26; j++){
-			printf("%c%c\n",'a'+i,'a'+j);
-		}
-	}
+	uint8_t a = 16;
+	int b = 0x12345678;
+	uint8_t *c = &a;
+	printf("%x %x %x %x %x",*c,*(c+1),*(c+2),*(c+3),*(c+4));
+	return 0;
 }
