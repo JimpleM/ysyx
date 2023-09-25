@@ -32,6 +32,7 @@ enum {
 #define immI() do { *imm = SEXT(BITS(i, 31, 20), 12); } while(0)
 #define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0) //取出立即数
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
+// B型和J型都需要地址左移一位
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | SEXT(BITS(i,  7,  7), 1) << 10 | SEXT(BITS(i, 30, 25), 6) <<  4 | SEXT(BITS(i, 11, 8), 4)) << 1;} while(0)
 #define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | BITS(i, 19, 12) << 11 | BITS(i, 20, 20) << 10 | BITS(i, 30, 21)) << 1; } while(0)
 
@@ -71,7 +72,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
 
   INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, s->dnpc = (src1 == src2) ? s->pc + imm : s->pc + 4;);
-  INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B,Log("rd:%d src1:%x src2:%x imm:%x",rd,src1,src2,imm); s->dnpc = (src1 != src2) ? s->pc + imm : s->pc + 4;);
+  INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, s->dnpc = (src1 != src2) ? s->pc + imm : s->pc + 4;);
   
   // 将imm按照bit对应位置或起来并乘以2得到地址,这里使用跳转指令，要将新的pc值赋值给dnpc
   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(rd) = s->pc +4; s->dnpc = s->pc + imm);
