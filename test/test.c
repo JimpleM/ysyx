@@ -12,3 +12,4 @@ movsx
 unlign
 hello-str
 if-else
+mul-longlong
