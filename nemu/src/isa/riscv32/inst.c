@@ -41,7 +41,7 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
   *rd     = BITS(i, 11, 7);
   
   switch (type) {
-    case TYPE_I: src1R();Log("abasfadas");          immI(); break;
+    case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
   }
@@ -57,7 +57,7 @@ static int decode_exec(Decode *s) {
   decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
-
+  Log("abasfadas"); 
   INSTPAT_START();
 //INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
