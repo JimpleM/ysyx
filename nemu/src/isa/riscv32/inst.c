@@ -34,8 +34,10 @@ enum {
 #define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0) //取出立即数
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 // B型和J型都需要地址左移一位
+// #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i,  7,  7) << 10 | BITS(i, 30, 25) <<  4 | BITS(i, 11,  8)) << 1;} while(0)
+// #define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | BITS(i, 19, 12) << 11 | BITS(i, 20, 20) << 10 | BITS(i, 30, 21)) << 1; } while(0)
 #define immB() do { *imm = SEXT(BITS(i, 31, 31), 1) << 12 | BITS(i,  7,  7) << 11 | BITS(i, 30, 25) <<  5 | BITS(i, 11,  8) << 1;} while(0)
-#define immJ() do { *imm = SEXT(BITS(i, 31, 31), 1) << 20 | BITS(i, 19, 12) << 12 | BITS(i, 20, 20) << 11 | BITS(i, 30, 21) << 1; } while(0)
+#define immJ() do { *imm = SEXT(BITS(i, 31, 31), 1) << 20 | BITS(i, 19, 12) << 12 | BITS(i, 20, 20) << 11 | BITS(i, 30, 21) << 1;} while(0)
 #define immI64() do { *imm = SEXT(BITS(i, 25, 20), 6); } while(0)
 
 // rd目的操作数的寄存器号码, src1, src2两个源操作数和imm立即数.
