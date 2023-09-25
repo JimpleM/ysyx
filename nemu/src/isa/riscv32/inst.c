@@ -72,6 +72,7 @@ static int decode_exec(Decode *s) {
   //Log("rd:%d src1:%x src2:%x imm:%x",rd,src1,src2,imm);
   INSTPAT_START();
 //INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);
+printf("%ld",sizeof(int));
   //RV32I
   INSTPAT("0000000 ????? ????? 000 ????? 01100 11", add    , R, R(rd) = src1 + src2);
   INSTPAT("??????? ????? ????? 000 ????? 00100 11", addi   , I, R(rd) = (unsigned int)src1 + (unsigned int)imm);
