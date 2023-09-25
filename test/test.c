@@ -13,3 +13,4 @@ unlign
 hello-str
 if-else
 mul-longlong
+shift
