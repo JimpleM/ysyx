@@ -92,7 +92,6 @@ finish:
   pattern_decode(pattern, STRLEN(pattern), &key, &mask, &shift); \
   if ((((uint64_t)INSTPAT_INST(s) >> shift) & mask) == key) { \
     INSTPAT_MATCH(s, ##__VA_ARGS__); \
-    isa_reg_display(); \
     goto *(__instpat_end); \
   } \
 } while (0)
