@@ -63,7 +63,7 @@ static int decode_exec(Decode *s) {
   decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
-  // Log("rd:%d src1:%x src2:%x imm:%x",rd,src1,src2,imm);
+  Log("rd:%d src1:%x src2:%x imm:%x",rd,src1,src2,imm);
   INSTPAT_START();
 //INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);
   
