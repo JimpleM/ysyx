@@ -10,5 +10,4 @@ int main(){
 
 hello-str
 string
-to_lower_case
 qucik-sort
