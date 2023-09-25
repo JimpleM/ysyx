@@ -58,6 +58,7 @@ static int decode_exec(Decode *s) {
   __VA_ARGS__ ; \
 }
   Log("rd:%d src1:%x src2:%x imm:%x",rd,src1,src2,imm);
+  Log("R(rd):%x",R(rd));
   INSTPAT_START();
 //INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
