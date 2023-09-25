@@ -8,8 +8,6 @@ int main(){
 	return 0;
 }
 
-movsx
-unlign
 hello-str
 if-else
 mul-longlong
