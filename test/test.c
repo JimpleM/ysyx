@@ -9,7 +9,6 @@ int main(){
 }
 
 hello-str
-mul-longlong
 shift
 string
 to_lower_case
