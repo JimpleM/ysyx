@@ -7,3 +7,6 @@ int main(){
 	printf("%x %x %x %x %x",*c,*(c+1),*(c+2),*(c+3),*(c+4));
 	return 0;
 }
+
+movsx
+unlign
