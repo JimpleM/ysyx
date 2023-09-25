@@ -9,7 +9,6 @@ int main(){
 }
 
 hello-str
-if-else
 mul-longlong
 shift
 string
