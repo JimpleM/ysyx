@@ -56,7 +56,6 @@ static int decode_exec(Decode *s) {
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
   decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
-    Log("abasfadas");\
 }
   Log("rd:%d src1:%d src2:%d imm:%d",rd,src1,src2,imm);
   INSTPAT_START();
