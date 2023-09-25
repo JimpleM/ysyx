@@ -10,3 +10,5 @@ int main(){
 
 movsx
 unlign
+hello-str
+if-else
