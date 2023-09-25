@@ -41,7 +41,7 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
   *rd     = BITS(i, 11, 7);
   
   switch (type) {
-    case TYPE_I: src1R();       Log("abasfadas");   immI();Log("imm");break;
+    case TYPE_I: src1R();          immI();;break;
     case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
   }
@@ -55,6 +55,7 @@ static int decode_exec(Decode *s) {
 #define INSTPAT_INST(s) ((s)->isa.inst.val)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
   decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
+  Log("abasfadas");\
   __VA_ARGS__ ; \
 }
   Log("rd:%d src1:%d src2:%d imm:%d",rd,src1,src2,imm);
