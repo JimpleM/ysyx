@@ -1,15 +1,13 @@
 module top(
-	input a,
-	input b,
-	output f
+	input [31:0] a,
+	input [31:0]b,
+	output [31:0]f
 );
 
-reg [31:0]c;
-assign f = a ^ b;
 
 import "DPI-C" function int add(input int a, input int b);
 always @(*) begin
-	c = add(a,b);
+	f = add(a,b);
 end
 // export "DPI-C" function integer \$f;
 

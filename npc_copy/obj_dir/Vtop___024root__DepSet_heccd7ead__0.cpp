@@ -16,7 +16,7 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
     // Body
     vlSelf->f = ((IData)(vlSelf->a) ^ (IData)(vlSelf->b));
     Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(vlSelf->a, (IData)(vlSelf->b), vlSelf->__Vfunc_top__DOT__add__0__Vfuncout);
-    vlSelf->top__DOT__c = (0xfU & vlSelf->__Vfunc_top__DOT__add__0__Vfuncout);
+    vlSelf->top__DOT__c = vlSelf->__Vfunc_top__DOT__add__0__Vfuncout;
 }
 
 void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {
