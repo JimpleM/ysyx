@@ -9,14 +9,14 @@ module top(
 assign f = a ^ b;
 
 
-export "DPI-C" function integer \$f;
+// export "DPI-C" function integer \$f;
 
-// export "DPI-C" task publicSetBool;
+export "DPI-C" task publicSetBool;
 
-// task publicSetBool;
-//    input bit in_bool;
-//    var_bool = in_bool;
-// endtask
+task publicSetBool;
+   input bit in_bool;
+   var_bool = in_bool;
+endtask
 
 endmodule
 
