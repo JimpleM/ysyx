@@ -1,7 +1,7 @@
 module top(
 	input [31:0] a,
 	input [31:0]b,
-	output [31:0]f
+	output reg [31:0]f
 );
 
 
