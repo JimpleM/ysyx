@@ -11,7 +11,7 @@ module ysyx_23060077_riscv_decode #(
 );
 
 `define     LUI     01101_11    // lui
-`define     auipc   00101_11    // auipc
+`define     AUIPC   00101_11    // auipc
 `define     jal     11011_11    // jal
 `define     jalr    11001_11    // jalr 
 `define     beq     00101_11    // beq,bne,blt,bge,bltu,bgeu

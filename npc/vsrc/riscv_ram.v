@@ -23,4 +23,7 @@ always @(posedge clk) begin
         rdata <= memory[addr];
     end 
 end
+
+#initial
+
 endmodule
