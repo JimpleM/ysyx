@@ -16,11 +16,11 @@ extern "C" {
 
 
     // DPI EXPORTS
-    // DPI export at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:18:6
+    // DPI export at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:16:6
     extern void publicSetBool(svBit in_bool);
 
     // DPI IMPORTS
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:10:29
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:8:29
     extern int add(int a, int b);
 
 #ifdef __cplusplus

@@ -14,9 +14,8 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ico_sequent__TOP__0\n"); );
     // Body
-    vlSelf->f = ((IData)(vlSelf->a) ^ (IData)(vlSelf->b));
-    Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(vlSelf->a, (IData)(vlSelf->b), vlSelf->__Vfunc_top__DOT__add__0__Vfuncout);
-    vlSelf->top__DOT__c = vlSelf->__Vfunc_top__DOT__add__0__Vfuncout;
+    Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(vlSelf->a, vlSelf->b, vlSelf->__Vfunc_top__DOT__add__0__Vfuncout);
+    vlSelf->f = vlSelf->__Vfunc_top__DOT__add__0__Vfuncout;
 }
 
 void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {
@@ -125,10 +124,5 @@ void Vtop___024root___eval_debug_assertions(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_debug_assertions\n"); );
-    // Body
-    if (VL_UNLIKELY((vlSelf->a & 0xfeU))) {
-        Verilated::overWidthError("a");}
-    if (VL_UNLIKELY((vlSelf->b & 0xfeU))) {
-        Verilated::overWidthError("b");}
 }
 #endif  // VL_DEBUG
