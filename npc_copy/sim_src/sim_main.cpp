@@ -20,8 +20,8 @@ int main(int argc, char ** argv, char** env){
 	tfp->open("wave.vcd");
 
 	int count = 0;
-	// int value = 0;
-	// publicSetBool(value);
+	int value = 0;
+	publicSetBool(value);
 
 	while(!contextp->gotFinish()){
         int a = rand() % 2;
