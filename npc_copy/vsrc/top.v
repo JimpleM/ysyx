@@ -8,7 +8,7 @@ module top(
 assign f = a ^ b;
 
 
-// export "DPI-C" function integer \$f;
+export "DPI-C" function integer \$f;
 
 export "DPI-C" task publicSetBool;
 
