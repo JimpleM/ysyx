@@ -4,10 +4,13 @@ module top(
 	output f
 );
 
-
+reg [3:0]c;
 assign f = a ^ b;
 
-
+import "DPI-C" function int add(input int a, input int b);
+always @(*) begin
+	c = add(a,b);
+end
 // export "DPI-C" function integer \$f;
 
 export "DPI-C" task publicSetBool;
