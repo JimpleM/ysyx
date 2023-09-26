@@ -7,6 +7,8 @@
 
 #include "verilated_vcd_c.h"
 
+#include "Vour__Dpi.h"
+
 int main(int argc, char ** argv, char** env){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
@@ -18,6 +20,8 @@ int main(int argc, char ** argv, char** env){
 	tfp->open("wave.vcd");
 
 	int count = 0;
+	int value = 0;
+	publicSetBool(value);
 
 	while(!contextp->gotFinish()){
         int y = rand() %4;
