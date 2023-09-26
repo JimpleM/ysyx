@@ -8,6 +8,7 @@
 #include "verilated_vcd_c.h"
 
 #include "verilated_dpi.h"
+#include "Vour__Dpi.h"
 
 int main(int argc, char ** argv, char** env){
 	VerilatedContext* contextp = new VerilatedContext;
