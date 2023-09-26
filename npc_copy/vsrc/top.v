@@ -11,6 +11,10 @@ always @(*) begin
 end
 // export "DPI-C" function integer \$f;
 
+initial begin
+   $display("%x + %x = %x", 1, 2, add(1,2));
+end
+
 export "DPI-C" task publicSetBool;
 
 task publicSetBool;
