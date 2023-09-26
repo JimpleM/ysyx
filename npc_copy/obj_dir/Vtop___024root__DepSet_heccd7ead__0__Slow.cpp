@@ -3,6 +3,7 @@
 // See Vtop.h for the primary calling header
 
 #include "verilated.h"
+#include "verilated_dpi.h"
 
 #include "Vtop___024root.h"
 
@@ -96,6 +97,9 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__ico(Vtop___024root* vlSelf) {
     if (vlSelf->__VicoTriggered.at(0U)) {
         VL_DBG_MSGF("         'ico' region trigger index 0 is active: Internal 'ico' trigger - first iteration\n");
     }
+    if (vlSelf->__VicoTriggered.at(1U)) {
+        VL_DBG_MSGF("         'ico' region trigger index 1 is active: Internal 'ico' trigger - DPI export trigger\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -107,6 +111,9 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__act(Vtop___024root* vlSelf) {
     // Body
     if ((1U & (~ (IData)(vlSelf->__VactTriggered.any())))) {
         VL_DBG_MSGF("         No triggers active\n");
+    }
+    if (vlSelf->__VactTriggered.at(0U)) {
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: Internal 'act' trigger - DPI export trigger\n");
     }
 }
 #endif  // VL_DEBUG
@@ -120,6 +127,9 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__nba(Vtop___024root* vlSelf) {
     if ((1U & (~ (IData)(vlSelf->__VnbaTriggered.any())))) {
         VL_DBG_MSGF("         No triggers active\n");
     }
+    if (vlSelf->__VnbaTriggered.at(0U)) {
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: Internal 'nba' trigger - DPI export trigger\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -131,4 +141,6 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->a = VL_RAND_RESET_I(1);
     vlSelf->b = VL_RAND_RESET_I(1);
     vlSelf->f = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__var_bool = VL_RAND_RESET_I(1);
+    vlSelf->__Vdpi_export_trigger = 0;
 }
