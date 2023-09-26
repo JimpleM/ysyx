@@ -47,9 +47,9 @@ all:defualt
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	#@echo "Write this Makefile by your self."
-	$(VERILATOR) -cc  --trace --exe --build \
-		--top-module top \
-	$(VSRC) $(CSRC) 
+	$(VERILATOR) $(VERILATOR_CFLAGS) \
+		--top-module $(TOPNAME) $^ \
+		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run: $(BIN)
 	@$^
