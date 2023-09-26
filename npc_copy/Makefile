@@ -24,7 +24,7 @@ VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 CSRCS += $(SRC_AUTO_BIND)
 
-SIM_SRCS = ./sim_src/sim_main.cpp
+SIM_SRCS = $(shell find $(abspath ./sim_src) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
 # rules for NVBoard
 include $(NVBOARD_HOME)/scripts/nvboard.mk
