@@ -4,7 +4,7 @@ module top(
 	output f
 );
 
-
+reg var_bool;
 
 assign f = a ^ b;
 
