@@ -16,7 +16,7 @@ extern "C" {
 
 
     // DPI EXPORTS
-    // DPI export at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:16:6
+    // DPI export at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:15:6
     extern void publicSetBool(svBit in_bool);
 
 #ifdef __cplusplus

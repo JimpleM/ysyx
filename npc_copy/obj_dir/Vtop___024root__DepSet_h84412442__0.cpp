@@ -11,9 +11,6 @@
 void Vtop___024root____Vdpiexp_top__DOT__publicSetBool_TOP(Vtop__Syms* __restrict vlSymsp, CData/*0:0*/ in_bool) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiexp_top__DOT__publicSetBool_TOP\n"); );
     // Init
-    // Body
-    vlSymsp->TOP.__Vdpi_export_trigger = 1U;
-    vlSymsp->TOP.top__DOT__var_bool = in_bool;
 }
 
 #ifdef VL_DEBUG
@@ -26,8 +23,6 @@ void Vtop___024root___eval_triggers__ico(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_triggers__ico\n"); );
     // Body
     vlSelf->__VicoTriggered.at(0U) = (0U == vlSelf->__VicoIterCount);
-    vlSelf->__VicoTriggered.at(1U) = vlSelf->__Vdpi_export_trigger;
-    vlSelf->__Vdpi_export_trigger = 0U;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vtop___024root___dump_triggers__ico(vlSelf);
@@ -44,8 +39,6 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_triggers__act\n"); );
     // Body
-    vlSelf->__VactTriggered.at(0U) = vlSelf->__Vdpi_export_trigger;
-    vlSelf->__Vdpi_export_trigger = 0U;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vtop___024root___dump_triggers__act(vlSelf);
