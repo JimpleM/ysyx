@@ -46,7 +46,7 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	#@echo "Write this Makefile by your self."
+# @echo "Write this Makefile by your self."
 	$(VERILATOR) $(VERILATOR_CFLAGS)\
 		--top-module $(TOPNAME)  \
 	$(VSRCS) $(SIM_SRCS) $(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
