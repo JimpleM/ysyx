@@ -4,7 +4,7 @@ module top(
 	output f
 );
 
-reg [3:0]c;
+reg [31:0]c;
 assign f = a ^ b;
 
 import "DPI-C" function int add(input int a, input int b);
