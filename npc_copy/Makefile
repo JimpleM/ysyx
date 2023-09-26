@@ -49,7 +49,7 @@ sim:
 	#@echo "Write this Makefile by your self."
 	$(VERILATOR)$(VERILATOR_CFLAGS)\
 		--top-module $(TOPNAME)  \
-	$(VSRCS) $(SIM_SRCS) $(addprefix -CFLAGS , $(CFLAGS))
+	$(VSRCS) $(SIM_SRCS)
 
 run: $(BIN)
 	@$^
