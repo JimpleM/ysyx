@@ -34,12 +34,12 @@ INCFLAGS = $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 LDFLAGS += -lSDL2 -lSDL2_image
 
-$(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
-	@rm -rf $(OBJ_DIR)
-	$(VERILATOR) $(VERILATOR_CFLAGS) \
-		--top-module $(TOPNAME) $^ \
-		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
-		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+# $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+# 	@rm -rf $(OBJ_DIR)
+# 	$(VERILATOR) $(VERILATOR_CFLAGS) \
+# 		--top-module $(TOPNAME) $^ \
+# 		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+# 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
 all:defualt
 #	@echo "Write this Makefile by your self."
