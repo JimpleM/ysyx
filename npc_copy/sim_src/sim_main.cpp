@@ -24,9 +24,10 @@ int main(int argc, char ** argv, char** env){
 	// publicSetBool(value);
 
 	while(!contextp->gotFinish()){
-        int y = rand() %4;
-		top->a = 228;
-        top->y = y;
+        int a = rand() % 2;
+		int b = rand() % 2;
+		top->a = a;
+		top->a = b;
 		top->eval();
 		
 		tfp->dump(contextp->time());
