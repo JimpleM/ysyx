@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv_reg #(
+module ysyx_23060077_riscv_id_reg #(
     ADDR_WIDTH = 1, 
     DATA_WIDTH = 1
 ) (
@@ -18,6 +18,11 @@ module ysyx_23060077_riscv_reg #(
 );
 
 reg [DATA_WIDTH-1:0] memory [2**(ADDR_WIDTH)-1:0];
+
+integer i;
+initial begin
+    for(i=0; i<32; i=i+1)   memory[i] <= 0;
+end
 
 // read rs1
 always @(posedge clk) begin
