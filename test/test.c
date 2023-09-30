@@ -1,9 +1,19 @@
 #include <stdio.h>
-#include <stdint.h>
+// #include <string.h>
+void *memset(void *s, int c, size_t n) {
+  char *str = (char *)s;
+//   assert(*str != '\0');
+  for(;n;n--){
+    *str++ = c;
+  }
+  return str;
+}
 int main(){
-	uint8_t a = 16;
-	int b = 0x12345678;
-	uint8_t *c = &a;
-	printf("%x %x %x %x %x",*c,*(c+1),*(c+2),*(c+3),*(c+4));
+	char s1[10];
+	char* s2 = "ABCD";
+	char s3[10] = "ABCEFG";
+	memset(s3,-1,2);
+	printf("%s\n",s3);
+	printf("%s\n",s3+2);
 	return 0;
 }
