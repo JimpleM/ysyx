@@ -10,7 +10,7 @@ COLOR_NONE  = \033[0m
 ALL = $(basename $(notdir $(shell find tests/. -name "*.c")))
 
 all: $(addprefix Makefile., $(ALL))
-	@echo "chgckhf" $(ALL)
+	@echo "" $(ALL)
 
 $(ALL): %: Makefile.%
 
