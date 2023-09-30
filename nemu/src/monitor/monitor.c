@@ -106,7 +106,7 @@ void init_monitor(int argc, char *argv[]) {
   parse_args(argc, argv);
 
   for (int i = 0; i < argc; i++){
-    printf("%s\n", argv[i]);
+    printf("argv: %s\n", argv[i]);
   }
 
     /* Set random seed. */
