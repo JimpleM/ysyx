@@ -8,11 +8,11 @@ void *memset(void *s, int c, size_t n) {
   }
   return str;
 }
+
+char str1[] = "Hello";
+char str[20];
 int main(){
-	char s1[10];
-	char* s2 = "ABCD";
-	char s3[10] = "ABCEFG";
-	memset(s3,-1,2);
+	strcat(strcpy(str, str1), s[3]);
 	printf("%s\n",s3);
 	printf("%s\n",s3+2);
 	return 0;
