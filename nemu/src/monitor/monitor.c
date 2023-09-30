@@ -102,12 +102,12 @@ void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
 
   /* Parse arguments. */
+
   parse_args(argc, argv);
 
-  Log("%s", argv[0]);
 
-    /* Set random seed. */
-    init_rand();
+  /* Set random seed. */
+  init_rand();
 
   /* Open the log file. */
   init_log(log_file);
