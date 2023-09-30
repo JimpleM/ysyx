@@ -105,10 +105,12 @@ void init_monitor(int argc, char *argv[]) {
 
   parse_args(argc, argv);
 
-  printf("%d %s", argc,argv[0]);
+  for (int i = 0; i < argc; i++){
+    printf("%s\n", argv[i]);
+  }
 
-  /* Set random seed. */
-  init_rand();
+    /* Set random seed. */
+    init_rand();
 
   /* Open the log file. */
   init_log(log_file);
