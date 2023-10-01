@@ -45,7 +45,8 @@ int sprintf_t(char *out, const char *fmt, ...) {
       fmt_t++;
       if(*fmt_t == 's'){
         ArgStr = va_arg(args, char*);
-        out_t = strcat(out_t,ArgStr);
+        strcat(out_t,ArgStr);
+        out_t += strlen(ArgStr);
         count += strlen(ArgStr);
       }else if(*fmt_t == 'd'){
         ArgInt = va_arg(args, int);
