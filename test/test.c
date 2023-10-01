@@ -60,8 +60,8 @@ int sprintf_t(char *out, const char *fmt, ...) {
   return strlen(out);
 }
 int main(){
-	sprintf_t(str, "%s", "Hello world!\n");
-  printf("%d\n",strcmp(str, "Hello world!\n") == 0);
+	sprintf_t(str, "%s +", "Hello world!\n");
+  printf("%d\n",strcmp(str, "Hello world!\n +") == 0);
   printf("%s\n",str);
   sprintf_t(str, "%d", 100);
   printf("%d\n",strcmp(str, "100") == 0);
