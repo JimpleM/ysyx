@@ -4,9 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ringbuffer.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
+
 // off_t size = 4096;
 // int fd;
 static RingBuffer *buffer = NULL;
