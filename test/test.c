@@ -60,11 +60,7 @@ int sprintf_t(char *out, const char *fmt, ...) {
   return strlen(out);
 }
 int main(){
-	sprintf_t(str, "%s 123", "Hello world!");
-  printf("%d\n",strcmp(str, "Hello world! +") == 0);
-  printf("%s\n",str);
-  sprintf_t(str, "%d", 100);
-  printf("%d\n",strcmp(str, "100") == 0);
-	printf("%s\n",str);
+	int a = 0;
+  static int b =0;
 	return 0;
 }
