@@ -18,20 +18,20 @@ void InitBuffer(){
 
 RingBuffer *RingBuffer_create(int length)
 {   
-    fd = -1;
-    if ((fd = open("/dev/zero", O_RDWR, 0)) == -1){
-        return NULL;
-    }
+    // fd = -1;
+    // if ((fd = open("/dev/zero", O_RDWR, 0)) == -1){
+    //     return NULL;
+    // }
     RingBuffer *buffer = calloc(1, sizeof(RingBuffer));
     // RingBuffer *buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
     buffer->length  = length + 1;
     buffer->start = 0;
     buffer->end = 0;
-    // buffer->buffer = calloc(buffer->length, 1);
-    buffer->buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
-    if(buffer->buffer == MAP_FAILED){
-        return NULL;
-    }
+    buffer->buffer = calloc(buffer->length, 1);
+    // buffer->buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
+    // if(buffer->buffer == MAP_FAILED){
+    //     return NULL;
+    // }
     return buffer;
 }
 
