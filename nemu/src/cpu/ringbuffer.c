@@ -7,11 +7,28 @@
 
 // off_t size = 4096;
 // int fd;
-static RingBuffer *buffer = NULL;
+static RingBuffer *cpu_buffer = NULL;
+static RingBuffer *number_buffer = NULL;
 
-void InitBuffer(){
-    buffer = RingBuffer_create(16);
+void init_buffer(){
+    cpu_buffer = RingBuffer_create(1024);
+    number_buffer = RingBuffer_create(128);
     return ;
+}
+
+int write_buffer(char *data, int length){
+    char str[5];
+    memcpy(str,&length,4);
+    RingBuffer_write(number_buffer,str,4);
+    return RingBuffer_write(cpu_buffer, data, length);
+}
+
+int read_buffer(char *target){
+    char str[5];
+    int length=0;
+    RingBuffer_read(number_buffer,str,4);
+    memcpy(&length,str,4);
+    return RingBuffer_read(cpu_buffer, target, length);
 }
 
 RingBuffer *RingBuffer_create(int length)
