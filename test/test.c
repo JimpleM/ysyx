@@ -54,21 +54,21 @@ int sprintf_t(char *out, const char *fmt, ...) {
           ArgInt = -ArgInt;
           count++;
         }
-        number_to_str(out_t,ArgInt,10);
+        out_t = number_to_str(out_t,ArgInt,10);
       }
     }
 
     fmt_t++;
   }
-    *out_t++ = '\0';
+   *out_t++ = '\0';
   va_end(args);
   return count;
 }
 int main(){
 	sprintf(str, "%s", "Hello world!\n");
   printf("%d\n",strcmp(str, "Hello world!\n") == 0);
-  sprintf_t(str, "%d", 1);
-  printf("%d\n",strcmp(str, "1") == 0);
+  sprintf_t(str, "%d", 100);
+  printf("%d\n",strcmp(str, "100") == 0);
 	printf("%s\n",str);
 	return 0;
 }
