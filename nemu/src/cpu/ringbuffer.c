@@ -21,7 +21,7 @@ void init_buffer(){
 
 int write_buffer(char *data, int length){
     char str[5];
-    if(count > COUNT_MAX){
+    if(count >= COUNT_MAX){
         char str[100];
         read_buffer(str);
     }
