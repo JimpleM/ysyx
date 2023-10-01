@@ -45,7 +45,7 @@ int sprintf_t(char *out, const char *fmt, ...) {
       fmt_t++;
       if(*fmt_t == 's'){
         ArgStr = va_arg(args, char*);
-        strcat(out_t,ArgStr);
+        out_t = strcat(out_t,ArgStr);
         count += strlen(ArgStr);
       }else if(*fmt_t == 'd'){
         ArgInt = va_arg(args, int);
@@ -65,8 +65,9 @@ int sprintf_t(char *out, const char *fmt, ...) {
   return count;
 }
 int main(){
-	sprintf(str, "%s", "Hello world!\n");
+	sprintf_t(str, "%s", "Hello world!\n");
   printf("%d\n",strcmp(str, "Hello world!\n") == 0);
+  printf("%s\n",str);
   sprintf_t(str, "%d", 100);
   printf("%d\n",strcmp(str, "100") == 0);
 	printf("%s\n",str);
