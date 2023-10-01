@@ -22,8 +22,8 @@ void init_buffer(){
 int write_buffer(char *data, int length){
     char str[5];
     if(count >= COUNT_MAX){
-        char str[100];
-        read_buffer(str);
+        char s[100];
+        read_buffer(s);
     }
     memcpy(str,&length,4);
     RingBuffer_write(number_buffer,str,4);
