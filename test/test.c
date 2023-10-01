@@ -29,16 +29,12 @@ int sprintf_t(char *out, const char *fmt, ...) {
   while(*fmt_t != '\0'){
     if(*fmt == ' '){
       *out_t++ = ' ';
-      count++;
     }else if(*fmt == '='){
       *out_t++ = '=';
-      count++;
     }else if(*fmt == '+'){
       *out_t++ = '+';
-      count++;
     }else if(*fmt == '\n'){
       *out_t++ = '\n';
-      count++;
     }
     
     else if(*fmt == '%'){
@@ -47,13 +43,11 @@ int sprintf_t(char *out, const char *fmt, ...) {
         ArgStr = va_arg(args, char*);
         strcat(out_t,ArgStr);
         out_t += strlen(ArgStr);
-        count += strlen(ArgStr);
       }else if(*fmt_t == 'd'){
         ArgInt = va_arg(args, int);
         if(ArgInt<0){
           *out_t++ = '-';
           ArgInt = -ArgInt;
-          count++;
         }
         out_t = number_to_str(out_t,ArgInt,10);
       }
@@ -61,9 +55,9 @@ int sprintf_t(char *out, const char *fmt, ...) {
 
     fmt_t++;
   }
-   *out_t++ = '\0';
+  *out_t++ = '\0';
   va_end(args);
-  return count;
+  return strlen(out);
 }
 int main(){
 	sprintf_t(str, "%s", "Hello world!\n");

@@ -3,8 +3,8 @@
 char buf[128];
 
 int main() {
-	sprintf(buf, "%s", "Hello world!\n");
-	check(strcmp(buf, "Hello world!\n") == 0);
+	sprintf(buf, "%s +", "Hello world!\n");
+	check(strcmp(buf, "Hello world!\n +") == 0);
 
 	sprintf(buf, "%d", 1);
 	check(strcmp(buf, "1") == 0);
