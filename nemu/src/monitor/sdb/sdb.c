@@ -118,11 +118,6 @@ static int cmd_si(char *args) {
     int num = atoi(arg);
     cpu_exec(num);
   }
-
-  char str[500];
-  read_buffer(str);
-  printf("%s\n",str);
-
   return 0;
 }
 static int cmd_info(char *args) {

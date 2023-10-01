@@ -7,19 +7,27 @@
 
 // off_t size = 4096;
 // int fd;
+#define COUNT_MAX 16
 static RingBuffer *cpu_buffer = NULL;
 static RingBuffer *number_buffer = NULL;
+int count;
 
 void init_buffer(){
     cpu_buffer = RingBuffer_create(1024);
     number_buffer = RingBuffer_create(128);
+    count = 0;
     return ;
 }
 
 int write_buffer(char *data, int length){
     char str[5];
+    if(count > COUNT_MAX){
+        char str[100];
+        read_buffer(str);
+    }
     memcpy(str,&length,4);
     RingBuffer_write(number_buffer,str,4);
+    count++;
     return RingBuffer_write(cpu_buffer, data, length);
 }
 
@@ -28,6 +36,7 @@ int read_buffer(char *target){
     int length=0;
     RingBuffer_read(number_buffer,str,4);
     memcpy(&length,str,4);
+    count--;
     return RingBuffer_read(cpu_buffer, target, length);
 }
 
