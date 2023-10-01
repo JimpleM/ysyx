@@ -40,6 +40,19 @@ int read_buffer(char *target){
     return RingBuffer_read(cpu_buffer, target, length);
 }
 
+void show_all_buffer(){
+    char str[300];
+    while(1){
+        read_buffer(str);
+        if(RingBuffer_empty(number_buffer)){
+            printf("    -->%s\n",str);
+            break;
+        }else{
+            printf("       %s\n",str);
+        }
+    }
+}
+
 RingBuffer *RingBuffer_create(int length)
 {   
     // fd = -1;
