@@ -60,7 +60,7 @@ int sprintf_t(char *out, const char *fmt, ...) {
 
     fmt_t++;
   }
-  
+    *out_t++ = '\0';
   va_end(args);
   return count;
 }
