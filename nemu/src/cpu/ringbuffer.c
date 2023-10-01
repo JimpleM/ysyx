@@ -9,6 +9,12 @@
 #include <unistd.h>
 off_t size = 4096;
 int fd;
+
+void InitBuffer(){
+    buffer = RingBuffer_create(16);
+    return ;
+}
+
 RingBuffer *RingBuffer_create(int length)
 {   
     fd = -1;

@@ -10,6 +10,10 @@ typedef struct {
     int end;
 } RingBuffer;
 
+RingBuffer *buffer = NULL;
+
+void InitBuffer();
+
 RingBuffer *RingBuffer_create(int length);
 
 void RingBuffer_destroy(RingBuffer *buffer);

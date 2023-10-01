@@ -24,6 +24,9 @@
 #include <generated/autoconf.h>
 #include <macro.h>
 
+#include <ringbuffer.h>
+
+
 #ifdef CONFIG_TARGET_AM
 #include <klib.h>
 #else
