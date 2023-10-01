@@ -7,8 +7,8 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
-off_t size = 4096;
-int fd;
+// off_t size = 4096;
+// int fd;
 static RingBuffer *buffer = NULL;
 
 void InitBuffer(){
@@ -37,12 +37,12 @@ RingBuffer *RingBuffer_create(int length)
 
 void RingBuffer_destroy(RingBuffer *buffer)
 {
-    // if(buffer) {
-    //     free(buffer->buffer);
-    //     free(buffer);
-    // }
-    munmap(buffer,size);
-    close(fd);
+    if(buffer) {
+        free(buffer->buffer);
+        free(buffer);
+    }
+    // munmap(buffer,size);
+    // close(fd);
     return ;
 }
 
