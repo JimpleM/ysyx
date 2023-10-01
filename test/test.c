@@ -1,5 +1,7 @@
 #include <stdio.h>
-// #include <string.h>
+#include <stdarg.h>
+#include <string.h>
+#include <assert.h>
 char str1[] = "Hello";
 char str[20];
 char * number_to_str(char *str, int number, int scale){
@@ -13,17 +15,58 @@ char * number_to_str(char *str, int number, int scale){
   }
 }
 
-void number_to_str2(char **s, int number, int scale){
-  if(number < scale){
-    **s++ = number + '0';
-  }else{
-    number_to_str2(s,number/scale,scale);
-    **s++ = number%scale + '0';
+int sprintf_t(char *out, const char *fmt, ...) {
+  assert(fmt != NULL);
+  char *fmt_t = (char *)fmt;
+  char *out_t = (char *)out;
+
+  int count = 0;
+  char* ArgStr = NULL;  // 接收字符型
+  int ArgInt = 0;  // 接收整型
+  va_list args;
+  va_start(args,fmt);
+
+  while(*fmt_t != '\0'){
+    if(*fmt == ' '){
+      *out_t++ = ' ';
+      count++;
+    }else if(*fmt == '='){
+      *out_t++ = '=';
+      count++;
+    }else if(*fmt == '+'){
+      *out_t++ = '+';
+      count++;
+    }else if(*fmt == '\n'){
+      *out_t++ = '\n';
+      count++;
+    }
+    
+    else if(*fmt == '%'){
+      fmt_t++;
+      if(*fmt_t == 's'){
+        ArgStr = va_arg(args, char*);
+        strcat(out_t,ArgStr);
+        count += strlen(ArgStr);
+      }else if(*fmt_t == 'd'){
+        ArgInt = va_arg(args, int);
+        if(ArgInt<0){
+          *out_t++ = '-';
+          ArgInt = -ArgInt;
+          count++;
+        }
+        number_to_str(out_t,ArgInt,10);
+      }
+    }
+
+    fmt_t++;
   }
+
+  va_end(args);
+  return count;
 }
 int main(){
-  // number_to_str(str,12345,10);
-	number_to_str2(&str,12345,10);
+  sprintf_t(str, "%d", 1);
+  printf("%d\n",strcmp(str, "1") == 0);
 	printf("%s\n",str);
 	return 0;
 }
