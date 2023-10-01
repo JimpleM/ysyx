@@ -4,7 +4,7 @@ char str1[] = "Hello";
 char str[20];
 char * number_to_str(char *str, int number, int scale){
   if(number < scale){
-    *str = number + '0';
+    *str++ = number + '0';
     return str;
   }else{
     char *str_t = number_to_str(str,number/scale,scale);
