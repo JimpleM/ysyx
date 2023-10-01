@@ -7,7 +7,7 @@
 
 // off_t size = 4096;
 // int fd;
-#define COUNT_MAX 3
+#define COUNT_MAX 16
 static RingBuffer *cpu_buffer = NULL;
 static RingBuffer *number_buffer = NULL;
 int count;
@@ -42,7 +42,7 @@ int read_buffer(char *target){
 
 void show_all_buffer(){
     char str[300];
-    while(1){
+    while(RingBuffer_empty(number_buffer)){
         read_buffer(str);
         if(RingBuffer_empty(number_buffer)){
             printf("    -->%s\n",str);
