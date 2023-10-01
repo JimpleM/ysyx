@@ -60,11 +60,13 @@ int sprintf_t(char *out, const char *fmt, ...) {
 
     fmt_t++;
   }
-
+  
   va_end(args);
   return count;
 }
 int main(){
+	sprintf(str, "%s", "Hello world!\n");
+  printf("%d\n",strcmp(str, "Hello world!\n") == 0);
   sprintf_t(str, "%d", 1);
   printf("%d\n",strcmp(str, "1") == 0);
 	printf("%s\n",str);
