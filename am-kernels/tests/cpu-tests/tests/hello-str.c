@@ -7,7 +7,6 @@ int main() {
 	check(strcmp(buf, "Hello world!\n") == 0);
 
 	sprintf(buf, "%d + %d = %d\n", 1, 1, 2);
-	printf("%s\n",buf);
 	check(strcmp(buf, "1 + 1 = 2\n") == 0);
 
 	// sprintf(buf, "%d + %d = %d\n", 2, 10, 12);
