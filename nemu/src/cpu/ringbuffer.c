@@ -41,7 +41,7 @@ int read_buffer(char *target){
 }
 
 void show_all_buffer(){
-    char str[300];
+    char str[300] = "";
     while(!RingBuffer_empty(number_buffer)){
         read_buffer(str);
         if(RingBuffer_empty(number_buffer)){
