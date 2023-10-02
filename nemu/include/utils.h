@@ -75,3 +75,7 @@ uint64_t get_time();
 
 
 #endif
+
+// ----------- elf -----------
+
+void init_ftrace(const char *elf_file);
