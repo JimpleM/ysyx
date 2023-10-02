@@ -31,8 +31,6 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
-void show_all_buffer();
-int write_buffer(char *data, int length);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -79,11 +77,11 @@ static void exec_once(Decode *s, vaddr_t pc) {
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
   
-  write_buffer(s->logbuf,strlen(s->logbuf));
+  // write_buffer(s->logbuf,strlen(s->logbuf));
 
-  if(nemu_state.state == NEMU_ABORT){
-    show_all_buffer();
-  }
+  // if(nemu_state.state == NEMU_ABORT){
+  //   show_all_buffer();
+  // }
 
 #endif
 }
@@ -110,7 +108,7 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
-  show_all_buffer();
+  // show_all_buffer();
   statistic();
 }
 
