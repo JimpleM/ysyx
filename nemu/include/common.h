@@ -24,9 +24,14 @@
 #include <generated/autoconf.h>
 #include <macro.h>
 
-#include <ringbuffer.h>
-
+/*
+My include start
+*/
+// #include <ringbuffer.h>
 #include <elf.h>
+/*
+My include end
+*/
 
 #ifdef CONFIG_TARGET_AM
 #include <klib.h>
