@@ -7,13 +7,13 @@
 
 // off_t size = 4096;
 // int fd;
-#define COUNT_MAX 1
+#define COUNT_MAX 2
 static RingBuffer *cpu_buffer = NULL;
 static RingBuffer *number_buffer = NULL;
 int count;
 
 void init_buffer(){
-    cpu_buffer = RingBuffer_create(4096);
+    cpu_buffer = RingBuffer_create(100000);
     number_buffer = RingBuffer_create(128);
     count = 0;
     return ;
