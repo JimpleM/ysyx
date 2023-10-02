@@ -80,7 +80,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   write_buffer(s->logbuf,strlen(s->logbuf));
 
   if(nemu_state.state == NEMU_ABORT){
-    show_all_buffer();
+    // show_all_buffer();
   }
 
 #endif
