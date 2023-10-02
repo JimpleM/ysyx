@@ -31,6 +31,7 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+void show_all_buffer();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -108,7 +109,7 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
-  // show_all_buffer();
+  show_all_buffer();
   statistic();
 }
 
