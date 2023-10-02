@@ -26,6 +26,7 @@
 
 #include <ringbuffer.h>
 
+#include <elf.h>
 
 #ifdef CONFIG_TARGET_AM
 #include <klib.h>
