@@ -48,7 +48,7 @@ void init_ftrace(const char *elf_file){
 			break;	// don't found shshtrtab
 		}
 	}
-	printf("%x\n",sym_hdr.sh_name);
+	printf("%x\n",str_hdr.sh_name);
 	// Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
 	// Read symtab
