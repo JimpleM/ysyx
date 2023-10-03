@@ -24,10 +24,12 @@ void init_ftrace(const char *elf_file){
 	if(fread(&ehdr, sizeof(Elf32_Ehdr), 1, elf_fp) == 1){
 		printf("%d\n",ehdr.e_phoff);
 	}
-
-	if(fread(&shdr, sizeof(Elf32_Shdr), 1, elf_fp) == 1){
-		printf("%d\n",shdr.sh_addr);
+	for(int i=0; i<ehdr.e_shnum;i++){
+		if(fread(&shdr, sizeof(Elf32_Shdr), 1, elf_fp) == 1){
+			printf("%d\n",shdr.sh_addr);
+		}
 	}
+	
 
 	
 }
