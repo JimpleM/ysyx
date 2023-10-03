@@ -27,9 +27,9 @@ void init_ftrace(const char *elf_file){
 		printf("%d\n",ehdr.e_phoff);
 	}
 
-	// if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == 1){
+	if(fread(&buffer, sizeof(Elf32_Phdr), ehdr.e_phnum, elf_fp) == 1){
 
-	// }
+	}
 
 	if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == ehdr.e_shnum){
 		printf("adfsd\n");
