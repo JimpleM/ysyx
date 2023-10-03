@@ -58,7 +58,7 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			printf("%x %x\n",pSym[i].st_value,pSym[i].st_name);
+			printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
 			memcpy(&symbol[sym_cnt++], &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
