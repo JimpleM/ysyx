@@ -49,8 +49,9 @@ void init_ftrace(const char *elf_file){
 	ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
-		// if(pSym[i].st_info)
-		printf("%x %x\n",pSym[i].st_value,pSym[i].st_info);
+		if((pSym[i].st_info & 0x0f) == STT_FUNC){
+			printf("%x %x\n",pSym[i].st_value,pSym[i].st_info);
+		}
 	}
 	// STT_FUNC
 }
