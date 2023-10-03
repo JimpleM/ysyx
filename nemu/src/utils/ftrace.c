@@ -32,6 +32,7 @@ void init_ftrace(const char *elf_file){
 	// }
 
 	if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == ehdr.e_shnum){
+		printf("adfsd\n");
 		// 查找符号表头并拷贝出来备用
 		for (int i = 0; i < ehdr.e_shnum; i++)
 		{
