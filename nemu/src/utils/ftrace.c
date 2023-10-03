@@ -76,12 +76,12 @@ void init_ftrace(const char *elf_file){
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
 
-	printf("%ud\n",func_trace[0].symbol.st_value);
+	printf("%x\n",func_trace[0].symbol.st_name);
 
-	printf("%s\n",buffer+func_trace[0].symbol.st_value);
+	printf("%s\n",buffer+func_trace[0].symbol.st_name);
 
 	for(int i=0; i<func_cnt; i++){
-		uint8_t *temp = &buffer[func_trace[i].symbol.st_value];
+		uint8_t *temp = &buffer[func_trace[i].symbol.st_name];
 
 		strcpy(func_trace[i].str,(char *)temp);
 	}
