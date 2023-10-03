@@ -49,7 +49,7 @@ void init_ftrace(const char *elf_file){
 		}
 	}
 	printf("%x\n",str_hdr.sh_offset);
-	// Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
+	Assert(str_hdr.sh_offset != 0, "The string header is not found\n");
 
 	// Read symtab
 	int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
