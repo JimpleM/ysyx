@@ -22,7 +22,7 @@ void init_ftrace(const char *elf_file){
 		printf("%d\n",ehdr.e_phoff);
 	}
 
-	if(fread(&buffer, sizeof(Elf32_Shdr), 1, elf_fp) == 1){
+	if(fread(&buffer, sizeof(Elf32_Phdr), 1, elf_fp) == 1){
 		printf("%s\n",buffer);
 	}
 
