@@ -76,7 +76,7 @@ void init_ftrace(const char *elf_file){
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
 
-	printf("%d\n",func_trace[0].symbol.st_value);
+	printf("%ud\n",func_trace[0].symbol.st_value);
 
 	printf("%s\n",buffer+func_trace[0].symbol.st_value);
 
