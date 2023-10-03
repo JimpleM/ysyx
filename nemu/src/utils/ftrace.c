@@ -81,7 +81,7 @@ void init_ftrace(const char *elf_file){
 	}
 
 	for(int i=0; i<func_cnt; i++){
-		printf("%x %x %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_info,func_trace[i].str);
+		printf("%x %x %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_name,func_trace[i].str);
 	}
 
 	// printf("%s\n",buffer+39);
