@@ -33,6 +33,8 @@ void init_ftrace(const char *elf_file){
 	// Read ELF Header
 	ReadDataFromFile(&elf_hdr,sizeof(Elf32_Ehdr), 1, 0, elf_fp);
 
+	printf("%s\n",elf_hdr.e_ident);
+
 	// Read Section Headers
 	ReadDataFromFile(&buffer,sizeof(Elf32_Shdr), elf_hdr.e_shnum, elf_hdr.e_shoff, elf_fp);
 	
@@ -44,11 +46,11 @@ void init_ftrace(const char *elf_file){
 		}
 		// Search for string tab
 		if (pShdr[i].sh_type == SHT_STRTAB){
-			// memcpy(&str_hdr, &pShdr[i], sizeof(Elf32_Shdr));
+			memcpy(&str_hdr, &pShdr[i], sizeof(Elf32_Shdr));
 			break;	// don't found shshtrtab
 		}
 	}
-	printf("%x\n",str_hdr.sh_offset);
+	Assert(sym_hdr.sh_offset != 0, "The symbol header is not found\n");
 	Assert(str_hdr.sh_offset != 0, "The string header is not found\n");
 
 	// Read symtab
