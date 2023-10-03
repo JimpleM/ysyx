@@ -2,6 +2,10 @@
 #include <common.h>
 #include <elf.h>
 
+#define SYM_NUM	10
+int sym_cnt = 0;
+Elf32_Sym symbol[SYM_NUM] = {0};
+
 FILE *elf_fp = NULL;
 
 static void ReadDataFromFile(void *buffer,uint32_t size, uint32_t n, uint32_t offset, FILE *elf_fp){
@@ -51,6 +55,7 @@ void init_ftrace(const char *elf_file){
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
 			printf("%x %x\n",pSym[i].st_value,pSym[i].st_info);
+			memcpy(&symbol[sym_cnt++], &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
 	// STT_FUNC
