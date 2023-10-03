@@ -26,6 +26,7 @@ void init_ftrace(const char *elf_file){
 	if(fread(&ehdr, sizeof(Elf32_Ehdr), 1, elf_fp) == 1){
 		printf("%d\n",ehdr.e_phoff);
 	}
+
 	if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == 1){
 		// 查找符号表头并拷贝出来备用
 		for (int i = 0; i < ehdr.e_shnum; i++)
@@ -39,6 +40,7 @@ void init_ftrace(const char *elf_file){
 			{
 				memcpy(&ShdrStr, &pShdr[ShdrSym.sh_link], sizeof(Elf32_Shdr));
 				// found = 1;
+				printf("%d\n",i);
 				break;
 			}
 			}
