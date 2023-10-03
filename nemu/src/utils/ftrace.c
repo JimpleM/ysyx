@@ -58,11 +58,15 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			printf("%x %x\n",pSym[i].st_value,pSym[i].st_info);
+			printf("%x %x\n",pSym[i].st_value,pSym[i].st_name);
 			memcpy(&symbol[sym_cnt++], &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
 	Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
+
+	for(int i=0; i<sym_cnt; i++){
+		printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
+	}
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
 	for(int i=0; i<str_hdr.sh_size; i++){
@@ -72,5 +76,8 @@ void init_ftrace(const char *elf_file){
 	}
 	buffer[str_hdr.sh_size] = '\0';
 	printf("%s\n",buffer);
-	// STT_FUNC
+	
 }
+
+
+
