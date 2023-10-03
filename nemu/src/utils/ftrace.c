@@ -33,7 +33,7 @@ void init_ftrace(const char *elf_file){
 	// Read ELF Header
 	ReadDataFromFile(&elf_hdr,sizeof(Elf32_Ehdr), 1, 0, elf_fp);
 	printf("%s%d\n",elf_hdr.e_ident,strcmp((char *)elf_hdr.e_ident,"ELF")==0);
-	Assert(strcmp((char *)elf_hdr.e_ident,"ELF")==0,"The type of file is not elf\n");
+	Assert(strstr((char *)elf_hdr.e_ident,"ELF")!=NULL,"The type of file is not elf\n");
 	printf("%s\n",elf_hdr.e_ident);
 
 	// Read Section Headers
