@@ -11,6 +11,7 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "isa.h": "c"
     }
 }
