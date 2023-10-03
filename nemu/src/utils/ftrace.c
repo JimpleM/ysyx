@@ -50,7 +50,7 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		// if(pSym[i].st_info)
-		printf("%d %x\n",pSym[i].st_shndx,pSym[i].st_info);
+		printf("%d %x\n",pSym[i].st_value,pSym[i].st_info);
 	}
 	// STT_FUNC
 }
