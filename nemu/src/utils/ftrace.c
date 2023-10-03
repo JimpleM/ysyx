@@ -26,7 +26,7 @@ void init_ftrace(const char *elf_file){
 	}
 
 	if(fread(&shdr, sizeof(Elf32_Shdr), 1, elf_fp) == 1){
-		printf("%d\n",shdr.sh_name);
+		printf("%d\n",shdr.sh_addr);
 	}
 
 	
