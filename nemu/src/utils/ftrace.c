@@ -7,9 +7,9 @@ FILE *elf_fp = NULL;
 static void ReadDataFromFile(void *buffer,uint32_t size, uint32_t n, uint32_t offset, FILE *elf_fp){
 	int ret = 0;
 	ret = fseek(elf_fp, offset, SEEK_SET);
-	assert(ret < 0);
+	assert(ret >= 0);
 	ret = fread(buffer, size, n, elf_fp);
-	assert(ret != n);
+	assert(ret == n);
 }
 
 
