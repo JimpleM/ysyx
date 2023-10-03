@@ -11,9 +11,9 @@ FILE *elf_fp = NULL;
 static void ReadDataFromFile(void *buffer,uint32_t size, uint32_t n, uint32_t offset, FILE *elf_fp){
 	int ret = 0;
 	ret = fseek(elf_fp, offset, SEEK_SET);
-	Assert(ret >= 0, "the offset of fseek elf_file is out of range\n");
+	Assert(ret >= 0, "The offset of fseek elf_file is out of range!\n");
 	ret = fread(buffer, size, n, elf_fp);
-	Assert(ret == n, "the size of fread elf_file is not equal\n");
+	Assert(ret == n, "The size of fread elf_file is not equal!\n");
 }
 
 void init_ftrace(const char *elf_file){
@@ -58,7 +58,7 @@ void init_ftrace(const char *elf_file){
 			memcpy(&symbol[sym_cnt++], &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
-	Assert(sym_cnt >= SYM_NUM, "the number of symbol is out of range, please increse the number\n");
+	Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
 	for(int i=0; i<sym_cnt; i++){
 		printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
