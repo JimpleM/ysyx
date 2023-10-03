@@ -32,9 +32,7 @@ void init_ftrace(const char *elf_file){
 	
 	// Read ELF Header
 	ReadDataFromFile(&elf_hdr,sizeof(Elf32_Ehdr), 1, 0, elf_fp);
-	printf("%s%d\n",elf_hdr.e_ident,strcmp((char *)elf_hdr.e_ident,"ELF")==0);
 	Assert(strstr((char *)elf_hdr.e_ident,"ELF")!=NULL,"The type of file is not elf\n");
-	printf("%s\n",elf_hdr.e_ident);
 
 	// Read Section Headers
 	ReadDataFromFile(&buffer,sizeof(Elf32_Shdr), elf_hdr.e_shnum, elf_hdr.e_shoff, elf_fp);
@@ -66,8 +64,13 @@ void init_ftrace(const char *elf_file){
 	}
 	Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
-	for(int i=0; i<sym_cnt; i++){
-		printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
+	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
+	for(int i=0; i<str_hdr.sh_size; i++){
+		if(buffer[i] == '\0'){
+			buffer[i] = '\n';
+		}
 	}
+	buffer[str_hdr.sh_size] = '\0';
+	printf("%s\n",buffer);
 	// STT_FUNC
 }
