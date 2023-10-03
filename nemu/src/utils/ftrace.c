@@ -64,11 +64,12 @@ void init_ftrace(const char *elf_file){
 	}
 	Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
-	for(int i=0; i<sym_cnt; i++){
-		printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
-	}
+	// for(int i=0; i<sym_cnt; i++){
+	// 	printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
+	// }
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
+	printf("%s\n",buffer+27);
 	for(int i=0; i<str_hdr.sh_size; i++){
 		if(buffer[i] == '\0'){
 			buffer[i] = '\n';
