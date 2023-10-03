@@ -12,6 +12,7 @@
         "type_traits": "c",
         "utility": "c",
         "common.h": "c",
-        "isa.h": "c"
+        "isa.h": "c",
+        "*.tcc": "c"
     }
 }

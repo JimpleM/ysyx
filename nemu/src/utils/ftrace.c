@@ -95,7 +95,7 @@ void init_ftrace(const char *elf_file){
 	// printf("%s\n",buffer);
 	
 }
-void print_space(uint32_t address,int  n){
+void print_space(uint32_t address, int  n){
 	printf("0x%8x:",address);
 	for(int i=0; i<n; i++){
 		printf("  ");
