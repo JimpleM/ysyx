@@ -64,7 +64,7 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
+			// printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
 			memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
@@ -80,9 +80,9 @@ void init_ftrace(const char *elf_file){
 		strcpy(func_trace[i].str,(char *)&buffer[func_trace[i].symbol.st_name]);
 	}
 
-	for(int i=0; i<func_cnt; i++){
-		printf("%x %x %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_name,func_trace[i].str);
-	}
+	// for(int i=0; i<func_cnt; i++){
+	// 	printf("%x %d %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_name,func_trace[i].str);
+	// }
 
 	// printf("%s\n",buffer+39);
 	// for(int i=0; i<str_hdr.sh_size; i++){
@@ -95,5 +95,11 @@ void init_ftrace(const char *elf_file){
 	
 }
 
-
+void ftrace_print(uint32_t pc, uint32_t npc){
+	for(int i=0; i<func_cnt; i++){
+		if(npc == func_trace[i].symbol.st_value){
+			printf("0x%8x: call[%s@0x%8x]\n",pc,func_trace[i].str,npc);
+		}
+	}
+}
 
