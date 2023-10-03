@@ -97,14 +97,15 @@ void init_ftrace(const char *elf_file){
 
 void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst){
 	for(int i=0; i<func_cnt; i++){
+		if(inst == 0x00008067 && (pc >= func_trace[i].symbol.st_value && pc <= func_trace[i].symbol.st_value + func_trace[i].symbol.st_size )){
+			printf("ret[%s]\n",func_trace[i].str);
+			return ;
+		}
 		if(npc == func_trace[i].symbol.st_value){
-			// printf("%8x\n",inst);
-			if(inst != 0x00008067){
-				printf("0x%8x: call[%s@0x%8x]\n",pc,func_trace[i].str,npc);
-			}else{
-				printf("ret[%s]\n",func_trace[i].str);
-			}
+			printf("0x%8x: call[%s@0x%8x]\n",pc,func_trace[i].str,npc);
+			return ;
 		}
 	}
+	
 }
 
