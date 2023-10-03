@@ -95,9 +95,9 @@ void init_ftrace(const char *elf_file){
 	
 }
 
-void ftrace_print(uint32_t pc, uint32_t npc){
+void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst){
 	for(int i=0; i<func_cnt; i++){
-		if(npc == func_trace[i].symbol.st_value){
+		if(npc == func_trace[i].symbol.st_value && inst != 0x00008067){
 			printf("0x%8x: call[%s@0x%8x]\n",pc,func_trace[i].str,npc);
 		}
 	}
