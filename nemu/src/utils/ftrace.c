@@ -97,7 +97,7 @@ void init_ftrace(const char *elf_file){
 }
 void print_space(int n){
 	for(int i=0; i<n; i++){
-		printf("\t");
+		printf("  ");
 	}
 }
 
