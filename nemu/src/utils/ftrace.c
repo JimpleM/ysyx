@@ -75,6 +75,11 @@ void init_ftrace(const char *elf_file){
 	// }
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
+
+	for(int i=0; i<func_cnt; i++){
+		strcpy(func_trace[i].str,(char *)(buffer+func_trace[i].symbol.st_value));
+	}
+
 	printf("%s\n",buffer+39);
 	for(int i=0; i<str_hdr.sh_size; i++){
 		if(buffer[i] == '\0'){
