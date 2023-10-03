@@ -38,7 +38,8 @@ void init_ftrace(const char *elf_file){
 		{
 			if (pShdr[i].sh_type == SHT_SYMTAB)
 			{
-			memcpy(&ShdrSym, &pShdr[i], sizeof(Elf32_Shdr));
+				printf("%d\n",pShdr[i].sh_type);
+				memcpy(&ShdrSym, &pShdr[i], sizeof(Elf32_Shdr));
 
 				// 查找字符串表头并拷贝出来备用
 				if (pShdr[ShdrSym.sh_link].sh_type == SHT_STRTAB)
