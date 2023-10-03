@@ -80,14 +80,18 @@ void init_ftrace(const char *elf_file){
 		strcpy(func_trace[i].str,(char *)&buffer[func_trace[i].symbol.st_name]);
 	}
 
-	printf("%s\n",buffer+39);
-	for(int i=0; i<str_hdr.sh_size; i++){
-		if(buffer[i] == '\0'){
-			buffer[i] = '\n';
-		}
+	for(int i=0; i<func_cnt; i++){
+		printf("%x %x %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_info,func_trace[i].str);
 	}
-	buffer[str_hdr.sh_size] = '\0';
-	printf("%s\n",buffer);
+
+	// printf("%s\n",buffer+39);
+	// for(int i=0; i<str_hdr.sh_size; i++){
+	// 	if(buffer[i] == '\0'){
+	// 		buffer[i] = '\n';
+	// 	}
+	// }
+	// buffer[str_hdr.sh_size] = '\0';
+	// printf("%s\n",buffer);
 	
 }
 
