@@ -2,9 +2,15 @@
 #include <common.h>
 #include <elf.h>
 
-#define SYM_NUM	50
-int sym_cnt = 0;
-Elf32_Sym symbol[SYM_NUM] = {0};
+#define FUNC_NUM	50
+int func_cnt = 0;
+
+struct FUNC_TRACE{
+	Elf32_Sym symbol;
+	char str[50];
+}func_trace[FUNC_NUM];
+
+// Elf32_Sym symbol[SYM_NUM] = {0};
 
 FILE *elf_fp = NULL;
 
@@ -59,10 +65,10 @@ void init_ftrace(const char *elf_file){
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
 			printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
-			memcpy(&symbol[sym_cnt++], &pSym[i], sizeof(Elf32_Sym));
+			memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
-	Assert(sym_cnt < SYM_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
+	Assert(func_cnt < FUNC_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
 	// for(int i=0; i<sym_cnt; i++){
 	// 	printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
