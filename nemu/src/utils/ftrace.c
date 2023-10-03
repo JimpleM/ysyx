@@ -69,7 +69,7 @@ void init_ftrace(const char *elf_file){
 	// }
 
 	ReadDataFromFile(&buffer, str_hdr.sh_size, 1, str_hdr.sh_offset, elf_fp);
-	printf("%s\n",buffer+27);
+	printf("%s\n",buffer+39);
 	for(int i=0; i<str_hdr.sh_size; i++){
 		if(buffer[i] == '\0'){
 			buffer[i] = '\n';
