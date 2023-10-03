@@ -44,7 +44,7 @@ void init_ftrace(const char *elf_file){
 		}
 		// Search for string tab
 		if (pShdr[i].sh_type == SHT_STRTAB){
-			memcpy(&str_hdr, &pShdr[i], sizeof(Elf32_Shdr));
+			// memcpy(&str_hdr, &pShdr[i], sizeof(Elf32_Shdr));
 			break;	// don't found shshtrtab
 		}
 	}
