@@ -78,7 +78,7 @@ void init_ftrace(const char *elf_file){
 
 	printf("%d\n",func_trace[0].symbol.st_value);
 
-	printf("%s\n",&buffer[func_trace[0].symbol.st_value]);
+	printf("%s\n",buffer+func_trace[0].symbol.st_value);
 
 	for(int i=0; i<func_cnt; i++){
 		uint8_t *temp = &buffer[func_trace[i].symbol.st_value];
