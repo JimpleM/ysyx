@@ -28,6 +28,10 @@ void init_ftrace(const char *elf_file){
 	}
 
 	if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == 1){
+
+	}
+
+	if(fread(&buffer, sizeof(Elf32_Shdr), ehdr.e_shnum, elf_fp) == ehdr.e_shnum){
 		// 查找符号表头并拷贝出来备用
 		for (int i = 0; i < ehdr.e_shnum; i++)
 		{
@@ -35,14 +39,14 @@ void init_ftrace(const char *elf_file){
 			{
 			memcpy(&ShdrSym, &pShdr[i], sizeof(Elf32_Shdr));
 
-			// 查找字符串表头并拷贝出来备用
-			if (pShdr[ShdrSym.sh_link].sh_type == SHT_STRTAB)
-			{
-				memcpy(&ShdrStr, &pShdr[ShdrSym.sh_link], sizeof(Elf32_Shdr));
-				// found = 1;
-				printf("%d\n",i);
-				break;
-			}
+				// 查找字符串表头并拷贝出来备用
+				if (pShdr[ShdrSym.sh_link].sh_type == SHT_STRTAB)
+				{
+					memcpy(&ShdrStr, &pShdr[ShdrSym.sh_link], sizeof(Elf32_Shdr));
+					// found = 1;
+					printf("%d\n",i);
+					break;
+				}
 			}
 		}
 	}
