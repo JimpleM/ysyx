@@ -14,7 +14,7 @@ int rec = 0, lvl = 0;
 int f0(int n, int l) {
   if (l > lvl) lvl = l;
   rec ++;
-  return n <= 0 ? 1 : func[3](n / 3, l + 1);
+  return n <= 0 ? 1 : func[2](n / 3, l + 1);
 };
 
 int f1(int n, int l) {
