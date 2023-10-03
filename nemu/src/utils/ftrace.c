@@ -12,7 +12,6 @@ static void ReadDataFromFile(void *buffer,uint32_t size, uint32_t n, uint32_t of
 	assert(ret == n);
 }
 
-
 void init_ftrace(const char *elf_file){
 	elf_fp = stdout;
 	if (elf_fp != NULL) {
@@ -46,9 +45,12 @@ void init_ftrace(const char *elf_file){
 		}
 	}
 	// Read symtab
-	ReadDataFromFile(&buffer, sym_hdr.sh_size, 1, sym_hdr.sh_offset, elf_fp);
-	for(int i=0; i<sym_hdr.sh_size; i++){
-		printf("%c",buffer[i]);
+	int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
+	ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
+	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
+	for(int i=0; i<number; i++){
+		// if(pSym[i].st_info)
+		printf("%x\n",pSym[i].st_info);
 	}
-	
+	// STT_FUNC
 }
