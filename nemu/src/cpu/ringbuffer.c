@@ -93,8 +93,11 @@ void RingBuffer_destroy(RingBuffer *buffer)
 
 int RingBuffer_write(RingBuffer *buffer, char *data, int length)
 {
-    if(RingBuffer_available_data(buffer) == 0) {
-        buffer->start = buffer->end = 0;
+    // if(RingBuffer_available_data(buffer) == 0) {
+    //     buffer->start = buffer->end = 0;
+    // }
+    if(buffer->end + length >= buffer->length){
+        buffer->end = 0;
     }
 
     // check(length <= RingBuffer_available_space(buffer),
@@ -114,6 +117,9 @@ int RingBuffer_write(RingBuffer *buffer, char *data, int length)
 
 int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
 {
+    if(buffer->start + amount >= buffer->length){
+        buffer->start = 0;
+    }
     // check_debug(amount <= RingBuffer_available_data(buffer),
     //         "Not enough in the buffer: has %d, needs %d",
     //         RingBuffer_available_data(buffer), amount);
