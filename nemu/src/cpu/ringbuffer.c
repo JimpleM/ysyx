@@ -18,6 +18,10 @@ void init_buffer(){
     cpu_buffer.length  = 1024 + 1;
     cpu_buffer.start = 0;
     cpu_buffer.end = 0;
+
+    number_buffer.length  = 1024 + 1;
+    number_buffer.start = 0;
+    number_buffer.end = 0;
     return ;
 }
 
