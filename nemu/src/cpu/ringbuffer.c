@@ -32,27 +32,26 @@ int write_buffer(char *data, int length){
         read_buffer(s);
     }
     memcpy(str,&length,4);
-    RingBuffer_write(number_buffer,str,4);
+    RingBuffer_write(&number_buffer,str,4);
     count++;
-    return RingBuffer_write(cpu_buffer, data, length);
+    return RingBuffer_write(&cpu_buffer, data, length);
 }
 
 int read_buffer(char *target){
     char str[5];
     int length=0;
-    RingBuffer_read(number_buffer,str,4);
+    RingBuffer_read(&number_buffer,str,4);
     memcpy(&length,str,4);
     count--;
-    return RingBuffer_read(cpu_buffer, target, length);
+    return RingBuffer_read(&cpu_buffer, target, length);
 }
 
 void show_all_buffer(){
     char str[300] = "";
     printf("----------------- iringbuf start --------------\n");
-    printf("%d\n",RingBuffer_empty(number_buffer));
-    while(!RingBuffer_empty(number_buffer)){
+    while(!RingBuffer_empty(&number_buffer)){
         read_buffer(str);
-        if(RingBuffer_empty(number_buffer)){
+        if(RingBuffer_empty(&number_buffer)){
             printf("  -.%s\n",str);
             break;
         }else{
@@ -71,8 +70,8 @@ RingBuffer *RingBuffer_create(int length)
     RingBuffer buffer = calloc(1, sizeof(RingBuffer));
     // RingBuffer buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
     buffer.length  = length + 1;
-    buffer.start = 0;
-    buffer.end = 0;
+    buffer->start = 0;
+    buffer->end = 0;
     buffer.buffer = calloc(buffer.length, 1);
     // buffer.buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
     // if(buffer.buffer == MAP_FAILED){
@@ -81,7 +80,7 @@ RingBuffer *RingBuffer_create(int length)
     return buffer;
 }
 */
-void RingBuffer_destroy(RingBuffer buffer)
+void RingBuffer_destroy(RingBuffer *buffer)
 {
     // if(buffer) {
     //     free(buffer.buffer);
@@ -92,10 +91,10 @@ void RingBuffer_destroy(RingBuffer buffer)
     return ;
 }
 
-int RingBuffer_write(RingBuffer buffer, char *data, int length)
+int RingBuffer_write(RingBuffer *buffer, char *data, int length)
 {
     if(RingBuffer_available_data(buffer) == 0) {
-        buffer.start = buffer.end = 0;
+        buffer->start = buffer->end = 0;
     }
 
     // check(length <= RingBuffer_available_space(buffer),
@@ -113,7 +112,7 @@ int RingBuffer_write(RingBuffer buffer, char *data, int length)
 //     return -1;
 }
 
-int RingBuffer_read(RingBuffer buffer, char *target, int amount)
+int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
 {
     // check_debug(amount <= RingBuffer_available_data(buffer),
     //         "Not enough in the buffer: has %d, needs %d",
@@ -124,8 +123,8 @@ int RingBuffer_read(RingBuffer buffer, char *target, int amount)
     assert(result != NULL);
     RingBuffer_commit_read(buffer, amount);
 
-    if(buffer.end == buffer.start) {
-        buffer.start = buffer.end = 0;
+    if(buffer->end == buffer->start) {
+        buffer->start = buffer->end = 0;
     }
 
     return amount;
@@ -133,7 +132,7 @@ int RingBuffer_read(RingBuffer buffer, char *target, int amount)
 //     return -1;
 }
 
-bstring RingBuffer_gets(RingBuffer buffer, int amount)
+bstring RingBuffer_gets(RingBuffer *buffer, int amount)
 {   
     // check(amount > 0, "Need more than 0 for gets, you gave: %d ", amount);
     // check_debug(amount <= RingBuffer_available_data(buffer),
