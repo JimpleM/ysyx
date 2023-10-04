@@ -3,10 +3,8 @@
 
 #include <bstrlib.h>
 
-#define BUFFER_SIZE 2048
-
 typedef struct {
-    char buffer[BUFFER_SIZE];
+    char *buffer;
     int length;
     int start;
     int end;
@@ -17,7 +15,7 @@ int write_buffer(char *data, int length);
 int read_buffer(char *target);
 void show_all_buffer();
 
-// RingBuffer *RingBuffer_create(int length);
+RingBuffer *RingBuffer_create(int length);
 
 void RingBuffer_destroy(RingBuffer *buffer);
 

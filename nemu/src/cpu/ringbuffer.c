@@ -7,21 +7,15 @@
 
 // off_t size = 4096;
 // int fd;
-#define COUNT_MAX 16
-static RingBuffer cpu_buffer;
-static RingBuffer number_buffer;
-int count = 0;
+#define COUNT_MAX 2
+static RingBuffer *cpu_buffer = NULL;
+static RingBuffer *number_buffer = NULL;
+int count;
 
 void init_buffer(){
-    // cpu_buffer = RingBuffer_create(100000);
-    // number_buffer = RingBuffer_create(128);
-    cpu_buffer.length  = BUFFER_SIZE + 1;
-    cpu_buffer.start = 0;
-    cpu_buffer.end = 0;
-
-    number_buffer.length  = BUFFER_SIZE + 1;
-    number_buffer.start = 0;
-    number_buffer.end = 0;
+    cpu_buffer = RingBuffer_create(1024);
+    number_buffer = RingBuffer_create(128);
+    count = 0;
     return ;
 }
 
@@ -32,26 +26,26 @@ int write_buffer(char *data, int length){
         read_buffer(s);
     }
     memcpy(str,&length,4);
-    RingBuffer_write(&number_buffer,str,4);
+    RingBuffer_write(number_buffer,str,4);
     count++;
-    return RingBuffer_write(&cpu_buffer, data, length);
+    return RingBuffer_write(cpu_buffer, data, length);
 }
 
 int read_buffer(char *target){
     char str[5];
     int length=0;
-    RingBuffer_read(&number_buffer,str,4);
+    RingBuffer_read(number_buffer,str,4);
     memcpy(&length,str,4);
     count--;
-    return RingBuffer_read(&cpu_buffer, target, length);
+    return RingBuffer_read(cpu_buffer, target, length);
 }
 
 void show_all_buffer(){
     char str[300] = "";
     printf("----------------- iringbuf start --------------\n");
-    while(!RingBuffer_empty(&number_buffer)){
+    while(!RingBuffer_empty(number_buffer)){
         read_buffer(str);
-        if(RingBuffer_empty(&number_buffer)){
+        if(RingBuffer_empty(number_buffer)){
             printf("  -->%s\n",str);
             break;
         }else{
@@ -60,32 +54,32 @@ void show_all_buffer(){
     }
     printf("----------------- iringbuf end --------------\n");
 }
-/*
+
 RingBuffer *RingBuffer_create(int length)
 {   
     // fd = -1;
     // if ((fd = open("/dev/zero", O_RDWR, 0)) == -1){
     //     return NULL;
     // }
-    RingBuffer buffer = calloc(1, sizeof(RingBuffer));
-    // RingBuffer buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
-    buffer.length  = length + 1;
+    RingBuffer *buffer = calloc(1, sizeof(RingBuffer));
+    // RingBuffer *buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
+    buffer->length  = length + 1;
     buffer->start = 0;
     buffer->end = 0;
-    buffer.buffer = calloc(buffer.length, 1);
-    // buffer.buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
-    // if(buffer.buffer == MAP_FAILED){
+    buffer->buffer = calloc(buffer->length, 1);
+    // buffer->buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
+    // if(buffer->buffer == MAP_FAILED){
     //     return NULL;
     // }
     return buffer;
 }
-*/
+
 void RingBuffer_destroy(RingBuffer *buffer)
 {
-    // if(buffer) {
-    //     free(buffer.buffer);
-    //     free(buffer);
-    // }
+    if(buffer) {
+        free(buffer->buffer);
+        free(buffer);
+    }
     // munmap(buffer,size);
     // close(fd);
     return ;
