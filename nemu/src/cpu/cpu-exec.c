@@ -79,7 +79,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
 
 #ifdef CONFIG_IRINGBUF
   write_buffer(s->logbuf,strlen(s->logbuf));
-  if(nemu_state.state == NEMU_ABORT || nemu_state.state == NEMU_STOP){
+  if(nemu_state.state == NEMU_ABORT){
     show_all_buffer();
   }
 #endif
