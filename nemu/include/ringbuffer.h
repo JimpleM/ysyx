@@ -3,8 +3,10 @@
 
 #include <bstrlib.h>
 
+#define BUFFER_SIZE 1024
+
 typedef struct {
-    char buffer[100];
+    char buffer[BUFFER_SIZE];
     int length;
     int start;
     int end;

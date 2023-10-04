@@ -15,11 +15,11 @@ int count = 0;
 void init_buffer(){
     // cpu_buffer = RingBuffer_create(100000);
     // number_buffer = RingBuffer_create(128);
-    cpu_buffer.length  = 1024 + 1;
+    cpu_buffer.length  = BUFFER_SIZE + 1;
     cpu_buffer.start = 0;
     cpu_buffer.end = 0;
 
-    number_buffer.length  = 1024 + 1;
+    number_buffer.length  = BUFFER_SIZE + 1;
     number_buffer.start = 0;
     number_buffer.end = 0;
     return ;
