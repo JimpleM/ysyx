@@ -13,7 +13,7 @@ static RingBuffer *number_buffer = NULL;
 int count;
 
 void init_buffer(){
-    cpu_buffer = RingBuffer_create(1024);
+    cpu_buffer = RingBuffer_create(4096);
     number_buffer = RingBuffer_create(128);
     count = 0;
     return ;
