@@ -138,7 +138,7 @@ void init_monitor(int argc, char *argv[]) {
 
   init_ftrace(elf_file);
 
-  // init_buffer();
+  init_buffer();
 
 #ifndef CONFIG_ISA_loongarch32r
   IFDEF(CONFIG_ITRACE, init_disasm(
