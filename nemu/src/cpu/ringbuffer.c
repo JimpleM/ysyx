@@ -8,8 +8,8 @@
 // off_t size = 4096;
 // int fd;
 #define COUNT_MAX 2
-static RingBuffer cpu_buffer[1024];
-static RingBuffer number_buffer[128];
+static RingBuffer cpu_buffer;
+static RingBuffer number_buffer;
 int count = 0;
 
 void init_buffer(){
@@ -46,7 +46,7 @@ void show_all_buffer(){
     while(!RingBuffer_empty(number_buffer)){
         read_buffer(str);
         if(RingBuffer_empty(number_buffer)){
-            printf("  -->%s\n",str);
+            printf("  -.%s\n",str);
             break;
         }else{
             printf("     %s\n",str);
@@ -61,34 +61,34 @@ RingBuffer *RingBuffer_create(int length)
     // if ((fd = open("/dev/zero", O_RDWR, 0)) == -1){
     //     return NULL;
     // }
-    RingBuffer *buffer = calloc(1, sizeof(RingBuffer));
-    // RingBuffer *buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
-    buffer->length  = length + 1;
-    buffer->start = 0;
-    buffer->end = 0;
-    buffer->buffer = calloc(buffer->length, 1);
-    // buffer->buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
-    // if(buffer->buffer == MAP_FAILED){
+    RingBuffer buffer = calloc(1, sizeof(RingBuffer));
+    // RingBuffer buffer = mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
+    buffer.length  = length + 1;
+    buffer.start = 0;
+    buffer.end = 0;
+    buffer.buffer = calloc(buffer.length, 1);
+    // buffer.buffer = (char*) mmap(NULL,size,PROT_READ|PROT_WRITE,MAP_PRIVATE,fd,0);
+    // if(buffer.buffer == MAP_FAILED){
     //     return NULL;
     // }
     return buffer;
 }
 */
-void RingBuffer_destroy(RingBuffer *buffer)
+void RingBuffer_destroy(RingBuffer buffer)
 {
-    if(buffer) {
-        free(buffer->buffer);
-        free(buffer);
-    }
+    // if(buffer) {
+    //     free(buffer.buffer);
+    //     free(buffer);
+    // }
     // munmap(buffer,size);
     // close(fd);
     return ;
 }
 
-int RingBuffer_write(RingBuffer *buffer, char *data, int length)
+int RingBuffer_write(RingBuffer buffer, char *data, int length)
 {
     if(RingBuffer_available_data(buffer) == 0) {
-        buffer->start = buffer->end = 0;
+        buffer.start = buffer.end = 0;
     }
 
     // check(length <= RingBuffer_available_space(buffer),
@@ -106,7 +106,7 @@ int RingBuffer_write(RingBuffer *buffer, char *data, int length)
 //     return -1;
 }
 
-int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
+int RingBuffer_read(RingBuffer buffer, char *target, int amount)
 {
     // check_debug(amount <= RingBuffer_available_data(buffer),
     //         "Not enough in the buffer: has %d, needs %d",
@@ -117,8 +117,8 @@ int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
     assert(result != NULL);
     RingBuffer_commit_read(buffer, amount);
 
-    if(buffer->end == buffer->start) {
-        buffer->start = buffer->end = 0;
+    if(buffer.end == buffer.start) {
+        buffer.start = buffer.end = 0;
     }
 
     return amount;
@@ -126,7 +126,7 @@ int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
 //     return -1;
 }
 
-bstring RingBuffer_gets(RingBuffer *buffer, int amount)
+bstring RingBuffer_gets(RingBuffer buffer, int amount)
 {   
     // check(amount > 0, "Need more than 0 for gets, you gave: %d ", amount);
     // check_debug(amount <= RingBuffer_available_data(buffer),
