@@ -8,13 +8,13 @@
 // off_t size = 4096;
 // int fd;
 #define COUNT_MAX 2
-static RingBuffer *cpu_buffer = NULL;
-static RingBuffer *number_buffer = NULL;
-int count;
+static RingBuffer cpu_buffer[1024];
+static RingBuffer number_buffer[128];
+int count = 0;
 
 void init_buffer(){
-    cpu_buffer = RingBuffer_create(100000);
-    number_buffer = RingBuffer_create(128);
+    // cpu_buffer = RingBuffer_create(100000);
+    // number_buffer = RingBuffer_create(128);
     count = 0;
     return ;
 }
@@ -54,7 +54,7 @@ void show_all_buffer(){
     }
     printf("----------------- iringbuf end --------------\n");
 }
-
+/*
 RingBuffer *RingBuffer_create(int length)
 {   
     // fd = -1;
@@ -73,7 +73,7 @@ RingBuffer *RingBuffer_create(int length)
     // }
     return buffer;
 }
-
+*/
 void RingBuffer_destroy(RingBuffer *buffer)
 {
     if(buffer) {

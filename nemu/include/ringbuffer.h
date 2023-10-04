@@ -4,7 +4,7 @@
 #include <bstrlib.h>
 
 typedef struct {
-    char *buffer;
+    char buffer[100];
     int length;
     int start;
     int end;
@@ -15,7 +15,7 @@ int write_buffer(char *data, int length);
 int read_buffer(char *target);
 void show_all_buffer();
 
-RingBuffer *RingBuffer_create(int length);
+// RingBuffer *RingBuffer_create(int length);
 
 void RingBuffer_destroy(RingBuffer *buffer);
 

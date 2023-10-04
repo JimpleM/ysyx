@@ -13,6 +13,7 @@
         "utility": "c",
         "common.h": "c",
         "isa.h": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "ringbuffer.h": "c"
     }
 }
