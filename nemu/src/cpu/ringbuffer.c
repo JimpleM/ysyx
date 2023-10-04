@@ -7,7 +7,7 @@
 
 // off_t size = 4096;
 // int fd;
-#define COUNT_MAX 2
+#define COUNT_MAX 16
 static RingBuffer *cpu_buffer = NULL;
 static RingBuffer *number_buffer = NULL;
 int count;
@@ -123,9 +123,9 @@ int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
     assert(result != NULL);
     RingBuffer_commit_read(buffer, amount);
 
-    if(buffer->end == buffer->start) {
-        buffer->start = buffer->end = 0;
-    }
+    // if(buffer->end == buffer->start) {
+    //     buffer->start = buffer->end = 0;
+    // }
 
     return amount;
 // error:
