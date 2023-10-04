@@ -90,7 +90,7 @@ int RingBuffer_write(RingBuffer *buffer, char *data, int length)
     // if(RingBuffer_available_data(buffer) == 0) {
     //     buffer->start = buffer->end = 0;
     // }
-    if(buffer->end + length >= buffer->length){
+    if(buffer->end + length >= buffer->length-1){
         buffer->end = 0;
     }
 
@@ -111,7 +111,7 @@ int RingBuffer_write(RingBuffer *buffer, char *data, int length)
 
 int RingBuffer_read(RingBuffer *buffer, char *target, int amount)
 {
-    if(buffer->start + amount >= buffer->length){
+    if(buffer->start + amount >= buffer->length-1){
         buffer->start = 0;
     }
     // check_debug(amount <= RingBuffer_available_data(buffer),
