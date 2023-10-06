@@ -22,5 +22,5 @@ int is_exit_status_bad() {
     (nemu_state.state == NEMU_QUIT);
   Log("%d",!good);
   // return !good;
-  return 2;
+  return 10086;
 }
