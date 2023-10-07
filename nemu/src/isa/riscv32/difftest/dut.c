@@ -20,7 +20,7 @@
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   for(int i=0; i<32; i++){
     if(gpr(i) != ref_r->gpr[0]){
-      printf("%d: 0x%08x  : 0x%08x  ",i,gpr(i),ref_r->gpr[i]);
+      printf("%d: 0x%08x  : 0x%08x  \n",i,gpr(i),ref_r->gpr[i]);
       return false;
     }
   }
