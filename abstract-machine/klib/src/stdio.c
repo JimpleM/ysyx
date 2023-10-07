@@ -83,12 +83,12 @@ int printf(const char *fmt, ...) {
           ArgInt = -ArgInt;
           num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
         }
-        // number_to_str(str_temp,(ul)num_temp,10);
+        number_to_str(str_temp,(ul)num_temp,10);
         // printf("%s",str_temp);
       }
       else if(*fmt == 'u'){
         num_temp = va_arg(args, ul);
-        // number_to_str(str_temp,(ul)num_temp,10);
+        number_to_str(str_temp,(ul)num_temp,10);
         // printf("%s",str_temp);
       }
     }else{
