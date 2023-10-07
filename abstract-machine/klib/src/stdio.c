@@ -177,9 +177,9 @@ int sprintf(char *out, const char *fmt, ...) {
         strcat_out(str_temp);
       }else if(*fmt == 'x'){
         ArgHex = va_arg(args, unsigned long);
-        // number_to_str(str_temp,(ul)ArgHex,16);
-        // out = insert_space(out,num_before_dig-strlen(str_temp));
-        // strcat_out(str_temp);
+        number_to_str(str_temp,(ul)ArgHex,16);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
+        strcat_out(str_temp);
       }else if(*fmt == 'f'){
         ArgFloat = va_arg(args, double);
         ArgStr = str_temp;
