@@ -108,18 +108,18 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 int sprintf(char *out, const char *fmt, ...) {
   assert(fmt != NULL);
 
-  // char str_temp[100];
-  // unsigned long num_temp;
+  char str_temp[100];
+  unsigned long num_temp;
 
-  // char* ArgStr = NULL;      // 接收字符型
-  // int ArgInt = 0;           // 接收整型
-  // unsigned int ArgUInt = 0; // 接收无符号
-  // unsigned long ArgHex = 0; // 接收十六进制
-  // double  ArgFloat = 0;     // 接收浮点数
+  char* ArgStr = NULL;      // 接收字符型
+  int ArgInt = 0;           // 接收整型
+  unsigned int ArgUInt = 0; // 接收无符号
+  unsigned long ArgHex = 0; // 接收十六进制
+  double  ArgFloat = 0;     // 接收浮点数
 
-  // char Sign = '\0';
-  // int num_before_dig = 0;
-  // int num_after_dig = 0;
+  char Sign = '\0';
+  int num_before_dig = 0;
+  int num_after_dig = 0;
 
   va_list args;
   va_start(args,fmt);
