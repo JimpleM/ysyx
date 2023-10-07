@@ -100,7 +100,8 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
 
     uint64_t timer_current = get_time();
-    if(timer_current-timer_start>1000){
+    if(timer_current-timer_start > 1000000){
+      printf("progran stuck in loop\n");
       break;
     }
 
