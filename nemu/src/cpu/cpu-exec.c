@@ -23,7 +23,7 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#define MAX_INST_TO_PRINT 50
+#define MAX_INST_TO_PRINT 1000
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -68,6 +68,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   memset(p, ' ', space_len);
   p += space_len;
 
+//反汇编结果
 #ifndef CONFIG_ISA_loongarch32r
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
@@ -75,6 +76,17 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #else
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
+
+#ifdef CONFIG_IRINGBUF
+  write_buffer(s->logbuf,strlen(s->logbuf));
+  if(nemu_state.state == NEMU_ABORT){
+    show_all_buffer();
+  }
+#endif
+#ifdef CONFIG_FTRACE
+  ftrace_print(s->pc,s->dnpc,s->isa.inst.val);
+#endif
+
 #endif
 }
 
@@ -100,6 +112,7 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
+  // show_all_buffer();
   statistic();
 }
 
@@ -125,7 +138,7 @@ void cpu_exec(uint64_t n) {
 
     case NEMU_END: case NEMU_ABORT:
       Log("nemu: %s at pc = " FMT_WORD,
-          (nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
+          (nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED):
            (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
             ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
           nemu_state.halt_pc);

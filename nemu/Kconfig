@@ -221,6 +221,24 @@ config TEST_EXPR
 
 menu "trace_and_difftest"
 config WATCHPOINT
-  bool "Enable runtime checking"
+  bool "Enable Trigger the watchpoint"
   default y
+config IRINGBUF
+  bool "Enable ringbuf trace"
+  default y
+config MTRACE
+  bool "Enable memory trace"
+  default y
+config MTRACE_START_ADDR
+  depends on MTRACE
+  hex "When Mtrace is enabled (start address)"
+  default 0x80000000
+config MTRACE_END_ADDR
+  depends on MTRACE
+  hex "When Mtrace is enabled (end address)"
+  default 0x87ffffff
+config FTRACE
+  bool "Enable function trace"
+  default y
+
 endmenu

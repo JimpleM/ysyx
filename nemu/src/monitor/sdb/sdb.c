@@ -51,6 +51,9 @@ static int cmd_c(char *args) {
 
 static int cmd_q(char *args) {
   nemu_state.state = NEMU_QUIT;
+#ifdef CONFIG_IRINGBUF
+  show_all_buffer();
+#endif
   return -1;
 }
 
