@@ -138,8 +138,10 @@ void init_monitor(int argc, char *argv[]) {
 #ifdef CONFIG_FTRACE
   init_ftrace(elf_file);
 #endif
-
+#ifdef CONFIG_IRINGBUF
   init_buffer();
+#endif
+  
 
 #ifndef CONFIG_ISA_loongarch32r
   IFDEF(CONFIG_ITRACE, init_disasm(
