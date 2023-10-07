@@ -138,11 +138,11 @@ int sprintf(char *out, const char *fmt, ...) {
         fmt++;
       }
 
-      // fmt = parse_number(fmt,&num_before_dig);
-      // if(*fmt == '.'){
-      //   fmt++;
-      //   fmt = parse_number(fmt,&num_after_dig);
-      // }
+      fmt = parse_number(fmt,&num_before_dig);
+      if(*fmt == '.'){
+        fmt++;
+        fmt = parse_number(fmt,&num_after_dig);
+      }
 
       if(*fmt == 's'){
         ArgStr = va_arg(args, char*);
