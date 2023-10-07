@@ -18,17 +18,16 @@
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
   for(int i=0; i<32; i++){
     if(gpr(i) != ref_r->gpr[i]){
       printf("%d: 0x%08x  : 0x%08x  \n",i,gpr(i),ref_r->gpr[i]);
       return false;
     }
   }
-  // if(ref_r->pc != pc){
-  //    printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
-  //   return false;
-  // }
+  if(ref_r->pc != pc+4){
+     printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
+    return false;
+  }
   return true;
 }
 
