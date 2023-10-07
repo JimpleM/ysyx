@@ -146,7 +146,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
       if(*fmt == 's'){
         ArgStr = va_arg(args, char*);
-        // strcat_out(ArgStr);
+        strcat_out(ArgStr);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
         *out++ = ArgInt;
