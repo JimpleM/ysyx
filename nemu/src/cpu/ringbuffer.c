@@ -42,7 +42,7 @@ int read_buffer(char *target){
 
 void show_all_buffer(){
     char str[300] = "";
-    printf("------------------- iringbuf start -------------------\n");
+    printf("--------------------- iringbuf start ---------------------\n");
     while(!RingBuffer_empty(number_buffer)){
         read_buffer(str);
         if(RingBuffer_empty(number_buffer)){
@@ -52,7 +52,7 @@ void show_all_buffer(){
             printf("     %s\n",str);
         }
     }
-    printf("------------------- iringbuf end -------------------\n");
+    printf("--------------------- iringbuf end ----------------------\n");
 }
 
 RingBuffer *RingBuffer_create(int length)
