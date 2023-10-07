@@ -31,6 +31,7 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+void assert_fail_msg();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -91,11 +92,21 @@ static void exec_once(Decode *s, vaddr_t pc) {
 }
 
 static void execute(uint64_t n) {
+  uint64_t timer_start = get_time();
+
   Decode s;
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
+
+    uint64_t timer_current = get_time();
+    if(timer_current-timer_start > 10000000){ // 10s
+      printf("progran stuck in loop\n");
+      assert_fail_msg();
+      break;
+    }
+
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
@@ -112,7 +123,9 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
-  // show_all_buffer();
+#ifdef CONFIG_IRINGBUF
+  show_all_buffer();
+#endif
   statistic();
 }
 

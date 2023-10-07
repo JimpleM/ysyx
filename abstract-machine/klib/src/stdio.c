@@ -5,7 +5,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-#define ul unsigned long
+#define ul unsigned long long
 #define uint unsigned int
 #define strcat_out(a) *out = '\0';strcat(out,a);out += strlen(a);
 
@@ -73,26 +73,26 @@ int printf(const char *fmt, ...) {
       if(*fmt == 's'){
         ArgStr = va_arg(args, char*);
         while(*ArgStr !='\0'){
-          // putch(*ArgStr);
+          putch(*ArgStr);
           ArgStr++;
         }
       }else if(*fmt == 'd'){
         ArgInt = va_arg(args, ul);
         if(ArgInt<0){
-          // putch('-');
+          putch('-');
           ArgInt = -ArgInt;
           num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
         }
         number_to_str(str_temp,(ul)num_temp,10);
-        // printf("%s",str_temp);
+        printf("%s",str_temp);
       }
       else if(*fmt == 'u'){
         num_temp = va_arg(args, ul);
         number_to_str(str_temp,(ul)num_temp,10);
-        // printf("%s",str_temp);
+        printf("%s",str_temp);
       }
     }else{
-      // putch(*fmt);
+      putch(*fmt);
     } 
     fmt++;
   }
@@ -184,24 +184,24 @@ int sprintf(char *out, const char *fmt, ...) {
         ArgFloat = va_arg(args, double);
         ArgStr = str_temp;
 
-        if(ArgFloat < 0){
-          *ArgStr++ = '-';
-          ArgFloat = -ArgFloat;
-        }
+        // if(ArgFloat < 0){
+        //   *ArgStr++ = '-';
+        //   ArgFloat = -ArgFloat;
+        // }
 
-        num_temp = (ul)ArgFloat;
-        ArgFloat = ArgFloat - num_temp;
+        // num_temp = (ul)ArgFloat;
+        // ArgFloat = ArgFloat - num_temp;
         //整数位
-        ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
+        // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
         //小数点
         *ArgStr++ = '.';
         *ArgStr = '\0';
         //小数位
-        num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
-        ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
+        // num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
+        // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
 
-        out = insert_space(out,num_before_dig-strlen(str_temp));
-        strcat_out(str_temp);
+        // out = insert_space(out,num_before_dig-strlen(str_temp));
+        // strcat_out(str_temp);
       }
 
       num_before_dig = 0;
