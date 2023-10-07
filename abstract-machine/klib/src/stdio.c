@@ -165,16 +165,16 @@ int sprintf(char *out, const char *fmt, ...) {
           ArgUInt = ArgInt;
           Sign = '\0';
         }
-        // number_to_str(ArgStr,ArgUInt,10);
-        // out = insert_space(out,num_before_dig-strlen(str_temp));
+        number_to_str(ArgStr,ArgUInt,10);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
        
-        // strcat_out(str_temp);
+        strcat_out(str_temp);
       }
       else if(*fmt == 'u'){
         ArgUInt = va_arg(args, unsigned int);
-        // number_to_str(str_temp,(ul)ArgUInt,10);
-        // out = insert_space(out,num_before_dig-strlen(str_temp));
-        // strcat_out(str_temp);
+        number_to_str(str_temp,(ul)ArgUInt,10);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
+        strcat_out(str_temp);
       }else if(*fmt == 'x'){
         ArgHex = va_arg(args, unsigned long);
         // number_to_str(str_temp,(ul)ArgHex,16);
