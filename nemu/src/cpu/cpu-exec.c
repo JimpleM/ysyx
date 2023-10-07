@@ -90,27 +90,20 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #endif
 }
 
-#include <signal.h>
-volatile sig_atomic_t stop_flag = 0;
-
-void sigint_handler(int signum) {
-    printf("\nReceived SIGINT signal. Pausing program.\n");
-    stop_flag = 1;
-}
-
 static void execute(uint64_t n) {
-  if (signal(SIGINT, sigint_handler) == SIG_ERR) {
-    perror("signal");
-    return ;
-  }
+  uint64_t timer_start = get_time();
+
   Decode s;
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
-    if(stop_flag){
+
+    uint64_t timer_current = get_time();
+    if(timer_current-timer_start>1000){
       break;
     }
+
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
