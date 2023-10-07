@@ -31,6 +31,7 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+void assert_fail_msg();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -102,6 +103,7 @@ static void execute(uint64_t n) {
     uint64_t timer_current = get_time();
     if(timer_current-timer_start > 3000000){ // 3s
       printf("progran stuck in loop\n");
+      assert_fail_msg();
       break;
     }
 
@@ -121,7 +123,9 @@ static void statistic() {
 
 void assert_fail_msg() {
   isa_reg_display();
-  // show_all_buffer();
+#ifdef CONFIG_IRINGBUF
+  show_all_buffer();
+#endif
   statistic();
 }
 
