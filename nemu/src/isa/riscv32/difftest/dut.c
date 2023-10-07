@@ -25,6 +25,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     }
   }
   if(ref_r->pc != pc){
+     printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
     return false;
   }
   return true;
