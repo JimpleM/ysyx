@@ -18,7 +18,7 @@
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  
+  printf("0x%08x  : 0x%08x  ",gpr(0),ref_r->gpr[0]);
   return false;
 }
 
