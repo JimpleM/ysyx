@@ -3,9 +3,6 @@ module ysyx_23060077_riscv32(
 	input rst_n
 );
 
-parameter	DATA_WIDTH 		= 32;
-parameter 	INST_WIDTH 		= 32;	// 1024个pc
-parameter  	REG_ADDR_WIDTH 	=  5;	// 2**5 = 32个pc
 
 // pc
 reg 	[DATA_WIDTH-1:0] 		pc;
