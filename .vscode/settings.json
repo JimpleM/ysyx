@@ -16,5 +16,8 @@
         "*.tcc": "c",
         "ringbuffer.h": "c",
         "string_view": "c"
+    },
+    "files.watcherExclude": {
+        "**/target": true
     }
 }
