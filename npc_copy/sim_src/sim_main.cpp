@@ -10,6 +10,10 @@
 #include "verilated_dpi.h"
 #include "Vour__Dpi.h"
 
+int add(input int a, input int b){
+	return a+b;
+}
+
 int main(int argc, char ** argv, char** env){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
