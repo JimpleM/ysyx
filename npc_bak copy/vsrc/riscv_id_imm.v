@@ -1,6 +1,6 @@
 `include"riscv_define.vh"
 module ysyx_23060077_riscv_id_imm(
-    input 	    [`INST_WIDTH-1:0]   inst,
+    input 	    [6:0]               opcode,
     output  	[`DATA_WIDTH-1:0]   imm
 );
 
@@ -55,8 +55,8 @@ ysyx_23060077_riscv_mux#(
     .NR_KEY      (11), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`DATA_WIDTH)
-)riscv_mux_id_imm(
-    .key              (inst[6:0]),//opcode
+)riscv_mux_decode(
+    .key              (opcode),
     .out              (imm),
     .lut({  `LUI   ,{imm_typeU},
             `AUIPC ,{imm_typeU},

@@ -12,7 +12,7 @@ end
 // export "DPI-C" function integer \$f;
 
 initial begin
-   $display("%x + %x = %x", 1, 2, add(1,2));
+   $display("%x + %x = %x", a, b, f);
 end
 
 export "DPI-C" task publicSetBool;

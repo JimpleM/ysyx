@@ -123,3 +123,86 @@ Caused by: java.net.ConnectException: Connection timed out (Connection timed out
 	at java.lang.Thread.run(Thread.java:829)
 [0m
 2023.10.08 20:36:17 INFO  no build target found for /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc. Using presentation compiler with project's scala-library version: 3.3.0[0m
+2023.10.08 22:45:51 WARN  Could not find semantic tokens for: file:///home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/build.sc[0m
+2023.10.08 22:45:56 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/build.sc[0m
+2023.10.08 22:49:23 WARN  Could not find semantic tokens for: file:///home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/src/Hello.scala[0m
+2023.10.08 22:49:30 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/src/Hello.scala[0m
+2023.10.08 22:49:50 WARN  Could not find semantic tokens for: file:///home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/test/HelloTest.scala[0m
+2023.10.08 22:49:59 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/test/HelloTest.scala[0m
+Oct 08, 2023 10:55:53 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.10.08 23:02:30 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:02:33 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:02:41 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:02:43 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:02:46 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:03:23 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.08 23:19:53 WARN  no build target for: /home/jimple/Documents/ysyx/ysyx-workbench/npc/build.sc[0m
+2023.10.09 22:51:21 INFO  Started: Metals version 1.0.1 in folders '/home/jimple/Documents/ysyx/ysyx-workbench' for client Visual Studio Code 1.82.2.[0m
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.21.2 by Redgate
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.FlywayExecutor execute
+INFO: Database: jdbc:h2:file:/home/jimple/Documents/ysyx/ysyx-workbench/.metals/metals (H2 2.1)
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.024s)
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+Oct 09, 2023 10:51:21 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.10.09 22:51:22 INFO  time: initialize in 0.5s[0m
+2023.10.09 22:51:23 WARN  scala-cli >= 0.1.3 not found in PATH, fetching and starting a JVM-based Scala CLI[0m
+2023.10.09 22:51:24 INFO  Found Java version 11. Scala CLI requires at least Java 17, getting a temurin:17 JVM via coursier-jvm.[0m
+2023.10.09 23:01:56 ERROR Unexpected error initializing server: 
+coursierapi.shaded.coursier.cache.ArtifactError$DownloadError: download error: Caught java.net.ConnectException (Connection timed out (Connection timed out)) while downloading https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17%2B35/OpenJDK17-jdk_x64_linux_hotspot_17_35.tar.gz
+	at coursierapi.shaded.coursier.cache.internal.Downloader$.helper$2(Downloader.scala:793)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$.coursier$cache$internal$Downloader$$downloading(Downloader.scala:806)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$Blocking$.remote(Downloader.scala:415)
+	at coursierapi.shaded.coursier.cache.internal.Downloader.$anonfun$remote$6(Downloader.scala:533)
+	at coursierapi.shaded.scala.concurrent.Future$.$anonfun$apply$1(Future.scala:678)
+	at coursierapi.shaded.scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.ConnectException: Connection timed out (Connection timed out)
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:609)
+	at sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:305)
+	at sun.security.ssl.BaseSSLSocketImpl.connect(BaseSSLSocketImpl.java:173)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:182)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:509)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:604)
+	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:910)
+	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:724)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1615)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:334)
+	at coursierapi.shaded.coursier.cache.CacheUrl$.redirectTo(CacheUrl.scala:179)
+	at coursierapi.shaded.coursier.cache.CacheUrl$.redirect(CacheUrl.scala:194)
+	at coursierapi.shaded.coursier.cache.CacheUrl$.urlConnectionMaybePartial(CacheUrl.scala:350)
+	at coursierapi.shaded.coursier.cache.ConnectionBuilder.connectionMaybePartial(ConnectionBuilder.scala:50)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$Blocking$.doDownload(Downloader.scala:222)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$Blocking$.$anonfun$remote$2(Downloader.scala:410)
+	at coursierapi.shaded.coursier.cache.CacheLocks$.loop$1(CacheLocks.scala:73)
+	at coursierapi.shaded.coursier.cache.CacheLocks$.withLockOr(CacheLocks.scala:93)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$Blocking$.$anonfun$remote$1(Downloader.scala:413)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$.$anonfun$downloading$1(Downloader.scala:764)
+	at coursierapi.shaded.coursier.cache.CacheLocks$.withUrlLock(CacheLocks.scala:112)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$.helper$2(Downloader.scala:764)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$.coursier$cache$internal$Downloader$$downloading(Downloader.scala:806)
+	at coursierapi.shaded.coursier.cache.internal.Downloader$Blocking$.remote(Downloader.scala:415)
+	at coursierapi.shaded.coursier.cache.internal.Downloader.$anonfun$remote$6(Downloader.scala:533)
+	at coursierapi.shaded.scala.concurrent.Future$.$anonfun$apply$1(Future.scala:678)
+	at coursierapi.shaded.scala.concurrent.impl.Promise$Transformation.run(Promise.scala:467)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.lang.Thread.run(Thread.java:829)
+[0m

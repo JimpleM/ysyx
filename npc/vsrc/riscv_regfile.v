@@ -1,45 +1,36 @@
-module ysyx_23060077_riscv_id_reg (
-    input                           clk,
+module ysyx_23060077_riscv_regfile (
+    input                               clk,
 
-    input                           rs1_en,
-    input         [REG_WIDTH-1:0]   rs1_addr,
-    output  reg   [DATA_WIDTH-1:0]  rs1_data,
+    input         [`REG_ADDR_WIDTH-1:0] rs1_addr,
+    output  reg   [`DATA_WIDTH-1:0]     rs1_data,
 
-    input                           rs2_en,
-    input         [REG_WIDTH-1:0]   rs2_addr,
-    output  reg   [DATA_WIDTH-1:0]  rs2_data,
+    input         [`REG_ADDR_WIDTH-1:0] rs2_addr,
+    output  reg   [`DATA_WIDTH-1:0]     rs2_data,
 
-    input                           rd_en,
-    input         [REG_WIDTH-1:0]   rd_addr,
-    output  reg   [DATA_WIDTH-1:0]  rd_data
+    input                               rd_en,
+    input         [`REG_ADDR_WIDTH-1:0] rd_addr,
+    output  reg   [`DATA_WIDTH-1:0]     rd_data
 );
 
-reg [DATA_WIDTH-1:0] memory [2**(REG_WIDTH)-1:0];
+reg [`DATA_WIDTH-1:0] gpr [`REG_COUNT-1:0];
 
 integer i;
 initial begin
-    for(i=0; i<32; i=i+1)   memory[i] <= 0;
+    for(i=0; i<REG_COUNT; i=i+1)   gpr[i] <= 0;
 end
 
 // read rs1
-always @(posedge clk) begin
-    if (rs1_en)begin
-        rs1_data <= memory[rs1_addr];
-    end 
-end
+assign rs1_data = gpr[rs1_addr];
 
 // read rs2
-always @(posedge clk) begin
-    if (rs2_en)begin
-        rs2_data <= memory[rs2_addr];
-    end 
-end
+assign rs2_data = gpr[rs2_addr];
 
 // write rd
-always @(posedge clk) begin
-    if (rd_en)begin
-        memory[rd_addr] <= rd_data;
-    end 
-end
+Reg #(`DATA_WIDTH, `DATA_WIDTH'b0) Reg_rd (clk, 1'b0, rd_en, rd_data, gpr[rd_addr]);
+// always @(posedge clk) begin
+//     if (rd_en)begin
+//         gpr[rd_addr] <= rd_data;
+//     end 
+// end
 
 endmodule

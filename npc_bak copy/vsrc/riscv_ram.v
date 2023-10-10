@@ -11,7 +11,6 @@ module ysyx_23060077_riscv_ram #(
 );
 
 reg [DATA_WIDTH-1:0] memory [2**(ADDR_WIDTH)-1:0];
-
 // write
 always @(posedge clk) begin
     if (en && wen)begin
