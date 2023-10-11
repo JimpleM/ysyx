@@ -13,8 +13,6 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
-ASAN_OPTIONS=detect_leaks=0
-
 NPCFLAGS += -d ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
