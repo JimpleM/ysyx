@@ -3,7 +3,7 @@
 
 #include "verilated_vcd_c.h"
 
-#include <risc32_lib.h>
+#include <include/risc32_lib.h>
 
 
 int main(int argc, char ** argv, char** env){

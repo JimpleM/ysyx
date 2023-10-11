@@ -31,7 +31,6 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	#@echo "Write this Makefile by your self."
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 wave:

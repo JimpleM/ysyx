@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <Vtop__Dpi.h>
-#include <debug.h
+#include <debug.h>
 
 #define PMEM_BEGIN  0x80000000
 #define PMEM_END    0x8fffffff
