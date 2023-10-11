@@ -20,7 +20,7 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) -fsanitize=address
 
 run:sim
 	LD_PRELOAD=${DIFFTEST} ./obj_dir/V${TOPNAME}  ${DIFF} $(IMG) 
