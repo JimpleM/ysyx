@@ -1,4 +1,4 @@
-`include"riscv_define.vh"
+`include"riscv_define.v"
 module ysyx_23060077_riscv_ex_store #(
     DATA_WIDTH = 32,
     INST_WIDTH = 32

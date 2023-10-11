@@ -1,4 +1,4 @@
-`include"riscv_define.vh"
+`include"riscv_define.v"
 module ysyx_23060077_riscv_wbu(
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
 

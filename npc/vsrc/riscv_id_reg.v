@@ -1,4 +1,4 @@
-`include"riscv_define.vh"
+`include"riscv_define.v"
 module ysyx_23060077_riscv_id_reg(
     input 	    [`INST_WIDTH-1:0]       inst,
     output  	  [`REG_ADDR_WIDTH-1:0]   rd,

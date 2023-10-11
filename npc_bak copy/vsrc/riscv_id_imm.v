@@ -1,4 +1,4 @@
-`include"riscv_define.vh"
+`include"riscv_define.v"
 module ysyx_23060077_riscv_id_imm(
     input 	    [6:0]               opcode,
     output  	[`DATA_WIDTH-1:0]   imm
