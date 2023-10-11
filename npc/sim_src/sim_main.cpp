@@ -11,7 +11,6 @@ int stop_flag = 0;
 
 void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
-		printf("read_addr:%x\n",raddr);
 		*rdata = pmem_read((uint32_t)raddr,4);
 		if(*rdata == 0x00100073){
 			stop_flag = 1;
