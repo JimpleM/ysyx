@@ -18,8 +18,8 @@ void putch(char ch) {
 }
 
 void halt(int code) {
-  putch('a');
   // printf("finished\n");
+  asm volatile("mv a0, %0; ebreak" : :"r"(code));
   while (1);
 }
 
