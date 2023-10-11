@@ -22,7 +22,7 @@ sim:
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 run:sim
-	./obj_dir/V${TOPNAME}  ${NEMUFLAG}
+	./obj_dir/V${TOPNAME}  $(IMG)
 
 wave:
 	gtkwave wave.vcd
