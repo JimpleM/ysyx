@@ -16,7 +16,6 @@ assign inst = rdata;
 
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
 always @(*)begin
-    $display("%x",pc);
     riscv_pmem_read(raddr,rdata,rst_n);
 end
 
