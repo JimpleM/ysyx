@@ -25,7 +25,7 @@ sim:
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 run:sim
-	LD_PRELOAD=${DIFFTEST} ./obj_dir/V${TOPNAME}  ${DIFF} $(IMG) 
+	./obj_dir/V${TOPNAME}  ${DIFF} $(IMG) 
 
 wave:
 	gtkwave wave.vcd
