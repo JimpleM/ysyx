@@ -38,8 +38,6 @@ riscv_dff #(
     .dout   (gpr[rd_addr])
   
 );
-
-riscv_dff #(`DATA_WIDTH, `DATA_WIDTH'b0) riscv_dff_rd (clk, 1'b0, rd_en, rd_data, gpr[rd_addr]);
 // always @(posedge clk) begin
 //     if (rd_en)begin
 //         gpr[rd_addr] <= rd_data;
