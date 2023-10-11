@@ -4,173 +4,97 @@ module ysyx_23060077_riscv32(
 );
 
 
-// pc
-reg 	[DATA_WIDTH-1:0] 		pc;
-reg 	[DATA_WIDTH-1:0] 		snpc;
+// ifu
+wire [`DATA_WIDTH-1:0] ifu_pc;
+wire [`INST_WIDTH-1:0] ifu_inst;
 
-// if
-wire 	[INST_WIDTH-1:0] 		inst_if;
+// idu
+wire                         idu_branch		;
+wire                         idu_jal		;
+wire                         idu_jalr		;
+wire [`REG_ADDR_WIDTH-1:0]   idu_rd			;
+wire                         idu_rd_wen		;
+wire [`REG_ADDR_WIDTH-1:0]   idu_rs1		;
+wire [`REG_ADDR_WIDTH-1:0]   idu_rs2		;
+wire [`DATA_WIDTH-1:0]       idu_imm		;
+wire [`ALU_OPT_WIDTH-1:0]    idu_alu_opt	;
+wire [`SRC_SEL_WIDTH-1:0]    idu_src_sel	;
+wire [`LSU_OPT_WIDTH-1:0]    idu_lsu_opt	;
+wire [2:0]                   idu_func_code	;
 
-// if to id
-wire 	[INST_WIDTH-1:0] 		inst_if_to_id;
-wire 	[DATA_WIDTH-1:0] 		pc_if_to_id;
+//regfile
+wire [`DATA_WIDTH-1:0]       src1			;
+wire [`DATA_WIDTH-1:0]       src2			;
+wire [`DATA_WIDTH-1:0]       rd_data		;
 
-// id
-wire 	[DATA_WIDTH-1:0] 		imm_id;
-wire	[DATA_WIDTH-1:0] 		rs1_data_id;
-wire	[DATA_WIDTH-1:0] 		rs2_data_id;
+//exu
+wire                         zero_flag		;
+wire [`DATA_WIDTH-1:0]       exu_result		;
 
-// id to ex
-wire 	[INST_WIDTH-1:0] 		inst_id_to_ex;
-wire 	[DATA_WIDTH-1:0] 		pc_id_to_ex;
-wire 	[DATA_WIDTH-1:0] 		imm_id_to_ex;
-wire	[DATA_WIDTH-1:0] 		rs1_data_id_to_ex;
-wire	[DATA_WIDTH-1:0] 		rs2_data_id_to_ex;
+//lsu
+wire [`DATA_WIDTH-1:0]       lsu_result		;
 
-// ex
-wire	[DATA_WIDTH-1:0] 		alu_a_data_ex;
-wire	[DATA_WIDTH-1:0] 		alu_b_data_ex;
-	// ex_pass down
-wire	[DATA_WIDTH-1:0] 		alu_out_data_ex;
-wire					 		zero_flag_ex;
-wire					 		branch_out_ex;
-
-
-wire							rd_en;
-wire	[REG_ADDR_WIDTH-1:0] 	rd_addr;
-wire	[DATA_WIDTH-1:0] 		rd_wdata;
-
-
-always @(posedge clk) begin
-    if (!rst_n)begin
-		pc	<= 32'h8000_0000;
-	end
-	else begin
-		pc <= snpc;
-	end
-end
-
-// IF 取指
-ysyx_23060077_riscv_ram  #(
-	.ADDR_WIDTH(DATA_WIDTH),
-	.DATA_WIDTH(INST_WIDTH)
-) riscv_ram_pc (
-	.clk		(clk)						,
-	.en			(1'b1)						,
-	.wen		(1'b0)						,
-	.addr		(pc)	,
-	.wdata		()							,
-	.rdata		(inst_if)
+ysyx_23060077_riscv_ifu ysyx_23060077_riscv_ifu_u0(
+    .rst_n	(rst_n),
+    .pc		(ifu_pc),
+    .inst	(ifu_inst)
 );
 
-// IF to ID
-ysyx_23060077_riscv_dff #(
-  .WIDTH(INST_WIDTH+DATA_WIDTH), 
-  .RESET_VAL(0)
-) riscv_dff_if_to_id(
-  .clk		(clk),
-  .rst		(!rst_n),
-  .wen		(1'b1),
-  .din		({inst_if		,pc}),
-  .dout		({inst_if_to_id	,pc_if_to_id})
+ysyx_23060077_riscv_idu ysyx_23060077_riscv_idu_u0(
+    .inst			(ifu_inst	),
+    .branch			(idu_branch	),
+    .jal			(idu_jal		),
+    .jalr			(idu_jalr	),
+    .rd				(idu_rd		),
+    .rd_wen			(idu_rd_wen	),
+    .rs1			(idu_rs1		),
+    .rs2			(idu_rs2		),
+    .imm			(idu_imm		),
+    .alu_opt		(idu_alu_opt	),
+    .src_sel		(idu_src_sel	),
+    .lsu_opt		(idu_lsu_opt	),
+    .func_code		(idu_func_code	)
+);
+
+ysyx_23060077_riscv_regfile ysyx_23060077_riscv_regfile_u0(
+    .clk			(clk		),
+    .rs1_addr		(idu_rs1	),
+    .rs1_data		(src1		),
+    .rs2_addr		(idu_rs2	),
+    .rs2_data		(src2		),
+    .rd_en			(idu_rd_wen		),
+    .rd_addr		(idu_rd	),
+    .rd_data		(rd_data	)	
 );
 
 
-// ID 译码
-
-// 读寄存器值
-ysyx_23060077_riscv_id_reg #(
-	.ADDR_WIDTH(REG_ADDR_WIDTH),
-	.DATA_WIDTH(DATA_WIDTH)
-) riscv_id_reg (
-	.clk		(clk)					,
-	.rs1_en		(1'b1)					,
-	.rs1_addr	(inst_if_to_id[19:15])	,	// rs1
-	.rs1_data	(rs1_data_id)			,
-	.rs2_en		(1'b1)					,
-	.rs2_addr	(inst_if_to_id[24:20])	,	// rs2
-	.rs2_data	(rs2_data_id)			,
-
-	.rd_en		(rd_en	)				,
-	.rd_addr	(rd_addr)				,
-	.rd_data	(rd_data)
+ysyx_23060077_riscv_exu ysyx_23060077_riscv_exu_u0(
+    .pc				(ifu_pc			),
+    .src1			(src1		),
+    .src2			(src2		),
+    .imm			(idu_imm		),
+    .branch			(idu_branch		),
+    .alu_opt		(idu_alu_opt	),
+    .src_sel		(idu_src_sel	),
+    .func_code		(idu_func_code),
+    .zero_flag		(zero_flag),
+    .exu_result		(exu_result)
 );
 
-ysyx_23060077_riscv_id_imm #(
-	.INST_WIDTH(INST_WIDTH),
-	.DATA_WIDTH(DATA_WIDTH)
-)riscv_id_imm(
-	.inst	(inst_if_to_id),
-	.imm	(imm_id)
+ysyx_23060077_riscv_lsu ysyx_23060077_riscv_lsu_u0(
+    .exu_result		(exu_result),
+    .src2			(src2),
+    .lsu_opt		(idu_lsu_opt),
+    .func_code		(idu_func_code),
+    .lsu_result		(lsu_result)
 );
 
-
-// ID to EX
-ysyx_23060077_riscv_dff #(
-	.WIDTH(INST_WIDTH+DATA_WIDTH+DATA_WIDTH+DATA_WIDTH+DATA_WIDTH), 
-	.RESET_VAL(0)
-) riscv_dff_id_to_ex(
-	.clk	(clk),
-	.rst	(!rst_n),
-	.wen	(1'b1),
-	.din	({
-			inst_if_to_id,
-			pc_if_to_id,
-			imm_id,
-			rs1_data_id,
-			rs2_data_id
-			}),
-	.dout	({
-			inst_id_to_ex,
-			pc_id_to_ex,
-			imm_id_to_ex,
-			rs1_data_id_to_ex,
-			rs2_data_id_to_ex
-			})
+ysyx_23060077_riscv_wbu ysyx_23060077_riscv_wbu_u0(
+    .lsu_opt		(idu_lsu_opt),
+    .exu_result		(exu_result),
+    .lsu_result		(lsu_result),
+    .wbu_result		(rd_data)
 );
-
-// EX
-ysyx_23060077_riscv_ex_data #(
-    .INST_WIDTH(INST_WIDTH),
-	.DATA_WIDTH(DATA_WIDTH)
-) riscv_ex_data(
-    .inst_id_to_ex			(inst_id_to_ex),
-	.rs1_data_id_to_ex		(rs1_data_id_to_ex),
-	.rs2_data_id_to_ex		(rs2_data_id_to_ex),
-	.imm_id_to_ex			(imm_id_to_ex),
-    .alu_a_data_ex			(alu_a_data_ex),
-    .alu_b_data_ex			(alu_b_data_ex)
-);
-
-ysyx_23060077_riscv_ex_alu #(
-    .INST_WIDTH(INST_WIDTH),
-	.DATA_WIDTH(DATA_WIDTH)
-) riscv_ex_alu(
-    .inst_id_to_ex			(inst_id_to_ex),
-    .alu_a_data_ex			(alu_a_data_ex),
-    .alu_b_data_ex			(alu_b_data_ex),
-    .alu_out_data_ex		(alu_out_data_ex),	
-    .zero_flag				(zero_flag_ex)
-);
-
-ysyx_23060077_riscv_ex_branch #(
-	.INST_WIDTH(INST_WIDTH)
-) riscv_ex_branch(
-    .inst_id_to_ex			(inst_id_to_ex),
-	.alu_out_most_bit		(alu_out_data_ex[DATA_WIDTH-1]),
-	.rs1_most_bit			(rs1_data_id_to_ex[DATA_WIDTH-1]),
-	.rs2_most_bit			(rs2_data_id_to_ex[DATA_WIDTH-1]),
-	.zero_flag				(zero_flag_ex),
-	.branch_out				(branch_out_ex)
-);
-
-ysyx_23060077_riscv_ex_result #(
-	.INST_WIDTH(INST_WIDTH),
-	.DATA_WIDTH(DATA_WIDTH)
-) riscv_ex_result(
-
-);
-
 
 endmodule
 

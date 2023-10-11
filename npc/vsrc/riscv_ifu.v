@@ -1,15 +1,22 @@
 `include"riscv_define.vh"
 module ysyx_23060077_riscv_ifu(
-    input 	    [`DATA_WIDTH-1:0]       pc,
     input                               rst_n,
+    input 	    [`DATA_WIDTH-1:0]       pc,
 
     output  	[`INST_WIDTH-1:0]       inst
 );
 
-import "DPI-C" function void mem_read(input int pc, output int inst, input en);
 
+
+wire [`DATA_WIDTH-1:0] raddr;
+wire [`INST_WIDTH-1:0] rdata;
+
+assign raddr = pc;
+assign inst = rdata;
+
+import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
 always @(*)begin
-    mem_read(pc,inst,rst_n);
+    riscv_pmem_read(raddr,rdata,rst_n);
 end
 
 

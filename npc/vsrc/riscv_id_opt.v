@@ -1,9 +1,9 @@
 `include"riscv_define.vh"
 module ysyx_23060077_riscv_id_opt(
     input 	    [`INST_WIDTH-1:0]       inst,
-    output  	  [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    output  	  [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output  	  [`LSU_OPT_WIDTH-1:0]    lsu_opt,
+    output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
+    output      [`SRC_SEL_WIDTH-1:0]    src_sel,
+    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt,
     output      [2:0]                   func_code
 );
 
