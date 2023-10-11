@@ -28,6 +28,12 @@ int main(int argc, char *argv[]){
 	tfp->open("wave.vcd");
 // initialize
 	top->clk = 0;
+	top->rst_n = 0;
+	eval_dump;
+	top->clk = 1;
+	top->rst_n = 0;
+	eval_dump;
+	top->clk = 0;
 	top->rst_n = 1;
 	eval_dump;
 	init_npc(argc,argv);
