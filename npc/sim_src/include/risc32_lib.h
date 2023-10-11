@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+
+#include "common.h"
 #include "debug.h"
 #include "Vriscv32.h"
 #include "Vriscv32__Dpi.h"
