@@ -104,7 +104,7 @@ void difftest_init(char *ref_so_file, long img_size) {
   assert(ref_difftest_init);
 
   ref_difftest_init();
-  ref_difftest_memcpy(PMEM_START,guest_to_host(PMEM_START), img_size, DIFFTEST_TO_REF);
+  ref_difftest_memcpy(PMEM_LEFT,guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
 
   CPU_state cpu = package_cpu(cpu_gpr, PMEM_LEFT);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
