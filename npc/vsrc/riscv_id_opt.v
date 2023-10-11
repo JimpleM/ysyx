@@ -60,7 +60,7 @@ riscv_mux#(
 )riscv_mux_id_src_sel(
     .key              (opcode),//opcode
     .default_out      (`SRC_SEL_RS1_IMM),
-    .out              (lsu_opt),
+    .out              (src_sel),
     .lut({  `LUI   ,{`SRC_SEL_RS1_IMM},
             `AUIPC ,{`SRC_SEL_PC_IMM},
             `JAL   ,{`SRC_SEL_PC_4},
