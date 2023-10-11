@@ -58,6 +58,7 @@ riscv_idu riscv_idu_u0(
 
 riscv_regfile riscv_regfile_u0(
     .clk			(clk		),
+    .rst_n          (rst_n      ),
     .rs1_addr		(idu_rs1	),
     .rs1_data		(src1		),
     .rs2_addr		(idu_rs2	),

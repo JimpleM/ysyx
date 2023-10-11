@@ -474,6 +474,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->popNamePrefix(4);
     tracep->pushNamePrefix("riscv_regfile_u0 ");
     tracep->declBit(c+399,"clk", false,-1);
+    tracep->declBit(c+475,"rst_n", false,-1);
     tracep->declBus(c+163,"rs1_addr", false,-1, 4,0);
     tracep->declBus(c+169,"rs1_data", false,-1, 31,0);
     tracep->declBus(c+164,"rs2_addr", false,-1, 4,0);
@@ -485,7 +486,6 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declBus(c+364+i*1,"gpr", true,(i+0), 31,0);
     }
     tracep->declBus(c+100,"i", false,-1, 31,0);
-    tracep->declBit(c+475,"rst_n", false,-1);
     tracep->pushNamePrefix("riscv_dff_pc ");
     tracep->declBus(c+403,"WIDTH", false,-1, 31,0);
     tracep->declBus(c+420,"RESET_VAL", false,-1, 31,0);
