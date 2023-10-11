@@ -1,4 +1,5 @@
 #include "include/risc32_lib.h"
+#include <getopt.h>
 
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
