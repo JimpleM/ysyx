@@ -27,11 +27,11 @@ void host_write(void *addr, int len, word_t data) {
   }
 }
 
-uint32_t pmem_read(int addr, int len){
+uint32_t pmem_read(uint32_t addr, uint32_t len){
     uint32_t ret = host_read(guest_to_host(addr), len);
     return ret;
 }
 
-void pmem_write(int addr, int data, int len){
+void pmem_write(uint32_t addr, uint32_t data, uint32_t len){
     host_write(guest_to_host(addr), len, data);
 }
