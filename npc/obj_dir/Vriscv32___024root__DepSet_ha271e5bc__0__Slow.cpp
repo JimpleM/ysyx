@@ -27,6 +27,8 @@ VL_ATTR_COLD void Vriscv32___024root___eval_initial(Vriscv32___024root* vlSelf) 
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
 }
 
+void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_regfile_u0__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 32> &a);
+
 VL_ATTR_COLD void Vriscv32___024root___eval_initial__TOP(Vriscv32___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vriscv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -235,6 +237,7 @@ VL_ATTR_COLD void Vriscv32___024root___eval_initial__TOP(Vriscv32___024root* vlS
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[0x1eU] = 0U;
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[0x1fU] = 0U;
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__i = 0x20U;
+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_regfile_u0__DOT__set_gpr_ptr__Vdpioc2_TOP(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr);
 }
 
 VL_ATTR_COLD void Vriscv32___024root___eval_final(Vriscv32___024root* vlSelf) {
@@ -1779,11 +1782,11 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
           : ((0x33U == (0x7fU & vlSelf->riscv32__DOT__riscv_ifu_u0__DOT__rdata))
               ? (vlSelf->riscv32__DOT__idu_imm + vlSelf->riscv32__DOT__src1)
               : ((IData)(4U) + vlSelf->riscv32__DOT__ifu_pc)));
-    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read_TOP(vlSelf->riscv32__DOT__exu_result, vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata, 
+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read_TOP(vlSelf->riscv32__DOT__exu_result, vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__2__rdata, 
                                                                                 (0U 
                                                                                 != (IData)(vlSelf->riscv32__DOT__idu_lsu_opt)));
     vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__rdata 
-        = vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata;
+        = vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__2__rdata;
     Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP(
                                                                                 vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[2U], 
                                                                                 vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[1U], 
@@ -2096,7 +2099,7 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->__VdfgTmp_hda24e88d__0 = 0;
     vlSelf->__VdfgTmp_ha3892a3b__0 = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata = 0;
-    vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata = 0;
+    vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__2__rdata = 0;
     vlSelf->__Vtrigrprev__TOP__clk = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
