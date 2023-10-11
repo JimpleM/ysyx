@@ -7,16 +7,11 @@ module riscv_ifu(
 );
 
 
-
-wire [`DATA_WIDTH-1:0] raddr;
-wire [`INST_WIDTH-1:0] rdata;
-
-assign raddr = pc;
-assign inst = rdata;
-
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
+import "DPI-C" function void set_pc_ptr(input int pc);
 always @(*)begin
-    riscv_pmem_read(raddr,rdata,rst_n);
+    riscv_pmem_read(pc,inst,rst_n);
+    set_pc_ptr(pc);
 end
 
 

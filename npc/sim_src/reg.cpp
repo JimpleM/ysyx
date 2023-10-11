@@ -8,6 +8,11 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+uint32_t cpu_pc;
+extern "C" void set_pc_ptr(int pc) {
+  cpu_pc = (uint32_t) pc;
+}
+
 uint32_t *cpu_gpr = NULL;
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
   cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
@@ -25,3 +30,5 @@ void isa_reg_display() {
 //   printf("$pc : 0x%08x\n",cpu.pc);
 //   printf("------------------------------reg display end -----------------------------\n");
 }
+
+CPU_state read_dut_regs()
