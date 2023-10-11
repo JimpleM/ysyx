@@ -10,7 +10,7 @@
 
 
 void riscv_pmem_read(int raddr, int *rdata, svBit ren){
-	printf("read_addr:%x",raddr);
+	printf("read_addr:%x\n",raddr);
 	*rdata = pmem_read((uint32_t)raddr,4);
 }
 
