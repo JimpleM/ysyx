@@ -33,12 +33,29 @@ assign opcode   = inst[6:0];
 assign funct3   = inst[14:12];
 assign funct7   = inst[31:25];
 
-riscv_id_reg riscv_id_reg_idu(
-    .inst       (inst),
-    .rd         (rd),
-    .rd_wen     (rd_wen),
-    .rs1        (rs1),
-    .rs2        (rs2)
+wire [`REG_WIDTH-1:0] reg_zero;
+assign reg_zero = {`REG_WIDTH{1'b0}};
+
+riscv_mux#(
+  .NR_KEY      (11), 
+  .KEY_LEN     (7), 
+  .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+`REG_WIDTH+1)
+)riscv_mux_id_reg(
+  .key                (opcode),
+  .default_out        (0),
+  .out                ({rs1,rs2,rd,rd_wen}),
+  .lut({    `LUI   ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
+            `AUIPC ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
+            `JAL   ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
+            `JALR  ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
+            `BRANCH,  {inst[19:15], inst[24:20], reg_zero  , 1'b0},
+            `LOAD  ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
+            `STORE ,  {inst[19:15], inst[24:20], reg_zero  , 1'b0},
+            `OP_IMM,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
+            `OP    ,  {inst[19:15], inst[24:20], inst[11:7], 1'b1},
+            `FENCE ,  {reg_zero   , reg_zero   , reg_zero  , 1'b0},
+            `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b0}
+  })
 );
 
 riscv_id_imm riscv_id_imm_idu(
