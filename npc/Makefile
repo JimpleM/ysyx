@@ -1,5 +1,4 @@
-TOPNAME = top
-NXDC_FILES = constr/top.nxdc
+
 INC_PATH ?=
 
 VERILATOR = verilator
@@ -16,15 +15,14 @@ $(shell mkdir -p $(BUILD_DIR))
 
 # project source
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" )
-CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
-
 SIM_SRCS = ./sim_src/sim_main.cpp
-SEARCHPATH = ./vsrc
-TOP_MODULE = riscv32
+
+INC_PATH = ./vsrc
+TOPNAME = riscv32
 
 VERILATOR_FLAGS += -Wall --trace --cc --exe --build
-VERILATOR_FLAGS += -I${SEARCHPATH}
-VERILATOR_FLAGS += --top ${TOP_MODULE}
+VERILATOR_FLAGS += -I${INC_PATH}
+VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
 
@@ -34,13 +32,9 @@ all:defualt
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	#@echo "Write this Makefile by your self."
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(CSRCS) $(LDFLAGS)
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
-
-run: $(BIN)
-	@$^
-
-wave: sim
+wave:
 	./obj_dir/Vtop
 	gtkwave wave.vcd
 
