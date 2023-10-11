@@ -19,7 +19,7 @@ VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" )
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
 SIM_SRCS = ./sim_src/sim_main.cpp
-SEARCHPATH = ./vscr
+SEARCHPATH = ./vsrc
 TOP_MODULE = top
 
 VERILATOR_FLAGS += -Wall --trace --cc --exe --build
