@@ -14,7 +14,7 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 LDFLAGS   += --gc-sections -e _start
 
 DIFFTEST = /home/jimple/Documents/ysyx/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so
-NPCFLAGS += -diff ${DIFFTEST}
+NPCFLAGS += --diff ${DIFFTEST}
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
