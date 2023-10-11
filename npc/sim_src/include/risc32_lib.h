@@ -16,5 +16,5 @@
 
 void init_npc(int argc, char *argv[]);
 
-uint32_t pmem_read(uint32_t addr, uint32_t len);
-void pmem_write(uint32_t addr, uint32_t data, uint32_t len);
+uint32_t pmem_read(uint32_t addr, int len);
+void pmem_write(uint32_t addr, uint32_t data, int len);
