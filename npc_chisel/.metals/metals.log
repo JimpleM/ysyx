@@ -621,3 +621,22 @@ INFO: Schema "PUBLIC" is up to date. No migration necessary.
 2023.10.10 23:05:58 WARN  Build server is not auto-connectable.[0m
 2023.10.10 23:05:58 INFO  skipping build import with status 'Failed'[0m
 DanglingParentheses: top-level presets deprecated; use 'preset' subsection
+2023.10.11 22:40:30 INFO  Started: Metals version 1.0.1 in folders '/home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel' for client Visual Studio Code 1.82.2.[0m
+Oct 11, 2023 10:40:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.21.2 by Redgate
+Oct 11, 2023 10:40:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Oct 11, 2023 10:40:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Oct 11, 2023 10:40:31 PM org.flywaydb.core.FlywayExecutor execute
+INFO: Database: jdbc:h2:file:/home/jimple/Documents/ysyx/ysyx-workbench/npc_chisel/.metals/metals (H2 2.1)
+Oct 11, 2023 10:40:31 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.024s)
+Oct 11, 2023 10:40:31 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+Oct 11, 2023 10:40:31 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.10.11 22:40:31 INFO  time: initialize in 0.46s[0m
+2023.10.11 22:40:32 WARN  Build server is not auto-connectable.[0m
+2023.10.11 22:40:32 INFO  skipping build import with status 'Failed'[0m
+DanglingParentheses: top-level presets deprecated; use 'preset' subsection
