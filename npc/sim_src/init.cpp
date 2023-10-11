@@ -35,10 +35,10 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, "-bhl:d:i:", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, "-bhl:d:", table, NULL)) != -1) {
     switch (o) {
       case 'd': diff_so_file = optarg; break;
-      case 'i': img_file = optarg; return 0;
+      case 1: img_file = optarg; return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-l,--log=FILE           output log to FILE\n");
