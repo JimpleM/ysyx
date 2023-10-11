@@ -15,17 +15,17 @@ riscv_mux#(
   .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+`REG_WIDTH+1)
 )riscv_mux_id_reg(
   .key                (inst[6:0]),
-  .default_out      (0),
+  .default_out        (0),
   .out                ({rs1,rs2,rd,rd_wen}),
   .lut({    `LUI   ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
             `AUIPC ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
             `JAL   ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
             `JALR  ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
-            `BRANCH,  {inst[19:15], inst[24:10], reg_zero  , 1'b0},
+            `BRANCH,  {inst[19:15], inst[24:20], reg_zero  , 1'b0},
             `LOAD  ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
-            `STORE ,  {inst[19:15], inst[24:10], reg_zero  , 1'b0},
+            `STORE ,  {inst[19:15], inst[24:20], reg_zero  , 1'b0},
             `OP_IMM,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
-            `OP    ,  {inst[19:15], inst[24:10], inst[11:7], 1'b1},
+            `OP    ,  {inst[19:15], inst[24:20], inst[11:7], 1'b1},
             `FENCE ,  {reg_zero   , reg_zero   , reg_zero  , 1'b0},
             `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b0}
   })
