@@ -30,7 +30,7 @@ void host_write(void *addr, int len, word_t data) {
 uint32_t pmem_read(uint32_t addr, int len){
     printf("%x %d\n",addr,len);
     printf("%p\n",pmem);
-    printf("%p\n",guest_to_host(addr),len);
+    printf("%p\n",guest_to_host(addr));
     uint32_t ret = host_read(guest_to_host(addr), len);
     printf("%x\n",ret);
     return ret;
