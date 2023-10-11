@@ -2,10 +2,10 @@
 #include <dlfcn.h>
 
 enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
-// void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
-// void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
-// void (*ref_difftest_exec)(uint64_t n) = NULL;
-// void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
+void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
+void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
+void (*ref_difftest_exec)(uint64_t n) = NULL;
+void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
 extern uint32_t cpu_pc;
 extern uint32_t *cpu_gpr;
@@ -35,81 +35,46 @@ void difftest_skip_ref() {
 // The semantic is
 //   Let REF run `nr_ref` instructions first.
 //   We expect that DUT will catch up with REF within `nr_dut` instructions.
-// void difftest_skip_dut(int nr_ref, int nr_dut) {
-//   skip_dut_nr_inst += nr_dut;
+void difftest_skip_dut(int nr_ref, int nr_dut) {
+  skip_dut_nr_inst += nr_dut;
 
-//   while (nr_ref -- > 0) {
-//     ref_difftest_exec(1);
-//   }
-// }
+  while (nr_ref -- > 0) {
+    ref_difftest_exec(1);
+  }
+}
 
-// void init_difftest(char *ref_so_file, long img_size, int port) {
-//   assert(ref_so_file != NULL);
-
-//   void *handle;
-//   handle = dlopen(ref_so_file, RTLD_LAZY);
-//   assert(handle);
-// // C++不允许将一个通用指针转换为任意类型指针，因此这里得将dlsym返回的指针转换成特定函数指针。
-//   ref_difftest_memcpy = (void(*)(paddr_t addr, void *buf, size_t n, bool direction))dlsym(handle, "difftest_memcpy");
-//   assert(ref_difftest_memcpy);
-
-//   ref_difftest_regcpy = (void(*)(void *dut, bool direction))dlsym(handle, "difftest_regcpy");
-//   assert(ref_difftest_regcpy);
-
-//   ref_difftest_exec = (void(*)(uint64_t n))dlsym(handle, "difftest_exec");
-//   assert(ref_difftest_exec);
-
-// //   ref_difftest_raise_intr = dlsym(handle, "difftest_raise_intr");
-// //   assert(ref_difftest_raise_intr);
-
-//   void (*ref_difftest_init)(int) = (void (*)(int))dlsym(handle, "difftest_init");
-//   assert(ref_difftest_init);
-
-//   Log("Differential testing: %s", ANSI_FMT("ON", ANSI_FG_GREEN));
-//   Log("The result of every instruction will be compared with %s. "
-//       "This will help you a lot for debugging, but also significantly reduce the performance. "
-//       "If it is not necessary, you can turn it off in menuconfig.", ref_so_file);
-
-//   ref_difftest_init(port);
-//   ref_difftest_memcpy(PMEM_LEFT, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
-//   CPU_state cpu = package_cpu(cpu_gpr, PMEM_LEFT);
-//   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
-// }
-
-void (*ref_difftest_memcpy)(uint64_t addr, void *buf, size_t n, bool direction) = NULL;
-void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
-void (*ref_difftest_exec)(uint64_t n) = NULL;
-void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
-
-void init_difftest(char *ref_so_file, long img_size,int port) {
+void init_difftest(char *ref_so_file, long img_size, int port) {
   assert(ref_so_file != NULL);
 
   void *handle;
   handle = dlopen(ref_so_file, RTLD_LAZY);
   assert(handle);
-
-  ref_difftest_memcpy = (void (*)(uint64_t addr, void *buf, size_t n, bool direction))dlsym(handle , "difftest_memcpy");
+// C++不允许将一个通用指针转换为任意类型指针，因此这里得将dlsym返回的指针转换成特定函数指针。
+  ref_difftest_memcpy = (void(*)(paddr_t addr, void *buf, size_t n, bool direction))dlsym(handle, "difftest_memcpy");
   assert(ref_difftest_memcpy);
 
-  ref_difftest_regcpy = (void (*)(void *dut, bool direction))dlsym(handle, "difftest_regcpy");
+  ref_difftest_regcpy = (void(*)(void *dut, bool direction))dlsym(handle, "difftest_regcpy");
   assert(ref_difftest_regcpy);
 
-  ref_difftest_exec = (void (*)(uint64_t n))dlsym(handle, "difftest_exec");
+  ref_difftest_exec = (void(*)(uint64_t n))dlsym(handle, "difftest_exec");
   assert(ref_difftest_exec);
 
-  ref_difftest_raise_intr = (void (*)(uint64_t NO))dlsym(handle, "difftest_raise_intr");
-  assert(ref_difftest_raise_intr);
+//   ref_difftest_raise_intr = dlsym(handle, "difftest_raise_intr");
+//   assert(ref_difftest_raise_intr);
 
-  void (*ref_difftest_init)() = (void (*)())dlsym(handle, "difftest_init");
+  void (*ref_difftest_init)(int) = (void (*)(int))dlsym(handle, "difftest_init");
   assert(ref_difftest_init);
 
-  ref_difftest_init();
-  ref_difftest_memcpy(PMEM_LEFT,guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
+  Log("Differential testing: %s", ANSI_FMT("ON", ANSI_FG_GREEN));
+  Log("The result of every instruction will be compared with %s. "
+      "This will help you a lot for debugging, but also significantly reduce the performance. "
+      "If it is not necessary, you can turn it off in menuconfig.", ref_so_file);
 
+  ref_difftest_init(port);
+  ref_difftest_memcpy(PMEM_LEFT, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
   CPU_state cpu = package_cpu(cpu_gpr, PMEM_LEFT);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
-
 
 static void checkregs() {
     CPU_state ref;
