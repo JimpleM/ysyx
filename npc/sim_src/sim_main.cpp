@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
 			break;
 		}
 		count++;
-		if(count >10){
+		if(count >40){
 			break;
 		}
 	}
