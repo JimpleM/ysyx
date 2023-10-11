@@ -1,6 +1,6 @@
 #include "include/risc32_lib.h"
 
-uint8_t pmem[PMEM_SIZE] = {};
+uint8_t pmem[PMEM_SIZE];
 
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - PMEM_LEFT; }
 
