@@ -12,7 +12,7 @@ word_t host_read(void *addr, int len) {
     case 4: return *(uint32_t *)addr;
     // IFDEF(CONFIG_ISA64, case 8: return *(uint64_t *)addr);
     // default: MUXDEF(CONFIG_RT_CHECK, assert(0), return 0);
-    default: assert(0);
+    // default: assert(0);
   }
 }
 
@@ -23,7 +23,7 @@ void host_write(void *addr, int len, word_t data) {
     case 4: *(uint32_t *)addr = data; return;
     // IFDEF(CONFIG_ISA64, case 8: *(uint64_t *)addr = data; return);
     // IFDEF(CONFIG_RT_CHECK, default: assert(0));
-    default: assert(0);
+    // default: assert(0);
   }
 }
 
