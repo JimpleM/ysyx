@@ -13,9 +13,9 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
-DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 
-NPCFLAGS += -d ${DIFFTEST}
+
+NPCFLAGS += 
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c

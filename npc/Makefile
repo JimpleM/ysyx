@@ -12,7 +12,8 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
 
-
+DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
+DIFF := --diff= ${DIFFTEST}
 
 all:defualt
 #	@echo "Write this Makefile by your self."
@@ -22,7 +23,7 @@ sim:
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 run:sim
-	./obj_dir/V${TOPNAME}  $(IMG) ${NPCFLAGS}
+	./obj_dir/V${TOPNAME}  $(IMG) ${DIFF}
 
 wave:
 	gtkwave wave.vcd
