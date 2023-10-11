@@ -83,6 +83,8 @@ riscv_exu riscv_exu_u0(
 );
 
 riscv_lsu riscv_lsu_u0(
+    .clk			(clk		),
+    .rst_n          (rst_n      ),
     .exu_result		(exu_result),
     .src2			(src2),
     .lsu_opt		(idu_lsu_opt),

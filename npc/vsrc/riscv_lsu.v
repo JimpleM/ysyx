@@ -1,5 +1,8 @@
 `include"riscv_define.v"
 module riscv_lsu(
+    input 	                            clk,
+    input 	                            rst_n,    
+
     input       [`DATA_WIDTH-1:0]       exu_result,
 
     input  	    [`DATA_WIDTH-1:0]       src2,
