@@ -21,8 +21,8 @@ sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
-# run:sim
-# 	./obj_dir/V${TOPNAME}  ${NEMUFLAG}
+run:sim
+	./obj_dir/V${TOPNAME}  ${NEMUFLAG}
 
 wave:
 	gtkwave wave.vcd
