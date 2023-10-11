@@ -10,7 +10,7 @@
 
 
 void riscv_pmem_read(int raddr, int *rdata, svBit ren){
-	// *rdata = pmem_read(raddr,4);
+	*rdata = pmem_read(raddr,4);
 }
 
 void riscv_pmem_write(int waddr, int wdata, int wmask){
