@@ -20,7 +20,7 @@ wire [`DATA_WIDTH-1:0] wmask;
 wire [`DATA_WIDTH-1:0]  mask;
 
 assign ren = (|lsu_opt);
-assign raddr = exu_result;
+// assign raddr = exu_result;
 
 
 riscv_mux#(
