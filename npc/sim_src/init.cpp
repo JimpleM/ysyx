@@ -1,5 +1,4 @@
-#include <include/risc32_lib.h>
-
+#include <risc32_lib.h>
 
 
 static long load_img() {
