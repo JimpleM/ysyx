@@ -28,6 +28,7 @@ class Vriscv32___024root final : public VerilatedModule {
         CData/*0:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__hit;
         CData/*1:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__lut_out;
         CData/*0:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__hit;
+        CData/*0:0*/ riscv32__DOT__riscv_regfile_u0__DOT__rst_n;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__carry_flag;
         CData/*3:0*/ riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__hit;
@@ -51,6 +52,7 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__idu_imm;
         IData/*31:0*/ riscv32__DOT__src1;
         IData/*31:0*/ riscv32__DOT__src2;
+        IData/*31:0*/ riscv32__DOT__rd_data;
         IData/*31:0*/ riscv32__DOT__exu_result;
         IData/*31:0*/ riscv32__DOT__lsu_result;
         IData/*31:0*/ riscv32__DOT__riscv_ifu_u0__DOT__rdata;
@@ -63,6 +65,7 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out;
         IData/*16:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT____Vcellinp__riscv_mux_id_alu_opt__key;
         IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT__i;
+        IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout;
         IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_rd____pinNumber5;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__alu_out_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data;
@@ -76,11 +79,11 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_bpu_u0__DOT__npc;
         IData/*30:0*/ __VdfgTmp_ha3892a3b__0;
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata;
+    };
+    struct {
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata;
         IData/*31:0*/ __Vtrigrprev__TOP__riscv32__DOT__exu_result;
         IData/*31:0*/ __VstlIterCount;
-    };
-    struct {
         IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
         QData/*63:0*/ riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out;

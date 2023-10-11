@@ -1,5 +1,6 @@
 module riscv_regfile (
     input                               clk,
+    input                               rst_n,
 
     input       [`REG_WIDTH-1:0]        rs1_addr,
     output      [`DATA_WIDTH-1:0]       rs1_data,

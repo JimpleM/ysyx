@@ -1355,6 +1355,10 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[(0x1fU 
                                                       & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_reg_idu__DOT____Vcellout__riscv_mux_id_reg__out) 
                                                          >> 1U))] 
+        = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout;
+    vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[(0x1fU 
+                                                      & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_reg_idu__DOT____Vcellout__riscv_mux_id_reg__out) 
+                                                         >> 1U))] 
         = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_rd____pinNumber5;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[0U][0U] 
         = (IData)((((QData)((IData)(vlSelf->riscv32__DOT__ifu_pc)) 
@@ -1794,6 +1798,7 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->riscv32__DOT__idu_lsu_opt = VL_RAND_RESET_I(2);
     vlSelf->riscv32__DOT__src1 = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__src2 = VL_RAND_RESET_I(32);
+    vlSelf->riscv32__DOT__rd_data = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__exu_result = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__lsu_result = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_ifu_u0__DOT__rdata = VL_RAND_RESET_I(32);
@@ -1863,7 +1868,9 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
         vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[__Vi0] = VL_RAND_RESET_I(32);
     }
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__i = VL_RAND_RESET_I(32);
+    vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_rd____pinNumber5 = VL_RAND_RESET_I(32);
+    vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__rst_n = VL_RAND_RESET_I(1);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag = VL_RAND_RESET_I(1);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out = VL_RAND_RESET_Q(64);
