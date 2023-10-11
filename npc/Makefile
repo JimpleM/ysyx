@@ -10,7 +10,7 @@ VERILATOR_FLAGS += -Wall --trace --cc --exe --build
 VERILATOR_FLAGS += -I${INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
-LDFLAGS := -LDFLAGS -ldl
+# LDFLAGS := -LDFLAGS -ldl
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
