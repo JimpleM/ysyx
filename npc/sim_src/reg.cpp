@@ -16,10 +16,10 @@ extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
 void isa_reg_display() {
   printf("------------------------------reg display start ---------------------------\n");
   for(int i=0; i<8; i++){
-    printf("%3s : 0x%08x  ",regs[4*i+0],cpu.gpr[4*i+0]);
-    printf("%3s : 0x%08x  ",regs[4*i+1],cpu.gpr[4*i+1]);
-    printf("%3s : 0x%08x  ",regs[4*i+2],cpu.gpr[4*i+2]);
-    printf("%3s : 0x%08x  ",regs[4*i+3],cpu.gpr[4*i+3]);
+    printf("%3s : 0x%08x  ",regs[4*i+0],cpu_gpr[4*i+0]);
+    printf("%3s : 0x%08x  ",regs[4*i+1],cpu_gpr[4*i+1]);
+    printf("%3s : 0x%08x  ",regs[4*i+2],cpu_gpr[4*i+2]);
+    printf("%3s : 0x%08x  ",regs[4*i+3],cpu_gpr[4*i+3]);
     printf("\n");
   }
 //   printf("$pc : 0x%08x\n",cpu.pc);
