@@ -4,13 +4,13 @@ module riscv_ex_alu(
     input           [`DATA_WIDTH-1:0]       alu_a_data,
     input           [`DATA_WIDTH-1:0]       alu_b_data,
     output                                  carry_flag,
-    output  	    [`DATA_WIDTH-1:0]       alu_out_data
+    output  	    [`DATA_WIDTH-1:0]         alu_out_data
 );
 
 wire [`DATA_WIDTH-1:0] add_data;
 wire [`DATA_WIDTH-1:0] sub_data;
 wire [`DATA_WIDTH-1:0] usub_data;
-wire carry_flag;
+
 assign add_data = alu_a_data + alu_b_data;
 assign sub_data = $signed(alu_a_data) - $signed(alu_b_data);
 //相当与变成有符号数进行减法，看最高bit
