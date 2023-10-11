@@ -14,11 +14,11 @@ wire [`DATA_WIDTH-1:0] rdata;
 wire [`DATA_WIDTH-1:0] waddr;
 wire [`DATA_WIDTH-1:0] wdata;
 wire [`DATA_WIDTH-1:0] wmask;
+wire [`DATA_WIDTH-1:0]  mask;
 
 assign ren = (|lsu_opt);
 assign raddr = exu_result;
-assign waddr = exu_result;
-assign waddr = src2;
+
 
 riscv_mux#(
     .NR_KEY      (5), 
@@ -44,12 +44,25 @@ riscv_mux#(
 )riscv_mux_ls_wmask(
   .key              ({lsu_opt,func_code}),
   .default_out      (0),
-  .out              ({wmask}),
+  .out              ({mask}),
   .lut({{`LSU_OPT_STORE,3'b000}, {32'h000_00ff},        //sb
         {`LSU_OPT_STORE,3'b001}, {32'h000_ffff},        //sh
         {`LSU_OPT_STORE,3'b010}, {32'hffff_ffff}        //sw
   })
 );
+
+riscv_dff #(
+  .WIDTH(`DATA_WIDTH*3), 
+  .RESET_VAL(0)
+)riscv_dff_pc(
+    .clk    (clk),
+    .rst    (!rst_n),
+    .wen    (1'b1),
+    .din    ({exu_result,src2,mask}),
+    .dout   ({waddr,wdata,wmask})
+  
+);
+
 
 // sim
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
