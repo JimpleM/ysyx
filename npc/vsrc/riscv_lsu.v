@@ -48,9 +48,9 @@ riscv_mux#(
   .key              ({lsu_opt,funct3}),
   .default_out      (0),
   .out              ({mask}),
-  .lut({{`LSU_OPT_STORE,3'b000}, {32'h000_00ff},        //sb
-        {`LSU_OPT_STORE,3'b001}, {32'h000_ffff},        //sh
-        {`LSU_OPT_STORE,3'b010}, {32'hffff_ffff}        //sw
+  .lut({{`LSU_OPT_STORE,3'b000}, {32'd1},         //sb
+        {`LSU_OPT_STORE,3'b001}, {32'd2},         //sh
+        {`LSU_OPT_STORE,3'b010}, {32'd4}          //sw
   })
 );
 

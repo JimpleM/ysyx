@@ -15,3 +15,6 @@
 #define RESET_VECTOR PMEM_LEFT
 
 void init_npc(int argc, char *argv[]);
+
+static uint32_t pmem_read(int addr, int len);
+static void pmem_write(int addr, int data, int len);
