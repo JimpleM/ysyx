@@ -55,8 +55,8 @@ riscv_mux#(
   .key              ({branch,funct3}),
   .default_out      (alu_out_data),
   .out              (exu_result),
-  .lut({{1'b1,3'b000}, {{(`DATA_WIDTH-1){1'b0}}, zero_flag},     //beq
-        {1'b1,3'b001}, {{(`DATA_WIDTH-1){1'b0}}, !zero_flag},     //bne
+  .lut({{1'b1,3'b000}, {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)},     //beq
+        {1'b1,3'b001}, {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)},     //bne
         {1'b1,3'b100}, {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[`DATA_WIDTH-1]},     //blt
         {1'b1,3'b101}, {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[`DATA_WIDTH-1]},     //bge
         {1'b1,3'b110}, {{(`DATA_WIDTH-1){1'b0}}, carry_flag},     //bltu

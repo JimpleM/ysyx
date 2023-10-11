@@ -68,7 +68,6 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out;
-        IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__raddr;
         IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__rdata;
         IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__mask;
         VlWide<3>/*95:0*/ riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout;
@@ -79,9 +78,9 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata;
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata;
         IData/*31:0*/ __Vtrigrprev__TOP__riscv32__DOT__exu_result;
+        IData/*31:0*/ __VstlIterCount;
     };
     struct {
-        IData/*31:0*/ __VstlIterCount;
         IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
         QData/*63:0*/ riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out;
