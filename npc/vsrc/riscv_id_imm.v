@@ -19,36 +19,36 @@ assign imm_type_NONE    = {`DATA_WIDTH{1'b0}};
 riscv_id_imm_ext #(
     .INPUT_WIDTH    (12)
 )riscv_id_imm_ext_typeI(
-    imm_in      (inst[31:20]),
-    imm_out     (imm_typeI)
+    .imm_in      (inst[31:20]),
+    .imm_out     (imm_typeI)
 );
 // TO MODIFIED
 riscv_id_imm_ext #(
     .INPUT_WIDTH    (32)
 )riscv_id_imm_ext_typeU(
-    imm_in      ({inst[31:12],{12{1'b0}}}),
-    imm_out     (imm_typeU)
+    .imm_in      ({inst[31:12],{12{1'b0}}}),
+    .imm_out     (imm_typeU)
 );
 
 riscv_id_imm_ext #(
     .INPUT_WIDTH    (12)
 )riscv_id_imm_ext_typeS(
-    imm_in      ({inst[31:25],inst[11:7]}),
-    imm_out     (imm_typeS)
+    .imm_in      ({inst[31:25],inst[11:7]}),
+    .imm_out     (imm_typeS)
 );
 
 riscv_id_imm_ext #(
     .INPUT_WIDTH    (13)
 )riscv_id_imm_ext_typeB(
-    imm_in      ({inst[31],inst[7],inst[30:25],inst[11:8],1'b0}),
-    imm_out     (imm_typeB)
+    .imm_in      ({inst[31],inst[7],inst[30:25],inst[11:8],1'b0}),
+    .imm_out     (imm_typeB)
 );
 
 riscv_id_imm_ext #(
     .INPUT_WIDTH    (21)
 )riscv_id_imm_ext_typeJ(
-    imm_in      ({inst[31],inst[19:12],inst[20],inst[30:21],1'b0}),
-    imm_out     (imm_typeJ)
+    .imm_in      ({inst[31],inst[19:12],inst[20],inst[30:21],1'b0}),
+    .imm_out     (imm_typeJ)
 );
 
 riscv_mux#(
