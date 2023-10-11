@@ -32,10 +32,11 @@ static long load_img() {
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"diff"     , required_argument, NULL, 'd'},
+    {"img"      , required_argument, NULL, 'i'},
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, ":d", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, ":i:d", table, NULL)) != -1) {
     switch (o) {
       case 'd': diff_so_file = optarg; break;
       case 1: img_file = optarg; return 0;
