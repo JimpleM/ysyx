@@ -13,7 +13,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 LDFLAGS := -LDFLAGS -ldl
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
-DIFF := -d=${DIFFTEST}
+DIFF := --diff=${DIFFTEST}
 
 all:defualt
 #	@echo "Write this Makefile by your self."
