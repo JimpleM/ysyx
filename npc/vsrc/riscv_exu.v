@@ -47,7 +47,7 @@ riscv_ex_alu riscv_ex_alu(
    .alu_out_data    (alu_out_data)
 );
 
-riscv_muxt#(
+riscv_mux#(
     .NR_KEY      (6), 
     .KEY_LEN     (4), 
     .DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
