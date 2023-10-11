@@ -38,7 +38,7 @@ riscv_mux#(
 
 
 riscv_mux#(
-    .NR_KEY      (5), 
+    .NR_KEY      (3), 
     .KEY_LEN     (`LSU_OPT_WIDTH+3), 
     .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_wmask(
