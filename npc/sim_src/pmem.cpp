@@ -1,6 +1,6 @@
 #include "include/risc32_lib.h"
 
-static uint8_t pmem[PMEM_MSIZE] PG_ALIGN = {};
+uint8_t pmem[PMEM_MSIZE] PG_ALIGN = {};
 
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - PMEM_LEFT; }
 
@@ -26,11 +26,11 @@ static inline void host_write(void *addr, int len, word_t data) {
   }
 }
 
-uint32_t pmem_read(int addr, int len){
+static uint32_t pmem_read(int addr, int len){
     uint32_t ret = host_read(guest_to_host(addr), len);
     return ret;
 }
 
-void pmem_write(int addr, int data, int len){
+static void pmem_write(int addr, int data, int len){
     host_write(guest_to_host(addr), len, data);
 }
