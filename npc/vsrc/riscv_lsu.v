@@ -45,7 +45,7 @@ ysyx_23060077_riscv_mux#(
   .out              ({wmask}),
   .lut({{`LSU_OPT_STORE,3'b000}, {32'h000_00ff},        //sb
         {`LSU_OPT_STORE,3'b001}, {32'h000_ffff},        //sh
-        {`LSU_OPT_STORE,3'b010}, {32'hffff_ffff},       //sw
+        {`LSU_OPT_STORE,3'b010}, {32'hffff_ffff}        //sw
   })
 );
 
