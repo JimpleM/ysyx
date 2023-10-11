@@ -20,6 +20,8 @@ typedef struct{
     uint32_t pc;
 }CPU_state;
 
+//difftest
+void init_difftest(char *ref_so_file, long img_size, int port);
 
 void init_npc(int argc, char *argv[]);
 
