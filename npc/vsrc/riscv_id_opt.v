@@ -5,7 +5,7 @@ module riscv_id_opt(
     input 	    [6:0]                   funct7,
     output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output      [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt,
+    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt
 );
 
 
