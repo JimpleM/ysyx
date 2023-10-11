@@ -15,7 +15,7 @@ LDFLAGS := -LDFLAGS -ldl
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
 
-ASAN_OPTIONS=detect_leaks=0
+
 
 all:defualt
 #	@echo "Write this Makefile by your self."
