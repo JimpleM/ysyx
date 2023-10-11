@@ -8,7 +8,7 @@ void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
 extern uint32_t cpu_pc;
-extern uint32_t *cpu_gpr = NULL;
+extern uint32_t *cpu_gpr;
 
 #ifdef DIFFTEST
 
