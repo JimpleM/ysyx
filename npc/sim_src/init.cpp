@@ -54,6 +54,6 @@ void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
 
     long img_size = load_img();
-
+    printf("%s\n",diff_so_file);
     init_difftest(diff_so_file, img_size, difftest_port);
 }
