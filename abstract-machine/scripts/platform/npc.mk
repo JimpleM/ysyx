@@ -18,21 +18,6 @@ NPCFLAGS += -i $(IMAGE).bin
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
 
-# -include $(NPC_HOME)/Makefile
-
-VERILATOR = verilator
-# project source
-VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
-SIM_SRCS = $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" )
-
-INC_PATH = $(NPC_HOME)/vsrc
-TOPNAME = riscv32
-
-VERILATOR_FLAGS += -Wall --trace --cc --exe --build
-VERILATOR_FLAGS += -I${INC_PATH}
-VERILATOR_FLAGS += --top ${TOPNAME}
-
-LDFLAGS := -LDFLAGS -ldl
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -d $(IMAGE).elf > $(IMAGE).txt
@@ -40,4 +25,4 @@ image: $(IMAGE).elf
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
 run: image
-    $(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
+    $(MAKE) -C $(NPC_HOME) ISA=$(ISA) run ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin
