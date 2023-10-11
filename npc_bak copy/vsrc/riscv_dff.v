@@ -1,5 +1,5 @@
 // 触发器模板
-module ysyx_23060077_riscv_dff #(
+module riscv_dff #(
   WIDTH = 1, 
   RESET_VAL = 0
 ) (

@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_wbu(
+module riscv_wbu(
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
 
     input       [`DATA_WIDTH-1:0]       exu_result,

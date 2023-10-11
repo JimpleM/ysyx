@@ -1,6 +1,6 @@
 `include "riscv_define.v"
 `include "riscv_define.vh"
-module ysyx_23060077_riscv_ifu(
+module riscv_ifu(
     input                               rst_n,
     input 	    [`DATA_WIDTH-1:0]       pc,
 

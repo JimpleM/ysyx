@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_idu(
+module riscv_idu(
     input 	    [`INST_WIDTH-1:0]       inst,
 
     output                              branch,
@@ -25,7 +25,7 @@ assign  branch  = (inst[6:0] == `BRANCH)    ? 1'b1 : 1'b0;
 assign  jal     = (inst[6:0] == `JAL)       ? 1'b1 : 1'b0;
 assign  jalr    = (inst[6:0] == `JALR)      ? 1'b1 : 1'b0;
 
-ysyx_23060077_riscv_id_reg ysyx_23060077_riscv_id_reg_idu(
+riscv_id_reg riscv_id_reg_idu(
     .inst       (inst),
     .rd         (rd),
     .rd_wen     (rd_wen),
@@ -33,12 +33,12 @@ ysyx_23060077_riscv_id_reg ysyx_23060077_riscv_id_reg_idu(
     .rs2        (rs2)
 );
 
-ysyx_23060077_riscv_id_imm ysyx_23060077_riscv_id_imm_idu(
+riscv_id_imm riscv_id_imm_idu(
     .inst      (inst),
     .imm       (imm)
 );
 
-ysyx_23060077_riscv_id_opt ysyx_23060077_riscv_id_opt_idu(
+riscv_id_opt riscv_id_opt_idu(
     inst        (inst     ),
     alu_opt     (alu_opt  ),
     src_sel     (src_sel  ),

@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_lsu(
+module riscv_lsu(
     input       [`DATA_WIDTH-1:0]       exu_result,
 
     input  	    [`DATA_WIDTH-1:0]       src2,
@@ -20,7 +20,7 @@ assign raddr = exu_result;
 assign waddr = exu_result;
 assign waddr = src2;
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (5), 
     KEY_LEN     (`LSU_OPT_WIDTH+3), 
     DATA_LEN    (`DATA_WIDTH)
@@ -36,7 +36,7 @@ ysyx_23060077_riscv_mux#(
 );
 
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (5), 
     KEY_LEN     (`LSU_OPT_WIDTH+3), 
     DATA_LEN    (`DATA_WIDTH)

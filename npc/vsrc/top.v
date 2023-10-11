@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv32(
+module riscv32(
 	input clk,
 	input rst_n
 );
@@ -34,13 +34,13 @@ wire [`DATA_WIDTH-1:0]      exu_result		;
 //lsu
 wire [`DATA_WIDTH-1:0]     	lsu_result		;
 
-ysyx_23060077_riscv_ifu ysyx_23060077_riscv_ifu_u0(
+riscv_ifu riscv_ifu_u0(
     .rst_n	(rst_n),
     .pc		(ifu_pc),
     .inst	(ifu_inst)
 );
 
-ysyx_23060077_riscv_idu ysyx_23060077_riscv_idu_u0(
+riscv_idu riscv_idu_u0(
     .inst			(ifu_inst	),
     .branch			(idu_branch	),
     .jal			(idu_jal		),
@@ -56,7 +56,7 @@ ysyx_23060077_riscv_idu ysyx_23060077_riscv_idu_u0(
     .func_code		(idu_func_code	)
 );
 
-ysyx_23060077_riscv_regfile ysyx_23060077_riscv_regfile_u0(
+riscv_regfile riscv_regfile_u0(
     .clk			(clk		),
     .rs1_addr		(idu_rs1	),
     .rs1_data		(src1		),
@@ -68,7 +68,7 @@ ysyx_23060077_riscv_regfile ysyx_23060077_riscv_regfile_u0(
 );
 
 
-ysyx_23060077_riscv_exu ysyx_23060077_riscv_exu_u0(
+riscv_exu riscv_exu_u0(
     .pc				(ifu_pc			),
     .src1			(src1		),
     .src2			(src2		),
@@ -81,7 +81,7 @@ ysyx_23060077_riscv_exu ysyx_23060077_riscv_exu_u0(
     .exu_result		(exu_result)
 );
 
-ysyx_23060077_riscv_lsu ysyx_23060077_riscv_lsu_u0(
+riscv_lsu riscv_lsu_u0(
     .exu_result		(exu_result),
     .src2			(src2),
     .lsu_opt		(idu_lsu_opt),
@@ -89,7 +89,7 @@ ysyx_23060077_riscv_lsu ysyx_23060077_riscv_lsu_u0(
     .lsu_result		(lsu_result)
 );
 
-ysyx_23060077_riscv_wbu ysyx_23060077_riscv_wbu_u0(
+riscv_wbu riscv_wbu_u0(
     .lsu_opt		(idu_lsu_opt),
     .exu_result		(exu_result),
     .lsu_result		(lsu_result),

@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv_sys_inst #(
+module riscv_sys_inst #(
     INST_WIDTH = 32,
     DATA_WIDTH = 32
 ) (

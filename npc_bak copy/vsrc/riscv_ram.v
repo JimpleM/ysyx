@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv_ram #(
+module riscv_ram #(
     ADDR_WIDTH = 1, 
     DATA_WIDTH = 1
 ) (

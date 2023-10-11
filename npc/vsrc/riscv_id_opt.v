@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_id_opt(
+module riscv_id_opt(
     input 	    [`INST_WIDTH-1:0]       inst,
     output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output      [`SRC_SEL_WIDTH-1:0]    src_sel,
@@ -9,7 +9,7 @@ module ysyx_23060077_riscv_id_opt(
 
 assign func_code = inst[14:12];
 
-ysyx_23060077_riscv_mux_default#(
+riscv_mux_default#(
     NR_KEY      (33), 
     KEY_LEN     (17), 
     DATA_LEN    (`ALU_OPT_WIDTH)
@@ -53,7 +53,7 @@ ysyx_23060077_riscv_mux_default#(
   })
 );
 
-ysyx_23060077_riscv_mux_default#(
+riscv_mux_default#(
     .NR_KEY      (11), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`SRC_SEL_WIDTH)
@@ -76,7 +76,7 @@ ysyx_23060077_riscv_mux_default#(
 );
 
 
-ysyx_23060077_riscv_mux_default#(
+riscv_mux_default#(
     .NR_KEY      (2), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`LSU_OPT_WIDTH)

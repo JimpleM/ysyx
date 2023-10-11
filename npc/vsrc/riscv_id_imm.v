@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_id_imm(
+module riscv_id_imm(
     input 	    [`INST_WIDTH-1:0]   inst,
     output  	[`DATA_WIDTH-1:0]   imm
 );
@@ -16,42 +16,42 @@ assign imm_typeR        = {`DATA_WIDTH{1'b0}};
 assign imm_type_NONE    = {`DATA_WIDTH{1'b0}};
 
 
-ysyx_23060077_riscv_id_imm_ext #(
+riscv_id_imm_ext #(
     .INPUT_WIDTH    (12)
 )riscv_id_imm_ext_typeI(
     imm_in      (inst[31:20]),
     imm_out     (imm_typeI)
 );
 // TO MODIFIED
-ysyx_23060077_riscv_id_imm_ext #(
+riscv_id_imm_ext #(
     .INPUT_WIDTH    (32)
 )riscv_id_imm_ext_typeU(
     imm_in      ({inst[31:12],{12{1'b0}}}),
     imm_out     (imm_typeU)
 );
 
-ysyx_23060077_riscv_id_imm_ext #(
+riscv_id_imm_ext #(
     .INPUT_WIDTH    (12)
 )riscv_id_imm_ext_typeS(
     imm_in      ({inst[31:25],inst[11:7]}),
     imm_out     (imm_typeS)
 );
 
-ysyx_23060077_riscv_id_imm_ext #(
+riscv_id_imm_ext #(
     .INPUT_WIDTH    (13)
 )riscv_id_imm_ext_typeB(
     imm_in      ({inst[31],inst[7],inst[30:25],inst[11:8],1'b0}),
     imm_out     (imm_typeB)
 );
 
-ysyx_23060077_riscv_id_imm_ext #(
+riscv_id_imm_ext #(
     .INPUT_WIDTH    (21)
 )riscv_id_imm_ext_typeJ(
     imm_in      ({inst[31],inst[19:12],inst[20],inst[30:21],1'b0}),
     imm_out     (imm_typeJ)
 );
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     .NR_KEY      (11), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`DATA_WIDTH)
@@ -75,7 +75,7 @@ ysyx_23060077_riscv_mux#(
 endmodule
 
 
-module ysyx_23060077_riscv_id_imm_ext #(
+module riscv_id_imm_ext #(
     INPUT_WIDTH = 1
 ) (
     input 	    [INPUT_WIDTH-1:0]      imm_in,

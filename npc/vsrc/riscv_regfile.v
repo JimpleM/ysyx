@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv_regfile (
+module riscv_regfile (
     input                               clk,
 
     input       [`REG_WIDTH-1:0]        rs1_addr,
@@ -26,7 +26,7 @@ assign rs1_data = gpr[rs1_addr];
 assign rs2_data = gpr[rs2_addr];
 
 // write rd
-ysyx_23060077_riscv_dff #(`DATA_WIDTH, `DATA_WIDTH'b0) riscv_dff_rd (clk, 1'b0, rd_en, rd_data, gpr[rd_addr]);
+riscv_dff #(`DATA_WIDTH, `DATA_WIDTH'b0) riscv_dff_rd (clk, 1'b0, rd_en, rd_data, gpr[rd_addr]);
 // always @(posedge clk) begin
 //     if (rd_en)begin
 //         gpr[rd_addr] <= rd_data;

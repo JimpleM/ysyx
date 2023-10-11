@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_exu(
+module riscv_exu(
     input 	    [`DATA_WIDTH-1:0]       pc,
 
     input  	    [`DATA_WIDTH-1:0]       src1,
@@ -24,7 +24,7 @@ wire [`DATA_WIDTH-1:0] alu_b_data;
 wire [`DATA_WIDTH-1:0] alu_out_data;
 wire carry_flag;
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (4), 
     KEY_LEN     (`SRC_SEL_WIDTH), 
     DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
@@ -38,7 +38,7 @@ ysyx_23060077_riscv_mux#(
   })
 );
 
-ysyx_23060077_riscv_ex_alu riscv_ex_alu(
+riscv_ex_alu riscv_ex_alu(
    .alu_opt         (alu_opt),
    .alu_a_data      (alu_a_data),
    .alu_b_data      (alu_b_data),
@@ -46,7 +46,7 @@ ysyx_23060077_riscv_ex_alu riscv_ex_alu(
    .alu_out_data    (alu_out_data)
 );
 
-ysyx_23060077_riscv_mux_default#(
+riscv_mux_default#(
     NR_KEY      (6), 
     KEY_LEN     (4), 
     DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)

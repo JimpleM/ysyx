@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_ex_data #(
+module riscv_ex_data #(
     DATA_WIDTH = 32,
     INST_WIDTH = 32
 ) (
@@ -16,7 +16,7 @@ module ysyx_23060077_riscv_ex_data #(
 wire [6:0]   opcode;
 assign opcode 	= inst[6:0];
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (11), 
     KEY_LEN     (7), 
     DATA_LEN    (DATA_WIDTH+DATA_WIDTH)

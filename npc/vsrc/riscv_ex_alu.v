@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_ex_alu(
+module riscv_ex_alu(
    input            [`ALU_OPT_WIDTH-1:0]    alu_opt,
     input           [`DATA_WIDTH-1:0]       alu_a_data,
     input           [`DATA_WIDTH-1:0]       alu_b_data,
@@ -16,7 +16,7 @@ assign sub_data = $signed(alu_a_data) - $signed(alu_b_data);
 //相当与变成有符号数进行减法，看最高bit
 assign {carry_flag,usub_data} = {1'b0,alu_a_data} - {1'b0,alu_b_data};
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (11), 
     KEY_LEN     (4), 
     DATA_LEN    (`DATA_WIDTH)

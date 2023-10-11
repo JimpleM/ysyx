@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv32(
+module riscv32(
 	input clk,
 	input rst_n
 );
@@ -51,7 +51,7 @@ always @(posedge clk) begin
 end
 
 // IF 取指
-ysyx_23060077_riscv_ram  #(
+riscv_ram  #(
 	.ADDR_WIDTH(DATA_WIDTH),
 	.DATA_WIDTH(INST_WIDTH)
 ) riscv_ram_pc (
@@ -64,7 +64,7 @@ ysyx_23060077_riscv_ram  #(
 );
 
 // IF to ID
-ysyx_23060077_riscv_dff #(
+riscv_dff #(
   .WIDTH(INST_WIDTH+DATA_WIDTH), 
   .RESET_VAL(0)
 ) riscv_dff_if_to_id(
@@ -79,7 +79,7 @@ ysyx_23060077_riscv_dff #(
 // ID 译码
 
 // 读寄存器值
-ysyx_23060077_riscv_id_reg #(
+riscv_id_reg #(
 	.ADDR_WIDTH(REG_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 ) riscv_id_reg (
@@ -96,7 +96,7 @@ ysyx_23060077_riscv_id_reg #(
 	.rd_data	(rd_data)
 );
 
-ysyx_23060077_riscv_id_imm #(
+riscv_id_imm #(
 	.INST_WIDTH(INST_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 )riscv_id_imm(
@@ -106,7 +106,7 @@ ysyx_23060077_riscv_id_imm #(
 
 
 // ID to EX
-ysyx_23060077_riscv_dff #(
+riscv_dff #(
 	.WIDTH(INST_WIDTH+DATA_WIDTH+DATA_WIDTH+DATA_WIDTH+DATA_WIDTH), 
 	.RESET_VAL(0)
 ) riscv_dff_id_to_ex(
@@ -130,7 +130,7 @@ ysyx_23060077_riscv_dff #(
 );
 
 // EX
-ysyx_23060077_riscv_ex_data #(
+riscv_ex_data #(
     .INST_WIDTH(INST_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 ) riscv_ex_data(
@@ -142,7 +142,7 @@ ysyx_23060077_riscv_ex_data #(
     .alu_b_data_ex			(alu_b_data_ex)
 );
 
-ysyx_23060077_riscv_ex_alu #(
+riscv_ex_alu #(
     .INST_WIDTH(INST_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 ) riscv_ex_alu(
@@ -153,7 +153,7 @@ ysyx_23060077_riscv_ex_alu #(
     .zero_flag				(zero_flag_ex)
 );
 
-ysyx_23060077_riscv_ex_branch #(
+riscv_ex_branch #(
 	.INST_WIDTH(INST_WIDTH)
 ) riscv_ex_branch(
     .inst_id_to_ex			(inst_id_to_ex),
@@ -164,7 +164,7 @@ ysyx_23060077_riscv_ex_branch #(
 	.branch_out				(branch_out_ex)
 );
 
-ysyx_23060077_riscv_ex_result #(
+riscv_ex_result #(
 	.INST_WIDTH(INST_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 ) riscv_ex_result(

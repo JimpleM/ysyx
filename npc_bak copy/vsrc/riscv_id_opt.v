@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_id_opt(
+module riscv_id_opt(
     input 	    [`INST_WIDTH-1:0]       inst,
     output  	  [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output  	  [`SRC_SEL_WIDTH-1:0]    src_sel,
@@ -7,7 +7,7 @@ module ysyx_23060077_riscv_id_opt(
 );
 
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (11), 
     KEY_LEN     (10), 
     DATA_LEN    (`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+`LSU_OPT_WIDTH)

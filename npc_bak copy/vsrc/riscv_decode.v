@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_decode #(
+module riscv_decode #(
     DATA_WIDTH = 1
 ) (
     input          [6:0]             opcode,
@@ -16,7 +16,7 @@ parameter   NR_KEY      = 11;
 parameter   KEY_LEN     = 7;
 parameter   DATA_LEN    = 11;
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (NR_KEY), 
     KEY_LEN     (KEY_LEN), 
     DATA_LEN    ()

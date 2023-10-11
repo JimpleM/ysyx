@@ -1,5 +1,5 @@
 `include"riscv_define.v"
-module ysyx_23060077_riscv_ex_branch #(
+module riscv_ex_branch #(
     INST_WIDTH = 32
 ) (
     input               [INST_WIDTH-1:0]    inst_id_to_ex,
@@ -26,7 +26,7 @@ unsigned rs1 {1'b1,30'd0,1'b1} rs2 {32'd1}
 ans {1'b1,31'd0} MSB为1并不满足rs1 < rs2
 */
 
-ysyx_23060077_riscv_mux#(
+riscv_mux#(
     NR_KEY      (11), 
     KEY_LEN     (10), 
     DATA_LEN    (1)

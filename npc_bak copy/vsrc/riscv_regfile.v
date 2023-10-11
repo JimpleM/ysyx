@@ -1,4 +1,4 @@
-module ysyx_23060077_riscv_id_reg (
+module riscv_id_reg (
     input                           clk,
 
     input                           rs1_en,
