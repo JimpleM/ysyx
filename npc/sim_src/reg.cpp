@@ -8,9 +8,9 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
-uint64_t *cpu_gpr = NULL;
+uint32_t *cpu_gpr = NULL;
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
-  cpu_gpr = (uint64_t *)(((VerilatedDpiOpenVar*)r)->datap());
+  cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 
 void isa_reg_display() {
