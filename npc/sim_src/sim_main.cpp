@@ -17,14 +17,14 @@ int main(int argc, char *argv[]){
 	top->trace(tfp,0);
 	tfp->open("wave.vcd");
 // initialize
-	tfp->clk = 0;
-	tfp->rst_n = 1;
+	top->clk = 0;
+	top->rst_n = 1;
 	eval_dump;
 	init_npc(argc,argv);
 
 
 	while(!contextp->gotFinish()){
-        tfp->clk = !tfp->clk;
+        top->clk = !top->clk;
 	
 		
 
