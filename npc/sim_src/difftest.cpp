@@ -7,6 +7,9 @@ void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;
 void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
+extern uint32_t cpu_pc;
+extern uint32_t *cpu_gpr = NULL;
+
 #ifdef DIFFTEST
 
 static bool is_skip_ref = false;
@@ -69,15 +72,16 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 
   ref_difftest_init(port);
   ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), img_size, DIFFTEST_TO_REF);
+  CPU_state cpu = package_cpu(cpu_gpr, 0x80000000);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
 
 static void checkregs() {
-  if (!isa_difftest_checkregs(ref, pc)) {
-    nemu_state.state = NEMU_ABORT;
-    nemu_state.halt_pc = pc;
-    isa_reg_display();
-  }
+    CPU_state ref;
+    ref_difftest_regcpy(&ref, DIFFTEST_TO_DUT);
+    if(isa_difftest_checkregs(&ref)){
+        isa_reg_display();
+    }
 }
 
 void difftest_step(vaddr_t pc, vaddr_t npc) {
@@ -103,7 +107,7 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 //     return;
 //   }
 
-  ref_difftest_exec(1);
+    ref_difftest_exec(1);
 //   ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
 //   // 发现ref执行完一条指令后cpu.pc直接到下一条，这里也要用npc
 //   // checkregs(&ref_r, pc);
