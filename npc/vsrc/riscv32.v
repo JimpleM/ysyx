@@ -5,8 +5,8 @@ module riscv32(
 
 
 // ifu
-wire [`DATA_WIDTH-1:0] ifu_pc;
-wire [`INST_WIDTH-1:0] ifu_inst;
+wire [`DATA_WIDTH-1:0]      ifu_pc;
+wire [`INST_WIDTH-1:0]      ifu_inst;
 
 // idu
 wire                       	idu_branch		;
@@ -94,6 +94,19 @@ riscv_wbu riscv_wbu_u0(
     .exu_result		(exu_result),
     .lsu_result		(lsu_result),
     .wbu_result		(rd_data)
+);
+
+
+riscv_bpu   riscv_bpu_u0(
+    .clk            (clk      ),
+    .rst_n          (rst_n    ),
+    .zero_flag      (zero_flag),
+    .branch         (idu_branch   ),
+    .jal            (idu_jal      ),
+    .jalr           (idu_jalr     ),
+    .src1           (src1     ),
+    .imm            (idu_imm      ),
+    .pc             (ifu_pc       )
 );
 
 endmodule

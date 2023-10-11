@@ -62,12 +62,12 @@ void Vriscv32___024root___eval_triggers__act(Vriscv32___024root* vlSelf) {
     Vriscv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root___eval_triggers__act\n"); );
     // Body
-    vlSelf->__VactTriggered.at(0U) = (vlSelf->__VdfgTmp_h62b6ca21__0 
-                                      != vlSelf->__Vtrigrprev__TOP____VdfgTmp_h62b6ca21__0);
+    vlSelf->__VactTriggered.at(0U) = (vlSelf->riscv32__DOT__exu_result 
+                                      != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result);
     vlSelf->__VactTriggered.at(1U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
-    vlSelf->__Vtrigrprev__TOP____VdfgTmp_h62b6ca21__0 
-        = vlSelf->__VdfgTmp_h62b6ca21__0;
+    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result 
+        = vlSelf->riscv32__DOT__exu_result;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
         vlSelf->__VactDidInit = 1U;

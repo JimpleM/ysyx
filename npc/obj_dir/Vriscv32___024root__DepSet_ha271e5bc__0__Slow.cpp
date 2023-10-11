@@ -25,8 +25,8 @@ VL_ATTR_COLD void Vriscv32___024root___eval_initial(Vriscv32___024root* vlSelf) 
     vlSelf->__Vm_traceActivity[2U] = 1U;
     vlSelf->__Vm_traceActivity[1U] = 1U;
     vlSelf->__Vm_traceActivity[0U] = 1U;
-    vlSelf->__Vtrigrprev__TOP____VdfgTmp_h62b6ca21__0 
-        = vlSelf->__VdfgTmp_h62b6ca21__0;
+    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result 
+        = vlSelf->riscv32__DOT__exu_result;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
 }
 
@@ -80,24 +80,12 @@ VL_ATTR_COLD void Vriscv32___024root___eval_initial__TOP(Vriscv32___024root* vlS
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[8U] = 3U;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[9U] = 2U;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[0xaU] = 1U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[0U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[1U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[2U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[3U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[4U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[5U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] = 0x20000ULL;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[4U] = 0ULL;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[5U] = 0ULL;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U][0U] = 0x20000U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U][1U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U][2U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[4U][0U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[4U][1U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[4U][2U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[5U][0U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[5U][1U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[5U][2U] = 0U;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[0U] = 0xfU;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[1U] = 0xeU;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[2U] = 0xdU;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[3U] = 0xcU;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[4U] = 9U;
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[5U] = 8U;
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_alu_opt__DOT__i1__DOT__key_list[0U] = 0x1cc00U;
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_alu_opt__DOT__i1__DOT__key_list[1U] = 0x3c00U;
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_alu_opt__DOT__i1__DOT__key_list[2U] = 0x8f80U;
@@ -304,7 +292,7 @@ VL_ATTR_COLD void Vriscv32___024root___dump_triggers__stl(Vriscv32___024root* vl
         VL_DBG_MSGF("         'stl' region trigger index 0 is active: Internal 'stl' trigger - first iteration\n");
     }
     if (vlSelf->__VstlTriggered.at(1U)) {
-        VL_DBG_MSGF("         'stl' region trigger index 1 is active: @([hybrid] __VdfgTmp_h62b6ca21__0)\n");
+        VL_DBG_MSGF("         'stl' region trigger index 1 is active: @([hybrid] riscv32.exu_result)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -1560,24 +1548,18 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[7U] 
         = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data 
            >> 0x1fU);
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[0U] 
+        = (0xf00000000ULL | (QData)((IData)((1U & (~ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[1U] 
+        = (0xe00000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[6U] 
         = (0x500000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag)));
-    vlSelf->__VdfgTmp_h25847f12__0 = (0x1e00000040ULL 
-                                      | (((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag)) 
-                                          << 0x25U) 
-                                         | (QData)((IData)(
-                                                           (1U 
-                                                            & (~ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag)))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[0U] 
+        = (1U & (~ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag)));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[1U] 
+        = vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[6U] 
         = vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[0U][0U] 
-        = (IData)(vlSelf->__VdfgTmp_h25847f12__0);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[0U][1U] 
-        = (0x800U | (IData)((vlSelf->__VdfgTmp_h25847f12__0 
-                             >> 0x20U)));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[0U][2U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[0U] 
-        = (0x80000000000ULL | vlSelf->__VdfgTmp_h25847f12__0);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out 
         = ((- (IData)(((IData)(vlSelf->riscv32__DOT__idu_alu_opt) 
                        == vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list
@@ -1701,26 +1683,19 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
         = ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__hit)
             ? vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out
             : 0U);
-    vlSelf->__VdfgTmp_hc9c01cea__0 = (0x68000001000ULL 
-                                      | (((QData)((IData)(
-                                                          (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                                                           >> 0x1fU))) 
-                                          << 0x2bU) 
-                                         | (QData)((IData)(
-                                                           (0x38U 
-                                                            | (0x40U 
-                                                               & ((~ 
-                                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                                                                    >> 0x1fU)) 
-                                                                  << 6U)))))));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[1U][0U] 
-        = (IData)(vlSelf->__VdfgTmp_hc9c01cea__0);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[1U][1U] 
-        = (0x20000U | (IData)((vlSelf->__VdfgTmp_hc9c01cea__0 
-                               >> 0x20U)));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[1U][2U] = 0U;
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[1U] 
-        = (0x2000000000000ULL | vlSelf->__VdfgTmp_hc9c01cea__0);
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[2U] 
+        = (0xd00000000ULL | (QData)((IData)((1U & (~ 
+                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                                                    >> 0x1fU))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
+        = (0xc00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                                             >> 0x1fU))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[2U] 
+        = (1U & (~ (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                    >> 0x1fU)));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
+        = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+           >> 0x1fU);
 }
 
 void Vriscv32___024root___act_sequent__TOP__0(Vriscv32___024root* vlSelf);
@@ -1779,7 +1754,7 @@ VL_ATTR_COLD void Vriscv32___024root___dump_triggers__act(Vriscv32___024root* vl
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VactTriggered.at(0U)) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @([hybrid] __VdfgTmp_h62b6ca21__0)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @([hybrid] riscv32.exu_result)\n");
     }
     if (vlSelf->__VactTriggered.at(1U)) {
         VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge clk)\n");
@@ -1797,7 +1772,7 @@ VL_ATTR_COLD void Vriscv32___024root___dump_triggers__nba(Vriscv32___024root* vl
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VnbaTriggered.at(0U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @([hybrid] __VdfgTmp_h62b6ca21__0)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @([hybrid] riscv32.exu_result)\n");
     }
     if (vlSelf->__VnbaTriggered.at(1U)) {
         VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge clk)\n");
@@ -1819,6 +1794,7 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->riscv32__DOT__idu_lsu_opt = VL_RAND_RESET_I(2);
     vlSelf->riscv32__DOT__src1 = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__src2 = VL_RAND_RESET_I(32);
+    vlSelf->riscv32__DOT__exu_result = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__lsu_result = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_ifu_u0__DOT__rdata = VL_RAND_RESET_I(32);
     VL_RAND_RESET_W(253, vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_reg_idu__DOT____Vcellinp__riscv_mux_id_reg__lut);
@@ -1891,7 +1867,6 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__carry_flag = VL_RAND_RESET_I(1);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out = VL_RAND_RESET_Q(64);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_branch__out = VL_RAND_RESET_Q(64);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key = VL_RAND_RESET_I(4);
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
         VL_RAND_RESET_W(66, vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[__Vi0]);
@@ -1917,15 +1892,15 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__hit = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
-        VL_RAND_RESET_W(68, vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[__Vi0]);
+        vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(36);
     }
     for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
         vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[__Vi0] = VL_RAND_RESET_I(4);
     }
     for (int __Vi0 = 0; __Vi0 < 6; ++__Vi0) {
-        vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[__Vi0] = VL_RAND_RESET_Q(64);
+        vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out = VL_RAND_RESET_Q(64);
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__hit = VL_RAND_RESET_I(1);
     vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__rdata = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__wdata = VL_RAND_RESET_I(32);
@@ -1956,13 +1931,10 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->__VdfgTmp_h173d9883__0 = 0;
     vlSelf->__VdfgTmp_h173eebe8__0 = 0;
     vlSelf->__VdfgTmp_hda24e88d__0 = 0;
-    vlSelf->__VdfgTmp_h25847f12__0 = 0;
     vlSelf->__VdfgTmp_ha3892a3b__0 = 0;
-    vlSelf->__VdfgTmp_hc9c01cea__0 = 0;
-    vlSelf->__VdfgTmp_h62b6ca21__0 = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__1__rdata = 0;
-    vlSelf->__Vtrigrprev__TOP____VdfgTmp_h62b6ca21__0 = 0;
+    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result = VL_RAND_RESET_I(32);
     vlSelf->__VstlDidInit = 0;
     vlSelf->__Vtrigrprev__TOP__clk = VL_RAND_RESET_I(1);
     vlSelf->__VactDidInit = 0;
