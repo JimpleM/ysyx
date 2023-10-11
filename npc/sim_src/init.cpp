@@ -31,8 +31,8 @@ static long load_img() {
 
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
-    {"diff"     , required_argument, NULL, 'd'},
     {"img"      , required_argument, NULL, 'i'},
+    {"diff"     , required_argument, NULL, 'd'},
     {0          , 0                , NULL,  0 },
   };
   int o;
