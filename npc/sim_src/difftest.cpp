@@ -76,11 +76,14 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
 
-static void checkregs() {
+static bool checkregs() {
     CPU_state ref;
     ref_difftest_regcpy(&ref, DIFFTEST_TO_DUT);
     if(isa_difftest_checkregs(&ref)){
         isa_reg_display();
+        return 1;
+    }else{
+        return 0;
     }
 }
 

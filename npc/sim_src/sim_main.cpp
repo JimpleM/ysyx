@@ -48,7 +48,9 @@ int main(int argc, char *argv[]){
 	while(!contextp->gotFinish()){
         top->clk = !top->clk;
 	
-		
+		if(checkregs()){
+			break;
+		}
 
 		eval_dump;
 		if(stop_flag == 1){
