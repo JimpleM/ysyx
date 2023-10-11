@@ -131,7 +131,9 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
     if (VL_UNLIKELY(((vlSelf->__Vm_traceActivity[1U] 
                       | vlSelf->__Vm_traceActivity[2U]) 
                      | vlSelf->__Vm_traceActivity[3U]))) {
-        bufp->chgIData(oldp+100,(vlSelf->riscv32__DOT__rd_data),32);
+        bufp->chgIData(oldp+100,(((0U == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
+                                   ? vlSelf->riscv32__DOT__exu_result
+                                   : vlSelf->riscv32__DOT__lsu_result)),32);
         bufp->chgBit(oldp+101,((1U & (~ (IData)((0U 
                                                  != vlSelf->riscv32__DOT__exu_result))))));
         bufp->chgIData(oldp+102,(vlSelf->riscv32__DOT__exu_result),32);
@@ -638,11 +640,10 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
         bufp->chgIData(oldp+403,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[0U]),32);
         bufp->chgWData(oldp+404,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout),96);
         bufp->chgIData(oldp+407,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout),32);
-        bufp->chgIData(oldp+408,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_rd____pinNumber5),32);
     }
-    bufp->chgBit(oldp+409,(vlSelf->clk));
-    bufp->chgBit(oldp+410,(vlSelf->rst_n));
-    bufp->chgBit(oldp+411,((1U & (~ (IData)(vlSelf->rst_n)))));
+    bufp->chgBit(oldp+408,(vlSelf->clk));
+    bufp->chgBit(oldp+409,(vlSelf->rst_n));
+    bufp->chgBit(oldp+410,((1U & (~ (IData)(vlSelf->rst_n)))));
 }
 
 void Vriscv32___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

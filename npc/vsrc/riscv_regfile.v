@@ -17,7 +17,7 @@ reg [`DATA_WIDTH-1:0] gpr [`REG_COUNT-1:0];
 
 integer i;
 initial begin
-    for(i=0; i<`REG_COUNT; i=i+1)   gpr[i] <= 0;
+    for(i=0; i<`REG_COUNT; i=i+1)   gpr[i] = 0;
 end
 
 // read rs1
