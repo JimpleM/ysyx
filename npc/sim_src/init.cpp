@@ -1,4 +1,4 @@
-#include "include/risc32_lib.h"
+#include "risc32_lib.h"
 #include <getopt.h>
 
 static char *img_file = NULL;
