@@ -26,6 +26,7 @@ riscv_mux#(
     DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_lsu_opt(
   .key              ({lsu_opt,func_code}),
+  .default_out      (0),
   .out              ({lsu_result}),
   .lut({{`LSU_OPT_LOAD,3'b000}, {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]},       //lb
         {`LSU_OPT_LOAD,3'b001}, {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]},      //lh
@@ -42,6 +43,7 @@ riscv_mux#(
     DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_wmask(
   .key              ({lsu_opt,func_code}),
+  .default_out      (0),
   .out              ({wmask}),
   .lut({{`LSU_OPT_STORE,3'b000}, {32'h000_00ff},        //sb
         {`LSU_OPT_STORE,3'b001}, {32'h000_ffff},        //sh

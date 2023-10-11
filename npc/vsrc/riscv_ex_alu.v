@@ -22,6 +22,7 @@ riscv_mux#(
     DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ex_data(
   .key              (alu_opt),
+  .default_out      (0),
   .out              (alu_out_data),
   .lut({`ALU_ADD    , add_data,                                           
         `ALU_SUB    , sub_data,

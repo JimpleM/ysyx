@@ -9,7 +9,7 @@ module riscv_id_opt(
 
 assign func_code = inst[14:12];
 
-riscv_mux_default#(
+riscv_mux#(
     NR_KEY      (33), 
     KEY_LEN     (17), 
     DATA_LEN    (`ALU_OPT_WIDTH)
@@ -53,7 +53,7 @@ riscv_mux_default#(
   })
 );
 
-riscv_mux_default#(
+riscv_mux#(
     .NR_KEY      (11), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`SRC_SEL_WIDTH)
@@ -76,7 +76,7 @@ riscv_mux_default#(
 );
 
 
-riscv_mux_default#(
+riscv_mux#(
     .NR_KEY      (2), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`LSU_OPT_WIDTH)

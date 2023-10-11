@@ -22,6 +22,7 @@ riscv_mux#(
     DATA_LEN    ()
 )riscv_mux_decode(
   .key             (opcode),
+  .default_out      (0),
   .out             ({alu_type}),
   .lut({    LUI   , {ALU_NONE},
             AUIPC , {ALU_PC_IMM},

@@ -30,6 +30,7 @@ riscv_mux#(
     DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
 )riscv_mux_ex_src_sel(
   .key              (src_sel),
+  .default_out      (0),
   .out              ({alu_a_data,alu_b_data}),
   .lut({`SRC_SEL_RS1_2  , {src1 ,src2   },
         `SRC_SEL_RS1_IMM, {src1 ,imm    },
@@ -46,7 +47,7 @@ riscv_ex_alu riscv_ex_alu(
    .alu_out_data    (alu_out_data)
 );
 
-riscv_mux_default#(
+riscv_muxt#(
     NR_KEY      (6), 
     KEY_LEN     (4), 
     DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)

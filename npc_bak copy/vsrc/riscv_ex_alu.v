@@ -36,6 +36,7 @@ riscv_mux#(
     DATA_LEN    (DATA_WIDTH)
 )riscv_mux_ex_data(
   .key              (funcode),
+  .default_out      (0),
   .out              (alu_out_data_ex),
   .lut({    4'b0000 , add_data,                                           
             4'b0001 , alu_a_data_ex << alu_b_data_ex[5:0],

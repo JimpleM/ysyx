@@ -15,6 +15,7 @@ riscv_mux#(
   .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+`REG_WIDTH+1)
 )riscv_mux_id_reg(
   .key                (inst[6:0]),
+  .default_out      (0),
   .out                ({rs1,rs2,rd,rd_wen}),
   .lut({    `LUI   ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},
             `AUIPC ,  {reg_zero   , reg_zero   , inst[11:7], 1'b1},

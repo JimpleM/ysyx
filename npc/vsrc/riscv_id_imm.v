@@ -57,6 +57,7 @@ riscv_mux#(
     .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_id_imm(
     .key              (inst[6:0]),//opcode
+    .default_out      (0),
     .out              (imm),
     .lut({  `LUI   ,{imm_typeU},
             `AUIPC ,{imm_typeU},
