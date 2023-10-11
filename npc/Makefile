@@ -20,7 +20,7 @@ CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*
 
 SIM_SRCS = ./sim_src/sim_main.cpp
 SEARCHPATH = ./vsrc
-TOP_MODULE = top
+TOP_MODULE = riscv32
 
 VERILATOR_FLAGS += -Wall --trace --cc --exe --build
 VERILATOR_FLAGS += -I${SEARCHPATH}
