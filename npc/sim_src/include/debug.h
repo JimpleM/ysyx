@@ -53,7 +53,6 @@
   do { \
     if (!(cond)) { \
       printf(ANSI_FMT(format, ANSI_FG_RED) "\n", ## __VA_ARGS__), \
-        (fflush(stdout), fprintf(stderr, ANSI_FMT(format, ANSI_FG_RED) "\n", ##  __VA_ARGS__)); \
       assert(cond); \
     } \
   } while (0)
