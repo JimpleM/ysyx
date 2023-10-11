@@ -1,5 +1,5 @@
 
-#include "Vtop.h"
+
 #include "verilated.h"
 
 #include "verilated_vcd_c.h"
@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
-	Vtop* top = new Vtop(contextp);
+	Vriscv32* top = new Vriscv32(contextp);
 
 	VerilatedVcdC* tfp = new VerilatedVcdC;
 	contextp->traceEverOn(true);
