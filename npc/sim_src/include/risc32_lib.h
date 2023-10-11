@@ -5,8 +5,8 @@
 #include "debug.h"
 #include "Vriscv32__Dpi.h"
 
-#define PMEM_BEGIN  0x80000000
-#define PMEM_END    0x8fffffff
-#define PMEM_SIZE   PMEM_END-PMEM_BEGIN+1
 
-
+#define PMEM_LEFT  0x80000000
+#define PMEM_RIGHT 0x8fffffff
+#define PMEM_SIZE   PMEM_RIGHT-PMEM_LEFT+1
+#define RESET_VECTOR PMEM_LEFT

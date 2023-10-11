@@ -3,6 +3,8 @@
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
 
+extern uint8_t pmem [PMEM_SIZE];
+
 static long load_img() {
   if (img_file == NULL) {
     Log("No image is given. Use the default build-in image.");
@@ -18,7 +20,7 @@ static long load_img() {
   Log("The image is %s, size = %ld", img_file, size);
 
   fseek(fp, 0, SEEK_SET);
-  int ret = fread(guest_to_host(RESET_VECTOR), size, 1, fp);
+  int ret = fread(pmem, size, 1, fp);
   assert(ret == 1);
 
   fclose(fp);
