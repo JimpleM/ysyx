@@ -3,7 +3,7 @@
 #include <assert.h>
 
 #include "debug.h"
-#include "Vtop.h"
+#include "Vriscv32.h"
 #include "Vriscv32__Dpi.h"
 
 
