@@ -20,7 +20,7 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) ${DIFF}
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) ${NPCFLAGS}
 
 run:sim
 	./obj_dir/V${TOPNAME}  ${DIFF} $(IMG) 
