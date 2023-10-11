@@ -13,7 +13,8 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
-NPCFLAGS += 
+DIFFTEST = /home/jimple/Documents/ysyx/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so
+NPCFLAGS += -d ${DIFFTEST}
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
