@@ -19,6 +19,12 @@ VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" )
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
 SIM_SRCS = ./sim_src/sim_main.cpp
+SEARCHPATH = ./vscr
+TOP_MODULE = top
+
+VERILATOR_FLAGS += -Wall --trace --cc --exe --build
+VERILATOR_FLAGS += -I${SEARCHPATH}
+VERILATOR_FLAGS += --top ${TOP_MODULE}
 
 # rules for NVBoard
 include $(NVBOARD_HOME)/scripts/nvboard.mk
@@ -41,10 +47,8 @@ all:defualt
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	#@echo "Write this Makefile by your self."
-	$(VERILATOR) -cc  --trace --exe --build \
-		--top-module top \
-		-I${./vsrc} \
-	$(VSRCS) $(CSRCS) 
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(CSRCS) 
+
 
 run: $(BIN)
 	@$^
