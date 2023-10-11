@@ -9,12 +9,12 @@
 
 
 
-void riscv_pmem_read(uint32_t raddr, uint32_t *rdata, svBit ren){
-	*rdata = pmem_read(raddr,4);
+void riscv_pmem_read(int raddr, int *rdata, svBit ren){
+	*rdata = pmem_read((uint32_t)raddr,4);
 }
 
-void riscv_pmem_write(uint32_t waddr, uint32_t wdata, int wmask){
-	pmem_write(waddr,wdata,wmask);
+void riscv_pmem_write(int waddr, int wdata, int wmask){
+	pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
 }
 
 int main(int argc, char *argv[]){
