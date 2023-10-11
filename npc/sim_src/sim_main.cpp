@@ -44,6 +44,7 @@ int main(int argc, char *argv[]){
 	eval_dump;
 	init_npc(argc,argv);
 
+	int count = 0;
 
 	while(!contextp->gotFinish()){
         top->clk = !top->clk;
@@ -52,6 +53,10 @@ int main(int argc, char *argv[]){
 
 		eval_dump;
 		if(stop_flag == 1){
+			break;
+		}
+		count++;
+		if(count >10){
 			break;
 		}
 	}
