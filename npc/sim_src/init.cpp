@@ -3,6 +3,7 @@
 
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
+static int difftest_port = 1234;
 
 extern uint8_t pmem [PMEM_SIZE];
 
@@ -53,4 +54,6 @@ void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
 
     long img_size = load_img();
+
+    init_difftest(diff_so_file, img_size, difftest_port);
 }
