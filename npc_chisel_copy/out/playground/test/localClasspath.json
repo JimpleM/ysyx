@@ -1,0 +1,9 @@
+{
+    "value": [
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/compile-resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/resources",
+        "ref:v0:b21033da:/home/jimple/Documents/ysyx/ysyx-workbench/npc/out/playground/test/compile.dest/classes"
+    ],
+    "valueHash": 978132388,
+    "inputsHash": -224636483
+}

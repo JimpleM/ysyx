@@ -15,7 +15,7 @@ $(shell mkdir -p $(BUILD_DIR))
 
 # project source
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v" )
-SIM_SRCS = ./sim_src/sim_main.cpp
+SIM_SRCS = $(shell find $(abspath ./vsrc) -name "*.cpp" )
 
 INC_PATH = ./vsrc
 TOPNAME = riscv32
