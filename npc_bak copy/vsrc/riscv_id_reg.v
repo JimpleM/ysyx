@@ -7,10 +7,10 @@ module ysyx_23060077_riscv_id_reg(
     output reg 	                        rd_wen
 );
 wire [`REG_WIDTH-1:0] reg_zero;
-assign reg_zero = {`REG_WIDTH{1'b0}}
+assign reg_zero = {`REG_WIDTH{1'b0}};
 
 ysyx_23060077_riscv_mux#(
-  .NR_KEY      (11), 
+  .NR_KEY      (11),
   .KEY_LEN     (7), 
   .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+REG_WIDTH+1)
 )riscv_mux_decode(
