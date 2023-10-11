@@ -17,9 +17,9 @@ assign sub_data = $signed(alu_a_data) - $signed(alu_b_data);
 assign {carry_flag,usub_data} = {1'b0,alu_a_data} - {1'b0,alu_b_data};
 
 riscv_mux#(
-    NR_KEY      (11), 
-    KEY_LEN     (4), 
-    DATA_LEN    (`DATA_WIDTH)
+  .NR_KEY      (11), 
+  .KEY_LEN     (4), 
+  .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ex_data(
   .key              (alu_opt),
   .default_out      (0),

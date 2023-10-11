@@ -25,9 +25,9 @@ wire [`DATA_WIDTH-1:0] alu_out_data;
 wire carry_flag;
 
 riscv_mux#(
-    NR_KEY      (4), 
-    KEY_LEN     (`SRC_SEL_WIDTH), 
-    DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
+    .NR_KEY      (4), 
+    .KEY_LEN     (`SRC_SEL_WIDTH), 
+    .DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
 )riscv_mux_ex_src_sel(
   .key              (src_sel),
   .default_out      (0),
@@ -48,9 +48,9 @@ riscv_ex_alu riscv_ex_alu(
 );
 
 riscv_muxt#(
-    NR_KEY      (6), 
-    KEY_LEN     (4), 
-    DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
+    .NR_KEY      (6), 
+    .KEY_LEN     (4), 
+    .DATA_LEN    (`DATA_WIDTH+`DATA_WIDTH)
 )riscv_mux_ex_branch(
   .key              ({branch,func_code}),
   .default_out      (alu_out_data),

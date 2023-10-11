@@ -10,9 +10,9 @@ module riscv_id_opt(
 assign func_code = inst[14:12];
 
 riscv_mux#(
-    NR_KEY      (33), 
-    KEY_LEN     (17), 
-    DATA_LEN    (`ALU_OPT_WIDTH)
+    .NR_KEY      (33), 
+    .KEY_LEN     (17), 
+    .DATA_LEN    (`ALU_OPT_WIDTH)
 )riscv_mux_id_alu_opt(
   .key              ({inst[6:0],inst[14:12],inst[31:25]}),  //opcode + func_code + [31:25]
   .default_out      (`ALU_ADD),

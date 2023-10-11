@@ -39,11 +39,11 @@ riscv_id_imm riscv_id_imm_idu(
 );
 
 riscv_id_opt riscv_id_opt_idu(
-    inst        (inst     ),
-    alu_opt     (alu_opt  ),
-    src_sel     (src_sel  ),
-    lsu_opt     (lsu_opt  ),
-    func_code   (func_code)
+    .inst        (inst     ),
+    .alu_opt     (alu_opt  ),
+    .src_sel     (src_sel  ),
+    .lsu_opt     (lsu_opt  ),
+    .func_code   (func_code)
 );
 
 endmodule

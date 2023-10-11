@@ -21,9 +21,9 @@ assign waddr = exu_result;
 assign waddr = src2;
 
 riscv_mux#(
-    NR_KEY      (5), 
-    KEY_LEN     (`LSU_OPT_WIDTH+3), 
-    DATA_LEN    (`DATA_WIDTH)
+    .NR_KEY      (5), 
+    .KEY_LEN     (`LSU_OPT_WIDTH+3), 
+    .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_lsu_opt(
   .key              ({lsu_opt,func_code}),
   .default_out      (0),
@@ -38,9 +38,9 @@ riscv_mux#(
 
 
 riscv_mux#(
-    NR_KEY      (5), 
-    KEY_LEN     (`LSU_OPT_WIDTH+3), 
-    DATA_LEN    (`DATA_WIDTH)
+    .NR_KEY      (5), 
+    .KEY_LEN     (`LSU_OPT_WIDTH+3), 
+    .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_wmask(
   .key              ({lsu_opt,func_code}),
   .default_out      (0),
