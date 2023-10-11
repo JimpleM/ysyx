@@ -560,7 +560,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     VlWide<3>/*95:0*/ __Vtemp_h8c6da091__0;
     VlWide<6>/*191:0*/ __Vtemp_h82212276__0;
     VlWide<4>/*127:0*/ __Vtemp_h9be1f35c__0;
-    VlWide<4>/*127:0*/ __Vtemp_h559e3450__0;
+    VlWide<4>/*127:0*/ __Vtemp_heb927861__0;
     // Body
     bufp->fullCData(oldp+1,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[0]),4);
     bufp->fullCData(oldp+2,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[1]),4);
@@ -1204,10 +1204,10 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     bufp->fullIData(oldp+476,(0x25U),32);
     bufp->fullIData(oldp+477,(5U),32);
     bufp->fullIData(oldp+478,(3U),32);
-    __Vtemp_h559e3450__0[0U] = 0xffffffffU;
-    __Vtemp_h559e3450__0[1U] = 0x1ffff2U;
-    __Vtemp_h559e3450__0[2U] = 0x3fe20U;
-    __Vtemp_h559e3450__0[3U] = 0x4000U;
-    bufp->fullWData(oldp+479,(__Vtemp_h559e3450__0),111);
+    __Vtemp_heb927861__0[0U] = 4U;
+    __Vtemp_heb927861__0[1U] = 0x52U;
+    __Vtemp_heb927861__0[2U] = 0x620U;
+    __Vtemp_heb927861__0[3U] = 0x4000U;
+    bufp->fullWData(oldp+479,(__Vtemp_heb927861__0),111);
     bufp->fullIData(oldp+483,(3U),32);
 }
