@@ -13,14 +13,14 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 LDFLAGS := -LDFLAGS -ldl
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
-DIFF := --diff=${DIFFTEST}
+DIFF := -d=${DIFFTEST}
 
 all:defualt
 #	@echo "Write this Makefile by your self."
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) ${NPCFLAGS}
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 run:sim
 	./obj_dir/V${TOPNAME}  ${DIFF} $(IMG) 
