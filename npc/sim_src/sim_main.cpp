@@ -7,6 +7,14 @@
 
 #include "verilated_vcd_c.h"
 
+void riscv_pmem_read(int raddr, int *rdata, svBit ren){
+	*rdata = 0x80000000;
+}
+
+void riscv_pmem_write(int waddr, int wdata, int wmask){
+
+}
+
 int main(int argc, char ** argv, char** env){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);

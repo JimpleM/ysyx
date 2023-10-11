@@ -6,7 +6,7 @@ module riscv_lsu(
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
     input       [2:0]                   func_code,
 
-    output  	[`DATA_WIDTH-1:0]       lsu_result
+    output  	  [`DATA_WIDTH-1:0]       lsu_result
 );
 wire ren;
 wire [`DATA_WIDTH-1:0] raddr;

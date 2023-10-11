@@ -474,7 +474,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->popNamePrefix(4);
     tracep->pushNamePrefix("riscv_regfile_u0 ");
     tracep->declBit(c+399,"clk", false,-1);
-    tracep->declBit(c+475,"rst_n", false,-1);
+    tracep->declBit(c+400,"rst_n", false,-1);
     tracep->declBus(c+163,"rs1_addr", false,-1, 4,0);
     tracep->declBus(c+169,"rs1_data", false,-1, 31,0);
     tracep->declBus(c+164,"rs2_addr", false,-1, 4,0);
@@ -490,7 +490,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+403,"WIDTH", false,-1, 31,0);
     tracep->declBus(c+420,"RESET_VAL", false,-1, 31,0);
     tracep->declBit(c+399,"clk", false,-1);
-    tracep->declBit(c+476,"rst", false,-1);
+    tracep->declBit(c+401,"rst", false,-1);
     tracep->declBit(c+162,"wen", false,-1);
     tracep->declBus(c+101,"din", false,-1, 31,0);
     tracep->declBus(c+397,"dout", false,-1, 31,0);
@@ -499,7 +499,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+403,"WIDTH", false,-1, 31,0);
     tracep->declBus(c+420,"RESET_VAL", false,-1, 31,0);
     tracep->declBit(c+399,"clk", false,-1);
-    tracep->declBit(c+477,"rst", false,-1);
+    tracep->declBit(c+475,"rst", false,-1);
     tracep->declBit(c+162,"wen", false,-1);
     tracep->declBus(c+101,"din", false,-1, 31,0);
     tracep->declBus(c+398,"dout", false,-1, 31,0);
@@ -1193,7 +1193,5 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     __Vtemp_h559e3450__0[3U] = 0x4000U;
     bufp->fullWData(oldp+470,(__Vtemp_h559e3450__0),111);
     bufp->fullIData(oldp+474,(3U),32);
-    bufp->fullBit(oldp+475,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__rst_n));
-    bufp->fullBit(oldp+476,((1U & (~ (IData)(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__rst_n)))));
-    bufp->fullBit(oldp+477,(0U));
+    bufp->fullBit(oldp+475,(0U));
 }
