@@ -6,10 +6,10 @@ module ysyx_23060077_riscv_idu(
     output                              jal,
     output                              jalr,
 
-    output  	[`REG_ADDR_WIDTH-1:0]   rd,
+    output  	[`REG_WIDTH-1:0]        rd,
     output  	                        rd_wen,
-    output  	[`REG_ADDR_WIDTH-1:0]   rs1,
-    output  	[`REG_ADDR_WIDTH-1:0]   rs2,
+    output  	[`REG_WIDTH-1:0]        rs1,
+    output  	[`REG_WIDTH-1:0]        rs2,
 
 
     output      [`DATA_WIDTH-1:0]       imm,

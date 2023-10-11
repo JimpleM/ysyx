@@ -1,8 +1,8 @@
 
 `define INST_WIDTH          32
 `define DATA_WIDTH          32
-`define REG_ADDR_WIDTH      5
-`define REG_COUNT           (1<<`REG_ADDR_WIDTH)
+`define REG_WIDTH            5
+`define REG_COUNT           (1<<`REG_WIDTH)
 
 
 // opcode

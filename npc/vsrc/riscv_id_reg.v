@@ -1,10 +1,10 @@
 `include "riscv_define.v"
 module ysyx_23060077_riscv_id_reg(
     input 	    [`INST_WIDTH-1:0]       inst,
-    output  	  [`REG_ADDR_WIDTH-1:0]   rd,
+    output  	  [`REG_WIDTH-1:0]        rd,
     output  	                          rd_wen,
-    output  	  [`REG_ADDR_WIDTH-1:0]   rs1,
-    output  	  [`REG_ADDR_WIDTH-1:0]   rs2
+    output  	  [`REG_WIDTH-1:0]        rs1,
+    output  	  [`REG_WIDTH-1:0]        rs2
 );
 wire [`REG_WIDTH-1:0] reg_zero;
 assign reg_zero = {`REG_WIDTH{1'b0}}
@@ -12,7 +12,7 @@ assign reg_zero = {`REG_WIDTH{1'b0}}
 ysyx_23060077_riscv_mux#(
   .NR_KEY      (11), 
   .KEY_LEN     (7), 
-  .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+REG_WIDTH+1)
+  .DATA_LEN    (`REG_WIDTH+`REG_WIDTH+`REG_WIDTH+1)
 )riscv_mux_id_reg(
   .key                (inst[6:0]),
   .out                ({rs1,rs2,rd,rd_wen}),

@@ -37,7 +37,7 @@ wire					 		branch_out_ex;
 
 
 wire							rd_en;
-wire	[REG_ADDR_WIDTH-1:0] 	rd_addr;
+wire	[REG_WIDTH-1:0] 	rd_addr;
 wire	[DATA_WIDTH-1:0] 		rd_wdata;
 
 
@@ -80,7 +80,7 @@ ysyx_23060077_riscv_dff #(
 
 // 读寄存器值
 ysyx_23060077_riscv_id_reg #(
-	.ADDR_WIDTH(REG_ADDR_WIDTH),
+	.ADDR_WIDTH(REG_WIDTH),
 	.DATA_WIDTH(DATA_WIDTH)
 ) riscv_id_reg (
 	.clk		(clk)					,

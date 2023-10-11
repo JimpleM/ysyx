@@ -1,14 +1,14 @@
 module ysyx_23060077_riscv_regfile (
     input                               clk,
 
-    input       [`REG_ADDR_WIDTH-1:0]   rs1_addr,
+    input       [`REG_WIDTH-1:0]        rs1_addr,
     output      [`DATA_WIDTH-1:0]       rs1_data,
 
-    input       [`REG_ADDR_WIDTH-1:0]   rs2_addr,
+    input       [`REG_WIDTH-1:0]        rs2_addr,
     output      [`DATA_WIDTH-1:0]       rs2_data,
 
     input                               rd_en,
-    input       [`REG_ADDR_WIDTH-1:0]   rd_addr,
+    input       [`REG_WIDTH-1:0]        rd_addr,
     output      [`DATA_WIDTH-1:0]       rd_data
 );
 

@@ -1,9 +1,9 @@
 `include"riscv_define.v"
 module ysyx_23060077_riscv_id_reg(
     input 	    [`INST_WIDTH-1:0]       inst,
-    output reg 	[`REG_ADDR_WIDTH-1:0]   rs1,
-    output reg 	[`REG_ADDR_WIDTH-1:0]   rs2,
-    output reg 	[`REG_ADDR_WIDTH-1:0]   rd,
+    output reg 	[`REG_WIDTH-1:0]   rs1,
+    output reg 	[`REG_WIDTH-1:0]   rs2,
+    output reg 	[`REG_WIDTH-1:0]   rd,
     output reg 	                        rd_wen
 );
 wire [`REG_WIDTH-1:0] reg_zero;

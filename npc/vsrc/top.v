@@ -9,30 +9,30 @@ wire [`DATA_WIDTH-1:0] ifu_pc;
 wire [`INST_WIDTH-1:0] ifu_inst;
 
 // idu
-wire                         idu_branch		;
-wire                         idu_jal		;
-wire                         idu_jalr		;
-wire [`REG_ADDR_WIDTH-1:0]   idu_rd			;
-wire                         idu_rd_wen		;
-wire [`REG_ADDR_WIDTH-1:0]   idu_rs1		;
-wire [`REG_ADDR_WIDTH-1:0]   idu_rs2		;
-wire [`DATA_WIDTH-1:0]       idu_imm		;
-wire [`ALU_OPT_WIDTH-1:0]    idu_alu_opt	;
-wire [`SRC_SEL_WIDTH-1:0]    idu_src_sel	;
-wire [`LSU_OPT_WIDTH-1:0]    idu_lsu_opt	;
-wire [2:0]                   idu_func_code	;
+wire                       	idu_branch		;
+wire                       	idu_jal		;
+wire                       	idu_jalr		;
+wire [`REG_WIDTH-1:0]   	idu_rd			;
+wire                       	idu_rd_wen		;
+wire [`REG_WIDTH-1:0]   	idu_rs1		;
+wire [`REG_WIDTH-1:0]   	idu_rs2		;
+wire [`DATA_WIDTH-1:0]     	idu_imm		;
+wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	;
+wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	;
+wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	;
+wire [2:0]                  idu_func_code	;
 
 //regfile
-wire [`DATA_WIDTH-1:0]       src1			;
-wire [`DATA_WIDTH-1:0]       src2			;
-wire [`DATA_WIDTH-1:0]       rd_data		;
+wire [`DATA_WIDTH-1:0]     	src1			;
+wire [`DATA_WIDTH-1:0]     	src2			;
+wire [`DATA_WIDTH-1:0]     	rd_data		;
 
 //exu
-wire                         zero_flag		;
-wire [`DATA_WIDTH-1:0]       exu_result		;
+wire                        zero_flag		;
+wire [`DATA_WIDTH-1:0]      exu_result		;
 
 //lsu
-wire [`DATA_WIDTH-1:0]       lsu_result		;
+wire [`DATA_WIDTH-1:0]     	lsu_result		;
 
 ysyx_23060077_riscv_ifu ysyx_23060077_riscv_ifu_u0(
     .rst_n	(rst_n),
