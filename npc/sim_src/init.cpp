@@ -50,7 +50,8 @@ static int parse_args(int argc, char *argv[]) {
   return 0;
 }
 
-void init_monitor(int argc, char *argv[]) {
+void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
+
     long img_size = load_img();
 }
