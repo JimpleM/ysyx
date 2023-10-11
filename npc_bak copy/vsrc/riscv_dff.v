@@ -28,3 +28,4 @@ endmodule
 //   // 位宽为3比特, 复位值为3'b0, 写使能为out[0]
 //   Reg #(3, 3'b0) i1 (clk, rst, in[3:1], out[3:1], out[0]);
 // endmodule
+
