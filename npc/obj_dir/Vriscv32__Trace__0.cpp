@@ -639,7 +639,6 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
     }
     bufp->chgBit(oldp+408,(vlSelf->clk));
     bufp->chgBit(oldp+409,(vlSelf->rst_n));
-    bufp->chgBit(oldp+410,((1U & (~ (IData)(vlSelf->rst_n)))));
 }
 
 void Vriscv32___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

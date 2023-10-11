@@ -1629,13 +1629,13 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
                     ? vlSelf->riscv32__DOT__exu_result
                     : vlSelf->riscv32__DOT__lsu_result);
         }
-        vlSelf->riscv32__DOT__ifu_pc = 0x80000000U;
+        vlSelf->riscv32__DOT__ifu_pc = vlSelf->riscv32__DOT__riscv_bpu_u0__DOT__npc;
     } else {
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[0U] = 0U;
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[1U] = 0U;
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[2U] = 0U;
         vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout = 0U;
-        vlSelf->riscv32__DOT__ifu_pc = vlSelf->riscv32__DOT__riscv_bpu_u0__DOT__npc;
+        vlSelf->riscv32__DOT__ifu_pc = 0x80000000U;
     }
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[1U][0U] 
         = (IData)((4ULL | ((QData)((IData)(vlSelf->riscv32__DOT__ifu_pc)) 
