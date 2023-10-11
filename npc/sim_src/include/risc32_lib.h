@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <debug.h>
 
+#include "debug.h"
 #include "Vtop__Dpi.h"
 
 #define PMEM_BEGIN  0x80000000
