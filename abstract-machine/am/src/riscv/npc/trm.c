@@ -18,6 +18,8 @@ void putch(char ch) {
 }
 
 void halt(int code) {
+  putch('a');
+  // printf("finished\n");
   while (1);
 }
 
