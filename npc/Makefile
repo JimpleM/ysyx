@@ -49,7 +49,7 @@ sim:
 	#@echo "Write this Makefile by your self."
 	$(VERILATOR) -cc  --trace --exe --build \
 		--top-module top \
-	$(VSRC) $(CSRC) 
+	$(VSRCS) $(CSRCS) 
 
 run: $(BIN)
 	@$^
