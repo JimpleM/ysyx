@@ -42,6 +42,7 @@ VM_USER_LDLIBS = \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+	difftest \
 	dpi-c \
 	init \
 	pmem \
@@ -62,6 +63,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 dpi-c.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/dpi-c.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 init.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/init.cpp
