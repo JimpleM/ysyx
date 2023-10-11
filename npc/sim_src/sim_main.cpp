@@ -5,8 +5,9 @@
 #include "verilated_vcd_c.h"
 #include "include/risc32_lib.h"
 
+#define		eval_dump  top->eval(); tfp->dump(contextp->time());  contextp->timeInc(1);
 
-int main(int argc, char ** argv, char** env){
+int main(int argc, char *argv[]){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
 	Vtop* top = new Vtop(contextp);
@@ -15,24 +16,19 @@ int main(int argc, char ** argv, char** env){
 	contextp->traceEverOn(true);
 	top->trace(tfp,0);
 	tfp->open("wave.vcd");
+// initialize
+	tfp->clk = 0;
+	tfp->rst_n = 1;
+	eval_dump;
+	init_npc(argc,argv);
 
-	int count = 0;
 
 	while(!contextp->gotFinish()){
-        int y = rand() %4;
-		top->a = 228;
-        top->y = y;
-		top->eval();
-		
-		tfp->dump(contextp->time());
-		contextp->timeInc(1);
-		
-		// assert(top->f == (y==3?(y==2?(y==1? 1:0):2):3));
+        tfp->clk = !tfp->clk;
 	
-		count++;
-		if(count >100){
-			break;
-		}
+		
+
+		eval_dump;
 	}
 	
 	delete top;
