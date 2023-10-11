@@ -47,8 +47,8 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   assert(ref_so_file != NULL);
 
   void *handle;
-  handle = dlopen(ref_so_file, RTLD_LAZY);
-  assert(handle);
+//   handle = dlopen(ref_so_file, RTLD_LAZY);
+//   assert(handle);
 // C++不允许将一个通用指针转换为任意类型指针，因此这里得将dlsym返回的指针转换成特定函数指针。
 //   ref_difftest_memcpy = (void(*)(paddr_t addr, void *buf, size_t n, bool direction))dlsym(handle, "difftest_memcpy");
 //   assert(ref_difftest_memcpy);
