@@ -9,7 +9,7 @@ module riscv_regfile (
 
     input                               rd_en,
     input       [`REG_WIDTH-1:0]        rd_addr,
-    output      [`DATA_WIDTH-1:0]       rd_data
+    input       [`DATA_WIDTH-1:0]       rd_data
 );
 
 reg [`DATA_WIDTH-1:0] gpr [`REG_COUNT-1:0];
@@ -26,6 +26,18 @@ assign rs1_data = gpr[rs1_addr];
 assign rs2_data = gpr[rs2_addr];
 
 // write rd
+riscv_dff #(
+  .WIDTH(`DATA_WIDTH), 
+  .RESET_VAL(32'd0)
+)riscv_dff_pc(
+    .clk    (clk),
+    .rst    (!rst_n),
+    .wen    (rd_en),
+    .din    (rd_data),
+    .dout   (gpr[rd_addr])
+  
+);
+
 riscv_dff #(`DATA_WIDTH, `DATA_WIDTH'b0) riscv_dff_rd (clk, 1'b0, rd_en, rd_data, gpr[rd_addr]);
 // always @(posedge clk) begin
 //     if (rd_en)begin
