@@ -7,7 +7,7 @@ module riscv_lsu(
 
     input  	    [`DATA_WIDTH-1:0]       src2,
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
-    input       [2:0]                   func_code,
+    input       [2:0]                   funct3,
 
     output  	  [`DATA_WIDTH-1:0]       lsu_result
 );
@@ -28,7 +28,7 @@ riscv_mux#(
     .KEY_LEN     (`LSU_OPT_WIDTH+3), 
     .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_lsu_opt(
-  .key              ({lsu_opt,func_code}),
+  .key              ({lsu_opt,funct3}),
   .default_out      (0),
   .out              ({lsu_result}),
   .lut({{`LSU_OPT_LOAD,3'b000}, {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]},       //lb
@@ -45,7 +45,7 @@ riscv_mux#(
     .KEY_LEN     (`LSU_OPT_WIDTH+3), 
     .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ls_wmask(
-  .key              ({lsu_opt,func_code}),
+  .key              ({lsu_opt,funct3}),
   .default_out      (0),
   .out              ({mask}),
   .lut({{`LSU_OPT_STORE,3'b000}, {32'h000_00ff},        //sb

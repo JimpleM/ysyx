@@ -18,7 +18,7 @@ extern "C" {
     // DPI IMPORTS
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_ifu.v:17:30
     extern void riscv_pmem_read(int raddr, int* rdata, svLogic ren);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_lsu.v:69:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_lsu.v:72:30
     extern void riscv_pmem_write(int waddr, int wdata, int wmask);
 
 #ifdef __cplusplus

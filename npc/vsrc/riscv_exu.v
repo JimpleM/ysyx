@@ -11,7 +11,7 @@ module riscv_exu(
 
     input       [`ALU_OPT_WIDTH-1:0]    alu_opt,
     input       [`SRC_SEL_WIDTH-1:0]    src_sel,
-    input       [2:0]                   func_code,
+    input       [2:0]                   funct3,
 
     output                              zero_flag,
     output      [`DATA_WIDTH-1:0]       exu_result
@@ -52,7 +52,7 @@ riscv_mux#(
     .KEY_LEN     (4), 
     .DATA_LEN    (`DATA_WIDTH)
 )riscv_mux_ex_branch(
-  .key              ({branch,func_code}),
+  .key              ({branch,funct3}),
   .default_out      (alu_out_data),
   .out              ({exu_result}),
   .lut({{1'b1,3'b000}, {{(`DATA_WIDTH-1){1'b0}}, zero_flag},     //beq

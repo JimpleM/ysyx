@@ -66,13 +66,9 @@ void Vriscv32___024root___eval_triggers__act(Vriscv32___024root* vlSelf) {
                                       != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result);
     vlSelf->__VactTriggered.at(1U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
-    vlSelf->__VactTriggered.at(2U) = ((IData)(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__clk) 
-                                      & (~ (IData)(vlSelf->__Vtrigrprev__TOP__riscv32__DOT__riscv_lsu_u0__DOT__clk)));
     vlSelf->__Vtrigrprev__TOP__riscv32__DOT__exu_result 
         = vlSelf->riscv32__DOT__exu_result;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
-    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__riscv_lsu_u0__DOT__clk 
-        = vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__clk;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
         vlSelf->__VactDidInit = 1U;
         vlSelf->__VactTriggered.at(0U) = 1U;

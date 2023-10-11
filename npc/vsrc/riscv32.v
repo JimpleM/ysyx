@@ -20,7 +20,7 @@ wire [`DATA_WIDTH-1:0]     	idu_imm		;
 wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	;
 wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	;
 wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	;
-wire [2:0]                  idu_func_code	;
+wire [2:0]                  idu_funct3	;
 
 //regfile
 wire [`DATA_WIDTH-1:0]     	src1			;
@@ -53,7 +53,7 @@ riscv_idu riscv_idu_u0(
     .alu_opt		(idu_alu_opt	),
     .src_sel		(idu_src_sel	),
     .lsu_opt		(idu_lsu_opt	),
-    .func_code		(idu_func_code	)
+    .funct3		(idu_funct3	)
 );
 
 riscv_regfile riscv_regfile_u0(
@@ -77,7 +77,7 @@ riscv_exu riscv_exu_u0(
     .branch			(idu_branch		),
     .alu_opt		(idu_alu_opt	),
     .src_sel		(idu_src_sel	),
-    .func_code		(idu_func_code),
+    .funct3		    (idu_funct3),
     .zero_flag		(zero_flag),
     .exu_result		(exu_result)
 );
@@ -88,7 +88,7 @@ riscv_lsu riscv_lsu_u0(
     .exu_result		(exu_result),
     .src2			(src2),
     .lsu_opt		(idu_lsu_opt),
-    .func_code		(idu_func_code),
+    .funct3		    (idu_funct3),
     .lsu_result		(lsu_result)
 );
 
