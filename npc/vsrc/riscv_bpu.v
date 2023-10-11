@@ -25,7 +25,7 @@ riscv_dff #(
   .RESET_VAL(32'h8000_0000)
 )riscv_dff_pc(
     .clk    (clk),
-    .rst    (rst_n),
+    .rst_n  (rst_n),
     .wen    (1'b1),
     .din    (npc),
     .dout   (pc)

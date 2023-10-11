@@ -59,7 +59,7 @@ riscv_dff #(
   .RESET_VAL(0)
 )riscv_dff_pc(
     .clk    (clk),
-    .rst    (!rst_n),
+    .rst_n  (rst_n),
     .wen    (1'b1),
     .din    ({exu_result,src2,mask}),
     .dout   ({waddr,wdata,wmask})

@@ -32,7 +32,7 @@ riscv_dff #(
   .RESET_VAL(32'd0)
 )riscv_dff_pc(
     .clk    (clk),
-    .rst    (!rst_n),
+    .rst_n  (rst_n),
     .wen    (rd_en),
     .din    (rd_data),
     .dout   (gpr[rd_addr])
