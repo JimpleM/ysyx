@@ -13,9 +13,9 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
 
-INC_PATH += -I$(NPC_HOME)/sim_src/include
-INC_PATH += -MMD
-INCFLAGS := $(addprefix -CFLAGS ,${INC_PATH})
+INC_PATH += $(NPC_HOME)/sim_src/include
+INCFLAGS += $(addprefix -I, $(INC_PATH))
+CFLAGS += $(INCFLAGS)
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
@@ -29,7 +29,8 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  $(INCFLAGS) $(LDFLAGS)
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  \
+	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
 	./obj_dir/V${TOPNAME} ${DIFF} ${IMG} 
