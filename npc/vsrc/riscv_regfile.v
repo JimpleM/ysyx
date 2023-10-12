@@ -26,18 +26,31 @@ assign rs1_data = gpr[rs1_addr];
 // read rs2
 assign rs2_data = gpr[rs2_addr];
 
+wire  [`REG_WIDTH-1:0]        rd_addr_t;
+wire                          rd_en_t,
+
 // write rd
-// riscv_dff #(
-//   .WIDTH(`DATA_WIDTH), 
-//   .RESET_VAL(32'd0)
-// )riscv_dff_reg(
-//     .clk    (clk),
-//     .rst_n  (rst_n),
-//     .wen    (rd_en),
-//     .din    (rd_data),
-//     .dout   (gpr[rd_addr])
-// );
-assign gpr[rd_addr] = rd_data ;
+riscv_dff #(
+  .WIDTH(6), 
+  .RESET_VAL(0)
+)riscv_dff_reg(
+    .clk    (clk),
+    .rst_n  (rst_n),
+    .wen    (1'b1),
+    .din    ({rd_en,rd_addr}),
+    .dout   ({rd_en_t,rd_addr_t})
+);
+
+riscv_dff #(
+  .WIDTH(`DATA_WIDTH), 
+  .RESET_VAL(32'd0)
+)riscv_dff_reg(
+    .clk    (clk),
+    .rst_n  (rst_n),
+    .wen    (rd_en_t),
+    .din    (rd_data),
+    .dout   (gpr[rd_addr_t])
+);
 // always @(posedge clk) begin
 //     if (rd_en)begin
 //         gpr[rd_addr] <= rd_data;
