@@ -3,17 +3,14 @@
 #include <assert.h>
 
 
+#include "config.h"
 #include "common.h"
 #include "debug.h"
 #include "Vriscv32.h"
 #include "Vriscv32__Dpi.h"
 
-#define DIFFTEST 1
 
-#define PMEM_LEFT  0x80000000
-#define PMEM_RIGHT 0x8fffffff
-#define PMEM_SIZE   PMEM_RIGHT-PMEM_LEFT+1
-#define RESET_VECTOR PMEM_LEFT
+
 
 typedef struct{
     uint32_t gpr[32];
