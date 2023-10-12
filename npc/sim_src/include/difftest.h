@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "config.h"
+
 //difftest
 void init_difftest(char *ref_so_file, long img_size, int port);
 bool checkregs();
