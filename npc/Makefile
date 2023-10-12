@@ -15,6 +15,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 LDFLAGS := -LDFLAGS -ldl
 
 INC_PATH += $(NPC_HOME)/sim_src/include
+INC_PATH += $(NPC_HOME)/sim_src/sdb
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
 
