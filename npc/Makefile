@@ -3,11 +3,11 @@ VERILATOR = verilator
 VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
 SIM_SRCS = $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" )
 
-INC_PATH = $(NPC_HOME)/vsrc
+VERILATOR_INC_PATH = $(NPC_HOME)/vsrc
 TOPNAME = riscv32
 
 VERILATOR_FLAGS += --trace --cc --exe --build
-VERILATOR_FLAGS += -I${INC_PATH}
+VERILATOR_FLAGS += -I${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
