@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-
+#include "difftest.h"
 #include "config.h"
 #include "common.h"
 #include "debug.h"
@@ -17,10 +17,7 @@ typedef struct{
     uint32_t pc;
 }CPU_state;
 
-//difftest
-void init_difftest(char *ref_so_file, long img_size, int port);
-bool checkregs();
-void difftest_step();
+
 
 void init_npc(int argc, char *argv[]);
 
