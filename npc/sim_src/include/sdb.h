@@ -4,5 +4,8 @@
 
 #include "common.h"
 
+NPCState npc_state;
+
+
 
 #endif
