@@ -33,7 +33,7 @@ wire                          rd_en_t,
 riscv_dff #(
   .WIDTH(6), 
   .RESET_VAL(0)
-)riscv_dff_reg(
+)riscv_dff_reg_t(
     .clk    (clk),
     .rst_n  (rst_n),
     .wen    (1'b1),
