@@ -27,7 +27,7 @@ assign rs1_data = gpr[rs1_addr];
 assign rs2_data = gpr[rs2_addr];
 
 wire  [`REG_WIDTH-1:0]        rd_addr_t;
-wire                          rd_en_t,
+wire                          rd_en_t;
 
 // write rd
 riscv_dff #(
