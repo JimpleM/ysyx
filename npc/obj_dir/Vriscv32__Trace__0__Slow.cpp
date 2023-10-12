@@ -510,7 +510,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+435,"RESET_VAL", false,-1, 31,0);
     tracep->declBit(c+414,"clk", false,-1);
     tracep->declBit(c+101,"rst_n", false,-1);
-    tracep->declBit(c+108,"wen", false,-1);
+    tracep->declBit(c+410,"wen", false,-1);
     tracep->declBus(c+118,"din", false,-1, 31,0);
     tracep->declBus(c+411,"dout", false,-1, 31,0);
     tracep->popNamePrefix(1);

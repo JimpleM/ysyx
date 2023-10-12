@@ -47,9 +47,9 @@ riscv_dff #(
 )riscv_dff_reg(
     .clk    (clk),
     .rst_n  (rst_n),
-    .wen    (rd_en_t),
+    .wen    (rd_en),
     .din    (rd_data),
-    .dout   (gpr[rd_addr_t])
+    .dout   (gpr[rd_addr])
 );
 // always @(posedge clk) begin
 //     if (rd_en)begin
