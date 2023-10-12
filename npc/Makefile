@@ -14,7 +14,7 @@ LDFLAGS := -LDFLAGS -ldl
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-# IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
+IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
 # IMG = --img=${IMGS}
 
 all:defualt
@@ -25,7 +25,7 @@ sim:
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS)
 
 run:sim
-	./obj_dir/V${TOPNAME}  $(IMG) ${DIFF} 
+	./obj_dir/V${TOPNAME} ${DIFF} ${IMGS} 
 
 wave:
 	gtkwave wave.vcd
