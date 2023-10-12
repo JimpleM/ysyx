@@ -67,7 +67,7 @@ riscv_mux#(
 // );
 assign waddr = exu_result;
 assign wdata = src2;
-aasign wmask = mask;
+assign wmask = mask;
 
 
 // sim
