@@ -30,7 +30,7 @@ assign rs2_data = gpr[rs2_addr];
 riscv_dff #(
   .WIDTH(`DATA_WIDTH), 
   .RESET_VAL(32'd0)
-)riscv_dff_pc(
+)riscv_dff_reg(
     .clk    (clk),
     .rst_n  (rst_n),
     .wen    (rd_en),

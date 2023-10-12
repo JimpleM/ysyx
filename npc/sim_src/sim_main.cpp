@@ -60,6 +60,8 @@ int main(int argc, char *argv[]){
 		eval_dump;
 		top->clk = !top->clk;
 		eval_dump;
+		top->clk = !top->clk;
+		eval_dump;
 		if(stop_flag == 1){
 			break;
 		}
