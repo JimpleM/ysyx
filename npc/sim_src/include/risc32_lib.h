@@ -23,6 +23,7 @@ typedef struct{
 //difftest
 void init_difftest(char *ref_so_file, long img_size, int port);
 bool checkregs();
+void difftest_step(vaddr_t pc, vaddr_t npc);
 
 void init_npc(int argc, char *argv[]);
 
