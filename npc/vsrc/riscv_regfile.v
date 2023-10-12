@@ -41,23 +41,23 @@ riscv_dff #(
     .dout   ({rd_en_t,rd_addr_t})
 );
 
-// riscv_dff #(
-//   .WIDTH(`DATA_WIDTH), 
-//   .RESET_VAL(32'd0)
-// )riscv_dff_reg(
-//     .clk    (clk),
-//     .rst_n  (rst_n),
-//     .wen    (rd_en),
-//     .din    (rd_data),
-//     .dout   (gpr[rd_addr])
-// );
+riscv_dff #(
+  .WIDTH(`DATA_WIDTH), 
+  .RESET_VAL(32'd0)
+)riscv_dff_reg(
+    .clk    (clk),
+    .rst_n  (1'b1),
+    .wen    (rd_en),
+    .din    (rd_data),
+    .dout   (gpr[rd_addr])
+);
 
 
-always @(posedge clk) begin
-    if (rd_en)begin
-        gpr[rd_addr] <= rd_data;
-    end 
-end
+// always @(posedge clk) begin
+//     if (rd_en)begin
+//         gpr[rd_addr] <= rd_data;
+//     end 
+// end
 
 
 // for sim

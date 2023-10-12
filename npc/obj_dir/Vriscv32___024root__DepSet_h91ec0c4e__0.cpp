@@ -76,25 +76,9 @@ void Vriscv32___024root___eval_triggers__act(Vriscv32___024root* vlSelf) {
     Vriscv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root___eval_triggers__act\n"); );
     // Body
-    vlSelf->__VactTriggered.at(0U) = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr.neq(vlSelf->__Vtrigrprev__TOP__riscv32__DOT__riscv_regfile_u0__DOT__gpr);
-    vlSelf->__VactTriggered.at(1U) = (vlSelf->riscv32__DOT__src1 
-                                      != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__src1);
-    vlSelf->__VactTriggered.at(2U) = ((vlSelf->riscv32__DOT__src1 
-                                       != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__src1) 
-                                      | (vlSelf->riscv32__DOT__src2 
-                                         != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__src2));
-    vlSelf->__VactTriggered.at(3U) = ((IData)(vlSelf->clk) 
+    vlSelf->__VactTriggered.at(0U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
-    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__riscv_regfile_u0__DOT__gpr.assign(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr);
-    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__src1 = vlSelf->riscv32__DOT__src1;
-    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__src2 = vlSelf->riscv32__DOT__src2;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
-    if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
-        vlSelf->__VactDidInit = 1U;
-        vlSelf->__VactTriggered.at(0U) = 1U;
-        vlSelf->__VactTriggered.at(1U) = 1U;
-        vlSelf->__VactTriggered.at(2U) = 1U;
-    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vriscv32___024root___dump_triggers__act(vlSelf);
