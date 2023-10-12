@@ -53,9 +53,9 @@ int main(int argc, char *argv[]){
 			}
 			difftest_step();
 
-			eval_dump;
 		}
 		
+		eval_dump;
 		if(stop_flag == 1){
 			break;
 		}
