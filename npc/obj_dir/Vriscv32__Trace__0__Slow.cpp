@@ -494,7 +494,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declBus(c+368+i*1,"gpr", true,(i+0), 31,0);
     }
     tracep->declBus(c+100,"i", false,-1, 31,0);
-    tracep->pushNamePrefix("riscv_dff_pc ");
+    tracep->pushNamePrefix("riscv_dff_reg ");
     tracep->declBus(c+403,"WIDTH", false,-1, 31,0);
     tracep->declBus(c+422,"RESET_VAL", false,-1, 31,0);
     tracep->declBit(c+401,"clk", false,-1);
@@ -1140,7 +1140,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     bufp->fullIData(oldp+397,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[29]),32);
     bufp->fullIData(oldp+398,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[30]),32);
     bufp->fullIData(oldp+399,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[31]),32);
-    bufp->fullIData(oldp+400,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout),32);
+    bufp->fullIData(oldp+400,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg__dout),32);
     bufp->fullBit(oldp+401,(vlSelf->clk));
     bufp->fullBit(oldp+402,(vlSelf->i_rst_n));
     bufp->fullIData(oldp+403,(0x20U),32);

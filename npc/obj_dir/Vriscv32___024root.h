@@ -61,7 +61,7 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out;
         IData/*16:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT____Vcellinp__riscv_mux_id_alu_opt__key;
         IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT__i;
-        IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout;
+        IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg__dout;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__alu_out_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out;

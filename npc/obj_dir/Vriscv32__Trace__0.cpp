@@ -619,7 +619,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
         bufp->chgIData(oldp+396,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[29]),32);
         bufp->chgIData(oldp+397,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[30]),32);
         bufp->chgIData(oldp+398,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[31]),32);
-        bufp->chgIData(oldp+399,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_pc__dout),32);
+        bufp->chgIData(oldp+399,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg__dout),32);
     }
     bufp->chgBit(oldp+400,(vlSelf->clk));
     bufp->chgBit(oldp+401,(vlSelf->i_rst_n));

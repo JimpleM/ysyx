@@ -7,6 +7,17 @@
 
 #define		eval_dump  top->eval(); tfp->dump(contextp->time());  contextp->timeInc(1);
 
+bool riscv32_rst = false;
+
+extern "C" void get_riscv32_rst(svBit rst_n) {
+  if(rst_n){
+	riscv32_rst = true;
+  }else{
+	riscv32_rst = false;
+  }
+}
+
+
 int stop_flag = 0;
 
 void riscv_pmem_read(int raddr, int *rdata, svBit ren){
@@ -33,12 +44,6 @@ int main(int argc, char *argv[]){
 	tfp->open("wave.vcd");
 // initialize
 	top->clk = 0;
-	top->i_rst_n = 0;
-	eval_dump;
-	top->clk = 1;
-	top->i_rst_n = 0;
-	eval_dump;
-	top->clk = 0;
 	top->i_rst_n = 1;
 	eval_dump;
 	init_npc(argc,argv);
@@ -49,7 +54,7 @@ int main(int argc, char *argv[]){
         top->clk = !top->clk;
 		top->eval();
 
-		if(top->clk){
+		if(top->clk && riscv32_rst){
 			if(checkregs()){
 				break;
 			}
