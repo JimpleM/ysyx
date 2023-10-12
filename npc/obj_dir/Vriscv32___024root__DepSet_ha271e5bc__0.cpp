@@ -33,8 +33,11 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 0U;
     if ((1U & (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out))) {
         __Vdlyvval__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 
-            = ((0U == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
-                ? vlSelf->riscv32__DOT__exu_result : vlSelf->riscv32__DOT__lsu_result);
+            = ((0U == (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
+                                >> 1U))) ? 0U : ((0U 
+                                                  == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
+                                                  ? vlSelf->riscv32__DOT__exu_result
+                                                  : vlSelf->riscv32__DOT__lsu_result));
         __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 1U;
         __Vdlyvdim0__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 
             = (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 

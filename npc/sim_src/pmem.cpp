@@ -29,7 +29,12 @@ void host_write(void *addr, int len, word_t data) {
 
 uint32_t pmem_read(uint32_t addr, int len){
     uint32_t ret = host_read(guest_to_host(addr), len);
-    printf("read addr:%x data:%x\n",addr,ret);
+#ifdef CONFIG_MTRACE
+  if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
+    printf("read address:%08x data:%08x\n",addr,ret);
+  } 
+#endif
+    // printf("read addr:%x data:%x\n",addr,ret);
     return ret;
 }
 

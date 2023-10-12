@@ -41,6 +41,7 @@ riscv_dff #(
     .dout   ({rd_en_t,rd_addr_t})
 );
 
+//这玩意时序有问题
 // riscv_dff #(
 //   .WIDTH(`DATA_WIDTH), 
 //   .RESET_VAL(32'd0)
