@@ -636,14 +636,15 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
         bufp->chgCData(oldp+408,((0x1fU & (IData)(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout))),5);
         bufp->chgBit(oldp+409,((1U & ((IData)(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout) 
                                       >> 5U))));
-        bufp->chgCData(oldp+410,(((0x20U & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
+        bufp->chgIData(oldp+410,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg__dout),32);
+        bufp->chgCData(oldp+411,(((0x20U & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                                             << 5U)) 
                                   | (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                                               >> 1U)))),6);
-        bufp->chgCData(oldp+411,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout),6);
+        bufp->chgCData(oldp+412,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout),6);
     }
-    bufp->chgBit(oldp+412,(vlSelf->clk));
-    bufp->chgBit(oldp+413,(vlSelf->i_rst_n));
+    bufp->chgBit(oldp+413,(vlSelf->clk));
+    bufp->chgBit(oldp+414,(vlSelf->i_rst_n));
 }
 
 void Vriscv32___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
