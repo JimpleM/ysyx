@@ -27,18 +27,18 @@ __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction)
 }
 
 __EXPORT void difftest_regcpy(void *dut, bool direction) {
-  CPU_state *temp = (CPU_state *)dut;
-  if(direction == DIFFTEST_TO_REF){
-    for(int i=0; i<32; i++){
-      cpu.gpr[i] = temp->gpr[i];
-    }
-    cpu.pc = temp->pc;
-  }else{
-    for(int i=0; i<32; i++){
-      temp->gpr[i] = cpu.gpr[i];
-    }
-    temp->pc = cpu.pc;
-  }
+  // CPU_state *temp = (CPU_state *)dut;
+  // if(direction == DIFFTEST_TO_REF){
+  //   for(int i=0; i<32; i++){
+  //     cpu.gpr[i] = temp->gpr[i];
+  //   }
+  //   cpu.pc = temp->pc;
+  // }else{
+  //   for(int i=0; i<32; i++){
+  //     temp->gpr[i] = cpu.gpr[i];
+  //   }
+  //   temp->pc = cpu.pc;
+  // }
 }
 
 __EXPORT void difftest_exec(uint64_t n) {
