@@ -14,7 +14,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -ldl
 
-OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJS = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 INC_PATH += $(NPC_HOME)/sim_src/include
 INCFLAGS += $(addprefix -I, $(INC_PATH))
