@@ -37,7 +37,7 @@ assign rs2_data = gpr[rs2_addr];
 //     .din    (rd_data),
 //     .dout   (gpr[rd_addr])
 // );
-assign gpr[rd_addr] = rd_en ? rd_data : gpr[rd_addr];
+assign gpr[rd_addr] = rd_data ;
 // always @(posedge clk) begin
 //     if (rd_en)begin
 //         gpr[rd_addr] <= rd_data;
