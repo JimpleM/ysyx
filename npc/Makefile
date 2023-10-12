@@ -16,7 +16,7 @@ LDFLAGS := -ldl
 
 INC_PATH += $(NPC_HOME)/sim_src/include
 INCFLAGS += $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS) $(SRCS)
+CFLAGS += $(INCFLAGS) 
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
