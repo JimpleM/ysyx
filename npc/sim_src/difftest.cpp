@@ -1,5 +1,5 @@
 
-#include "../include/difftest.h"
+#include "difftest.h"
 
 enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
 void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
