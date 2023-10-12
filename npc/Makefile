@@ -7,13 +7,13 @@ SIM_SRCS += $(shell find $(abspath $(NPC_HOME)/sim_src/sdb) -name "*.cpp" )
 VERILATOR_INC_PATH = $(NPC_HOME)/vsrc
 TOPNAME = riscv32
 
-VERILATOR_FLAGS += --trace --cc --exe --build -O3 -noassert --x-assign fast --x-initial fast -j 2
+VERILATOR_FLAGS += --trace --cc --exe --build 
 VERILATOR_FLAGS += -I${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
 
-INC_PATH += $(NPC_HOME)/sim_src/include
+INC_PATH += -I$(NPC_HOME)/sim_src/include
 INCFLAGS = $(addprefix -CFLAGS ,${INC_PATH})
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
