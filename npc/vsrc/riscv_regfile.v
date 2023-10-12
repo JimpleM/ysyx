@@ -55,7 +55,13 @@ riscv_dff #(
 
 always @(posedge clk) begin
     if (rd_en)begin
-        gpr[rd_addr] <= rd_data;
+        if(rd_addr == 5'd0)begin
+            gpr[rd_addr] <= 32'd0;
+        end
+        else begin
+            gpr[rd_addr] <= rd_data;
+        end
+        
     end 
 end
 
