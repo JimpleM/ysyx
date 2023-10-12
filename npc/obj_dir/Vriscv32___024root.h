@@ -29,6 +29,7 @@ class Vriscv32___024root final : public VerilatedModule {
         CData/*0:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__hit;
         CData/*1:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__lut_out;
         CData/*0:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__hit;
+        CData/*5:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__carry_flag;
         CData/*3:0*/ riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__hit;
@@ -37,9 +38,7 @@ class Vriscv32___024root final : public VerilatedModule {
         CData/*4:0*/ riscv32__DOT__riscv_lsu_u0__DOT____Vcellinp__riscv_mux_ls_lsu_opt__key;
         CData/*0:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__hit;
         CData/*0:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__hit;
-        CData/*0:0*/ __VstlDidInit;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
-        CData/*0:0*/ __VactDidInit;
         CData/*0:0*/ __VactContinue;
         SData/*15:0*/ riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out;
         SData/*15:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__lut_out;
@@ -64,6 +63,7 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out;
         IData/*16:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT____Vcellinp__riscv_mux_id_alu_opt__key;
         IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT__i;
+        IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg__dout;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__alu_out_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out;
@@ -113,12 +113,11 @@ class Vriscv32___024root final : public VerilatedModule {
         VlUnpacked<QData/*36:0*/, 3> riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list;
         VlUnpacked<CData/*4:0*/, 3> riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 3> riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list;
-        VlUnpacked<IData/*31:0*/, 32> __Vtrigrprev__TOP__riscv32__DOT__riscv_regfile_u0__DOT__gpr;
-        VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
+        VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
     };
-    VlTriggerVec<2> __VstlTriggered;
-    VlTriggerVec<2> __VactTriggered;
-    VlTriggerVec<2> __VnbaTriggered;
+    VlTriggerVec<1> __VstlTriggered;
+    VlTriggerVec<1> __VactTriggered;
+    VlTriggerVec<1> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vriscv32__Syms* const vlSymsp;
