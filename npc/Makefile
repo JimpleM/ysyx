@@ -14,7 +14,7 @@ TOPNAME = riscv32
 VERILATOR_FLAGS +=  -O3 -noassert --x-assign fast --x-initial fast -j 2
 VERILATOR_FLAGS +=  -cc --exe  --build  --clk clk  
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
-VERILATOR_FLAGS += --top ${TOP_MODULE} --prefix Vtop -Wno-DECLFILENAME
+VERILATOR_FLAGS += --top ${TOPNAME} --prefix Vtop -Wno-DECLFILENAME
 
 LDFLAGS := -LDFLAGS -ldl
 
