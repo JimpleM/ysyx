@@ -36,9 +36,6 @@ int main(int argc, char *argv[]){
 	top->rst_n = 0;
 	eval_dump;
 	top->clk = 1;
-	top->rst_n = 0;
-	eval_dump;
-	top->clk = 0;
 	top->rst_n = 1;
 	eval_dump;
 	init_npc(argc,argv);
@@ -48,7 +45,7 @@ int main(int argc, char *argv[]){
 	while(!contextp->gotFinish()){
         top->clk = !top->clk;
 		top->eval();
-		
+
 		if(top->clk){
 			if(checkregs()){
 				break;
