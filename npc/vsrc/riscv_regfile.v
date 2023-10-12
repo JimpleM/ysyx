@@ -31,12 +31,11 @@ riscv_dff #(
   .WIDTH(`DATA_WIDTH), 
   .RESET_VAL(32'd0)
 )riscv_dff_reg(
-    .clk    (clk),
+    .clk    (!clk),
     .rst_n  (rst_n),
     .wen    (rd_en),
     .din    (rd_data),
     .dout   (gpr[rd_addr])
-  
 );
 // always @(posedge clk) begin
 //     if (rd_en)begin
