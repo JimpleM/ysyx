@@ -9,6 +9,8 @@
 #include "config.h"
 #include "common.h"
 #include "debug.h"
+
+#include "pmem.h"
 #include "reg.h"
 
 //difftest
