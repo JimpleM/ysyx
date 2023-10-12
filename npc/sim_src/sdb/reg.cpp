@@ -1,4 +1,6 @@
-#include "include/risc32_lib.h"
+#include "reg.h"
+
+#include "Vriscv32__Dpi.h"
 #include "verilated_dpi.h"
 
 const char *regs[] = {

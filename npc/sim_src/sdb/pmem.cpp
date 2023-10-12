@@ -1,4 +1,4 @@
-#include "include/risc32_lib.h"
+#include "pmem.h"
 
 uint8_t pmem[PMEM_SIZE] = {};
 
