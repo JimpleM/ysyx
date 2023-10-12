@@ -61,6 +61,8 @@ int main(int argc, char *argv[]){
 			difftest_step();
 
 		}
+
+		eval_dump;
 		
 		if(stop_flag == 1){
 			break;
@@ -76,7 +78,7 @@ int main(int argc, char *argv[]){
     //        (nemu_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :
     //         ANSI_FMT("HIT BAD TRAP", ANSI_FG_RED))),
     //       nemu_state.halt_pc);
-	eval_dump;
+	
 	top->clk = !top->clk;
 	eval_dump;
 	top->clk = !top->clk;
