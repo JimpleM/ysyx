@@ -14,8 +14,8 @@ LDFLAGS := -LDFLAGS -ldl
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-# IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
-# IMG = --img=${IMGS}
+IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
+IMG = --img=${IMGS}
 
 all:defualt
 #	@echo "Write this Makefile by your self."
