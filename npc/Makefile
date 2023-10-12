@@ -12,7 +12,9 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -LDFLAGS -ldl
 
-INCLUDE += $(NPC_HOME)/sim_src/include
+INC_PATH += $(NPC_HOME)/sim_src/include
+INCFLAGS = $(addprefix -I, $(INC_PATH))
+
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
@@ -25,7 +27,7 @@ all:defualt
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) $(INCLUDE)
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS) $(LDFLAGS) $(INCFLAGS)
 
 run:sim
 	./obj_dir/V${TOPNAME} ${DIFF} ${IMG} 
