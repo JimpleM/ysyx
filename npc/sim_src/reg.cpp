@@ -38,7 +38,7 @@ bool isa_difftest_checkregs(CPU_state *ref){
     }
     for(int i=0; i<32; i++){
         if(cpu_gpr[i] != ref->gpr[i]){
-            printf("%d: ref:0x%08x dut:0x%08x  \n",i,ref->gpr[i],cpu_gpr[i]);
+            printf("%s: ref:0x%08x dut:0x%08x  \n",regs[i],ref->gpr[i],cpu_gpr[i]);
             return false;
         }
     }
