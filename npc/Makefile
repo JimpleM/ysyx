@@ -1,7 +1,7 @@
 VERILATOR = verilator
 # project source
 VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
-SIM_SRCS = $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" )
+SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" )
 SIM_SRCS += $(shell find $(abspath $(NPC_HOME)/sim_src/sdb) -name "*.cpp" )
 
 VERILATOR_INC_PATH = $(NPC_HOME)/vsrc
