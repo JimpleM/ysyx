@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
 		if(checkregs()){
 			break;
 		}
+		difftest_step();
 
 		eval_dump;
 		if(stop_flag == 1){
