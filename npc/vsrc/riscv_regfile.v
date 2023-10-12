@@ -42,10 +42,10 @@ riscv_dff #(
 );
 
 
-genvar i;
+genvar j;
 generate
-    for(i=0;i<32;i++)begin
-        if(i == rd_addr)begin
+    for(j=0;j<32;j++)begin
+        if(j == rd_addr)begin
             riscv_dff #(
             .WIDTH(`DATA_WIDTH), 
             .RESET_VAL(32'd0)
@@ -54,7 +54,7 @@ generate
                 .rst_n  (rst_n),
                 .wen    (rd_en),
                 .din    (rd_data),
-                .dout   (gpr[i])
+                .dout   (gpr[j])
             );
         end
     end
