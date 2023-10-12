@@ -27,16 +27,17 @@ assign rs1_data = gpr[rs1_addr];
 assign rs2_data = gpr[rs2_addr];
 
 // write rd
-riscv_dff #(
-  .WIDTH(`DATA_WIDTH), 
-  .RESET_VAL(32'd0)
-)riscv_dff_reg(
-    .clk    (!clk),
-    .rst_n  (rst_n),
-    .wen    (rd_en),
-    .din    (rd_data),
-    .dout   (gpr[rd_addr])
-);
+// riscv_dff #(
+//   .WIDTH(`DATA_WIDTH), 
+//   .RESET_VAL(32'd0)
+// )riscv_dff_reg(
+//     .clk    (clk),
+//     .rst_n  (rst_n),
+//     .wen    (rd_en),
+//     .din    (rd_data),
+//     .dout   (gpr[rd_addr])
+// );
+assign gpr[rd_addr] = rd_en ? rd_data : gpr[rd_addr];
 // always @(posedge clk) begin
 //     if (rd_en)begin
 //         gpr[rd_addr] <= rd_data;
