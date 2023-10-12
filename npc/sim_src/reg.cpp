@@ -33,12 +33,12 @@ void isa_reg_display() {
 
 bool isa_difftest_checkregs(CPU_state *ref){
     if(ref->pc != cpu_pc){
-        printf("0x%08x  : 0x%08x  \n",ref->pc,cpu_pc);
+        printf("ref:0x%08x dut:0x%08x  \n",ref->pc,cpu_pc);
         return false;
     }
     for(int i=0; i<32; i++){
         if(cpu_gpr[i] != ref->gpr[i]){
-            printf("%d: 0x%08x  : 0x%08x  \n",i,ref->gpr[i],cpu_gpr[i]);
+            printf("%d: ref:0x%08x dut:0x%08x  \n",i,ref->gpr[i],cpu_gpr[i]);
             return false;
         }
     }
