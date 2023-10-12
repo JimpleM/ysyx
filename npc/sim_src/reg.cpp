@@ -19,7 +19,7 @@ extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
 }
 
 void isa_reg_display() {
-  printf("------------------------------reg display start ---------------------------\n");
+  printf("---------------------------cpu reg display start ---------------------------\n");
   for(int i=0; i<8; i++){
     printf("%3s : 0x%08x  ",regs[4*i+0],cpu_gpr[4*i+0]);
     printf("%3s : 0x%08x  ",regs[4*i+1],cpu_gpr[4*i+1]);

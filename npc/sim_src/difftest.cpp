@@ -79,7 +79,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 bool checkregs() {
     CPU_state ref;
     ref_difftest_regcpy(&ref, DIFFTEST_TO_DUT);
-    if(isa_difftest_checkregs(&ref)){
+    if(!isa_difftest_checkregs(&ref)){
         isa_reg_display();
         return 1;
     }else{
