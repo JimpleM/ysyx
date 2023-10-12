@@ -2,7 +2,7 @@ VERILATOR = verilator
 # project source
 VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
 SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" )
-SIM_SRCS += $(shell find $(abspath $(NPC_HOME)/sim_src/sdb) -name "*.cpp" )
+SIM_SRCS += $(shell find -L $(abspath $(NPC_HOME)/sim_src/sdb) -name "*.cpp" )
 
 VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
 
@@ -15,7 +15,6 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 LDFLAGS := -LDFLAGS -ldl
 
 INC_PATH += $(NPC_HOME)/sim_src/include
-INC_PATH += $(NPC_HOME)/sim_src/sdb
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
 
