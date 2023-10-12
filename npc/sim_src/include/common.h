@@ -15,4 +15,10 @@ typedef int32_t sword_t;
 #endif
 
 typedef word_t vaddr_t;
+
+typedef struct{
+    uint32_t gpr[32];
+    uint32_t pc;
+}CPU_state;
+
 #endif

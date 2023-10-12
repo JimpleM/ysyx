@@ -7,7 +7,8 @@
 #include <assert.h>
 
 #include "config.h"
-#include "risc32_lib.h"
+#include "common.h"
+#include "reg.h"
 
 //difftest
 void init_difftest(char *ref_so_file, long img_size, int port);
