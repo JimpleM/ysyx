@@ -1,14 +1,9 @@
 #ifndef __REG_H__
 #define __REG_H__
 
-#include <dlfcn.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 
-#include "config.h"
 #include "common.h"
-#include "debug.h"
+
 
 
 //reg

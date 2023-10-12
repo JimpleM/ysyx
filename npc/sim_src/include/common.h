@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+#include "config.h"
+#include "debug.h"
 
 #ifdef ISA64
 typedef uint64_t word_t;

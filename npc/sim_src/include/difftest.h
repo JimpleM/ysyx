@@ -2,13 +2,10 @@
 #define __DIFFTEST_H__
 
 #include <dlfcn.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 
-#include "config.h"
+
 #include "common.h"
-#include "debug.h"
+
 
 #include "pmem.h"
 #include "reg.h"
