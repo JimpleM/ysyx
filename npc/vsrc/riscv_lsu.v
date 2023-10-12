@@ -54,17 +54,20 @@ riscv_mux#(
   })
 );
 
-riscv_dff #(
-  .WIDTH(`DATA_WIDTH*3), 
-  .RESET_VAL(0)
-)riscv_dff_pc(
-    .clk    (clk),
-    .rst_n  (rst_n),
-    .wen    (1'b1),
-    .din    ({exu_result,src2,mask}),
-    .dout   ({waddr,wdata,wmask})
+// riscv_dff #(
+//   .WIDTH(`DATA_WIDTH*3), 
+//   .RESET_VAL(0)
+// )riscv_dff_pc(
+//     .clk    (clk),
+//     .rst_n  (rst_n),
+//     .wen    (1'b1),
+//     .din    ({exu_result,src2,mask}),
+//     .dout   ({waddr,wdata,wmask})
   
-);
+// );
+assign waddr = exu_result;
+assign wdata = src2;
+aasign wmask = mask;
 
 
 // sim
