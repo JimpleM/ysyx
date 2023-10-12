@@ -87,7 +87,7 @@ bool checkregs() {
     }
 }
 
-void difftest_step(vaddr_t pc, vaddr_t npc) {
+void difftest_step() {
 //   CPU_state ref_r;
 
 //   if (skip_dut_nr_inst > 0) {
