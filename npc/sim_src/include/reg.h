@@ -7,6 +7,8 @@
 #include <assert.h>
 
 #include "config.h"
+#include "common.h"
+#include "debug.h"
 #include "Vriscv32__Dpi.h"
 
 //reg
