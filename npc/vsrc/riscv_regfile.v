@@ -47,7 +47,7 @@ riscv_dff #(
 )riscv_dff_reg(
     .clk    (clk),
     .rst_n  (rst_n),
-    .wen    (rd_en),
+    .wen    (rd_en_t),
     .din    (rd_data),
     .dout   (gpr[rd_addr_t])
 );

@@ -82,7 +82,10 @@ int main(int argc, char *argv[]){
 	top->clk = !top->clk;
 	eval_dump;
 	top->clk = !top->clk;
-	
+	eval_dump;
+	top->clk = !top->clk;
+	eval_dump;
+	top->clk = !top->clk;
 	eval_dump;
 	delete top;
 	tfp->close();
