@@ -36,6 +36,9 @@ int main(int argc, char *argv[]){
 	top->i_rst_n = 0;
 	eval_dump;
 	top->clk = 1;
+	top->i_rst_n = 0;
+	eval_dump;
+	top->clk = 0;
 	top->i_rst_n = 1;
 	eval_dump;
 	init_npc(argc,argv);
