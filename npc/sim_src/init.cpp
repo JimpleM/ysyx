@@ -40,6 +40,7 @@ static int parse_args(int argc, char *argv[]) {
     switch (o) {
       case 'd': diff_so_file = optarg; break;
       case 'i': img_file = optarg; break;
+      case 1 : img_file = optarg; return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-l,--log=FILE           output log to FILE\n");
