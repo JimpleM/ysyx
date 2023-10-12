@@ -37,7 +37,7 @@ riscv_dff #(
     .clk    (clk),
     .rst_n  (rst_n),
     .wen    (1'b1),
-    .din    ({,rd_addr}),
+    .din    ({rd_en,rd_addr}),
     .dout   ({rd_en_t,rd_addr_t})
 );
 
