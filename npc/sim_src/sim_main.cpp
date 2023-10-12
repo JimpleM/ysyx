@@ -43,24 +43,26 @@ int main(int argc, char *argv[]){
 	eval_dump;
 	init_npc(argc,argv);
 
-	int count = 0;
+	// int count = 0;
 
 	while(!contextp->gotFinish()){
         top->clk = !top->clk;
-	
-		if(checkregs()){
-			break;
-		}
-		difftest_step();
+		if(top->clk){
+			if(checkregs()){
+				break;
+			}
+			difftest_step();
 
-		eval_dump;
+			eval_dump;
+		}
+		
 		if(stop_flag == 1){
 			break;
 		}
-		count++;
-		if(count >40){
-			break;
-		}
+		// count++;
+		// if(count >40){
+		// 	break;
+		// }
 	}
 	
 	// Log("nemu: %s at pc = " FMT_WORD,
