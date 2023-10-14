@@ -3,8 +3,22 @@
 
 static int is_batch_mode = false;
 
-void init_regex();
-void init_wp_pool();
+static char* rl_gets() {
+  static char *line_read = NULL;
+
+  if (line_read) {
+    free(line_read);
+    line_read = NULL;
+  }
+
+  line_read = readline("(nemu) ");
+
+  if (line_read && *line_read) {
+    add_history(line_read);
+  }
+
+  return line_read;
+}
 
 
 static int cmd_c(char *args) {
@@ -14,7 +28,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  npc_state.state = NEMU_QUIT;
+  npc_state.state = NPC_QUIT;
   return -1;
 }
 
@@ -33,7 +47,7 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
+  { "q", "Exit NPC", cmd_q },
 
   /* TODO: Add more commands */
   { "si", "Pause the program after run one step N times. N defaults is 1", cmd_si},
