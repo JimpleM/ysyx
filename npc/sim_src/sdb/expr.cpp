@@ -1,5 +1,6 @@
 #include "sdb.h"
 
+#include <regex.h>
 
 #define TOKENS_NUM  128
 enum {

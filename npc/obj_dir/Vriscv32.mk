@@ -45,10 +45,12 @@ VM_USER_LDLIBS = \
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	difftest \
+	expr \
 	init \
 	pmem \
 	reg \
 	sdb \
+	watchpoint \
 	sim_main \
 
 # User .cpp directories (from .cpp's on Verilator command line)
@@ -68,6 +70,8 @@ VPATH += $(VM_USER_DIR)
 
 difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/difftest.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+expr.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/expr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 init.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/init.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 pmem.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/pmem.cpp
@@ -75,6 +79,8 @@ pmem.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/pmem.cpp
 reg.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/reg.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 sdb.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/sdb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+watchpoint.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/watchpoint.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 sim_main.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sim_main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
