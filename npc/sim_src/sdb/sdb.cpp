@@ -1,7 +1,5 @@
-
 #include "sdb.h"
 
-#include "reg.h"
 
 static int is_batch_mode = false;
 

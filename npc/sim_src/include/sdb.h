@@ -3,6 +3,7 @@
 
 
 #include "common.h"
+#include "reg.h"
 
 NPCState npc_state;
 
