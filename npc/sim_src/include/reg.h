@@ -4,8 +4,6 @@
 
 #include "common.h"
 
-
-
 //reg
 void isa_reg_display();
 CPU_state package_cpu(uint32_t *gpr, uint32_t pc);

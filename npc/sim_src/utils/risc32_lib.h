@@ -2,7 +2,7 @@
 #include "common.h"
 
 #include "difftest.h"
-
+#include "init.h"
 
 
 #include "Vriscv32.h"
