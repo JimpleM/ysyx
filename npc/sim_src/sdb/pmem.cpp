@@ -48,7 +48,7 @@ void pmem_write(uint32_t addr, uint32_t data, int len){
 }
 
 static void out_of_bound(paddr_t addr) {
-  panic("address = " 0x%8x " is out of bound of pmem [" 0x%8x ", " 0x%8x "] at pc = " 0x%8x,
+  panic("address =  0x%8x  is out of bound of pmem [ 0x%8x , 0x%8x ] at pc =  0x%8x",
       addr, PMEM_LEFT, PMEM_RIGHT, cpu.pc);
 }
 
