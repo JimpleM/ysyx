@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "reg.h"
+#include "pmem.h"
 
 NPCState npc_state;
 
