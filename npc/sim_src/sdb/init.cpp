@@ -1,5 +1,7 @@
 #include "init.h"
 
+#include "difftest.h"
+
 #include <getopt.h>
 
 static char *img_file = NULL;
