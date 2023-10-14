@@ -59,12 +59,12 @@ CPU_state package_cpu(uint32_t *gpr, uint32_t pc){
 word_t isa_reg_str2val(const char *s, bool *success) {
   if(strcmp(s,"pc") == 0){
     // printf("$pc : 0x%08x\n",cpu.pc);
-    return cpu.pc;
+    return cpu_pc
   }
   for(int i=0; i<32; i++){
     if(strcmp(s,regs[i]) == 0){
     //printf("%3s : 0x%08x  ",regs[i],cpu.gpr[i]);
-      return cpu.gpr[i];
+      return cpu_gpr[i];
     }
   }
   printf("no such reg:%s\n",s);
