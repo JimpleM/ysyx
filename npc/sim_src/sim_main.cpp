@@ -11,19 +11,6 @@
 
 int stop_flag = 0;
 
-void riscv_pmem_read(int raddr, int *rdata, svBit ren){
-	if(ren){
-		*rdata = pmem_read((uint32_t)raddr,4);
-		if(*rdata == 0x00100073){
-			stop_flag = 1;
-		}
-	}
-}
-
-void riscv_pmem_write(int waddr, int wdata, int wmask){
-	pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
-}
-
 int main(int argc, char *argv[]){
 	init_sim()
 // initialize
