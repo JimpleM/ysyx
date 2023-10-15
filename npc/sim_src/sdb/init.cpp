@@ -61,7 +61,7 @@ static int parse_args(int argc, char *argv[]) {
 
 void init_sim(){
     contextp = new VerilatedContext;
-    contextp->commandArgs(argc, argv);
+    // contextp->commandArgs(argc, argv);
     top = new Vriscv32(contextp);
 
     tfp = new VerilatedVcdC;
