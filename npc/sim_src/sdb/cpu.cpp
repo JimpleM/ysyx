@@ -1,6 +1,7 @@
 #include "cpu.h"
 
 #include "reg.h"
+#include "difftest.h"
 
 #define MAX_INST_TO_PRINT 1000
 
@@ -62,7 +63,7 @@ static void trace_and_difftest() {
   difftest_step();
   if(checkregs()){
     // npc_state.state = NPC_STOP;
-    break;
+    return;
   }
 #endif
 
