@@ -8,6 +8,8 @@ extern VerilatedContext* contextp;
 extern Vriscv32* top;
 extern VerilatedVcdC* tfp;
 
+NPCState npc_state = { .state = NPC_STOP };
+
 CPU_state cpu = {};
 
 static void exec_once() {
@@ -69,7 +71,7 @@ static void trace_and_difftest() {
 
 
 static void execute(uint64_t n) {
-  uint64_t timer_start = get_time();
+  // uint64_t timer_start = get_time();
 
   for (;n > 0; n --) {
     exec_once();
@@ -90,12 +92,12 @@ void cpu_exec(uint64_t n) {
     default: npc_state.state = NPC_RUNNING;
   }
 
-  uint64_t timer_start = get_time();
+  // uint64_t timer_start = get_time();
 
   execute(n);
 
-  uint64_t timer_end = get_time();
-  g_timer += timer_end - timer_start;
+  // uint64_t timer_end = get_time();
+  // g_timer += timer_end - timer_start;
 
   switch (npc_state.state) {
     case NPC_RUNNING: npc_state.state = NPC_STOP; break;
