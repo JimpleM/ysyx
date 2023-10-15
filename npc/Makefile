@@ -18,7 +18,7 @@ INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
 INC_PATH += /usr/include/readline
 INCFLAGS += $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS) 
+CFLAGS += $(INCFLAGS) -lreadline
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
