@@ -6,7 +6,6 @@
 #include "reg.h"
 #include "pmem.h"
 
-NPCState npc_state;
 
 //sdb
 void sdb_set_batch_mode();
