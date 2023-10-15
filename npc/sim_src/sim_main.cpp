@@ -18,5 +18,5 @@ int main(int argc, char *argv[]){
 	sdb_mainloop();
 
 	finish_sim();
-	return 0;
+	return is_exit_status_bad();
 }

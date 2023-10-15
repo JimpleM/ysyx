@@ -6,6 +6,7 @@
 
 
 // cpu
+int is_exit_status_bad();
 void reset();
 void cpu_exec(uint64_t n);
 
