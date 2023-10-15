@@ -12,7 +12,7 @@
 #include "debug.h"
 #include "macro.h"
 
-
+#include "Vriscv32.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
