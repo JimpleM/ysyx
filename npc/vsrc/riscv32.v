@@ -1,21 +1,21 @@
 module riscv32(
 	input clk,
-	input i_rst_n
+	input rst_n
 );
 
-wire rst_n;
+// wire rst_n;
 
-riscv_dff #(
-  .WIDTH(1), 
-  .RESET_VAL(1'b0)
-)riscv_dff_pc(
-    .clk    (clk),
-    .rst_n  (1'b1),
-    .wen    (1'b1),
-    .din    (i_rst_n),
-    .dout   (rst_n)
+// riscv_dff #(
+//   .WIDTH(1), 
+//   .RESET_VAL(1'b0)
+// )riscv_dff_pc(
+//     .clk    (clk),
+//     .rst_n  (1'b1),
+//     .wen    (1'b1),
+//     .din    (i_rst_n),
+//     .dout   (rst_n)
   
-);
+// );
 
 // ifu
 wire [`DATA_WIDTH-1:0]      ifu_pc;

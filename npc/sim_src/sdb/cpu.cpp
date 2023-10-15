@@ -33,10 +33,10 @@ static void exec_once() {
 
 void reset(){
   for(int i=0; i<5; i++){
-    top->i_rst_n = 0;
+    top->rst_n = 0;
     exec_once();
   }
-  top->i_rst_n = 1;
+  top->rst_n = 1;
 }
 
 
