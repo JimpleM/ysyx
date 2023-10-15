@@ -1,8 +1,5 @@
 #include "reg.h"
 
-#include "Vriscv32__Dpi.h"
-#include "verilated_dpi.h"
-
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
   "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
@@ -10,15 +7,9 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
-uint32_t cpu_pc;
-extern "C" void set_pc_ptr(int pc) {
-  cpu_pc = (uint32_t) pc;
-}
+extern uint32_t cpu_pc;
+extern uint32_t *cpu_gpr = NULL;
 
-uint32_t *cpu_gpr = NULL;
-extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
-  cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
-}
 
 void isa_reg_display() {
   printf("---------------------------cpu reg display start ---------------------------\n");

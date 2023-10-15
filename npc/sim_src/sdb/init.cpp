@@ -8,6 +8,10 @@ static char *img_file = NULL;
 static char *diff_so_file = NULL;
 static int difftest_port = 1234;
 
+VerilatedContext* contextp = NULL;
+Vriscv32* top = NULL;
+VerilatedVcdC* tfp = NULL;
+
 extern uint8_t pmem [PMEM_SIZE];
 
 static long load_img() {
@@ -53,6 +57,18 @@ static int parse_args(int argc, char *argv[]) {
     }
   }
   return 0;
+}
+
+static void init_sim(){
+    contextp = new VerilatedContext;
+    contextp->commandArgs(argc, argv);
+    top = new Vriscv32(contextp);
+
+    tfp = new VerilatedVcdC;
+    contextp->traceEverOn(true);
+    top->trace(tfp,0);
+    tfp->open("wave.vcd");
+
 }
 
 void init_npc(int argc, char *argv[]) {

@@ -6,10 +6,15 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include "config.h"
 #include "debug.h"
 #include "marco.h"
+
+
+#include "verilated.h"
+#include "verilated_vcd_c.h"
 
 #ifdef ISA64
 typedef uint64_t word_t;
@@ -36,5 +41,11 @@ typedef struct {
   vaddr_t halt_pc;
   uint32_t halt_ret;
 } NPCState;
+
+
+
+#define FMT_WORD MUXDEF(CONFIG_ISA64, "0x%016" PRIx64, "0x%08" PRIx32)
+
+#define FMT_PADDR MUXDEF(PMEM64, "0x%016" PRIx64, "0x%08" PRIx32)
 
 #endif
