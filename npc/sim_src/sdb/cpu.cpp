@@ -81,7 +81,7 @@ static void execute(uint64_t n) {
 
   for (;!contextp->gotFinish() && n > 0; n --) {
     exec_once();
-      printf("%8x\n",pc);
+      printf("%8x\n",cpu_pc);
     trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
