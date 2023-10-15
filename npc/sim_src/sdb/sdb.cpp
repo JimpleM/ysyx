@@ -2,8 +2,8 @@
 
 #include "cpu.h"
 
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <readline.h>
+#include <history.h>
 
 static int is_batch_mode = false;
 
