@@ -10,7 +10,7 @@
 
 #include "config.h"
 #include "debug.h"
-#include "marco.h"
+#include "macro.h"
 
 
 #include "verilated.h"

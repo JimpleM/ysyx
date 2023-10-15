@@ -44,7 +44,9 @@ VM_USER_LDLIBS = \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+	cpu \
 	difftest \
+	dpic \
 	expr \
 	init \
 	pmem \
@@ -68,7 +70,11 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+dpic.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/dpic.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 expr.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
