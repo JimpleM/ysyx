@@ -60,11 +60,12 @@ static void trace_and_difftest() {
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(cpu_pc)); }
 
 #ifdef CONFIG_DIFFTEST
-  difftest_step();
   if(checkregs()){
     // npc_state.state = NPC_STOP;
     return;
   }
+  difftest_step();
+  
 #endif
 
 #ifdef CONFIG_WATCHPOINT
