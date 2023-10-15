@@ -15,6 +15,7 @@ LDFLAGS := -ldl
 
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
+INC_PATH += /usr/include
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS) 
 
