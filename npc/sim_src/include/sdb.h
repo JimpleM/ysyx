@@ -10,6 +10,9 @@ NPCState npc_state;
 
 //sdb
 void sdb_set_batch_mode();
+void init_sdb();
+void sdb_mainloop();
+
 
 //reg
 void init_regex();

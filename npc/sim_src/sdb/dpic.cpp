@@ -2,12 +2,14 @@
 
 #include "common.h"
 
+#include "pmem.h"
+
 #include "Vriscv32__Dpi.h"
 #include "verilated_dpi.h"
 
 
 bool riscv32_rst = false;
-
+int stop_flag = 0;
 
 uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;

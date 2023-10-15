@@ -10,6 +10,8 @@ extern VerilatedContext* contextp;
 extern Vriscv32* top;
 extern VerilatedVcdC* tfp;
 
+extern int stop_flag;
+
 NPCState npc_state = { .state = NPC_STOP };
 
 CPU_state cpu = {};
@@ -75,12 +77,13 @@ static void trace_and_difftest() {
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
 
-  for (;n > 0; n --) {
+  for (;!contextp->gotFinish() && n > 0; n --) {
     exec_once();
 
     trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
+    if (stop_flag == 1) break;
   }
 }
 
