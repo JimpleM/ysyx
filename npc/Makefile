@@ -13,9 +13,10 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS := -ldl
 
+#g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
-INC_PATH += /usr/include
+INC_PATH += /usr/include/SDL2
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS) 
 

@@ -37,6 +37,7 @@ VM_MODPREFIX = Vriscv32
 VM_USER_CFLAGS = \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/include \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/utils \
+	-I/usr/include \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
