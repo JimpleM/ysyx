@@ -93,7 +93,6 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
-  printf("%s\n",args);
   if (arg == NULL) {
     /* no argument given */
     cpu_exec(1);
