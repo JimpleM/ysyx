@@ -11,10 +11,12 @@ extern Vriscv32* top;
 extern VerilatedVcdC* tfp;
 
 extern int stop_flag;
+extern uint32_t cpu_pc;
 
 NPCState npc_state = { .state = NPC_STOP };
 
 CPU_state cpu = {};
+static bool g_print_step = false;
 
 static void exec_once() {
     top->clk = 1;
@@ -54,7 +56,7 @@ static void trace_and_difftest() {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
-  // if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(cpu_pc)); }
 
 #ifdef CONFIG_DIFFTEST
   difftest_step();
@@ -89,7 +91,7 @@ static void execute(uint64_t n) {
 
 
 void cpu_exec(uint64_t n) {
-  // g_print_step = (n < MAX_INST_TO_PRINT);
+  g_print_step = (n < MAX_INST_TO_PRINT);
   switch (npc_state.state) {
     case NPC_END: case NPC_ABORT:
       printf("Program execution has ended. To restart the program, exit NPC and run again.\n");
