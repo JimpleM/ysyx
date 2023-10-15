@@ -16,7 +16,7 @@ LDFLAGS := -ldl
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
-INC_PATH += /usr/include/SDL2
+INC_PATH += /usr/include/readline
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS) 
 
