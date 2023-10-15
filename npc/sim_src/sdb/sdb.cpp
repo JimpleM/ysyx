@@ -1,6 +1,6 @@
 #include "sdb.h"
 
-#include "adb.h"
+#include "cpu.h"
 
 #include <readline/readline.h>
 #include <readline/history.h>
