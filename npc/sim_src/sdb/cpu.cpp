@@ -78,10 +78,10 @@ static void trace_and_difftest() {
 
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
-  printf("%d\n",n);
+
   for (;!contextp->gotFinish() && n > 0; n --) {
     exec_once();
-
+      printf("%8x\n",pc);
     trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
