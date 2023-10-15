@@ -1,5 +1,7 @@
 #include "cpu.h"
 
+#include "reg.h"
+
 #define MAX_INST_TO_PRINT 1000
 
 #define dump_wave tfp->dump(contextp->time());  contextp->timeInc(1);
