@@ -40,11 +40,11 @@ uint32_t pmem_read(uint32_t addr, int len){
 
 void pmem_write(uint32_t addr, uint32_t data, int len){
     host_write(guest_to_host(addr), len, data);
-#ifdef CONFIG_MTRACE
-  if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
-    printf("write address:%08x data:%08x\n",addr,data);
-  } 
-#endif
+// #ifdef CONFIG_MTRACE
+//   if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
+//     printf("write address:%08x data:%08x\n",addr,data);
+//   } 
+// #endif
 }
 extern uint32_t cpu_pc;
 
