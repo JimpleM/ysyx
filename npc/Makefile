@@ -11,7 +11,8 @@ VERILATOR_FLAGS += --trace --cc --exe --build
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
-LDFLAGS := -ldl -lreadline
+LDFLAGS += -ldl 
+LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
 
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
