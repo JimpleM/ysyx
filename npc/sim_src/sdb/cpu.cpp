@@ -5,7 +5,7 @@
 
 #define MAX_INST_TO_PRINT 1000
 
-#define dump_wave tfp->dump(contextp->time());  contextp->timeInc(1);
+#define dump_wave contextp->timeInc(1); tfp->dump(contextp->time());  
 
 extern VerilatedContext* contextp;
 extern Vriscv32* top;
@@ -81,9 +81,9 @@ static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-    exec_once();
+      exec_once();
       printf("%8x\n",cpu_pc);
-    trace_and_difftest();
+      trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
     if (stop_flag == 1) break;
