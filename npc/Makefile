@@ -11,14 +11,13 @@ VERILATOR_FLAGS += --trace --cc --exe --build
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
-LDFLAGS := -ldl
+LDFLAGS := -ldl -lreadline
 
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
-INC_PATH += /usr/include/readline
 INCFLAGS += $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS) -lreadline
+CFLAGS += $(INCFLAGS) 
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
