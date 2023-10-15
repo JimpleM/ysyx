@@ -8,7 +8,7 @@ const char *regs[] = {
 };
 
 extern uint32_t cpu_pc;
-extern uint32_t *cpu_gpr = NULL;
+extern uint32_t *cpu_gpr;
 
 
 void isa_reg_display() {
