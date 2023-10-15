@@ -13,7 +13,7 @@ Vriscv32::Vriscv32(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vriscv32__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
-    , i_rst_n{vlSymsp->TOP.i_rst_n}
+    , rst_n{vlSymsp->TOP.rst_n}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
