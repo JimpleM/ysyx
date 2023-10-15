@@ -78,7 +78,7 @@ static void trace_and_difftest() {
 
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
-
+  printf("%d\n",n);
   for (;!contextp->gotFinish() && n > 0; n --) {
     exec_once();
 
