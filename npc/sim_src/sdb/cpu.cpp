@@ -76,7 +76,7 @@ static void trace_and_difftest() {
 #ifdef CONFIG_DIFFTEST
   difftest_step();
   if(checkregs()){
-    // npc_state.state = NPC_STOP;
+    npc_state.state = NPC_ABORT;
     return;
   }
 #endif
