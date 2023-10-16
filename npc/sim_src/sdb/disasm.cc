@@ -22,14 +22,14 @@
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCDisassembler/MCDisassembler.h"
 #include "llvm/MC/MCInstPrinter.h"
-#if LLVM_VERSION_MAJOR >= 14
+// #if LLVM_VERSION_MAJOR >= 14
 #include "llvm/MC/TargetRegistry.h"
-#if LLVM_VERSION_MAJOR >= 15
-#include "llvm/MC/MCSubtargetInfo.h"
-#endif
-#else
-#include "llvm/Support/TargetRegistry.h"
-#endif
+// #if LLVM_VERSION_MAJOR >= 15
+// #include "llvm/MC/MCSubtargetInfo.h"
+// #endif
+// #else
+// #include "llvm/Support/TargetRegistry.h"
+// #endif
 #include "llvm/Support/TargetSelect.h"
 
 #if defined(__GNUC__) && !defined(__clang__)
@@ -76,13 +76,13 @@ extern "C" void init_disasm(const char *triple) {
   gMII = target->createMCInstrInfo();
   gMRI = target->createMCRegInfo(gTriple);
   auto AsmInfo = target->createMCAsmInfo(*gMRI, gTriple, MCOptions);
-#if LLVM_VERSION_MAJOR >= 13
+// #if LLVM_VERSION_MAJOR >= 13
    auto llvmTripleTwine = Twine(triple);
    auto llvmtriple = llvm::Triple(llvmTripleTwine);
    auto Ctx = new llvm::MCContext(llvmtriple,AsmInfo, gMRI, nullptr);
-#else
-   auto Ctx = new llvm::MCContext(AsmInfo, gMRI, nullptr);
-#endif
+// #else
+//    auto Ctx = new llvm::MCContext(AsmInfo, gMRI, nullptr);
+// #endif
   gDisassembler = target->createMCDisassembler(*gSTI, *Ctx);
   gIP = target->createMCInstPrinter(llvm::Triple(gTriple),
       AsmInfo->getAssemblerDialect(), *AsmInfo, *gMII, *gMRI);
