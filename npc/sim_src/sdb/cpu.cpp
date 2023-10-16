@@ -3,7 +3,7 @@
 #include "reg.h"
 #include "difftest.h"
 #include "pmem.h"
-#include "itrace.h"
+#include "trace.h"
 
 #define MAX_INST_TO_PRINT 1000
 

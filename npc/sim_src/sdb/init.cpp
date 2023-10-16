@@ -2,7 +2,7 @@
 
 #include "difftest.h"
 #include "sdb.h"
-#include "itrace.h"
+#include "trace.h"
 
 #include <getopt.h>
 
