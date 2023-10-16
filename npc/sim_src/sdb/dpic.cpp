@@ -31,8 +31,8 @@ extern "C" void get_riscv32_rst(svBit rst_n) {
   }
 }
 
-int addr;
-int data;
+int addr = 0;
+int data = 0;
 
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
