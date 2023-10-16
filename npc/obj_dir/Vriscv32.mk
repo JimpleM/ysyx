@@ -58,6 +58,7 @@ VM_USER_CLASSES = \
 	disasm \
 	dpic \
 	expr \
+	ftrace \
 	init \
 	pmem \
 	reg \
@@ -89,6 +90,8 @@ disasm.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/disasm.cc
 dpic.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/dpic.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 expr.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/expr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+ftrace.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/ftrace.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 init.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/init.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

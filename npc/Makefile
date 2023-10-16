@@ -30,6 +30,8 @@ DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
 IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
 IMG = --img=${IMGS}
+ELFFILE = ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.elf
+ELF = --elf=${ELFFILE}
 
 all:defualt
 #	@echo "Write this Makefile by your self."
@@ -40,7 +42,7 @@ sim:
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
-	./obj_dir/V${TOPNAME} ${DIFF} ${IMG} 
+	./obj_dir/V${TOPNAME} ${DIFF} ${IMG} ${ELF}
 
 wave:
 	gtkwave wave.vcd
