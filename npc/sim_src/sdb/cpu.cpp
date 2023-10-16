@@ -92,9 +92,7 @@ static void trace_and_difftest() {
 
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
-  static char dis_str[64];
-  static uint32_t pc = 0x80000000;
-  static uint32_t inst_data = 0x00000413;
+  static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
       
@@ -102,7 +100,7 @@ static void execute(uint64_t n) {
       #ifdef CONFIG_ITRACE
 
         cpu_inst = pmem_read((uint32_t)cpu_pc,4);
-        disassemble(dis_str, sizeof(dis_str),pc, (uint8_t *)&inst_data, 4);
+        disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
         printf("%s\n",p);
       #else
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
