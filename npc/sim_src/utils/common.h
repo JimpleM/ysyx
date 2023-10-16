@@ -12,7 +12,10 @@
 #include "debug.h"
 #include "macro.h"
 
+#ifndef __STDC_FORMAT_MACROS
 #define __STDC_FORMAT_MACROS
+#endif
+
 
 #include "Vriscv32.h"
 #include "verilated.h"
