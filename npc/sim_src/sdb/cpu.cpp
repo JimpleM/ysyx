@@ -107,7 +107,10 @@ static void execute(uint64_t n) {
       #endif
       
       if (npc_state.state != NPC_RUNNING) break;
-      if (stop_flag == 1) break;
+      if (stop_flag == 1){
+          npc_state.state = NPC_END
+          break;
+      } 
 
       exec_once();
       trace_and_difftest();
