@@ -76,7 +76,7 @@ static void trace_and_difftest() {
 #ifdef CONFIG_DIFFTEST
   difftest_step();
   if(checkregs()){
-    nemu_state.halt_pc = pc;
+    nemu_state.halt_pc = cpu_pc;
     npc_state.state = NPC_ABORT;
     return;
   }
