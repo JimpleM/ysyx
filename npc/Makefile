@@ -45,7 +45,7 @@ sim:
 
 run:sim
 	@echo ${ARGS} $(IMG)
-	./obj_dir/V${TOPNAME} $(IMG) ${ARGS}
+	./obj_dir/V${TOPNAME} ${ARGS} $(IMG)
 
 wave:
 	gtkwave wave.vcd
