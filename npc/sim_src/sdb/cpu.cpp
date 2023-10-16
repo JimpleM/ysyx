@@ -45,9 +45,10 @@ static void exec_once() {
     //反汇编结果
     char p[100];
 #ifdef CONFIG_ITRACE
-  cpu_inst = pmem_read((uint32_t)cpu_pc,4);
   printf("%x\n",cpu_pc);
   printf("%x\n",cpu_inst);
+  cpu_inst = pmem_read((uint32_t)cpu_pc,4);
+
   disassemble(p, sizeof(p),(uint64_t)cpu_pc, (uint8_t *)&cpu_inst, 4);
   // printf("%s\n",p);
 #else
