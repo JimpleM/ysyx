@@ -1,6 +1,8 @@
 #include "init.h"
 
 #include "difftest.h"
+#include "sdb.h"
+#include "difftest.h"
 
 #include <getopt.h>
 
@@ -83,5 +85,11 @@ void init_npc(int argc, char *argv[]) {
     long img_size = load_img();
 
     init_difftest(diff_so_file, img_size, difftest_port);
+
+	  init_sdb();
+
+#ifdef CONFIG_ITRACE
+    init_disasm("riscv32");
+#endif
     
 }

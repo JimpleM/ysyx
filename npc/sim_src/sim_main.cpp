@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 
 	init_npc(argc,argv);
 
-	init_sdb();
+
 	
 	sdb_mainloop();
 
