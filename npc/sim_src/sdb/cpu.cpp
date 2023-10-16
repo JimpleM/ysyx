@@ -13,6 +13,7 @@ extern VerilatedVcdC* tfp;
 
 extern int stop_flag;
 extern uint32_t cpu_pc;
+uint32_t cpu_inst = 0;
 
 NPCState npc_state = { .state = NPC_STOP };
 
@@ -39,11 +40,11 @@ static void exec_once() {
     dump_wave;
 
     //反汇编结果
-#ifndef CONFIG_ISA_loongarch32r
+#ifndef CONFIG_ITRACE
+  char p[100];
+  cpu_inst = pmem_read((uint32_t)raddr,4);
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-  disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
-      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-
+  disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
 #else
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
