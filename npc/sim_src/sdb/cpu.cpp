@@ -4,6 +4,7 @@
 #include "difftest.h"
 #include "pmem.h"
 #include "trace.h"
+#include "sdb.h"
 
 #define MAX_INST_TO_PRINT 1000
 
