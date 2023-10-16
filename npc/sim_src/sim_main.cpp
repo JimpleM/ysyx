@@ -3,7 +3,7 @@
 #include "init.h"
 #include "sdb.h"
 
-#include "risc32_lib.h"
+#include "riscv_lib.h"
 
 
 int main(int argc, char *argv[]){
