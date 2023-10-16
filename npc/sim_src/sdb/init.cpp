@@ -41,14 +41,16 @@ static long load_img() {
 
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
+    {"batch"    , no_argument      , NULL, 'b'},
     {"img"      , required_argument, NULL, 'i'},
     {"diff"     , required_argument, NULL, 'd'},
     {"elf"      , required_argument, NULL, 'e'},
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, ":i:d:e:", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, "-b:i:d:e:", table, NULL)) != -1) {
     switch (o) {
+      case 'b': sdb_set_batch_mode(); break;
       case 'd': diff_so_file = optarg; break;
       case 'i': img_file = optarg; break;
       case 'e': elf_file = optarg; break;
