@@ -13,10 +13,10 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
-NPCFLAGS += --batch
-NPCFLAGS += --elf $(IMAGE).elf
-NPCFLAGS += --img $(IMAGE).bin
-NPCFLAGS += --diff ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
+NPCFLAGS += -b
+NPCFLAGS += -e $(IMAGE).elf
+NPCFLAGS += -i $(IMAGE).bin
+NPCFLAGS += -d ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
