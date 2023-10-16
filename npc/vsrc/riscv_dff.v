@@ -10,6 +10,9 @@ module riscv_dff #(
   output reg [WIDTH-1:0] dout
   
 );
+inital begin
+  dout = RESET_VAL;
+end
   always @(posedge clk) begin
     if (!rst_n) dout <= RESET_VAL;
     else if (wen) dout <= din;
