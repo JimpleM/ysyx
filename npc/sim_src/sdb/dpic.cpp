@@ -46,7 +46,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 			printf("read address:%08x data:%08x\n",raddr,*rdata);
 		}
 		addr = raddr;
-		data = rdata;
+		data = *rdata;
 	}
 #endif
 	}
