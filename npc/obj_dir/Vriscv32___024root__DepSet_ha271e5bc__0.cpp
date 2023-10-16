@@ -1130,8 +1130,11 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b 
         = (((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                      >> 0x1fU)) << 0x1fU) | (0x7fffffffU 
-                                             & ((2U 
-                                                 == (IData)(vlSelf->riscv32__DOT__idu_alu_opt))
+                                             & (((2U 
+                                                  == (IData)(vlSelf->riscv32__DOT__idu_alu_opt)) 
+                                                 & (IData)(
+                                                           (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                            >> 0x1fU)))
                                                  ? 
                                                 (~ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))
                                                  : (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))));
@@ -2688,8 +2691,11 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b 
         = (((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                      >> 0x1fU)) << 0x1fU) | (0x7fffffffU 
-                                             & ((2U 
-                                                 == (IData)(vlSelf->riscv32__DOT__idu_alu_opt))
+                                             & (((2U 
+                                                  == (IData)(vlSelf->riscv32__DOT__idu_alu_opt)) 
+                                                 & (IData)(
+                                                           (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                            >> 0x1fU)))
                                                  ? 
                                                 (~ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))
                                                  : (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))));
