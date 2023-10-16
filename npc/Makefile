@@ -33,7 +33,7 @@ IMG = --img=${IMGS}
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
-override ARGS ?= ${DIFF} ${IMG} ${ELF} #--batch
+override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG)#--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
@@ -44,7 +44,7 @@ sim:
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
-	./obj_dir/V${TOPNAME} ${ARGS} $(IMG)
+	./obj_dir/V${TOPNAME} ${ARGS}
 
 wave:
 	gtkwave wave.vcd
