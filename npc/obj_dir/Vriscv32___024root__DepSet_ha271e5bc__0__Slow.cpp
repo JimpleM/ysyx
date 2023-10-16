@@ -1525,10 +1525,6 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
         = ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__hit)
             ? vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out
             : 0U);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[2U] 
-        = (0xd00000000ULL | (QData)((IData)((1U & (~ 
-                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                                                    >> 0x1fU))))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
         = (0xc00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
                                              >> 0x1fU))));
@@ -1538,9 +1534,6 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
         = (0x800000000ULL | (QData)((IData)((1U & (~ (IData)(
                                                              (0U 
                                                               != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data)))))));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[2U] 
-        = (1U & (~ (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                    >> 0x1fU)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
         = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
            >> 0x1fU);
@@ -1548,6 +1541,21 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
         = (0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[5U] 
         = (1U & (~ (IData)((0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data))));
+    vlSelf->__VdfgTmp_hc47b4975__0 = (1U & (~ ((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                                                >> 0x1fU) 
+                                               ^ (IData)(
+                                                         (1ULL 
+                                                          & ((1ULL 
+                                                              + 
+                                                              ((QData)((IData)(
+                                                                               (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                                >> 0x20U))) 
+                                                               + (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b)))) 
+                                                             >> 0x20U))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[2U] 
+        = (0xd00000000ULL | (QData)((IData)(vlSelf->__VdfgTmp_hc47b4975__0)));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[2U] 
+        = vlSelf->__VdfgTmp_hc47b4975__0;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out 
         = ((- (IData)(((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key) 
                        == vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list
@@ -1931,6 +1939,7 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->__VdfgTmp_heb12ce95__0 = 0;
     vlSelf->__VdfgTmp_heb135ca6__0 = 0;
     vlSelf->__VdfgTmp_h2d99613b__0 = 0;
+    vlSelf->__VdfgTmp_hc47b4975__0 = 0;
     vlSelf->__VdfgTmp_ha3892a3b__0 = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__4__rdata = 0;
