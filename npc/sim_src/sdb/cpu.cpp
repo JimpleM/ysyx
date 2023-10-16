@@ -16,6 +16,7 @@ extern VerilatedVcdC* tfp;
 extern int stop_flag;
 extern uint32_t cpu_pc;
 uint32_t cpu_inst = 0;
+uint32_t cpu_lpc = 0x80000000;
 
 NPCState npc_state = { .state = NPC_STOP };
 
@@ -95,16 +96,18 @@ static void execute(uint64_t n) {
   static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-      
+
+      cpu_inst = pmem_read((uint32_t)cpu_pc,4);
+      cpu_lpc  = cpu_pc;
         //反汇编结果
       #ifdef CONFIG_ITRACE
-
-        cpu_inst = pmem_read((uint32_t)cpu_pc,4);
         disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
         printf("%08x %s\n",cpu_pc,p);
       #else
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif
+
+
       
       if (npc_state.state != NPC_RUNNING) break;
       if (stop_flag == 1){
@@ -114,6 +117,10 @@ static void execute(uint64_t n) {
 
       exec_once();
       trace_and_difftest();
+
+      #ifdef CONFIG_FTRACE
+        ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
+      #endif
 
     
   }
