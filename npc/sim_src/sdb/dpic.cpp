@@ -41,7 +41,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 			stop_flag = 1;
 		}
 #ifdef CONFIG_MTRACE
-	if(addr != raddr && data != rdata){
+	if(addr != raddr && data != *rdata){
 		if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
 			printf("read address:%08x data:%08x\n",raddr,*rdata);
 		}
