@@ -1,5 +1,5 @@
-#ifndef __DISASM_H__
-#define __DISASM_H__
+#ifndef __ITRACE_H__
+#define __ITRACE_H__
 
 #include <inttypes.h>
 
