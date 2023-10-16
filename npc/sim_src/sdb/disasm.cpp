@@ -98,7 +98,7 @@ void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
   MCInst inst;
   llvm::ArrayRef<uint8_t> arr(code, nbyte);
   uint64_t dummy_size = 0;
-  printf("%d\n",arr[0]);
+  printf("%d,%d,%d,%d\n",arr[0],arr[1],arr[2],arr[3]);
   gDisassembler->getInstruction(inst, dummy_size, arr, pc, llvm::nulls());
   std::string s;
   raw_string_ostream os(s);
