@@ -7,8 +7,8 @@ module riscv_ex_alu(
     output  	    [`DATA_WIDTH-1:0]         alu_out_data
 );
 
-wire [`DATA_WIDTH-1:0] add_data;
-wire [`DATA_WIDTH-1:0] sub_data;
+wire signed[`DATA_WIDTH-1:0] add_data;
+wire signed[`DATA_WIDTH-1:0] sub_data;
 wire [`DATA_WIDTH-1:0] usub_data;
 
 assign add_data = alu_a_data + alu_b_data;
