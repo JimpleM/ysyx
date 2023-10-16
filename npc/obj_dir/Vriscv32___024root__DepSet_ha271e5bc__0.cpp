@@ -1283,12 +1283,12 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
             ? vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out
             : 0U);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[2U] 
-        = (0xd00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                                             >> 0x1fU))));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
-        = (0xc00000000ULL | (QData)((IData)((1U & (~ 
+        = (0xd00000000ULL | (QData)((IData)((1U & (~ 
                                                    (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
                                                     >> 0x1fU))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
+        = (0xc00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                                             >> 0x1fU))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[4U] 
         = (0x900000000ULL | (QData)((IData)((0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[5U] 
@@ -1296,11 +1296,11 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
                                                              (0U 
                                                               != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data)))))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[2U] 
-        = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-           >> 0x1fU);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
         = (1U & (~ (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
                     >> 0x1fU)));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
+        = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+           >> 0x1fU);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[4U] 
         = (0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[5U] 
@@ -2829,12 +2829,12 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
             ? vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out
             : 0U);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[2U] 
-        = (0xd00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-                                             >> 0x1fU))));
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
-        = (0xc00000000ULL | (QData)((IData)((1U & (~ 
+        = (0xd00000000ULL | (QData)((IData)((1U & (~ 
                                                    (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
                                                     >> 0x1fU))))));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[3U] 
+        = (0xc00000000ULL | (QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+                                             >> 0x1fU))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[4U] 
         = (0x900000000ULL | (QData)((IData)((0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list[5U] 
@@ -2842,11 +2842,11 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
                                                              (0U 
                                                               != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data)))))));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[2U] 
-        = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
-           >> 0x1fU);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
         = (1U & (~ (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
                     >> 0x1fU)));
+    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[3U] 
+        = (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data 
+           >> 0x1fU);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[4U] 
         = (0U != vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list[5U] 
