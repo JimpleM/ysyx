@@ -102,7 +102,6 @@ static void execute(uint64_t n) {
       #ifdef CONFIG_ITRACE
 
         cpu_inst = pmem_read((uint32_t)cpu_pc,4);
-          printf("afsf\n");
 
         disassemble(dis_str, sizeof(dis_str),pc, (uint8_t *)&inst_data, 4);
         // printf("%s\n",p);
