@@ -21,6 +21,8 @@ NPCState npc_state = { .state = NPC_STOP };
 CPU_state cpu = {};
 static bool g_print_step = false;
 
+ extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+
 int is_exit_status_bad() {
   int good = (npc_state.state == NPC_END && npc_state.halt_ret == 0) ||
     (npc_state.state == NPC_QUIT);
@@ -44,7 +46,7 @@ static void exec_once() {
     char p[100];
 #ifdef CONFIG_ITRACE
   cpu_inst = pmem_read((uint32_t)cpu_pc,4);
- extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+
   disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
   printf("%s\n",p);
 #else
