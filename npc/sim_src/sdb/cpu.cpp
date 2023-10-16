@@ -42,18 +42,6 @@ static void exec_once() {
     
     dump_wave;
 
-    //反汇编结果
-    char p[100];
-#ifdef CONFIG_ITRACE
-  printf("%x\n",cpu_pc);
-  printf("%x\n",cpu_inst);
-  cpu_inst = pmem_read((uint32_t)cpu_pc,4);
-
-  // disassemble(p, sizeof(p),(uint64_t)cpu_pc, (uint8_t *)&cpu_inst, 4);
-  // printf("%s\n",p);
-#else
-  p[0] = '\0'; // the upstream llvm does not support loongarch32r
-#endif
 }
 
 void reset(){
@@ -104,10 +92,24 @@ static void trace_and_difftest() {
 
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
+  char p[100];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
       exec_once();
-      printf("%8x\n",cpu_pc);
+        //反汇编结果
+    
+      #ifdef CONFIG_ITRACE
+        printf("%x\n",cpu_pc);
+        printf("%x\n",cpu_inst);
+        cpu_inst = pmem_read((uint32_t)cpu_pc,4);
+
+        // disassemble(p, sizeof(p),(uint64_t)cpu_pc, (uint8_t *)&cpu_inst, 4);
+        // printf("%s\n",p);
+      #else
+        p[0] = '\0'; // the upstream llvm does not support loongarch32r
+      #endif
+      
+      
       trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
