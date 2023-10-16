@@ -13,12 +13,15 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS += -ldl 
 LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
+LDFLAGS += $(shell llvm-config --libs)	#llvm库
 
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
 INCFLAGS += $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS) 
+CFLAGS += $(INCFLAGS)
+LLVM_FLAGS = $(shell llvm-config --cxxflags) -fPIE
+CFLAGS += $(LLVM_FLAGS)
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
