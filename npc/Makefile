@@ -33,7 +33,7 @@ override IMG = --img=${IMGS}
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
-override ARGS = ${DIFF} ${IMG} ${ELF} --batch
+override ARGS = ${DIFF} ${IMG} ${ELF} #--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
