@@ -26,7 +26,7 @@ riscv_mux#(
   .default_out      (0),
   .out              (alu_out_data),
   .lut({`ALU_ADD    , add_data,                                           
-        `ALU_SUB    , usub_data,
+        `ALU_SUB    , add_data,
         `ALU_SLL    , alu_a_data << alu_b_data[5:0],
         `ALU_SLT    , {{(`DATA_WIDTH-1){1'b0}},sub_data[`DATA_WIDTH-1]},
         `ALU_SLTU   , {{(`DATA_WIDTH-1){1'b0}},carry_flag},
