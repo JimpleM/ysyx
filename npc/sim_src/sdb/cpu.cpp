@@ -21,7 +21,7 @@ NPCState npc_state = { .state = NPC_STOP };
 CPU_state cpu = {};
 static bool g_print_step = false;
 
- extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+//  extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 
 int is_exit_status_bad() {
   int good = (npc_state.state == NPC_END && npc_state.halt_ret == 0) ||
