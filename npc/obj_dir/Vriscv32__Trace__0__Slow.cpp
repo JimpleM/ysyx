@@ -691,10 +691,12 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
                                - (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))),32);
     bufp->fullIData(oldp+129,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b),32);
     bufp->fullBit(oldp+130,((1U & (IData)((1ULL & (
-                                                   ((QData)((IData)(
-                                                                    (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                                     >> 0x20U))) 
-                                                    + (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b))) 
+                                                   (1ULL 
+                                                    + 
+                                                    ((QData)((IData)(
+                                                                     (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                      >> 0x20U))) 
+                                                     + (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b)))) 
                                                    >> 0x20U))))));
     __Vtemp_h30a55d20__0[0U] = (IData)((0xb00000000ULL 
                                         | (QData)((IData)(

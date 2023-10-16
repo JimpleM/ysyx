@@ -21,7 +21,7 @@ assign add_data = alu_a_data + alu_b_data;
 assign {a,sub_data} = alu_a_data + temp_b + 1;
 assign {carry_flag,usub_data} = {1'b0,alu_a_data} - {1'b0,alu_b_data};
 
-assign signed_flag = a != alu_a_data[`DATA_WIDTH-1];
+assign signed_flag = a == alu_a_data[`DATA_WIDTH-1];
 
 riscv_mux#(
   .NR_KEY      (11), 

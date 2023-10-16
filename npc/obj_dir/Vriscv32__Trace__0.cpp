@@ -184,10 +184,12 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                   - (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))),32);
         bufp->chgIData(oldp+128,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b),32);
         bufp->chgBit(oldp+129,((1U & (IData)((1ULL 
-                                              & (((QData)((IData)(
-                                                                  (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                                   >> 0x20U))) 
-                                                  + (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b))) 
+                                              & ((1ULL 
+                                                  + 
+                                                  ((QData)((IData)(
+                                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                    >> 0x20U))) 
+                                                   + (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b)))) 
                                                  >> 0x20U))))));
         __Vtemp_h30a55d20__0[0U] = (IData)((0xb00000000ULL 
                                             | (QData)((IData)(
