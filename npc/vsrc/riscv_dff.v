@@ -10,7 +10,7 @@ module riscv_dff #(
   output reg [WIDTH-1:0] dout
   
 );
-inital begin
+initial begin
   dout = RESET_VAL;
 end
   always @(posedge clk) begin
