@@ -32,7 +32,7 @@ riscv_dff #(
   
 );
 initial begin
-  pc = 32'h8000_0000;
+  assign pc = 32'h8000_0000;
 end
 
 endmodule
