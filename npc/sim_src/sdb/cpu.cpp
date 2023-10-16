@@ -103,7 +103,7 @@ static void execute(uint64_t n) {
 
         cpu_inst = pmem_read((uint32_t)cpu_pc,4);
         disassemble(dis_str, sizeof(dis_str),pc, (uint8_t *)&inst_data, 4);
-        // printf("%s\n",p);
+        printf("%s\n",p);
       #else
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif

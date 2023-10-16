@@ -33,7 +33,7 @@ uint32_t pmem_read(uint32_t addr, int len){
     printf("read address:%08x data:%08x\n",addr,ret);
   } 
 #endif
-    printf("read addr:%x data:%x\n",addr,ret);
+    // printf("read addr:%x data:%x\n",addr,ret);
     return ret;
 }
 
