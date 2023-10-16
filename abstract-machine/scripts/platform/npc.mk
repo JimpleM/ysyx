@@ -16,6 +16,7 @@ LDFLAGS   += --gc-sections -e _start
 NPCFLAGS += --batch
 NPCFLAGS += --elf $(IMAGE).elf
 NPCFLAGS += --img $(IMAGE).bin
+NPCFLAGS += --diff ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
