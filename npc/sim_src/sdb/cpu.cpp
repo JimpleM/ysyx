@@ -49,6 +49,7 @@ static void exec_once() {
 #else
   p[0] = '\0'; // the upstream llvm does not support loongarch32r
 #endif
+  printf("%s\n",p);
 }
 
 void reset(){
