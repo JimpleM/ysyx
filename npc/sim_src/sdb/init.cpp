@@ -50,7 +50,7 @@ static int parse_args(int argc, char *argv[]) {
   int o;
   while ( (o = getopt_long(argc, argv, "-b:i:d:e:", table, NULL)) != -1) {
     switch (o) {
-      case 'b': sdb_set_batch_mode(); break;
+      case 'b': sdb_set_batch_mode(); printf("batch\n");break;
       case 'd': diff_so_file = optarg; break;
       case 'i': img_file = optarg; break;
       case 'e': elf_file = optarg; break;
