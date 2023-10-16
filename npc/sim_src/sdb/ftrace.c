@@ -1,5 +1,5 @@
-#include <utils.h>
-#include <common.h>
+#include "sdb.h"
+
 #include <elf.h>
 
 #define FUNC_NUM	50

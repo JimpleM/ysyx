@@ -2,12 +2,13 @@
 
 #include "difftest.h"
 #include "sdb.h"
-#include "disasm.h"
+#include "itrace.h"
 
 #include <getopt.h>
 
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
+static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 VerilatedContext* contextp = NULL;
@@ -42,13 +43,15 @@ static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     {"img"      , required_argument, NULL, 'i'},
     {"diff"     , required_argument, NULL, 'd'},
+    {"elf"      , required_argument, NULL, 'e'},
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, ":i:d", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, ":i:d:e:", table, NULL)) != -1) {
     switch (o) {
       case 'd': diff_so_file = optarg; break;
       case 'i': img_file = optarg; break;
+      case 'e': elf_file = optarg; break;
       case 1 : img_file = optarg; return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -90,6 +93,10 @@ void init_npc(int argc, char *argv[]) {
 
 #ifdef CONFIG_ITRACE
     init_disasm("riscv32");
+#endif
+
+#ifdef CONFIG_FTRACE
+  init_ftrace(elf_file);
 #endif
     
 }
