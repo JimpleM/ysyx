@@ -1,8 +1,10 @@
-#include <stdio.h>
+#include <stdint.h>
+int32_t fun1(int32_t a, int32_t b) { return a + b; }
+uint32_t fun2(uint32_t a, uint32_t b) { return a + b; }
+
 int main(){
-	for(int i=0; i<32;i++){
-		printf("assign gpr[%d] = rd_en &&(rd_addr == 5'd%d) ? rd_data : gpr[%d];\n",i,i,i);
-	}
+	fun1(1,2);
+	fun2(3,4);
 	
 	return 0;
 }
