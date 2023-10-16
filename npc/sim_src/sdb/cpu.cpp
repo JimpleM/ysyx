@@ -1,9 +1,9 @@
 #include "cpu.h"
 
 #include "reg.h"
-// #include "difftest.h"
+#include "difftest.h"
 #include "pmem.h"
-#include "disasm.h"
+// #include "disasm.h"
 
 #define MAX_INST_TO_PRINT 1000
 
