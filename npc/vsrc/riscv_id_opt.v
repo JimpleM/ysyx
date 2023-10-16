@@ -23,6 +23,7 @@ always @(*)begin
                 3'b101 :begin alu_opt = `ALU_SUB ;  end     //bge
                 3'b110 :begin alu_opt = `ALU_SUBU;  end     //bltu
                 3'b111 :begin alu_opt = `ALU_SUBU;  end     //bgeu
+                default : alu_opt = 4'd0;
             endcase
         end
         `LOAD  :begin alu_opt = `ALU_ADD;    end            //lb,lh,lw,lbu,lhu
@@ -40,8 +41,10 @@ always @(*)begin
                     case(funct7)                       
                         7'b000_0000 : begin alu_opt = `ALU_SRL;     end //srli
                         7'b010_0000 : begin alu_opt = `ALU_SRA;     end //srai
+                        default : alu_opt = 4'd0;
                     endcase
                 end
+                default : alu_opt = 4'd0;
             endcase
         end
         `OP    :begin 
@@ -50,6 +53,7 @@ always @(*)begin
                     case(funct7)
                         7'b000_0000 : begin alu_opt = `ALU_ADD;     end // add
                         7'b010_0000 : begin alu_opt = `ALU_SUB;     end // sub
+                        default : alu_opt = 4'd0;
                     endcase                                            
                 end                                                    
                 3'b001:begin alu_opt = `ALU_SLL;end                    // sll
@@ -60,15 +64,17 @@ always @(*)begin
                     case(funct7)                                       
                         7'b000_0000 : begin alu_opt = `ALU_SRL;     end // srl
                         7'b010_0000 : begin alu_opt = `ALU_SRA;     end // sra
+                        default : alu_opt = 4'd0;
                     endcase
                 end
                 3'b110:begin alu_opt = `ALU_OR ;end                     // or
                 3'b111:begin alu_opt = `ALU_AND;end                     // and
+                default : alu_opt = 4'd0;
             endcase
         end
         `FENCE :begin alu_opt = `ALU_AND; end
         `SYS   :begin alu_opt = `ALU_AND; end
-
+        default : alu_opt = 4'd0;
     endcase
 
 end
