@@ -92,7 +92,7 @@ static void trace_and_difftest() {
 
 static void execute(uint64_t n) {
   // uint64_t timer_start = get_time();
-  char p[100];
+  static char p[100];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
       
