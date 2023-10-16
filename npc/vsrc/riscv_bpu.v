@@ -35,6 +35,6 @@ riscv_dff #(
 );
 
 assign tpc = 32'h8000_0000;
-assign pc = rst_n ? npc : tpc;
+assign pc = rst_n == 1'b1 ? npc : tpc;
 
 endmodule
