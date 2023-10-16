@@ -31,26 +31,38 @@ extern "C" void get_riscv32_rst(svBit rst_n) {
   }
 }
 
+uint32_t addr;
+uint32_t data;
+
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		*rdata = pmem_read((uint32_t)raddr,4);
-		#ifdef CONFIG_MTRACE
-			if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
-				printf("read address:%08x data:%08x\n",raddr,*rdata);
-			} 
-		#endif
 		if(*rdata == 0x00100073){
 			stop_flag = 1;
 		}
+#ifdef CONFIG_MTRACE
+	if(addr != raddr && data != rdata){
+		if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
+			printf("read address:%08x data:%08x\n",raddr,*rdata);
+		}
+		addr = raddr;
+		data = rdata;
+	}
+#endif
 	}
 }
 
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
-#ifdef CONFIG_MTRACE
-	if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
-		printf("write address:%08x data:%08x\n",waddr,wdata);
-	} 
-#endif
 	pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
+#ifdef CONFIG_MTRACE
+	if(addr != waddr && data != wdata){
+		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
+			printf("write address:%08x data:%08x\n",waddr,wdata);
+		}
+		addr = waddr;
+		data = wdata;
+	}
+#endif
+	
 }
 
