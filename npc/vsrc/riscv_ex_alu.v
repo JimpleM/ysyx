@@ -36,7 +36,7 @@ riscv_mux#(
         `ALU_SRA    , {alu_a_data[`DATA_WIDTH-1],{alu_a_data[`DATA_WIDTH-2:0] >> alu_b_data[5:0]}},
         `ALU_OR     , alu_a_data | alu_b_data,
         `ALU_AND    , alu_a_data & alu_b_data,
-        `ALU_SUBU   , usub_data
+        `ALU_SUBU   , sub_data
   })
 );
 

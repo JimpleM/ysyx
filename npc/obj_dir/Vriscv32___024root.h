@@ -27,14 +27,17 @@ class Vriscv32___024root final : public VerilatedModule {
         CData/*1:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__lut_out;
         CData/*0:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__hit;
         CData/*5:0*/ riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout;
+        CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__carry_flag;
         CData/*3:0*/ riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__hit;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__a;
+        CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__usub_data;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__hit;
         CData/*0:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__hit;
         CData/*4:0*/ riscv32__DOT__riscv_lsu_u0__DOT____Vcellinp__riscv_mux_ls_lsu_opt__key;
         CData/*0:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__hit;
         CData/*0:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__hit;
+        CData/*5:0*/ __VdfgTmp_h42a16fe1__0;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
         CData/*0:0*/ __VactContinue;
         SData/*15:0*/ riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out;
@@ -60,7 +63,7 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_regfile_u0__DOT__i;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__alu_out_data;
-        IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data;
+        IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_data;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__rdata;
@@ -69,7 +72,21 @@ class Vriscv32___024root final : public VerilatedModule {
         IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__lut_out;
         IData/*31:0*/ riscv32__DOT__riscv_bpu_u0__DOT__npc;
+        VlWide<12>/*360:0*/ __VdfgTmp_h58a97e7f__0;
+        IData/*31:0*/ __VdfgTmp_ha5c00cb1__0;
+        IData/*31:0*/ __VdfgTmp_ha4f58f0d__0;
         IData/*30:0*/ __VdfgTmp_ha3892a3b__0;
+        IData/*31:0*/ __VdfgTmp_ha38e4819__0;
+        IData/*31:0*/ __VdfgTmp_ha3ee5f95__0;
+        IData/*31:0*/ __VdfgTmp_ha3965b5c__0;
+    };
+    struct {
+        VlWide<3>/*72:0*/ __VdfgTmp_hbda8053e__0;
+        VlWide<4>/*107:0*/ __VdfgTmp_h259a39cb__0;
+        VlWide<5>/*144:0*/ __VdfgTmp_h2c7fb6b3__0;
+        VlWide<6>/*180:0*/ __VdfgTmp_h8f1abbc5__0;
+        VlWide<10>/*288:0*/ __VdfgTmp_h28714d79__0;
+        VlWide<11>/*324:0*/ __VdfgTmp_hfa7eabc8__0;
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata;
         IData/*31:0*/ __Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__4__rdata;
         IData/*31:0*/ __VstlIterCount;
@@ -79,8 +96,6 @@ class Vriscv32___024root final : public VerilatedModule {
         QData/*63:0*/ riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__lut_out;
         VlUnpacked<IData/*22:0*/, 11> riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list;
         VlUnpacked<CData/*6:0*/, 11> riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list;
-    };
-    struct {
         VlUnpacked<SData/*15:0*/, 11> riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__data_list;
         VlUnpacked<QData/*38:0*/, 11> riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list;
         VlUnpacked<CData/*6:0*/, 11> riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list;
