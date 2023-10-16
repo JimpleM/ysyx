@@ -1,8 +1,8 @@
 `include"riscv_define.v"
 module riscv_ex_alu(
    input            [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    input           [`DATA_WIDTH-1:0]       alu_a_data,
-    input           [`DATA_WIDTH-1:0]       alu_b_data,
+    input       signed    [`DATA_WIDTH-1:0]       alu_a_data,
+    input       signed    [`DATA_WIDTH-1:0]       alu_b_data,
     output                                  carry_flag,
     output  	    [`DATA_WIDTH-1:0]         alu_out_data
 );
