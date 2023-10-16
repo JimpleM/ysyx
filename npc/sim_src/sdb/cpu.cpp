@@ -42,7 +42,7 @@ static void exec_once() {
     //反汇编结果
     char p[100];
 #ifdef CONFIG_ITRACE
-  cpu_inst = pmem_read((uint32_t)raddr,4);
+  cpu_inst = pmem_read((uint32_t)pc,4);
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
   printf("%s\n",p);
