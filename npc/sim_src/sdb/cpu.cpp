@@ -95,13 +95,12 @@ static void execute(uint64_t n) {
   char p[100];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-      exec_once();
+      
         //反汇编结果
-    
       #ifdef CONFIG_ITRACE
         
         cpu_inst = pmem_read((uint32_t)cpu_pc,4);
-        
+
         printf("%x\n",cpu_pc);
         printf("%x\n",cpu_inst);
 
@@ -111,7 +110,7 @@ static void execute(uint64_t n) {
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif
       
-
+      exec_once();
       trace_and_difftest();
 
     if (npc_state.state != NPC_RUNNING) break;
