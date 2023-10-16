@@ -59,7 +59,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
 	pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
 #ifdef CONFIG_MTRACE
-	if(top->clk = 1){
+	if(top->clk == 1){
 		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
 			printf("write address:%08x data:%08x\n",waddr,wdata);
 		}
