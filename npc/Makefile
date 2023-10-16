@@ -44,6 +44,7 @@ sim:
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
+	@echo ${ARGS}
 	./obj_dir/V${TOPNAME} $(IMG) ${ARGS}
 
 wave:
