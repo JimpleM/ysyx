@@ -18,6 +18,14 @@ VL_ATTR_COLD void Vriscv32___024root___eval_triggers__stl(Vriscv32___024root* vl
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root___eval_triggers__stl\n"); );
     // Body
     vlSelf->__VstlTriggered.at(0U) = (0U == vlSelf->__VstlIterCount);
+    vlSelf->__VstlTriggered.at(1U) = (vlSelf->riscv32__DOT__ifu_pc 
+                                      != vlSelf->__Vtrigrprev__TOP__riscv32__DOT__ifu_pc);
+    vlSelf->__Vtrigrprev__TOP__riscv32__DOT__ifu_pc 
+        = vlSelf->riscv32__DOT__ifu_pc;
+    if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VstlDidInit))))) {
+        vlSelf->__VstlDidInit = 1U;
+        vlSelf->__VstlTriggered.at(1U) = 1U;
+    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vriscv32___024root___dump_triggers__stl(vlSelf);

@@ -15,8 +15,7 @@ module riscv_bpu(
     output      [`DATA_WIDTH-1:0]       pc
 
 );
-assign tpc = 32'h8000_0000;
-assign pc = rst_n ? npc : tpc;
+
 
 wire [`DATA_WIDTH-1:0]       npc;
 wire [`DATA_WIDTH-1:0]       tpc;
@@ -35,5 +34,7 @@ riscv_dff #(
   
 );
 
+assign tpc = 32'h8000_0000;
+assign pc = rst_n ? npc : tpc;
 
 endmodule
