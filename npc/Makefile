@@ -13,6 +13,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS += -ldl 
 LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
+LDFLAGS += -pie
 LDFLAGS += $(shell llvm-config --libs)	#llvm库
 
 #g++ include路径
