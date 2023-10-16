@@ -31,9 +31,9 @@ DIFF := --diff=${DIFFTEST}
 IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
 IMG = --img=${IMGS}
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
-override ELF = --elf=${ELFFILE}
+ELF = --elf=${ELFFILE}
 
-override ARGS = ${DIFF} ${IMG} ${ELF} #--batch
+ARGS = ${DIFF} ${IMG} ${ELF} #--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
