@@ -31,5 +31,8 @@ riscv_dff #(
     .dout   (pc)
   
 );
+initial begin
+  pc = 32'h8000_0000;
+end
 
 endmodule
