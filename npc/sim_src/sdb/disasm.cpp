@@ -99,7 +99,7 @@ void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
   llvm::ArrayRef<uint8_t> arr(code, nbyte);
   uint64_t dummy_size = 0;
   printf("afsf\n");
-  gDisassembler->getInstruction(inst, dummy_size, arr, 0x80000000, llvm::nulls());
+  gDisassembler->getInstruction(inst, dummy_size, arr, 0x00000000, llvm::nulls());
   printf("afsf\n");
 
   std::string s;
