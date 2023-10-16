@@ -13,10 +13,10 @@
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
 
-#if defined(__GNUC__) && !defined(__clang__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
+// #if defined(__GNUC__) && !defined(__clang__)
+// #pragma GCC diagnostic push
+// #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+// #endif
 
 #include "llvm/MC/MCAsmInfo.h"
 #include "llvm/MC/MCContext.h"
@@ -32,9 +32,9 @@
 #endif
 #include "llvm/Support/TargetSelect.h"
 
-#if defined(__GNUC__) && !defined(__clang__)
-#pragma GCC diagnostic pop
-#endif
+// #if defined(__GNUC__) && !defined(__clang__)
+// #pragma GCC diagnostic pop
+// #endif
 
 #if LLVM_VERSION_MAJOR < 11
 #error Please use LLVM with major version >= 11
