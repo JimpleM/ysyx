@@ -29,11 +29,11 @@ SDB		+= $(NPC_HOME)/sim_src/sdb
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
 IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
-# override IMG = --img=${IMGS}
+override IMG = --img=${IMGS}
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
-ELF = --elf=${ELFFILE}
+override ELF = --elf=${ELFFILE}
 
-# override ARGS = ${DIFF} ${IMG} ${ELF} #--batch
+override ARGS = ${DIFF} ${IMG} ${ELF} #--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
@@ -44,7 +44,6 @@ sim:
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
-	@echo ${ARGS} $(IMG)
 	./obj_dir/V${TOPNAME} ${ARGS} $(IMG)
 
 wave:
