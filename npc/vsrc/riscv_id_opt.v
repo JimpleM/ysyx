@@ -15,7 +15,7 @@ riscv_mux#(
     .DATA_LEN    (`ALU_OPT_WIDTH)
 )riscv_mux_id_alu_opt(
   .key              ({opcode,funct3,funct7}),  //opcode + func_code + [31:25]
-  .default_out      (`ALU_ADD),
+  .default_out      (4'd0),
   .out              ({alu_opt}),
   .lut({  {`LUI   , 3'b???, 7'b???_????}, {`ALU_ADD},   //lui
           {`AUIPC , 3'b???, 7'b???_????}, {`ALU_ADD},   //auipc
