@@ -12,6 +12,8 @@
 #include "debug.h"
 #include "macro.h"
 
+#define __STDC_FORMAT_MACROS
+
 #include "Vriscv32.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
