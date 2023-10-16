@@ -2,7 +2,7 @@
 
 #include "difftest.h"
 #include "sdb.h"
-#include "difftest.h"
+#include "disasm.h"
 
 #include <getopt.h>
 
