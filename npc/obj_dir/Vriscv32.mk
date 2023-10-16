@@ -84,7 +84,7 @@ cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/difftest.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-disasm.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/disasm.cc
+disasm.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/disasm.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 dpic.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/dpic.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
