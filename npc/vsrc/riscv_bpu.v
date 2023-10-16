@@ -15,8 +15,11 @@ module riscv_bpu(
     output      [`DATA_WIDTH-1:0]       pc
 
 );
+aassign tpc = 32'h8000_0000;
+assign pc = rst_n ? npc : tpc;
 
 wire [`DATA_WIDTH-1:0]       npc;
+wire [`DATA_WIDTH-1:0]       tpc;
 
 assign npc = ((branch && !zero_flag) || jal) ? (pc + imm) : (jalr ? (src1 + imm) : (pc + 4));
 
@@ -28,11 +31,9 @@ riscv_dff #(
     .rst_n  (rst_n),
     .wen    (1'b1),
     .din    (npc),
-    .dout   (pc)
+    .dout   (tpc)
   
 );
-initial begin
-  assign pc = 32'h8000_0000;
-end
+
 
 endmodule
