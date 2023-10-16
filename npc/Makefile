@@ -20,8 +20,8 @@ INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
-LLVM_FLAGS += $(shell llvm-config --cxxflags)
-CFLAGS += $(LLVM_FLAGS) -Wno-__STDC_FORMAT_MACROS
+LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflags))
+CFLAGS += $(LLVM_FLAGS) 
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
 
