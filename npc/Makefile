@@ -13,7 +13,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 
 LDFLAGS += -ldl 
 LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
-LDFLAGS += $(shell llvm-config --libs)	#llvm库
+# LDFLAGS += $(shell llvm-config --libs)	#llvm库
 
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
@@ -21,7 +21,7 @@ INC_PATH += $(NPC_HOME)/sim_src/utils
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
 # llvm, 用figure—out消除 warning: "__STDC_FORMAT_MACROS" redefined报错
-LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cflags))  -fPIE
+LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflags))  -fPIE
 CFLAGS += $(LLVM_FLAGS) 
 
 SDB		+= $(NPC_HOME)/sim_src/sdb
