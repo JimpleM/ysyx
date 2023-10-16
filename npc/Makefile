@@ -14,7 +14,7 @@ VERILATOR_FLAGS += --top ${TOPNAME}
 LDFLAGS += -ldl 
 LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
 LDFLAGS += -pie
-LDFLAGS += $(shell llvm-config --libs)	#llvm库
+LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
 
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include

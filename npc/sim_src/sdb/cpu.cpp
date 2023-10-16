@@ -100,7 +100,6 @@ static void execute(uint64_t n) {
       
         //反汇编结果
       #ifdef CONFIG_ITRACE
-          printf("afsf\n");
 
         cpu_inst = pmem_read((uint32_t)cpu_pc,4);
           printf("afsf\n");

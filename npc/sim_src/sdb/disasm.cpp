@@ -98,10 +98,7 @@ void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
   MCInst inst;
   llvm::ArrayRef<uint8_t> arr(code, nbyte);
   uint64_t dummy_size = 0;
-  printf("afsf\n");
-  gDisassembler->getInstruction(inst, dummy_size, arr, 0x00000000, llvm::nulls());
-  printf("afsf\n");
-
+  gDisassembler->getInstruction(inst, dummy_size, arr, pc, llvm::nulls());
   std::string s;
   raw_string_ostream os(s);
   gIP->printInst(&inst, pc, "", *gSTI, os);
