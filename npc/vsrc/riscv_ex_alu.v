@@ -9,13 +9,14 @@ module riscv_ex_alu(
 
 wire [`DATA_WIDTH-1:0] add_data;
 wire [`DATA_WIDTH-1:0] sub_data;
-wire [`DATA_WIDTH-1:0] usub_data;
+wire [`DATA_WIDTH-1:0] temp_b;
 wire a;
 
+assign temp_b = (alu_opt == `ALU_SUB) ? ~alu_b_data:alu_b_data;
+
 assign add_data = alu_a_data + alu_b_data;
-assign {a,sub_data} = $signed({1'b0,alu_a_data}) - $signed({1'b0,alu_b_data});
 //相当与变成有符号数进行减法，看最高bit
-assign {carry_flag,usub_data} = {1'b0,alu_a_data} - {1'b0,alu_b_data};
+assign {carry_flag,sub_data} = alu_a_data + alu_b_data + 1;
 
 riscv_mux#(
   .NR_KEY      (11), 
