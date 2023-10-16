@@ -95,8 +95,7 @@ static void execute(uint64_t n) {
   static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-      if (npc_state.state != NPC_RUNNING) break;
-      if (stop_flag == 1) break;
+      
         //反汇编结果
       #ifdef CONFIG_ITRACE
 
@@ -107,6 +106,9 @@ static void execute(uint64_t n) {
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif
       
+      if (npc_state.state != NPC_RUNNING) break;
+      if (stop_flag == 1) break;
+
       exec_once();
       trace_and_difftest();
 
