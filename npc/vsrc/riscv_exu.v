@@ -23,6 +23,7 @@ wire [`DATA_WIDTH-1:0] alu_a_data;
 wire [`DATA_WIDTH-1:0] alu_b_data;
 wire [`DATA_WIDTH-1:0] alu_out_data;
 wire carry_flag;
+wire signed_flag;
 
 riscv_mux#(
     .NR_KEY      (4), 
