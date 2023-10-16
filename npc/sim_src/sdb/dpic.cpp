@@ -45,8 +45,8 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 		if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
 			printf("read address:%08x data:%08x\n",raddr,*rdata);
 		}
-		addr = raddr;
-		data = rdata;
+		addr = (uint32_t)raddr;
+		data =  (uint32_t)rdata;
 	}
 #endif
 	}
@@ -59,8 +59,8 @@ extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
 		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
 			printf("write address:%08x data:%08x\n",waddr,wdata);
 		}
-		addr = waddr;
-		data = wdata;
+		addr = (uint32_t)waddr;
+		data = (uint32_t)wdata;
 	}
 #endif
 	
