@@ -1882,7 +1882,6 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__hit = VL_RAND_RESET_I(1);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_data = VL_RAND_RESET_I(32);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__temp_b = VL_RAND_RESET_I(32);
-    vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__a = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 11; ++__Vi0) {
         vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(36);
     }
