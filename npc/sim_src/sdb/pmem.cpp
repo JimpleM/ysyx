@@ -44,6 +44,7 @@ void pmem_write(uint32_t addr, uint32_t data, int len){
     printf("write address:%08x data:%08x\n",addr,data);
   } 
 #endif
+  printf("write address:%08x data:%08x\n",addr,data);
 }
 extern uint32_t cpu_pc;
 
