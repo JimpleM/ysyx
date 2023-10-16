@@ -7,6 +7,8 @@
 #define PMEM_RIGHT 0x8fffffff
 #define PMEM_SIZE   PMEM_RIGHT-PMEM_LEFT+1
 
+#define CONFIG_MTRACE_START_ADDR    0x80000000
+#define CONFIG_MTRACE_END_ADDR      0x8fffffff
 
 #define CONFIG_DIFFTEST
 #define CONFIG_ITRACE
