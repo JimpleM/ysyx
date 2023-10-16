@@ -75,6 +75,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
         printf("p:%s\n",p);
+        printf("inst:%s\n",inst);
       printf("size:%ld\n",s->logbuf + sizeof(s->logbuf) - p);
       printf("ilen:%d\n",ilen);
 #else
