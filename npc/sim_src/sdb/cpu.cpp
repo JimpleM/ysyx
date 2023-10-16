@@ -104,7 +104,7 @@ static void execute(uint64_t n) {
         //反汇编结果
       #ifdef CONFIG_ITRACE
         disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
-        printf("%08x %s\n",cpu_pc,p);
+        printf("%08x %08x %s\n",cpu_pc,inst,p);
       #else
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif

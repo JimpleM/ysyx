@@ -28,9 +28,9 @@ SDB		+= $(NPC_HOME)/sim_src/sdb
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-IMGS ?= ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
+IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
 IMG = --img=${IMGS}
-ELFFILE = ../am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.elf
+ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
 all:defualt
