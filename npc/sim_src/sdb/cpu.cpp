@@ -46,6 +46,7 @@ static void exec_once() {
     char p[100];
 #ifdef CONFIG_ITRACE
   cpu_inst = pmem_read((uint32_t)cpu_pc,4);
+  printf("%d\n",cpu_inst);
   disassemble(p, sizeof(p),(uint64_t)cpu_pc, (uint8_t *)&cpu_inst, 4);
   // printf("%s\n",p);
 #else
