@@ -46,7 +46,7 @@ static void out_of_bound(paddr_t addr) {
 word_t paddr_read(paddr_t addr, int len) {
 #ifdef CONFIG_MTRACE
   if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
-    printf("read address:%08x data:%08x\n",addr);
+    printf("read address:%08x\n",addr);
   } 
 #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
