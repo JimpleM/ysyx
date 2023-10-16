@@ -38,6 +38,8 @@ VM_USER_CFLAGS = \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/include \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/utils \
 	-I/usr/lib/llvm-14/include \
+	-std=c++14 \
+	-fno-exceptions \
 	-D_GNU_SOURCE \
 	-D__STDC_CONSTANT_MACROS \
 	-D__STDC_LIMIT_MACROS \
