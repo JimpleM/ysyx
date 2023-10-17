@@ -1377,9 +1377,9 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
         = (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out);
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[0xaU] 
         = (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out);
-    vlSelf->__VdfgTmp_h6179b90e__0 = (1U & (IData)(
-                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
-                                                    >> 0x20U)));
+    vlSelf->__VdfgTmp_he7f14af0__0 = (1U & VL_REDXOR_64(
+                                                        (0x180000000ULL 
+                                                         & vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__carry_flag 
         = (1U & ((((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                             >> 0x3fU)) | ((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__alu_b_t 
@@ -1410,9 +1410,9 @@ VL_ATTR_COLD void Vriscv32___024root___stl_sequent__TOP__0(Vriscv32___024root* v
                                                                  >> 0x20U))))))) 
                  ^ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[7U] 
-        = (0x400000000ULL | (QData)((IData)(vlSelf->__VdfgTmp_h6179b90e__0)));
+        = (0x400000000ULL | (QData)((IData)(vlSelf->__VdfgTmp_he7f14af0__0)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[7U] 
-        = vlSelf->__VdfgTmp_h6179b90e__0;
+        = vlSelf->__VdfgTmp_he7f14af0__0;
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[6U] 
         = (0x500000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__carry_flag)));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[6U] 
@@ -1951,7 +1951,7 @@ VL_ATTR_COLD void Vriscv32___024root___ctor_var_reset(Vriscv32___024root* vlSelf
     vlSelf->__VdfgTmp_heb12ce95__0 = 0;
     vlSelf->__VdfgTmp_heb135ca6__0 = 0;
     vlSelf->__VdfgTmp_h2d99613b__0 = 0;
-    vlSelf->__VdfgTmp_h6179b90e__0 = 0;
+    vlSelf->__VdfgTmp_he7f14af0__0 = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata = 0;
     vlSelf->__Vtask_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_read__4__rdata = 0;
     vlSelf->__Vtrigrprev__TOP__clk = VL_RAND_RESET_I(1);
