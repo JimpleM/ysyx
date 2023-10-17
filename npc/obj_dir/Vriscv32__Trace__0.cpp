@@ -22,7 +22,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root__trace_chg_sub_0\n"); );
     // Init
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode + 1);
-    VlWide<13>/*415:0*/ __Vtemp_h2dd7818e__0;
+    VlWide<13>/*415:0*/ __Vtemp_h6c3ef4e6__0;
     VlWide<7>/*223:0*/ __Vtemp_hcb26cac4__0;
     VlWide<9>/*287:0*/ __Vtemp_hd9d822d0__0;
     VlWide<14>/*447:0*/ __Vtemp_h56c4ca1e__0;
@@ -186,36 +186,55 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                           >> (0x3fU 
                                               & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))))),32);
         bufp->chgBit(oldp+124,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag));
-        bufp->chgQData(oldp+125,((QData)((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                  >> 0x20U)))),33);
+        bufp->chgQData(oldp+125,((((QData)((IData)(
+                                                   (1U 
+                                                    & (IData)(
+                                                              (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                               >> 0x3fU))))) 
+                                   << 0x20U) | (QData)((IData)(
+                                                               (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                >> 0x20U))))),33);
         bufp->chgQData(oldp+127,((0x1ffffffffULL & 
-                                  ((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
+                                  ((((QData)((IData)(
+                                                     (1U 
+                                                      & (IData)(
+                                                                (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                 >> 0x1fU))))) 
+                                     << 0x20U) | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out))) 
                                    ^ (- (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag)))))),33);
         bufp->chgQData(oldp+129,((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag))),33);
         bufp->chgQData(oldp+131,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out),33);
         bufp->chgBit(oldp+133,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                               >> 0x3fU)))));
         bufp->chgBit(oldp+134,((1U & (IData)((3ULL 
-                                              & (((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                                  ^ 
-                                                  (- (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag)))) 
-                                                 >> 0x1fU))))));
+                                              & (((0x1fffffffeULL 
+                                                   & ((QData)((IData)(
+                                                                      (1U 
+                                                                       & (IData)(
+                                                                                (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+                                                                                >> 0x1fU))))) 
+                                                      << 1U)) 
+                                                  | ((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
+                                                     >> 0x1fU)) 
+                                                 ^ 
+                                                 ((- (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag))) 
+                                                  >> 0x1fU)))))));
         bufp->chgBit(oldp+135,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
                                               >> 0x20U)))));
         bufp->chgBit(oldp+136,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
                                               >> 0x1fU)))));
         bufp->chgBit(oldp+137,((1U & VL_REDXOR_64((0x180000000ULL 
                                                    & vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out)))));
-        __Vtemp_h2dd7818e__0[0U] = (IData)((0xb00000000ULL 
+        __Vtemp_h6c3ef4e6__0[0U] = (IData)((0xb00000000ULL 
                                             | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out))));
-        __Vtemp_h2dd7818e__0[1U] = ((((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+        __Vtemp_h6c3ef4e6__0[1U] = ((((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                >> 0x20U)) 
                                       & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
                                      << 4U) | (IData)(
                                                       ((0xb00000000ULL 
                                                         | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out))) 
                                                        >> 0x20U)));
-        __Vtemp_h2dd7818e__0[2U] = (0xa0U | ((((IData)(
+        __Vtemp_h6c3ef4e6__0[2U] = (0xa0U | ((((IData)(
                                                        (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                         >> 0x20U)) 
                                                | (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
@@ -225,7 +244,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                                           >> 0x20U)) 
                                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
                                                 >> 0x1cU)));
-        __Vtemp_h2dd7818e__0[3U] = (0x900U | (((IData)(
+        __Vtemp_h6c3ef4e6__0[3U] = (0x900U | (((IData)(
                                                        ((((QData)((IData)(
                                                                           (- (IData)(
                                                                                 (1U 
@@ -245,7 +264,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                                            >> 0x20U)) 
                                                   | (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
                                                  >> 0x18U)));
-        __Vtemp_h2dd7818e__0[4U] = (0x8000U | ((((0x1fU 
+        __Vtemp_h6c3ef4e6__0[4U] = (0x8000U | ((((0x1fU 
                                                   >= 
                                                   (0x3fU 
                                                    & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
@@ -273,7 +292,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                                            (0x3fU 
                                                             & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))) 
                                                   >> 0x14U)));
-        __Vtemp_h2dd7818e__0[5U] = (0x70000U | ((((IData)(
+        __Vtemp_h6c3ef4e6__0[5U] = (0x70000U | ((((IData)(
                                                           (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                            >> 0x20U)) 
                                                   ^ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
@@ -291,7 +310,7 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                                       & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
                                                      : 0U) 
                                                    >> 0x10U)));
-        __Vtemp_h2dd7818e__0[6U] = (0x600000U | ((0x1000000U 
+        __Vtemp_h6c3ef4e6__0[6U] = (0x600000U | ((0x1000000U 
                                                   & ((IData)(
                                                              (vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
                                                               >> 0x20U)) 
@@ -301,24 +320,24 @@ void Vriscv32___024root__trace_chg_sub_0(Vriscv32___024root* vlSelf, VerilatedVc
                                                               >> 0x20U)) 
                                                      ^ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
                                                     >> 0xcU)));
-        __Vtemp_h2dd7818e__0[7U] = (0x5000000U | ((IData)(vlSelf->__VdfgTmp_h6179b90e__0) 
+        __Vtemp_h6c3ef4e6__0[7U] = (0x5000000U | ((IData)(vlSelf->__VdfgTmp_h39dd3dac__0) 
                                                   << 0x1cU));
-        __Vtemp_h2dd7818e__0[8U] = 0x40000000U;
-        __Vtemp_h2dd7818e__0[9U] = ((0x1fU >= (0x3fU 
+        __Vtemp_h6c3ef4e6__0[8U] = 0x40000000U;
+        __Vtemp_h6c3ef4e6__0[9U] = ((0x1fU >= (0x3fU 
                                                & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
                                      ? ((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                  >> 0x20U)) 
                                         << (0x3fU & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
                                      : 0U);
-        __Vtemp_h2dd7818e__0[0xaU] = (3U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
+        __Vtemp_h6c3ef4e6__0[0xaU] = (3U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                             << 4U));
-        __Vtemp_h2dd7818e__0[0xbU] = (0x20U | (((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
+        __Vtemp_h6c3ef4e6__0[0xbU] = (0x20U | (((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                                 << 8U) 
                                                | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                                   >> 0x1cU)));
-        __Vtemp_h2dd7818e__0[0xcU] = (0x100U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
+        __Vtemp_h6c3ef4e6__0[0xcU] = (0x100U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                                 >> 0x18U));
-        bufp->chgWData(oldp+138,(__Vtemp_h2dd7818e__0),396);
+        bufp->chgWData(oldp+138,(__Vtemp_h6c3ef4e6__0),396);
         bufp->chgQData(oldp+151,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[0]),36);
         bufp->chgQData(oldp+153,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[1]),36);
         bufp->chgQData(oldp+155,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[2]),36);
