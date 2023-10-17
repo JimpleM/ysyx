@@ -19,10 +19,10 @@ always @(*)begin
             case(funct3)
                 3'b000 :begin alu_opt = `ALU_SUB ;  end     //beq
                 3'b001 :begin alu_opt = `ALU_SUB ;  end     //bne
-                3'b100 :begin alu_opt = `ALU_SUB ;  end     //blt
-                3'b101 :begin alu_opt = `ALU_SUB ;  end     //bge
-                3'b110 :begin alu_opt = `ALU_SUBU;  end     //bltu
-                3'b111 :begin alu_opt = `ALU_SUBU;  end     //bgeu
+                3'b100 :begin alu_opt = `ALU_SLT ;  end     //blt
+                3'b101 :begin alu_opt = `ALU_SLT ;  end     //bge
+                3'b110 :begin alu_opt = `ALU_SLTU;  end     //bltu
+                3'b111 :begin alu_opt = `ALU_SLTU;  end     //bgeu
                 default : alu_opt = 4'd0;
             endcase
         end

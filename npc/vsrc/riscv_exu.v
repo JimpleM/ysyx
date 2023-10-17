@@ -43,8 +43,6 @@ riscv_ex_alu riscv_ex_alu(
    .alu_opt         (alu_opt),
    .alu_a_data      (alu_a_data),
    .alu_b_data      (alu_b_data),
-   .signed_flag     (signed_flag),
-   .carry_flag      (carry_flag),
    .alu_out_data    (alu_out_data)
 );
 
@@ -58,10 +56,10 @@ riscv_mux#(
   .out              (exu_result),
   .lut({{1'b1,3'b000}, {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)},     //beq
         {1'b1,3'b001}, {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)},     //bne
-        {1'b1,3'b100}, {{(`DATA_WIDTH-1){1'b0}}, signed_flag},     //blt
-        {1'b1,3'b101}, {{(`DATA_WIDTH-1){1'b0}}, !signed_flag},     //bge
-        {1'b1,3'b110}, {{(`DATA_WIDTH-1){1'b0}}, carry_flag},     //bltu
-        {1'b1,3'b111}, {{(`DATA_WIDTH-1){1'b0}}, !carry_flag}      //bgeu
+        {1'b1,3'b100}, {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]},     //blt
+        {1'b1,3'b101}, {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]},     //bge
+        {1'b1,3'b110}, {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]},     //bltu
+        {1'b1,3'b111}, {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]}      //bgeu
   })
 );
 
