@@ -36,7 +36,7 @@ riscv_mux#(
         `ALU_SLTU   , {{(`DATA_WIDTH-1){1'b0}},carry_flag},
         `ALU_XOR    , alu_a_data ^ alu_b_data,
         `ALU_SRL    , alu_a_data >> alu_b_data[5:0],
-        `ALU_SRA    , {alu_a_data[`DATA_WIDTH-1],{alu_a_data[`DATA_WIDTH-2:0] >> alu_b_data[5:0]}},
+        `ALU_SRA    , {{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0],
         `ALU_OR     , alu_a_data | alu_b_data,
         `ALU_AND    , alu_a_data & alu_b_data,
         `ALU_SUBU   , add_out[`DATA_WIDTH-1:0]
