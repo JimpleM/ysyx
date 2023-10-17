@@ -35,6 +35,8 @@ wire top_A = alu_a_t[`DATA_WIDTH-1];
 wire top_B = alu_b_t[`DATA_WIDTH-1];
 wire top_C = add_out[`DATA_WIDTH-1];
 
+wire sign_flag = add_out[`DATA_WIDTH-1];
+wire over_flag = add_out[`DATA_WIDTH-1] ^ add_out[`DATA_WIDTH-2];
 wire carry_flag = (top_A&top_B) | (top_A&top_C) | (top_B&top_C);
 
 riscv_mux#(
