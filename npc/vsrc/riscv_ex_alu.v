@@ -10,7 +10,7 @@ wire sub_flag = (alu_opt == `ALU_SUB);
 
 wire [`DATA_WIDTH:0] alu_a_t = {alu_a_data[`DATA_WIDTH-1],alu_a_data};
 wire [`DATA_WIDTH:0] alu_b_t = {alu_b_data[`DATA_WIDTH-1],alu_b_data} ^ {(`DATA_WIDTH+1){sub_flag}};
-wire [`DATA_WIDTH:0] cin     = {(`DATA_WIDTH){1'b0},sub_flag};
+wire [`DATA_WIDTH:0] cin     = {{(`DATA_WIDTH){1'b0}},sub_flag};
 wire [`DATA_WIDTH:0] add_out = alu_a_t + alu_b_t + cin;
 
 wire top_A = alu_a_t[`DATA_WIDTH];
