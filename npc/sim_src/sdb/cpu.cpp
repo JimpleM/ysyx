@@ -8,7 +8,11 @@
 
 #define MAX_INST_TO_PRINT 1000
 
-#define dump_wave contextp->timeInc(1); tfp->dump(contextp->time());  
+#ifdef CONFIG_WAVE
+  #define dump_wave contextp->timeInc(1); tfp->dump(contextp->time()); 
+#elif
+  #define dump_wave
+#endif
 
 extern VerilatedContext* contextp;
 extern Vriscv32* top;
