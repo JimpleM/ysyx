@@ -18,6 +18,8 @@ VerilatedVcdC* tfp = NULL;
 extern uint8_t pmem [PMEM_SIZE];
 
 static long load_img() {
+  Assert(img_file != NULL, "No img file!");
+  
   if (img_file == NULL) {
     Log("No image is given. Use the default build-in image.");
     return 4096; // built-in image size
