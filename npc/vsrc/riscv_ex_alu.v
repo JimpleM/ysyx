@@ -23,7 +23,7 @@ wire over_flag = add_out[`DATA_WIDTH] ^ add_out[`DATA_WIDTH-1];
 减法的时候  
 */
 // wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!top_C) & (!top_A|!top_B|top_C)) ^ sub_flag;
-wire carry_flag = (top_A&!top_C&!sub_flag) | (!top_A&top_B&!top_C) | (!top_A&top_C&sub_flag) | (top_A|top_B|top_C);
+wire carry_flag = (top_A&top_B) | (top_A&top_C) | (top_B&top_C);
 
 
 wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]}[`DATA_WIDTH-1:0] ;
