@@ -22,6 +22,37 @@ VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__
     rdata = rdata__Vcvt;
 }
 
+extern "C" void set_pc_ptr(int pc);
+
+VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP\n"); );
+    // Body
+    int pc__Vcvt;
+    for (size_t pc__Vidx = 0; pc__Vidx < 1; ++pc__Vidx) pc__Vcvt = pc;
+    set_pc_ptr(pc__Vcvt);
+}
+
+extern "C" void get_riscv32_rst(svBit rst_n);
+
+VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__get_riscv32_rst_TOP(CData/*0:0*/ rst_n) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__get_riscv32_rst_TOP\n"); );
+    // Body
+    svBit rst_n__Vcvt;
+    for (size_t rst_n__Vidx = 0; rst_n__Vidx < 1; ++rst_n__Vidx) rst_n__Vcvt = rst_n;
+    get_riscv32_rst(rst_n__Vcvt);
+}
+
+extern "C" void set_gpr_ptr(const svOpenArrayHandle a);
+
+VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_regfile_u0__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 32> &a) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_regfile_u0__DOT__set_gpr_ptr__Vdpioc2_TOP\n"); );
+    // Body
+    static const int a__Vopenprops__ulims[2] = {31, 0};
+    static const VerilatedVarProps a__Vopenprops(VLVT_UINT32, VLVD_IN, VerilatedVarProps::Packed(), 31, 0, VerilatedVarProps::Unpacked(), 1, a__Vopenprops__ulims);
+    VerilatedDpiOpenVar a__Vopenarray (&a__Vopenprops, &a);
+    set_gpr_ptr(&a__Vopenarray);
+}
+
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask);
 
 VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, IData/*31:0*/ wmask) {

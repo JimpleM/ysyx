@@ -1,0 +1,21 @@
+{
+    "workerCache": {
+        "mill.scalalib.ZincWorkerModule.worker": {
+            "identityHashCode": 65565171,
+            "inputHash": -891940275
+        }
+    },
+    "evalWatched": [
+        "ref:v0:8a2a15a7:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/src",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/resources",
+        "ref:v0:12e164eb:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/src",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/compile-resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/compile-resources"
+    ],
+    "moduleWatched": [],
+    "scriptImportGraph": [],
+    "classLoaderIdentity": [],
+    "runClasspath": [],
+    "runClasspathHash": 473519988
+}

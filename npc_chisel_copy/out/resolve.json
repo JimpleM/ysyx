@@ -1,0 +1,19 @@
+{
+    "value": [
+        "clean",
+        "init",
+        "inspect",
+        "path",
+        "plan",
+        "playground",
+        "resolve",
+        "show",
+        "showNamed",
+        "shutdown",
+        "version",
+        "visualize",
+        "visualizePlan"
+    ],
+    "valueHash": 2014851575,
+    "inputsHash": -1506867627
+}

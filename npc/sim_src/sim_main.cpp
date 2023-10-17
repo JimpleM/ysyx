@@ -1,51 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 
-#include "Vtop.h"
-#include "verilated.h"
+#include "cpu.h"
+#include "init.h"
+#include "sdb.h"
 
-#include "verilated_vcd_c.h"
+#include "riscv_lib.h"
 
-void riscv_pmem_read(int raddr, int *rdata, svBit ren){
-	*rdata = 0x80000000;
-}
 
-void riscv_pmem_write(int waddr, int wdata, int wmask){
+int main(int argc, char *argv[]){
+	init_sim();
 
-}
+	reset();
 
-int main(int argc, char ** argv, char** env){
-	VerilatedContext* contextp = new VerilatedContext;
-	contextp->commandArgs(argc, argv);
-	Vtop* top = new Vtop(contextp);
+	init_npc(argc,argv);
 
-	VerilatedVcdC* tfp = new VerilatedVcdC;
-	contextp->traceEverOn(true);
-	top->trace(tfp,0);
-	tfp->open("wave.vcd");
 
-	int count = 0;
-
-	while(!contextp->gotFinish()){
-        int y = rand() %4;
-		top->a = 228;
-        top->y = y;
-		top->eval();
-		
-		tfp->dump(contextp->time());
-		contextp->timeInc(1);
-		
-		// assert(top->f == (y==3?(y==2?(y==1? 1:0):2):3));
 	
-		count++;
-		if(count >100){
-			break;
-		}
-	}
-	
-	delete top;
-	tfp->close();
-	delete contextp;
-	return 0;
+	sdb_mainloop();
+
+	finish_sim();
+	return is_exit_status_bad();
 }

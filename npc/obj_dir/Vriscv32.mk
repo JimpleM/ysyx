@@ -35,18 +35,42 @@ VM_PREFIX = Vriscv32
 VM_MODPREFIX = Vriscv32
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/include \
+	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/utils \
+	-I/usr/lib/llvm-14/include \
+	-std=c++14 \
+	-fno-exceptions \
+	-D_GNU_SOURCE \
+	-D__STDC_CONSTANT_MACROS \
+	-D__STDC_LIMIT_MACROS \
+	-fPIE \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
 	-ldl \
+	-lreadline \
+	-lLLVM-14 \
+	-flto \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-	main \
+	cpu \
+	difftest \
+	disasm \
+	dpic \
+	expr \
+	ftrace \
+	init \
+	pmem \
+	reg \
+	sdb \
+	watchpoint \
+	sim_main \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/home/jimple/Documents/ysyx/ysyx-workbench/npc/csrc \
+	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src \
+	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb \
 
 
 ### Default rules...
@@ -58,7 +82,29 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-main.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/csrc/main.c
+cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+disasm.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/disasm.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+dpic.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/dpic.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+expr.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/expr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+ftrace.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/ftrace.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+init.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/init.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+pmem.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/pmem.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+reg.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/reg.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sdb.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/sdb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+watchpoint.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/watchpoint.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sim_main.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sim_main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)

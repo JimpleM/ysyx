@@ -26,22 +26,49 @@ assign rs1_data = gpr[rs1_addr];
 // read rs2
 assign rs2_data = gpr[rs2_addr];
 
+wire  [`REG_WIDTH-1:0]        rd_addr_t;
+wire                          rd_en_t;
+
 // write rd
 riscv_dff #(
-  .WIDTH(`DATA_WIDTH), 
-  .RESET_VAL(32'd0)
-)riscv_dff_pc(
+  .WIDTH(6), 
+  .RESET_VAL(0)
+)riscv_dff_reg_t(
     .clk    (clk),
-    .rst    (!rst_n),
-    .wen    (rd_en),
-    .din    (rd_data),
-    .dout   (gpr[rd_addr])
-  
+    .rst_n  (rst_n),
+    .wen    (1'b1),
+    .din    ({rd_en,rd_addr}),
+    .dout   ({rd_en_t,rd_addr_t})
 );
-// always @(posedge clk) begin
-//     if (rd_en)begin
-//         gpr[rd_addr] <= rd_data;
-//     end 
-// end
+
+//这玩意时序有问题
+// riscv_dff #(
+//   .WIDTH(`DATA_WIDTH), 
+//   .RESET_VAL(32'd0)
+// )riscv_dff_reg(
+//     .clk    (clk),
+//     .rst_n  (1'b1),
+//     .wen    (rd_en),
+//     .din    (rd_data),
+//     .dout   (gpr[rd_addr])
+// );
+
+
+always @(posedge clk) begin
+    if (rd_en)begin
+        if(rd_addr == 5'd0)begin
+            gpr[rd_addr] <= 32'd0;
+        end
+        else begin
+            gpr[rd_addr] <= rd_data;
+        end
+        
+    end 
+end
+
+
+// for sim
+import "DPI-C" function void set_gpr_ptr(input logic [63:0] a []);
+initial set_gpr_ptr(gpr);  // rf为通用寄存器的二维数组变量
 
 endmodule

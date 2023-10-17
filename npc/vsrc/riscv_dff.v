@@ -4,14 +4,17 @@ module riscv_dff #(
   RESET_VAL = 0
 ) (
   input clk,
-  input rst,
+  input rst_n,
   input wen,
   input [WIDTH-1:0] din,
   output reg [WIDTH-1:0] dout
   
 );
+initial begin
+  dout = RESET_VAL;
+end
   always @(posedge clk) begin
-    if (rst) dout <= RESET_VAL;
+    if (!rst_n) dout <= RESET_VAL;
     else if (wen) dout <= din;
   end
 endmodule
