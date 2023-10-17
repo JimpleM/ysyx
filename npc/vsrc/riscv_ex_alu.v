@@ -21,6 +21,9 @@ wire sign_flag = add_out[`DATA_WIDTH-1];
 wire over_flag = add_out[`DATA_WIDTH] ^ add_out[`DATA_WIDTH-1];
 wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!top_C) & (!top_A|!top_B|top_C)) ^ sub_flag;
 
+
+wire [`DATA_WIDTH-1:0] sra_result = {{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0];
+
 riscv_mux#(
   .NR_KEY      (11), 
   .KEY_LEN     (4), 
@@ -36,7 +39,7 @@ riscv_mux#(
         `ALU_SLTU   , {{(`DATA_WIDTH-1){1'b0}},carry_flag},
         `ALU_XOR    , alu_a_data ^ alu_b_data,
         `ALU_SRL    , alu_a_data >> alu_b_data[5:0],
-        `ALU_SRA    , {{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0],
+        `ALU_SRA    , sra_result,
         `ALU_OR     , alu_a_data | alu_b_data,
         `ALU_AND    , alu_a_data & alu_b_data,
         `ALU_SUBU   , add_out[`DATA_WIDTH-1:0]

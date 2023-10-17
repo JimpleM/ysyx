@@ -17,100 +17,100 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBit(c+421,"clk", false,-1);
     tracep->declBit(c+422,"rst_n", false,-1);
     tracep->declBus(c+379,"ifu_pc", false,-1, 31,0);
-    tracep->declBus(c+101,"ifu_inst", false,-1, 31,0);
-    tracep->declBit(c+102,"idu_branch", false,-1);
-    tracep->declBit(c+103,"idu_jal", false,-1);
-    tracep->declBit(c+104,"idu_jalr", false,-1);
-    tracep->declBus(c+105,"idu_rd", false,-1, 4,0);
-    tracep->declBit(c+106,"idu_rd_wen", false,-1);
-    tracep->declBus(c+107,"idu_rs1", false,-1, 4,0);
-    tracep->declBus(c+108,"idu_rs2", false,-1, 4,0);
-    tracep->declBus(c+109,"idu_imm", false,-1, 31,0);
-    tracep->declBus(c+110,"idu_alu_opt", false,-1, 3,0);
-    tracep->declBus(c+111,"idu_src_sel", false,-1, 1,0);
-    tracep->declBus(c+112,"idu_lsu_opt", false,-1, 1,0);
-    tracep->declBus(c+113,"idu_funct3", false,-1, 2,0);
-    tracep->declBus(c+114,"src1", false,-1, 31,0);
-    tracep->declBus(c+115,"src2", false,-1, 31,0);
-    tracep->declBus(c+116,"rd_data", false,-1, 31,0);
-    tracep->declBit(c+117,"zero_flag", false,-1);
-    tracep->declBus(c+118,"exu_result", false,-1, 31,0);
-    tracep->declBus(c+119,"lsu_result", false,-1, 31,0);
+    tracep->declBus(c+90,"ifu_inst", false,-1, 31,0);
+    tracep->declBit(c+91,"idu_branch", false,-1);
+    tracep->declBit(c+92,"idu_jal", false,-1);
+    tracep->declBit(c+93,"idu_jalr", false,-1);
+    tracep->declBus(c+94,"idu_rd", false,-1, 4,0);
+    tracep->declBit(c+95,"idu_rd_wen", false,-1);
+    tracep->declBus(c+96,"idu_rs1", false,-1, 4,0);
+    tracep->declBus(c+97,"idu_rs2", false,-1, 4,0);
+    tracep->declBus(c+98,"idu_imm", false,-1, 31,0);
+    tracep->declBus(c+99,"idu_alu_opt", false,-1, 3,0);
+    tracep->declBus(c+100,"idu_src_sel", false,-1, 1,0);
+    tracep->declBus(c+101,"idu_lsu_opt", false,-1, 1,0);
+    tracep->declBus(c+102,"idu_funct3", false,-1, 2,0);
+    tracep->declBus(c+103,"src1", false,-1, 31,0);
+    tracep->declBus(c+104,"src2", false,-1, 31,0);
+    tracep->declBus(c+105,"rd_data", false,-1, 31,0);
+    tracep->declBit(c+106,"zero_flag", false,-1);
+    tracep->declBus(c+107,"exu_result", false,-1, 31,0);
+    tracep->declBus(c+108,"lsu_result", false,-1, 31,0);
     tracep->pushNamePrefix("riscv_bpu_u0 ");
     tracep->declBit(c+421,"clk", false,-1);
     tracep->declBit(c+422,"rst_n", false,-1);
-    tracep->declBit(c+117,"zero_flag", false,-1);
-    tracep->declBit(c+102,"branch", false,-1);
-    tracep->declBit(c+103,"jal", false,-1);
-    tracep->declBit(c+104,"jalr", false,-1);
-    tracep->declBus(c+114,"src1", false,-1, 31,0);
-    tracep->declBus(c+109,"imm", false,-1, 31,0);
+    tracep->declBit(c+106,"zero_flag", false,-1);
+    tracep->declBit(c+91,"branch", false,-1);
+    tracep->declBit(c+92,"jal", false,-1);
+    tracep->declBit(c+93,"jalr", false,-1);
+    tracep->declBus(c+103,"src1", false,-1, 31,0);
+    tracep->declBus(c+98,"imm", false,-1, 31,0);
     tracep->declBus(c+379,"pc", false,-1, 31,0);
-    tracep->declBus(c+120,"npc", false,-1, 31,0);
+    tracep->declBus(c+109,"npc", false,-1, 31,0);
     tracep->pushNamePrefix("riscv_dff_pc ");
     tracep->declBus(c+423,"WIDTH", false,-1, 31,0);
     tracep->declBus(c+424,"RESET_VAL", false,-1, 31,0);
     tracep->declBit(c+421,"clk", false,-1);
     tracep->declBit(c+422,"rst_n", false,-1);
     tracep->declBit(c+425,"wen", false,-1);
-    tracep->declBus(c+120,"din", false,-1, 31,0);
+    tracep->declBus(c+109,"din", false,-1, 31,0);
     tracep->declBus(c+379,"dout", false,-1, 31,0);
     tracep->popNamePrefix(2);
     tracep->pushNamePrefix("riscv_exu_u0 ");
     tracep->declBus(c+379,"pc", false,-1, 31,0);
-    tracep->declBus(c+114,"src1", false,-1, 31,0);
-    tracep->declBus(c+115,"src2", false,-1, 31,0);
-    tracep->declBus(c+109,"imm", false,-1, 31,0);
-    tracep->declBit(c+102,"branch", false,-1);
-    tracep->declBus(c+110,"alu_opt", false,-1, 3,0);
-    tracep->declBus(c+111,"src_sel", false,-1, 1,0);
-    tracep->declBus(c+113,"funct3", false,-1, 2,0);
-    tracep->declBit(c+117,"zero_flag", false,-1);
-    tracep->declBus(c+118,"exu_result", false,-1, 31,0);
-    tracep->declBus(c+121,"alu_a_data", false,-1, 31,0);
-    tracep->declBus(c+122,"alu_b_data", false,-1, 31,0);
-    tracep->declBus(c+123,"alu_out_data", false,-1, 31,0);
+    tracep->declBus(c+103,"src1", false,-1, 31,0);
+    tracep->declBus(c+104,"src2", false,-1, 31,0);
+    tracep->declBus(c+98,"imm", false,-1, 31,0);
+    tracep->declBit(c+91,"branch", false,-1);
+    tracep->declBus(c+99,"alu_opt", false,-1, 3,0);
+    tracep->declBus(c+100,"src_sel", false,-1, 1,0);
+    tracep->declBus(c+102,"funct3", false,-1, 2,0);
+    tracep->declBit(c+106,"zero_flag", false,-1);
+    tracep->declBus(c+107,"exu_result", false,-1, 31,0);
+    tracep->declBus(c+110,"alu_a_data", false,-1, 31,0);
+    tracep->declBus(c+111,"alu_b_data", false,-1, 31,0);
+    tracep->declBus(c+112,"alu_out_data", false,-1, 31,0);
     tracep->declBit(c+426,"carry_flag", false,-1);
     tracep->declBit(c+427,"signed_flag", false,-1);
     tracep->pushNamePrefix("riscv_ex_alu ");
-    tracep->declBus(c+110,"alu_opt", false,-1, 3,0);
-    tracep->declBus(c+121,"alu_a_data", false,-1, 31,0);
-    tracep->declBus(c+122,"alu_b_data", false,-1, 31,0);
-    tracep->declBus(c+123,"alu_out_data", false,-1, 31,0);
-    tracep->declBit(c+124,"sub_flag", false,-1);
-    tracep->declQuad(c+125,"alu_a_t", false,-1, 32,0);
-    tracep->declQuad(c+127,"alu_b_t", false,-1, 32,0);
-    tracep->declQuad(c+129,"cin", false,-1, 32,0);
-    tracep->declQuad(c+131,"add_out", false,-1, 32,0);
-    tracep->declBit(c+133,"top_A", false,-1);
-    tracep->declBit(c+134,"top_B", false,-1);
-    tracep->declBit(c+135,"top_C", false,-1);
-    tracep->declBit(c+136,"sign_flag", false,-1);
-    tracep->declBit(c+137,"over_flag", false,-1);
-    tracep->declBit(c+138,"carry_flag", false,-1);
+    tracep->declBus(c+99,"alu_opt", false,-1, 3,0);
+    tracep->declBus(c+110,"alu_a_data", false,-1, 31,0);
+    tracep->declBus(c+111,"alu_b_data", false,-1, 31,0);
+    tracep->declBus(c+112,"alu_out_data", false,-1, 31,0);
+    tracep->declBit(c+113,"sub_flag", false,-1);
+    tracep->declQuad(c+114,"alu_a_t", false,-1, 32,0);
+    tracep->declQuad(c+116,"alu_b_t", false,-1, 32,0);
+    tracep->declQuad(c+118,"cin", false,-1, 32,0);
+    tracep->declQuad(c+120,"add_out", false,-1, 32,0);
+    tracep->declBit(c+122,"top_A", false,-1);
+    tracep->declBit(c+123,"top_B", false,-1);
+    tracep->declBit(c+124,"top_C", false,-1);
+    tracep->declBit(c+125,"sign_flag", false,-1);
+    tracep->declBit(c+126,"over_flag", false,-1);
+    tracep->declBit(c+127,"carry_flag", false,-1);
     tracep->pushNamePrefix("riscv_mux_ex_data ");
     tracep->declBus(c+428,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+429,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+123,"out", false,-1, 31,0);
-    tracep->declBus(c+110,"key", false,-1, 3,0);
+    tracep->declBus(c+112,"out", false,-1, 31,0);
+    tracep->declBus(c+99,"key", false,-1, 3,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
-    tracep->declArray(c+139,"lut", false,-1, 395,0);
+    tracep->declArray(c+128,"lut", false,-1, 395,0);
     tracep->pushNamePrefix("i1 ");
     tracep->declBus(c+428,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+429,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+123,"out", false,-1, 31,0);
-    tracep->declBus(c+110,"key", false,-1, 3,0);
+    tracep->declBus(c+112,"out", false,-1, 31,0);
+    tracep->declBus(c+99,"key", false,-1, 3,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
-    tracep->declArray(c+139,"lut", false,-1, 395,0);
+    tracep->declArray(c+128,"lut", false,-1, 395,0);
     tracep->declBus(c+432,"PAIR_LEN", false,-1, 31,0);
     for (int i = 0; i < 11; ++i) {
-        tracep->declQuad(c+152+i*2,"pair_list", true,(i+0), 35,0);
+        tracep->declQuad(c+141+i*2,"pair_list", true,(i+0), 35,0);
     }
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+1+i*1,"key_list", true,(i+0), 3,0);
+        tracep->declBus(c+163+i*1,"key_list", true,(i+0), 3,0);
     }
     for (int i = 0; i < 11; ++i) {
         tracep->declBus(c+174+i*1,"data_list", true,(i+0), 31,0);
@@ -124,25 +124,25 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+434,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+429,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+118,"out", false,-1, 31,0);
+    tracep->declBus(c+107,"out", false,-1, 31,0);
     tracep->declBus(c+187,"key", false,-1, 3,0);
-    tracep->declBus(c+123,"default_out", false,-1, 31,0);
+    tracep->declBus(c+112,"default_out", false,-1, 31,0);
     tracep->declArray(c+188,"lut", false,-1, 215,0);
     tracep->pushNamePrefix("i1 ");
     tracep->declBus(c+434,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+429,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+118,"out", false,-1, 31,0);
+    tracep->declBus(c+107,"out", false,-1, 31,0);
     tracep->declBus(c+187,"key", false,-1, 3,0);
-    tracep->declBus(c+123,"default_out", false,-1, 31,0);
+    tracep->declBus(c+112,"default_out", false,-1, 31,0);
     tracep->declArray(c+188,"lut", false,-1, 215,0);
     tracep->declBus(c+432,"PAIR_LEN", false,-1, 31,0);
     for (int i = 0; i < 6; ++i) {
         tracep->declQuad(c+195+i*2,"pair_list", true,(i+0), 35,0);
     }
     for (int i = 0; i < 6; ++i) {
-        tracep->declBus(c+12+i*1,"key_list", true,(i+0), 3,0);
+        tracep->declBus(c+1+i*1,"key_list", true,(i+0), 3,0);
     }
     for (int i = 0; i < 6; ++i) {
         tracep->declBus(c+207+i*1,"data_list", true,(i+0), 31,0);
@@ -157,7 +157,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+436,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+437,"DATA_LEN", false,-1, 31,0);
     tracep->declQuad(c+215,"out", false,-1, 63,0);
-    tracep->declBus(c+111,"key", false,-1, 1,0);
+    tracep->declBus(c+100,"key", false,-1, 1,0);
     tracep->declQuad(c+438,"default_out", false,-1, 63,0);
     tracep->declArray(c+217,"lut", false,-1, 263,0);
     tracep->pushNamePrefix("i1 ");
@@ -166,7 +166,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+437,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
     tracep->declQuad(c+215,"out", false,-1, 63,0);
-    tracep->declBus(c+111,"key", false,-1, 1,0);
+    tracep->declBus(c+100,"key", false,-1, 1,0);
     tracep->declQuad(c+438,"default_out", false,-1, 63,0);
     tracep->declArray(c+217,"lut", false,-1, 263,0);
     tracep->declBus(c+440,"PAIR_LEN", false,-1, 31,0);
@@ -174,7 +174,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declArray(c+226+i*3,"pair_list", true,(i+0), 65,0);
     }
     for (int i = 0; i < 4; ++i) {
-        tracep->declBus(c+18+i*1,"key_list", true,(i+0), 1,0);
+        tracep->declBus(c+7+i*1,"key_list", true,(i+0), 1,0);
     }
     for (int i = 0; i < 4; ++i) {
         tracep->declQuad(c+238+i*2,"data_list", true,(i+0), 63,0);
@@ -185,25 +185,25 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->pushNamePrefix("genblk1 ");
     tracep->popNamePrefix(4);
     tracep->pushNamePrefix("riscv_idu_u0 ");
-    tracep->declBus(c+101,"inst", false,-1, 31,0);
-    tracep->declBit(c+102,"branch", false,-1);
-    tracep->declBit(c+103,"jal", false,-1);
-    tracep->declBit(c+104,"jalr", false,-1);
-    tracep->declBus(c+105,"rd", false,-1, 4,0);
-    tracep->declBit(c+106,"rd_wen", false,-1);
-    tracep->declBus(c+107,"rs1", false,-1, 4,0);
-    tracep->declBus(c+108,"rs2", false,-1, 4,0);
-    tracep->declBus(c+109,"imm", false,-1, 31,0);
-    tracep->declBus(c+110,"alu_opt", false,-1, 3,0);
-    tracep->declBus(c+111,"src_sel", false,-1, 1,0);
-    tracep->declBus(c+112,"lsu_opt", false,-1, 1,0);
-    tracep->declBus(c+113,"funct3", false,-1, 2,0);
+    tracep->declBus(c+90,"inst", false,-1, 31,0);
+    tracep->declBit(c+91,"branch", false,-1);
+    tracep->declBit(c+92,"jal", false,-1);
+    tracep->declBit(c+93,"jalr", false,-1);
+    tracep->declBus(c+94,"rd", false,-1, 4,0);
+    tracep->declBit(c+95,"rd_wen", false,-1);
+    tracep->declBus(c+96,"rs1", false,-1, 4,0);
+    tracep->declBus(c+97,"rs2", false,-1, 4,0);
+    tracep->declBus(c+98,"imm", false,-1, 31,0);
+    tracep->declBus(c+99,"alu_opt", false,-1, 3,0);
+    tracep->declBus(c+100,"src_sel", false,-1, 1,0);
+    tracep->declBus(c+101,"lsu_opt", false,-1, 1,0);
+    tracep->declBus(c+102,"funct3", false,-1, 2,0);
     tracep->declBus(c+249,"opcode", false,-1, 6,0);
     tracep->declBus(c+250,"funct7", false,-1, 6,0);
     tracep->declBus(c+442,"reg_zero", false,-1, 4,0);
     tracep->pushNamePrefix("riscv_id_imm_idu ");
-    tracep->declBus(c+101,"inst", false,-1, 31,0);
-    tracep->declBus(c+109,"imm", false,-1, 31,0);
+    tracep->declBus(c+90,"inst", false,-1, 31,0);
+    tracep->declBus(c+98,"imm", false,-1, 31,0);
     tracep->declBus(c+251,"imm_typeI", false,-1, 31,0);
     tracep->declBus(c+252,"imm_typeU", false,-1, 31,0);
     tracep->declBus(c+253,"imm_typeS", false,-1, 31,0);
@@ -240,7 +240,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+428,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+109,"out", false,-1, 31,0);
+    tracep->declBus(c+98,"out", false,-1, 31,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
     tracep->declArray(c+260,"lut", false,-1, 428,0);
@@ -249,7 +249,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+109,"out", false,-1, 31,0);
+    tracep->declBus(c+98,"out", false,-1, 31,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
     tracep->declArray(c+260,"lut", false,-1, 428,0);
@@ -258,7 +258,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declQuad(c+274+i*2,"pair_list", true,(i+0), 38,0);
     }
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+22+i*1,"key_list", true,(i+0), 6,0);
+        tracep->declBus(c+11+i*1,"key_list", true,(i+0), 6,0);
     }
     for (int i = 0; i < 11; ++i) {
         tracep->declBus(c+296+i*1,"data_list", true,(i+0), 31,0);
@@ -270,16 +270,16 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->popNamePrefix(4);
     tracep->pushNamePrefix("riscv_id_opt_idu ");
     tracep->declBus(c+249,"opcode", false,-1, 6,0);
-    tracep->declBus(c+113,"funct3", false,-1, 2,0);
+    tracep->declBus(c+102,"funct3", false,-1, 2,0);
     tracep->declBus(c+250,"funct7", false,-1, 6,0);
-    tracep->declBus(c+110,"alu_opt", false,-1, 3,0);
-    tracep->declBus(c+111,"src_sel", false,-1, 1,0);
-    tracep->declBus(c+112,"lsu_opt", false,-1, 1,0);
+    tracep->declBus(c+99,"alu_opt", false,-1, 3,0);
+    tracep->declBus(c+100,"src_sel", false,-1, 1,0);
+    tracep->declBus(c+101,"lsu_opt", false,-1, 1,0);
     tracep->pushNamePrefix("riscv_mux_id_lsu_opt ");
     tracep->declBus(c+436,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+436,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+112,"out", false,-1, 1,0);
+    tracep->declBus(c+101,"out", false,-1, 1,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+449,"default_out", false,-1, 1,0);
     tracep->declBus(c+450,"lut", false,-1, 17,0);
@@ -288,19 +288,19 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+436,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+112,"out", false,-1, 1,0);
+    tracep->declBus(c+101,"out", false,-1, 1,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+449,"default_out", false,-1, 1,0);
     tracep->declBus(c+450,"lut", false,-1, 17,0);
     tracep->declBus(c+451,"PAIR_LEN", false,-1, 31,0);
     for (int i = 0; i < 2; ++i) {
-        tracep->declBus(c+33+i*1,"pair_list", true,(i+0), 8,0);
+        tracep->declBus(c+22+i*1,"pair_list", true,(i+0), 8,0);
     }
     for (int i = 0; i < 2; ++i) {
-        tracep->declBus(c+35+i*1,"key_list", true,(i+0), 6,0);
+        tracep->declBus(c+24+i*1,"key_list", true,(i+0), 6,0);
     }
     for (int i = 0; i < 2; ++i) {
-        tracep->declBus(c+37+i*1,"data_list", true,(i+0), 1,0);
+        tracep->declBus(c+26+i*1,"data_list", true,(i+0), 1,0);
     }
     tracep->declBus(c+309,"lut_out", false,-1, 1,0);
     tracep->declBit(c+310,"hit", false,-1);
@@ -311,7 +311,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+428,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+436,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+111,"out", false,-1, 1,0);
+    tracep->declBus(c+100,"out", false,-1, 1,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+453,"default_out", false,-1, 1,0);
     tracep->declArray(c+454,"lut", false,-1, 98,0);
@@ -320,19 +320,19 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+447,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+436,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+111,"out", false,-1, 1,0);
+    tracep->declBus(c+100,"out", false,-1, 1,0);
     tracep->declBus(c+249,"key", false,-1, 6,0);
     tracep->declBus(c+453,"default_out", false,-1, 1,0);
     tracep->declArray(c+454,"lut", false,-1, 98,0);
     tracep->declBus(c+451,"PAIR_LEN", false,-1, 31,0);
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+39+i*1,"pair_list", true,(i+0), 8,0);
+        tracep->declBus(c+28+i*1,"pair_list", true,(i+0), 8,0);
     }
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+50+i*1,"key_list", true,(i+0), 6,0);
+        tracep->declBus(c+39+i*1,"key_list", true,(i+0), 6,0);
     }
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+61+i*1,"data_list", true,(i+0), 1,0);
+        tracep->declBus(c+50+i*1,"data_list", true,(i+0), 1,0);
     }
     tracep->declBus(c+311,"lut_out", false,-1, 1,0);
     tracep->declBit(c+312,"hit", false,-1);
@@ -361,7 +361,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declBus(c+322+i*1,"pair_list", true,(i+0), 22,0);
     }
     for (int i = 0; i < 11; ++i) {
-        tracep->declBus(c+72+i*1,"key_list", true,(i+0), 6,0);
+        tracep->declBus(c+61+i*1,"key_list", true,(i+0), 6,0);
     }
     for (int i = 0; i < 11; ++i) {
         tracep->declBus(c+333+i*1,"data_list", true,(i+0), 15,0);
@@ -374,18 +374,18 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->pushNamePrefix("riscv_ifu_u0 ");
     tracep->declBit(c+422,"rst_n", false,-1);
     tracep->declBus(c+379,"pc", false,-1, 31,0);
-    tracep->declBus(c+101,"inst", false,-1, 31,0);
+    tracep->declBus(c+90,"inst", false,-1, 31,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("riscv_lsu_u0 ");
     tracep->declBit(c+421,"clk", false,-1);
     tracep->declBit(c+422,"rst_n", false,-1);
-    tracep->declBus(c+118,"exu_result", false,-1, 31,0);
-    tracep->declBus(c+115,"src2", false,-1, 31,0);
-    tracep->declBus(c+112,"lsu_opt", false,-1, 1,0);
-    tracep->declBus(c+113,"funct3", false,-1, 2,0);
-    tracep->declBus(c+119,"lsu_result", false,-1, 31,0);
+    tracep->declBus(c+107,"exu_result", false,-1, 31,0);
+    tracep->declBus(c+104,"src2", false,-1, 31,0);
+    tracep->declBus(c+101,"lsu_opt", false,-1, 1,0);
+    tracep->declBus(c+102,"funct3", false,-1, 2,0);
+    tracep->declBus(c+108,"lsu_result", false,-1, 31,0);
     tracep->declBit(c+346,"ren", false,-1);
-    tracep->declBus(c+118,"raddr", false,-1, 31,0);
+    tracep->declBus(c+107,"raddr", false,-1, 31,0);
     tracep->declBus(c+347,"rdata", false,-1, 31,0);
     tracep->declBus(c+380,"waddr", false,-1, 31,0);
     tracep->declBus(c+381,"wdata", false,-1, 31,0);
@@ -404,7 +404,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+462,"NR_KEY", false,-1, 31,0);
     tracep->declBus(c+462,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
-    tracep->declBus(c+119,"out", false,-1, 31,0);
+    tracep->declBus(c+108,"out", false,-1, 31,0);
     tracep->declBus(c+352,"key", false,-1, 4,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
     tracep->declArray(c+353,"lut", false,-1, 184,0);
@@ -413,7 +413,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+462,"KEY_LEN", false,-1, 31,0);
     tracep->declBus(c+423,"DATA_LEN", false,-1, 31,0);
     tracep->declBus(c+431,"HAS_DEFAULT", false,-1, 31,0);
-    tracep->declBus(c+119,"out", false,-1, 31,0);
+    tracep->declBus(c+108,"out", false,-1, 31,0);
     tracep->declBus(c+352,"key", false,-1, 4,0);
     tracep->declBus(c+430,"default_out", false,-1, 31,0);
     tracep->declArray(c+353,"lut", false,-1, 184,0);
@@ -422,7 +422,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
         tracep->declQuad(c+359+i*2,"pair_list", true,(i+0), 36,0);
     }
     for (int i = 0; i < 5; ++i) {
-        tracep->declBus(c+83+i*1,"key_list", true,(i+0), 4,0);
+        tracep->declBus(c+72+i*1,"key_list", true,(i+0), 4,0);
     }
     for (int i = 0; i < 5; ++i) {
         tracep->declBus(c+369+i*1,"data_list", true,(i+0), 31,0);
@@ -451,13 +451,13 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declArray(c+466,"lut", false,-1, 110,0);
     tracep->declBus(c+463,"PAIR_LEN", false,-1, 31,0);
     for (int i = 0; i < 3; ++i) {
-        tracep->declQuad(c+88+i*2,"pair_list", true,(i+0), 36,0);
+        tracep->declQuad(c+77+i*2,"pair_list", true,(i+0), 36,0);
     }
     for (int i = 0; i < 3; ++i) {
-        tracep->declBus(c+94+i*1,"key_list", true,(i+0), 4,0);
+        tracep->declBus(c+83+i*1,"key_list", true,(i+0), 4,0);
     }
     for (int i = 0; i < 3; ++i) {
-        tracep->declBus(c+97+i*1,"data_list", true,(i+0), 31,0);
+        tracep->declBus(c+86+i*1,"data_list", true,(i+0), 31,0);
     }
     tracep->declBus(c+376,"lut_out", false,-1, 31,0);
     tracep->declBit(c+377,"hit", false,-1);
@@ -467,17 +467,17 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->pushNamePrefix("riscv_regfile_u0 ");
     tracep->declBit(c+421,"clk", false,-1);
     tracep->declBit(c+422,"rst_n", false,-1);
-    tracep->declBus(c+107,"rs1_addr", false,-1, 4,0);
-    tracep->declBus(c+114,"rs1_data", false,-1, 31,0);
-    tracep->declBus(c+108,"rs2_addr", false,-1, 4,0);
-    tracep->declBus(c+115,"rs2_data", false,-1, 31,0);
-    tracep->declBit(c+106,"rd_en", false,-1);
-    tracep->declBus(c+105,"rd_addr", false,-1, 4,0);
-    tracep->declBus(c+116,"rd_data", false,-1, 31,0);
+    tracep->declBus(c+96,"rs1_addr", false,-1, 4,0);
+    tracep->declBus(c+103,"rs1_data", false,-1, 31,0);
+    tracep->declBus(c+97,"rs2_addr", false,-1, 4,0);
+    tracep->declBus(c+104,"rs2_data", false,-1, 31,0);
+    tracep->declBit(c+95,"rd_en", false,-1);
+    tracep->declBus(c+94,"rd_addr", false,-1, 4,0);
+    tracep->declBus(c+105,"rd_data", false,-1, 31,0);
     for (int i = 0; i < 32; ++i) {
         tracep->declBus(c+386+i*1,"gpr", true,(i+0), 31,0);
     }
-    tracep->declBus(c+100,"i", false,-1, 31,0);
+    tracep->declBus(c+89,"i", false,-1, 31,0);
     tracep->declBus(c+418,"rd_addr_t", false,-1, 4,0);
     tracep->declBit(c+419,"rd_en_t", false,-1);
     tracep->pushNamePrefix("riscv_dff_reg_t ");
@@ -490,10 +490,10 @@ VL_ATTR_COLD void Vriscv32___024root__trace_init_sub__TOP__0(Vriscv32___024root*
     tracep->declBus(c+420,"dout", false,-1, 5,0);
     tracep->popNamePrefix(2);
     tracep->pushNamePrefix("riscv_wbu_u0 ");
-    tracep->declBus(c+112,"lsu_opt", false,-1, 1,0);
-    tracep->declBus(c+118,"exu_result", false,-1, 31,0);
-    tracep->declBus(c+119,"lsu_result", false,-1, 31,0);
-    tracep->declBus(c+116,"wbu_result", false,-1, 31,0);
+    tracep->declBus(c+101,"lsu_opt", false,-1, 1,0);
+    tracep->declBus(c+107,"exu_result", false,-1, 31,0);
+    tracep->declBus(c+108,"lsu_result", false,-1, 31,0);
+    tracep->declBus(c+105,"wbu_result", false,-1, 31,0);
     tracep->popNamePrefix(2);
 }
 
@@ -536,7 +536,7 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root__trace_full_sub_0\n"); );
     // Init
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode);
-    VlWide<13>/*415:0*/ __Vtemp_h54812643__0;
+    VlWide<13>/*415:0*/ __Vtemp_hdb9dd6df__0;
     VlWide<7>/*223:0*/ __Vtemp_hcb26cac4__0;
     VlWide<9>/*287:0*/ __Vtemp_hd9d822d0__0;
     VlWide<14>/*447:0*/ __Vtemp_h56c4ca1e__0;
@@ -545,129 +545,118 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
     VlWide<4>/*127:0*/ __Vtemp_h8c90ec6d__0;
     VlWide<4>/*127:0*/ __Vtemp_heb927861__0;
     // Body
-    bufp->fullCData(oldp+1,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[0]),4);
-    bufp->fullCData(oldp+2,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[1]),4);
-    bufp->fullCData(oldp+3,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[2]),4);
-    bufp->fullCData(oldp+4,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[3]),4);
-    bufp->fullCData(oldp+5,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[4]),4);
-    bufp->fullCData(oldp+6,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[5]),4);
-    bufp->fullCData(oldp+7,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[6]),4);
-    bufp->fullCData(oldp+8,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[7]),4);
-    bufp->fullCData(oldp+9,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[8]),4);
-    bufp->fullCData(oldp+10,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[9]),4);
-    bufp->fullCData(oldp+11,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[10]),4);
-    bufp->fullCData(oldp+12,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[0]),4);
-    bufp->fullCData(oldp+13,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[1]),4);
-    bufp->fullCData(oldp+14,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[2]),4);
-    bufp->fullCData(oldp+15,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[3]),4);
-    bufp->fullCData(oldp+16,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[4]),4);
-    bufp->fullCData(oldp+17,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[5]),4);
-    bufp->fullCData(oldp+18,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[0]),2);
-    bufp->fullCData(oldp+19,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[1]),2);
-    bufp->fullCData(oldp+20,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[2]),2);
-    bufp->fullCData(oldp+21,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[3]),2);
-    bufp->fullCData(oldp+22,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[0]),7);
-    bufp->fullCData(oldp+23,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[1]),7);
-    bufp->fullCData(oldp+24,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[2]),7);
-    bufp->fullCData(oldp+25,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[3]),7);
-    bufp->fullCData(oldp+26,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[4]),7);
-    bufp->fullCData(oldp+27,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[5]),7);
-    bufp->fullCData(oldp+28,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[6]),7);
-    bufp->fullCData(oldp+29,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[7]),7);
-    bufp->fullCData(oldp+30,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[8]),7);
-    bufp->fullCData(oldp+31,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[9]),7);
-    bufp->fullCData(oldp+32,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[10]),7);
-    bufp->fullSData(oldp+33,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__pair_list[0]),9);
-    bufp->fullSData(oldp+34,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__pair_list[1]),9);
-    bufp->fullCData(oldp+35,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list[0]),7);
-    bufp->fullCData(oldp+36,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list[1]),7);
-    bufp->fullCData(oldp+37,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__data_list[0]),2);
-    bufp->fullCData(oldp+38,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__data_list[1]),2);
-    bufp->fullSData(oldp+39,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[0]),9);
-    bufp->fullSData(oldp+40,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[1]),9);
-    bufp->fullSData(oldp+41,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[2]),9);
-    bufp->fullSData(oldp+42,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[3]),9);
-    bufp->fullSData(oldp+43,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[4]),9);
-    bufp->fullSData(oldp+44,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[5]),9);
-    bufp->fullSData(oldp+45,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[6]),9);
-    bufp->fullSData(oldp+46,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[7]),9);
-    bufp->fullSData(oldp+47,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[8]),9);
-    bufp->fullSData(oldp+48,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[9]),9);
-    bufp->fullSData(oldp+49,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[10]),9);
-    bufp->fullCData(oldp+50,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[0]),7);
-    bufp->fullCData(oldp+51,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[1]),7);
-    bufp->fullCData(oldp+52,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[2]),7);
-    bufp->fullCData(oldp+53,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[3]),7);
-    bufp->fullCData(oldp+54,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[4]),7);
-    bufp->fullCData(oldp+55,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[5]),7);
-    bufp->fullCData(oldp+56,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[6]),7);
-    bufp->fullCData(oldp+57,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[7]),7);
-    bufp->fullCData(oldp+58,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[8]),7);
-    bufp->fullCData(oldp+59,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[9]),7);
-    bufp->fullCData(oldp+60,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[10]),7);
-    bufp->fullCData(oldp+61,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[0]),2);
-    bufp->fullCData(oldp+62,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[1]),2);
-    bufp->fullCData(oldp+63,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[2]),2);
-    bufp->fullCData(oldp+64,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[3]),2);
-    bufp->fullCData(oldp+65,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[4]),2);
-    bufp->fullCData(oldp+66,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[5]),2);
-    bufp->fullCData(oldp+67,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[6]),2);
-    bufp->fullCData(oldp+68,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[7]),2);
-    bufp->fullCData(oldp+69,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[8]),2);
-    bufp->fullCData(oldp+70,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[9]),2);
-    bufp->fullCData(oldp+71,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[10]),2);
-    bufp->fullCData(oldp+72,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[0]),7);
-    bufp->fullCData(oldp+73,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[1]),7);
-    bufp->fullCData(oldp+74,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[2]),7);
-    bufp->fullCData(oldp+75,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[3]),7);
-    bufp->fullCData(oldp+76,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[4]),7);
-    bufp->fullCData(oldp+77,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[5]),7);
-    bufp->fullCData(oldp+78,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[6]),7);
-    bufp->fullCData(oldp+79,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[7]),7);
-    bufp->fullCData(oldp+80,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[8]),7);
-    bufp->fullCData(oldp+81,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[9]),7);
-    bufp->fullCData(oldp+82,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[10]),7);
-    bufp->fullCData(oldp+83,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[0]),5);
-    bufp->fullCData(oldp+84,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[1]),5);
-    bufp->fullCData(oldp+85,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[2]),5);
-    bufp->fullCData(oldp+86,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[3]),5);
-    bufp->fullCData(oldp+87,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[4]),5);
-    bufp->fullQData(oldp+88,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[0]),37);
-    bufp->fullQData(oldp+90,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[1]),37);
-    bufp->fullQData(oldp+92,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[2]),37);
-    bufp->fullCData(oldp+94,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[0]),5);
-    bufp->fullCData(oldp+95,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[1]),5);
-    bufp->fullCData(oldp+96,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[2]),5);
-    bufp->fullIData(oldp+97,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[0]),32);
-    bufp->fullIData(oldp+98,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[1]),32);
-    bufp->fullIData(oldp+99,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[2]),32);
-    bufp->fullIData(oldp+100,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__i),32);
-    bufp->fullIData(oldp+101,(vlSelf->riscv32__DOT__ifu_inst),32);
-    bufp->fullBit(oldp+102,((0x63U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
-    bufp->fullBit(oldp+103,((0x6fU == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
-    bufp->fullBit(oldp+104,((0x67U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
-    bufp->fullCData(oldp+105,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
-                                        >> 1U))),5);
-    bufp->fullBit(oldp+106,((1U & (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out))));
-    bufp->fullCData(oldp+107,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
-                                        >> 0xbU))),5);
-    bufp->fullCData(oldp+108,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
-                                        >> 6U))),5);
-    bufp->fullIData(oldp+109,(vlSelf->riscv32__DOT__idu_imm),32);
-    bufp->fullCData(oldp+110,(vlSelf->riscv32__DOT__idu_alu_opt),4);
-    bufp->fullCData(oldp+111,(vlSelf->riscv32__DOT__idu_src_sel),2);
-    bufp->fullCData(oldp+112,(vlSelf->riscv32__DOT__idu_lsu_opt),2);
-    bufp->fullCData(oldp+113,((7U & (vlSelf->riscv32__DOT__ifu_inst 
+    bufp->fullCData(oldp+1,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[0]),4);
+    bufp->fullCData(oldp+2,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[1]),4);
+    bufp->fullCData(oldp+3,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[2]),4);
+    bufp->fullCData(oldp+4,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[3]),4);
+    bufp->fullCData(oldp+5,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[4]),4);
+    bufp->fullCData(oldp+6,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list[5]),4);
+    bufp->fullCData(oldp+7,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[0]),2);
+    bufp->fullCData(oldp+8,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[1]),2);
+    bufp->fullCData(oldp+9,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[2]),2);
+    bufp->fullCData(oldp+10,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__key_list[3]),2);
+    bufp->fullCData(oldp+11,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[0]),7);
+    bufp->fullCData(oldp+12,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[1]),7);
+    bufp->fullCData(oldp+13,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[2]),7);
+    bufp->fullCData(oldp+14,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[3]),7);
+    bufp->fullCData(oldp+15,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[4]),7);
+    bufp->fullCData(oldp+16,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[5]),7);
+    bufp->fullCData(oldp+17,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[6]),7);
+    bufp->fullCData(oldp+18,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[7]),7);
+    bufp->fullCData(oldp+19,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[8]),7);
+    bufp->fullCData(oldp+20,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[9]),7);
+    bufp->fullCData(oldp+21,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__key_list[10]),7);
+    bufp->fullSData(oldp+22,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__pair_list[0]),9);
+    bufp->fullSData(oldp+23,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__pair_list[1]),9);
+    bufp->fullCData(oldp+24,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list[0]),7);
+    bufp->fullCData(oldp+25,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list[1]),7);
+    bufp->fullCData(oldp+26,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__data_list[0]),2);
+    bufp->fullCData(oldp+27,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__data_list[1]),2);
+    bufp->fullSData(oldp+28,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[0]),9);
+    bufp->fullSData(oldp+29,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[1]),9);
+    bufp->fullSData(oldp+30,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[2]),9);
+    bufp->fullSData(oldp+31,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[3]),9);
+    bufp->fullSData(oldp+32,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[4]),9);
+    bufp->fullSData(oldp+33,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[5]),9);
+    bufp->fullSData(oldp+34,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[6]),9);
+    bufp->fullSData(oldp+35,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[7]),9);
+    bufp->fullSData(oldp+36,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[8]),9);
+    bufp->fullSData(oldp+37,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[9]),9);
+    bufp->fullSData(oldp+38,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__pair_list[10]),9);
+    bufp->fullCData(oldp+39,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[0]),7);
+    bufp->fullCData(oldp+40,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[1]),7);
+    bufp->fullCData(oldp+41,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[2]),7);
+    bufp->fullCData(oldp+42,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[3]),7);
+    bufp->fullCData(oldp+43,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[4]),7);
+    bufp->fullCData(oldp+44,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[5]),7);
+    bufp->fullCData(oldp+45,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[6]),7);
+    bufp->fullCData(oldp+46,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[7]),7);
+    bufp->fullCData(oldp+47,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[8]),7);
+    bufp->fullCData(oldp+48,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[9]),7);
+    bufp->fullCData(oldp+49,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__key_list[10]),7);
+    bufp->fullCData(oldp+50,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[0]),2);
+    bufp->fullCData(oldp+51,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[1]),2);
+    bufp->fullCData(oldp+52,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[2]),2);
+    bufp->fullCData(oldp+53,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[3]),2);
+    bufp->fullCData(oldp+54,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[4]),2);
+    bufp->fullCData(oldp+55,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[5]),2);
+    bufp->fullCData(oldp+56,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[6]),2);
+    bufp->fullCData(oldp+57,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[7]),2);
+    bufp->fullCData(oldp+58,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[8]),2);
+    bufp->fullCData(oldp+59,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[9]),2);
+    bufp->fullCData(oldp+60,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__data_list[10]),2);
+    bufp->fullCData(oldp+61,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[0]),7);
+    bufp->fullCData(oldp+62,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[1]),7);
+    bufp->fullCData(oldp+63,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[2]),7);
+    bufp->fullCData(oldp+64,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[3]),7);
+    bufp->fullCData(oldp+65,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[4]),7);
+    bufp->fullCData(oldp+66,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[5]),7);
+    bufp->fullCData(oldp+67,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[6]),7);
+    bufp->fullCData(oldp+68,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[7]),7);
+    bufp->fullCData(oldp+69,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[8]),7);
+    bufp->fullCData(oldp+70,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[9]),7);
+    bufp->fullCData(oldp+71,(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__key_list[10]),7);
+    bufp->fullCData(oldp+72,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[0]),5);
+    bufp->fullCData(oldp+73,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[1]),5);
+    bufp->fullCData(oldp+74,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[2]),5);
+    bufp->fullCData(oldp+75,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[3]),5);
+    bufp->fullCData(oldp+76,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list[4]),5);
+    bufp->fullQData(oldp+77,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[0]),37);
+    bufp->fullQData(oldp+79,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[1]),37);
+    bufp->fullQData(oldp+81,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list[2]),37);
+    bufp->fullCData(oldp+83,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[0]),5);
+    bufp->fullCData(oldp+84,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[1]),5);
+    bufp->fullCData(oldp+85,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__key_list[2]),5);
+    bufp->fullIData(oldp+86,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[0]),32);
+    bufp->fullIData(oldp+87,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[1]),32);
+    bufp->fullIData(oldp+88,(vlSelf->riscv32__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__data_list[2]),32);
+    bufp->fullIData(oldp+89,(vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__i),32);
+    bufp->fullIData(oldp+90,(vlSelf->riscv32__DOT__ifu_inst),32);
+    bufp->fullBit(oldp+91,((0x63U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
+    bufp->fullBit(oldp+92,((0x6fU == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
+    bufp->fullBit(oldp+93,((0x67U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst))));
+    bufp->fullCData(oldp+94,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
+                                       >> 1U))),5);
+    bufp->fullBit(oldp+95,((1U & (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out))));
+    bufp->fullCData(oldp+96,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
+                                       >> 0xbU))),5);
+    bufp->fullCData(oldp+97,((0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
+                                       >> 6U))),5);
+    bufp->fullIData(oldp+98,(vlSelf->riscv32__DOT__idu_imm),32);
+    bufp->fullCData(oldp+99,(vlSelf->riscv32__DOT__idu_alu_opt),4);
+    bufp->fullCData(oldp+100,(vlSelf->riscv32__DOT__idu_src_sel),2);
+    bufp->fullCData(oldp+101,(vlSelf->riscv32__DOT__idu_lsu_opt),2);
+    bufp->fullCData(oldp+102,((7U & (vlSelf->riscv32__DOT__ifu_inst 
                                      >> 0xcU))),3);
-    bufp->fullIData(oldp+114,(vlSelf->riscv32__DOT__src1),32);
-    bufp->fullIData(oldp+115,(vlSelf->riscv32__DOT__src2),32);
-    bufp->fullIData(oldp+116,(((0U == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
+    bufp->fullIData(oldp+103,(vlSelf->riscv32__DOT__src1),32);
+    bufp->fullIData(oldp+104,(vlSelf->riscv32__DOT__src2),32);
+    bufp->fullIData(oldp+105,(((0U == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
                                 ? vlSelf->riscv32__DOT__exu_result
                                 : vlSelf->riscv32__DOT__lsu_result)),32);
-    bufp->fullBit(oldp+117,((1U & (~ (IData)((0U != vlSelf->riscv32__DOT__exu_result))))));
-    bufp->fullIData(oldp+118,(vlSelf->riscv32__DOT__exu_result),32);
-    bufp->fullIData(oldp+119,(vlSelf->riscv32__DOT__lsu_result),32);
-    bufp->fullIData(oldp+120,(((((0U != vlSelf->riscv32__DOT__exu_result) 
+    bufp->fullBit(oldp+106,((1U & (~ (IData)((0U != vlSelf->riscv32__DOT__exu_result))))));
+    bufp->fullIData(oldp+107,(vlSelf->riscv32__DOT__exu_result),32);
+    bufp->fullIData(oldp+108,(vlSelf->riscv32__DOT__lsu_result),32);
+    bufp->fullIData(oldp+109,(((((0U != vlSelf->riscv32__DOT__exu_result) 
                                  & (0x63U == (0x7fU 
                                               & vlSelf->riscv32__DOT__ifu_inst))) 
                                 | (0x6fU == (0x7fU 
@@ -680,130 +669,73 @@ VL_ATTR_COLD void Vriscv32___024root__trace_full_sub_0(Vriscv32___024root* vlSel
                                        + vlSelf->riscv32__DOT__src1)
                                     : ((IData)(4U) 
                                        + vlSelf->riscv32__DOT__ifu_pc)))),32);
-    bufp->fullIData(oldp+121,((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+    bufp->fullIData(oldp+110,((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                        >> 0x20U))),32);
-    bufp->fullIData(oldp+122,((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)),32);
-    bufp->fullIData(oldp+123,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data),32);
-    bufp->fullBit(oldp+124,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag));
-    bufp->fullQData(oldp+125,((((QData)((IData)((1U 
+    bufp->fullIData(oldp+111,((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)),32);
+    bufp->fullIData(oldp+112,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__alu_out_data),32);
+    bufp->fullBit(oldp+113,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag));
+    bufp->fullQData(oldp+114,((((QData)((IData)((1U 
                                                  & (IData)(
                                                            (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                             >> 0x3fU))))) 
                                 << 0x20U) | (QData)((IData)(
                                                             (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                                              >> 0x20U))))),33);
-    bufp->fullQData(oldp+127,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__alu_b_t),33);
-    bufp->fullQData(oldp+129,((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag))),33);
-    bufp->fullQData(oldp+131,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out),33);
-    bufp->fullBit(oldp+133,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
+    bufp->fullQData(oldp+116,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__alu_b_t),33);
+    bufp->fullQData(oldp+118,((QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__sub_flag))),33);
+    bufp->fullQData(oldp+120,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out),33);
+    bufp->fullBit(oldp+122,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
                                            >> 0x3fU)))));
-    bufp->fullBit(oldp+134,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__alu_b_t 
+    bufp->fullBit(oldp+123,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__alu_b_t 
                                            >> 0x20U)))));
-    bufp->fullBit(oldp+135,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
+    bufp->fullBit(oldp+124,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
                                            >> 0x20U)))));
-    bufp->fullBit(oldp+136,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
+    bufp->fullBit(oldp+125,((1U & (IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out 
                                            >> 0x1fU)))));
-    bufp->fullBit(oldp+137,((1U & VL_REDXOR_64((0x180000000ULL 
+    bufp->fullBit(oldp+126,((1U & VL_REDXOR_64((0x180000000ULL 
                                                 & vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out)))));
-    bufp->fullBit(oldp+138,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__carry_flag));
-    __Vtemp_h54812643__0[0U] = (IData)((0xb00000000ULL 
-                                        | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out))));
-    __Vtemp_h54812643__0[1U] = ((((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                           >> 0x20U)) 
-                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                 << 4U) | (IData)((
-                                                   (0xb00000000ULL 
-                                                    | (QData)((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out))) 
-                                                   >> 0x20U)));
-    __Vtemp_h54812643__0[2U] = (0xa0U | ((((IData)(
-                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                    >> 0x20U)) 
-                                           | (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                          << 8U) | 
-                                         (((IData)(
-                                                   (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                    >> 0x20U)) 
-                                           & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                          >> 0x1cU)));
-    __Vtemp_h54812643__0[3U] = (0x900U | ((vlSelf->__VdfgTmp_ha3892a3b__0 
-                                           << 0xcU) 
-                                          | (((IData)(
-                                                      (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                       >> 0x20U)) 
-                                              | (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                             >> 0x18U)));
-    __Vtemp_h54812643__0[4U] = (0x8000U | ((((0x1fU 
-                                              >= (0x3fU 
-                                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                              ? ((IData)(
-                                                         (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                          >> 0x20U)) 
-                                                 >> 
-                                                 (0x3fU 
-                                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                              : 0U) 
-                                            << 0x10U) 
-                                           | (0xfffU 
-                                              & ((0x800U 
-                                                  & ((IData)(
-                                                             (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                              >> 0x3fU)) 
-                                                     << 0xbU)) 
-                                                 | (vlSelf->__VdfgTmp_ha3892a3b__0 
-                                                    >> 0x14U)))));
-    __Vtemp_h54812643__0[5U] = (0x70000U | ((((IData)(
-                                                      (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                       >> 0x20U)) 
-                                              ^ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                             << 0x14U) 
-                                            | (((0x1fU 
-                                                 >= 
-                                                 (0x3fU 
-                                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                                 ? 
-                                                ((IData)(
-                                                         (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                          >> 0x20U)) 
-                                                 >> 
-                                                 (0x3fU 
-                                                  & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                                 : 0U) 
-                                               >> 0x10U)));
-    __Vtemp_h54812643__0[6U] = (0x600000U | (((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__carry_flag) 
-                                              << 0x18U) 
-                                             | (((IData)(
-                                                         (vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                                          >> 0x20U)) 
-                                                 ^ (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)) 
-                                                >> 0xcU)));
-    __Vtemp_h54812643__0[7U] = (0x5000000U | ((IData)(vlSelf->__VdfgTmp_h39dd3dac__0) 
-                                              << 0x1cU));
-    __Vtemp_h54812643__0[8U] = 0x40000000U;
-    __Vtemp_h54812643__0[9U] = ((0x1fU >= (0x3fU & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                 ? ((IData)((vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out 
-                                             >> 0x20U)) 
-                                    << (0x3fU & (IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellout__riscv_mux_ex_src_sel__out)))
-                                 : 0U);
-    __Vtemp_h54812643__0[0xaU] = (3U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
+    bufp->fullBit(oldp+127,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__carry_flag));
+    __Vtemp_hdb9dd6df__0[0U] = vlSelf->__VdfgTmp_hc2df5b22__0[0U];
+    __Vtemp_hdb9dd6df__0[1U] = vlSelf->__VdfgTmp_hc2df5b22__0[1U];
+    __Vtemp_hdb9dd6df__0[2U] = vlSelf->__VdfgTmp_hc2df5b22__0[2U];
+    __Vtemp_hdb9dd6df__0[3U] = vlSelf->__VdfgTmp_hc2df5b22__0[3U];
+    __Vtemp_hdb9dd6df__0[4U] = vlSelf->__VdfgTmp_hc2df5b22__0[4U];
+    __Vtemp_hdb9dd6df__0[5U] = vlSelf->__VdfgTmp_hc2df5b22__0[5U];
+    __Vtemp_hdb9dd6df__0[6U] = vlSelf->__VdfgTmp_hc2df5b22__0[6U];
+    __Vtemp_hdb9dd6df__0[7U] = vlSelf->__VdfgTmp_hc2df5b22__0[7U];
+    __Vtemp_hdb9dd6df__0[8U] = vlSelf->__VdfgTmp_hc2df5b22__0[8U];
+    __Vtemp_hdb9dd6df__0[9U] = vlSelf->__VdfgTmp_hc2df5b22__0[9U];
+    __Vtemp_hdb9dd6df__0[0xaU] = vlSelf->__VdfgTmp_hc2df5b22__0[0xaU];
+    __Vtemp_hdb9dd6df__0[0xbU] = (3U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                         << 4U));
-    __Vtemp_h54812643__0[0xbU] = (0x20U | (((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
-                                            << 8U) 
+    __Vtemp_hdb9dd6df__0[0xcU] = (0x20U | ((0xf00U 
+                                            & ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
+                                               << 8U)) 
                                            | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
                                               >> 0x1cU)));
-    __Vtemp_h54812643__0[0xcU] = (0x100U | ((IData)(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__add_out) 
-                                            >> 0x18U));
-    bufp->fullWData(oldp+139,(__Vtemp_h54812643__0),396);
-    bufp->fullQData(oldp+152,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[0]),36);
-    bufp->fullQData(oldp+154,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[1]),36);
-    bufp->fullQData(oldp+156,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[2]),36);
-    bufp->fullQData(oldp+158,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[3]),36);
-    bufp->fullQData(oldp+160,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[4]),36);
-    bufp->fullQData(oldp+162,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[5]),36);
-    bufp->fullQData(oldp+164,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[6]),36);
-    bufp->fullQData(oldp+166,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[7]),36);
-    bufp->fullQData(oldp+168,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[8]),36);
-    bufp->fullQData(oldp+170,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[9]),36);
-    bufp->fullQData(oldp+172,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[10]),36);
+    bufp->fullWData(oldp+128,(__Vtemp_hdb9dd6df__0),396);
+    bufp->fullQData(oldp+141,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[0]),36);
+    bufp->fullQData(oldp+143,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[1]),36);
+    bufp->fullQData(oldp+145,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[2]),36);
+    bufp->fullQData(oldp+147,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[3]),36);
+    bufp->fullQData(oldp+149,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[4]),36);
+    bufp->fullQData(oldp+151,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[5]),36);
+    bufp->fullQData(oldp+153,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[6]),36);
+    bufp->fullQData(oldp+155,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[7]),36);
+    bufp->fullQData(oldp+157,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[8]),36);
+    bufp->fullQData(oldp+159,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[9]),36);
+    bufp->fullQData(oldp+161,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__pair_list[10]),36);
+    bufp->fullCData(oldp+163,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[0]),4);
+    bufp->fullCData(oldp+164,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[1]),4);
+    bufp->fullCData(oldp+165,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[2]),4);
+    bufp->fullCData(oldp+166,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[3]),4);
+    bufp->fullCData(oldp+167,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[4]),4);
+    bufp->fullCData(oldp+168,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[5]),4);
+    bufp->fullCData(oldp+169,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[6]),4);
+    bufp->fullCData(oldp+170,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[7]),4);
+    bufp->fullCData(oldp+171,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[8]),4);
+    bufp->fullCData(oldp+172,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[9]),4);
+    bufp->fullCData(oldp+173,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list[10]),4);
     bufp->fullIData(oldp+174,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[0]),32);
     bufp->fullIData(oldp+175,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[1]),32);
     bufp->fullIData(oldp+176,(vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list[2]),32);
