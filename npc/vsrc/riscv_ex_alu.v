@@ -27,8 +27,8 @@ wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}}
 
 wire sub_flag = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
 
-wire [`DATA_WIDTH:0] alu_a_t = {alu_a_data[`DATA_WIDTH-1],alu_a_data};
-wire [`DATA_WIDTH:0] alu_b_t = {alu_b_data[`DATA_WIDTH-1],alu_b_data} ^ {(`DATA_WIDTH+1){sub_flag}};
+wire [`DATA_WIDTH:0] alu_a_t = {1'b0,alu_a_data};
+wire [`DATA_WIDTH:0] alu_b_t = {1'b0,alu_b_data} ^ {(`DATA_WIDTH+1){sub_flag}};
 wire [`DATA_WIDTH:0] cin     = {{(`DATA_WIDTH){1'b0}},sub_flag};
 wire [`DATA_WIDTH:0] add_out = alu_a_t + alu_b_t + cin;
 
@@ -38,7 +38,7 @@ wire top_C = add_out[`DATA_WIDTH];
 
 wire sign_flag = add_out[`DATA_WIDTH-1];
 wire over_flag = add_out[`DATA_WIDTH] ^ add_out[`DATA_WIDTH-1];
-wire carry_flag = add_out[`DATA_WIDTH] ^ sub_flag;
+wire carry_flag = add_out[`DATA_WIDTH];
 
 
 
