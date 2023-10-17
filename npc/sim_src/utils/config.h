@@ -19,12 +19,3 @@
 
 
 #endif
-
-
-/*
-   movsx
-mul-longlong
-shift
-max
-min3
-*/
