@@ -10,7 +10,7 @@
 
 #ifdef CONFIG_WAVE
   #define dump_wave contextp->timeInc(1); tfp->dump(contextp->time()); 
-#elif
+#else
   #define dump_wave
 #endif
 
