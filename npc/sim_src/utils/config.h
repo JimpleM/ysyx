@@ -11,7 +11,7 @@
 #define CONFIG_MTRACE_END_ADDR      0x8fffffff
 
 #define CONFIG_DIFFTEST
-// #define CONFIG_ITRACE
+#define CONFIG_ITRACE
 // #define CONFIG_FTRACE
 // #define CONFIG_WATCHPOINT
 // #define CONFIG_MTRACE
