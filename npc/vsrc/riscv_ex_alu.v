@@ -19,7 +19,7 @@ wire top_C = add_out[`DATA_WIDTH];
 
 wire sign_flag = add_out[`DATA_WIDTH-1];
 wire over_flag = add_out[`DATA_WIDTH] ^ add_out[`DATA_WIDTH-1];
-wire carry_flag = (top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!top_C) & (!top_A|!top_B|top_C);
+wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!top_C) & (!top_A|!top_B|top_C)) ^ sub_flag;
 
 riscv_mux#(
   .NR_KEY      (11), 
