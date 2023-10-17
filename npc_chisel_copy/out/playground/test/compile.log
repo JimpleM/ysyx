@@ -1,6 +1,0 @@
-[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /home/jimple/Documents/ysyx/ysyx-workbench/npc/out/playground/test/compile.dest/classes ...[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/jimple/Documents/ysyx/ysyx-workbench/npc/playground/test/src/GCDSpec.scala:19:21: method copyArrayToImmutableIndexedSeq in class LowPriorityImplicits2 is deprecated (since 2.13.0): Implicit conversions from Array to immutable.IndexedSeq are implemented by copying; Use the more efficient non-copying ArraySeq.unsafeWrapArray or an explicit toIndexedSeq call[0m
-[0m[[0m[33mwarn[0m] [0m[0m  val tests = Tests {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
-[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
