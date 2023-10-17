@@ -6,7 +6,7 @@ module riscv_ex_alu(
     output  	      [`DATA_WIDTH-1:0]       alu_out_data
 );
 
-wire sub_flag = (alu_opt == `ALU_SUB);
+wire sub_flag = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
 
 wire [`DATA_WIDTH:0] alu_a_t = {alu_a_data[`DATA_WIDTH-1],alu_a_data};
 wire [`DATA_WIDTH:0] alu_b_t = {alu_b_data[`DATA_WIDTH-1],alu_b_data} ^ {(`DATA_WIDTH+1){sub_flag}};
