@@ -11,7 +11,8 @@ static char *hbrk;
 static uint64_t uptime() { 
   uint64_t temp = io_read(AM_TIMER_UPTIME).us;
   printf("%ld\n",temp);
-  return io_read(AM_TIMER_UPTIME).us; 
+  // return io_read(AM_TIMER_UPTIME).us; 
+  return 10000;
 }
 
 
