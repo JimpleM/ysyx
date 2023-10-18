@@ -61,6 +61,7 @@ int debug_printf(const char *fmt, ...) {
   int count = 0;
 
   char* ArgStr = NULL;      // 接收字符型
+  char ch;
   int ArgInt = 0;
   char str_temp[100];
   ul num_temp = 0;
@@ -91,8 +92,8 @@ int debug_printf(const char *fmt, ...) {
         number_to_str(str_temp,(ul)num_temp,10);
         printf("%s",str_temp);
       }else if(*fmt == 'c'){
-        ArgInt = va_arg(args, int);
-        debug_printf("%d",ArgInt);
+        ch = va_arg(args, int);
+        debug_printf("%d",ch);
       }
     }else{
       putch(*fmt);
