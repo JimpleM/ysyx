@@ -112,7 +112,7 @@ int printf(const char *fmt, ...) {
   // debug_printf("%s",fmt);
   // debug_printf(fmt,args);
   int count = vsprintf(str,fmt,args);
-  putch('\n');
+  debug_printf("%d\n",count);
   for(int i=0; i<strlen(str); i++){
     putch(str[i]);
   }
