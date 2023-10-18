@@ -94,7 +94,7 @@ int debug_printf(const char *fmt, ...) {
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
         ch = (char)ArgInt;
-        debug_printf("%d",ch);
+        debug_printf("%d",ArgInt);
       }
     }else{
       putch(*fmt);
