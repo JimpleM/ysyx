@@ -42,6 +42,7 @@ Benchmark benchmarks[] = {
 // Running a benchmark
 static void bench_prepare(Result *res) {
   res->usec = uptime();
+  printf("%x\n",res->usec);
 }
 
 static void bench_reset() {
