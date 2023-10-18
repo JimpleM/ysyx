@@ -93,7 +93,7 @@ int main(const char *args) {
     halt(1);
   }
 
-  
+  ioe_init();
 
   printf("======= Running MicroBench [input *%s*] =======\n", setting_name);
 
