@@ -61,6 +61,7 @@ static const char *bench_check(Benchmark *bench) {
 }
 
 static void run_once(Benchmark *b, Result *res) {
+  printf("run_once\n");
   bench_reset();       // reset malloc state
   current->prepare();  // call bechmark's prepare function
   bench_prepare(res);  // clean everything, start timer
@@ -92,7 +93,7 @@ int main(const char *args) {
     halt(1);
   }
 
- 
+  ioe_init();
 
   printf("======= Running MicroBench [input *%s*] =======\n", setting_name);
 
@@ -101,7 +102,6 @@ int main(const char *args) {
   uint64_t t0 = uptime();
   uint64_t score_time = 0;
   
-   ioe_init();
 
   for (int i = 0; i < LENGTH(benchmarks); i ++) {
     Benchmark *bench = &benchmarks[i];
