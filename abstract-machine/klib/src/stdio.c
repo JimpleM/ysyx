@@ -199,7 +199,7 @@ int sprintf(char *out, const char *fmt, ...) {
       }else if(*fmt == 'f'){
         ArgFloat = va_arg(args, double);
         ArgStr = str_temp;
-        assert(0);
+        debug_printf("debug:aaaa\n");
         // if(ArgFloat < 0){
         //   *ArgStr++ = '-';
         //   ArgFloat = -ArgFloat;
