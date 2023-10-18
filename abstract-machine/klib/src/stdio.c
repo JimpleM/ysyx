@@ -103,16 +103,17 @@ int debug_printf(const char *fmt, ...) {
 int printf(const char *fmt, ...) {
   assert(fmt != NULL);
   char str[1024];
-  va_list args;
-  va_start(args,fmt);
-  int count = sprintf(str,fmt,args);
-  for(int i=0; i<count; i++){
-    putch(str[i]);
-  }
-  va_end(args);
+  // va_list args;
+  // va_start(args,fmt);
+  // int count = sprintf(str,fmt,args);
+  // for(int i=0; i<count; i++){
+  //   putch(str[i]);
+  // }
+  // va_end(args);
   // debug_printf("debug:aaaa\n");
   
-  return count;
+  // return count;
+  return 0;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
