@@ -92,7 +92,7 @@ int debug_printf(const char *fmt, ...) {
         printf("%s",str_temp);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
-        putch(ArgInt);
+        putch(ArgInt-'a');
       }
     }else{
       putch(*fmt);
