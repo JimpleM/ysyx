@@ -51,6 +51,7 @@ static void bench_reset() {
 
 static void bench_done(Result *res) {
   res->usec = uptime() - res->usec;
+  printf("%x\n",res->usec);
 }
 
 static const char *bench_check(Benchmark *bench) {
