@@ -110,7 +110,7 @@ int printf(const char *fmt, ...) {
     putch(str[i]);
   }
   va_end(args);
-  debug_printf("debug:aaaa\n");
+  // debug_printf("debug:aaaa\n");
   
   return count;
 }
