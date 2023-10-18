@@ -25,7 +25,7 @@ static uint64_t boot_time = 0;
 
 static uint64_t get_time_internal() {
 #if defined(CONFIG_TARGET_AM)
-  printf("CONFIG_TARGET_AM\n");
+  // printf("CONFIG_TARGET_AM\n");
   uint64_t us = io_read(AM_TIMER_UPTIME).us;
 #elif defined(CONFIG_TIMER_GETTIMEOFDAY)
   //printf("CONFIG_TIMER_GETTIMEOFDAY\n");
