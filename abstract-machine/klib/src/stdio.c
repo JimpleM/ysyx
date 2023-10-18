@@ -199,7 +199,7 @@ int sprintf(char *out, const char *fmt, ...) {
       }else if(*fmt == 'f'){
         ArgFloat = va_arg(args, double);
         ArgStr = str_temp;
-        debug_printf("debug:aaaa\n");
+        
         // if(ArgFloat < 0){
         //   *ArgStr++ = '-';
         //   ArgFloat = -ArgFloat;
@@ -218,6 +218,8 @@ int sprintf(char *out, const char *fmt, ...) {
 
         // out = insert_space(out,num_before_dig-strlen(str_temp));
         // strcat_out(str_temp);
+      }else{
+        debug_printf("debug:aaaa\n");
       }
 
       num_before_dig = 0;
