@@ -15,6 +15,7 @@ static char *format_time(uint64_t us) {
   uint32_t ms = us / 1000;
   us -= ms * 1000;
   printf("%d\n",us);
+  printf("%ld\n",us);
   assert(us < 1000000);
   int len = sprintf(buf, "%d.000", ms);
   char *p = &buf[len - 1];
