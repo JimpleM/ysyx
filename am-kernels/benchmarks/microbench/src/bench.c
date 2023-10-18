@@ -46,7 +46,6 @@ static void bench_prepare(Result *res) {
 
 static void bench_reset() {
   hbrk = (void *)ROUNDUP(heap.start, 8);
-  ioe_init();
 }
 
 static void bench_done(Result *res) {
