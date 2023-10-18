@@ -36,6 +36,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
+  assert(src != NULL);
   char *dst_t = dst;
   while(*dst_t != '\0'){
     dst_t++;
