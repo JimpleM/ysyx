@@ -41,6 +41,7 @@ void *malloc(size_t size) {
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
+    assert(0);
     return NULL;
   }
   void *ptr = (void *)memory_heep;
