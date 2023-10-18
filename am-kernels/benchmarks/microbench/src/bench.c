@@ -8,15 +8,7 @@ Setting *setting;
 
 static char *hbrk;
 
-uint64_t uptime() { 
-  uint64_t temp = io_read(AM_TIMER_UPTIME).us;
-  printf("%ld\n",temp);
-
-  AM_TIMER_RTC_T rtc = io_read(AM_TIMER_RTC);
-  printf("%d\n",rtc.year);
-  
-  return io_read(AM_TIMER_UPTIME).us; 
-}
+static uint64_t uptime() { return io_read(AM_TIMER_UPTIME).us; }
 
 
 static char *format_time(uint64_t us) {
@@ -70,6 +62,7 @@ static const char *bench_check(Benchmark *bench) {
 
 static void run_once(Benchmark *b, Result *res) {
   bench_reset();       // reset malloc state
+  uint64_t t0 = uptime();
   current->prepare();  // call bechmark's prepare function
   bench_prepare(res);  // clean everything, start timer
   current->run();      // run it
