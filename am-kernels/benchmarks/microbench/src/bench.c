@@ -46,6 +46,7 @@ static void bench_prepare(Result *res) {
 
 static void bench_reset() {
   hbrk = (void *)ROUNDUP(heap.start, 8);
+  ioe_init();
 }
 
 static void bench_done(Result *res) {
@@ -61,7 +62,6 @@ static const char *bench_check(Benchmark *bench) {
 }
 
 static void run_once(Benchmark *b, Result *res) {
-  printf("run_once\n");
   bench_reset();       // reset malloc state
   current->prepare();  // call bechmark's prepare function
   bench_prepare(res);  // clean everything, start timer
@@ -93,7 +93,7 @@ int main(const char *args) {
     halt(1);
   }
 
-  ioe_init();
+  
 
   printf("======= Running MicroBench [input *%s*] =======\n", setting_name);
 
