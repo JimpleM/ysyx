@@ -126,6 +126,9 @@ int printf(const char *fmt, ...) {
 int vsprintf(char *out, const char *fmt, va_list ap) {
   assert(fmt != NULL);
 
+  char *out_t;
+  out_t = out;
+
   char str_temp[1024];
   unsigned long num_temp;
 
@@ -143,7 +146,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt == '%'){
       fmt++;
       if(*fmt == '%'){
-        *out++ = '%';
+        *out_t++ = '%';
         fmt++;
         continue;
       }
@@ -165,7 +168,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         strcat_out(ArgStr);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(ap, int);
-        *out++ = ArgInt;
+        *out_t++ = ArgInt;
       }else if(*fmt == 'd'){
         ArgInt = va_arg(ap, int);
         ArgStr = str_temp;
@@ -182,19 +185,19 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           Sign = '\0';
         }
         number_to_str(ArgStr,ArgUInt,10);
-        out = insert_space(out,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
        
         strcat_out(str_temp);
       }
       else if(*fmt == 'u'){
         ArgUInt = va_arg(ap, unsigned int);
         number_to_str(str_temp,(ul)ArgUInt,10);
-        out = insert_space(out,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
         strcat_out(str_temp);
       }else if(*fmt == 'x'){
         ArgHex = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgHex,16);
-        out = insert_space(out,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
         strcat_out(str_temp);
       }else if(*fmt == 'f'){
         ArgFloat = va_arg(ap, double);
@@ -216,19 +219,19 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         // num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
         // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
 
-        // out = insert_space(out,num_before_dig-strlen(str_temp));
+        // out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
         // strcat_out(str_temp);
       }
 
       num_before_dig = 0;
       num_after_dig = 0;
     }else{
-      *out++ = *fmt;
+      *out_t++ = *fmt;
     }
     fmt++;
   }
   
-  *out++ = '\0';
+  *out_t++ = '\0';
   return strlen(out);
 }
 
