@@ -109,8 +109,8 @@ int printf(const char *fmt, ...) {
   char str[1024];
   va_list args;
   va_start(args,fmt);
-  debug_printf("%s",fmt);
-  debug_printf(fmt,args);
+  // debug_printf("%s",fmt);
+  // debug_printf(fmt,args);
   int count = vsprintf(str,fmt,args);
   for(int i=0; i<count; i++){
     putch(str[i]);
