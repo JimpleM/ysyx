@@ -25,15 +25,14 @@ static uint64_t boot_time = 0;
 
 static uint64_t get_time_internal() {
 #if defined(CONFIG_TARGET_AM)
-printf("sdffsafsdff\n");
+  printf("CONFIG_TARGET_AM\n");
   uint64_t us = io_read(AM_TIMER_UPTIME).us;
 #elif defined(CONFIG_TIMER_GETTIMEOFDAY)
-printf("tttttttttttt\n");
+  //printf("CONFIG_TIMER_GETTIMEOFDAY\n");
   struct timeval now;
   gettimeofday(&now, NULL);
   uint64_t us = now.tv_sec * 1000000 + now.tv_usec;
 #else
-printf("tttttttttttt\n");
   struct timespec now;
   clock_gettime(CLOCK_MONOTONIC_COARSE, &now);
   uint64_t us = now.tv_sec * 1000000 + now.tv_nsec / 1000;
