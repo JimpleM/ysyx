@@ -28,6 +28,7 @@ static uint64_t get_time_internal() {
 printf("sdffsafsdff\n");
   uint64_t us = io_read(AM_TIMER_UPTIME).us;
 #elif defined(CONFIG_TIMER_GETTIMEOFDAY)
+printf("tttttttttttt\n");
   struct timeval now;
   gettimeofday(&now, NULL);
   uint64_t us = now.tv_sec * 1000000 + now.tv_usec;
