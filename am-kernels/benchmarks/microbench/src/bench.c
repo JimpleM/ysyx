@@ -104,8 +104,6 @@ int main(const char *args) {
   int pass = 1;
   uint64_t t0 = uptime();
   uint64_t score_time = 0;
-
-  while(io_read(AM_TIMER_UPTIME).us / 1000000 < 10) ;
   
 
   for (int i = 0; i < LENGTH(benchmarks); i ++) {
