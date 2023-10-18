@@ -92,7 +92,8 @@ int debug_printf(const char *fmt, ...) {
         number_to_str(str_temp,(ul)num_temp,10);
         printf("%s",str_temp);
       }else if(*fmt == 'c'){
-        ch = va_arg(args, int);
+        ArgInt = va_arg(args, int);
+        ch = (char)ArgInt;
         debug_printf("%d",ch);
       }
     }else{
