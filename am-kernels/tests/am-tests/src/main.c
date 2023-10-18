@@ -31,7 +31,7 @@ int main(const char *args) {
       printf("Usage: make run mainargs=*\n");
       for (int ch = 0; ch < 256; ch++) {
         if (tests[ch]) {
-          printf("%c: %s\n", ch, tests[ch]);
+          printf("  %c: %s\n", ch, tests[ch]);
         }
       }
   }
