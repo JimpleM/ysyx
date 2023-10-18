@@ -104,11 +104,13 @@ int printf(const char *fmt, ...) {
   assert(fmt != NULL);
   char str[1024];
   va_list args;
+  va_start(args,fmt);
   int count = sprintf(str,fmt,args);
   for(int i=0; i<count; i++){
     putch(str[i]);
   }
   debug_printf("%s\n",str);
+  va_end(args);
   return count;
 }
 
