@@ -115,10 +115,10 @@ int printf(const char *fmt, ...) {
   for(int i=0; i<count; i++){
     putch(str[i]);
   }
-  sprintf(str,"%d",count);
-  for(int i=0; i<strlen(str); i++){
-    putch(str[i]);
-  }
+  // sprintf(str,"%d",count);
+  // for(int i=0; i<strlen(str); i++){
+  //   putch(str[i]);
+  // }
   va_end(args);
   // debug_printf("debug:aaaa\n");
   
