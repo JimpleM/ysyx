@@ -55,7 +55,7 @@ char* insert_space(const char *out, int number){
   return out_t;
 }
 
-int debug_printf(const char *fmt, ...) {
+int printf(const char *fmt, ...) {
   assert(fmt != NULL);
 
   int count = 0;
@@ -85,7 +85,7 @@ int debug_printf(const char *fmt, ...) {
           num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
         }
         number_to_str(str_temp,(ul)num_temp,10);
-        debug_printf("%s",str_temp);
+        printf("%s",str_temp);
       }
       else if(*fmt == 'u'){
         num_temp = va_arg(args, ul);
@@ -94,7 +94,7 @@ int debug_printf(const char *fmt, ...) {
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
         ch = (char)ArgInt;
-        debug_printf("%d",ArgInt);
+        printf("%d",ArgInt);
       }
     }else{
       putch(*fmt);
@@ -105,7 +105,7 @@ int debug_printf(const char *fmt, ...) {
   return count;
 }
 
-int printf(const char *fmt, ...) {
+int debug_printf(const char *fmt, ...) {
   assert(fmt != NULL);
   char str[1024];
   va_list args;
