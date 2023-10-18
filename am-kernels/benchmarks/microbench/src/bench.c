@@ -8,7 +8,13 @@ Setting *setting;
 
 static char *hbrk;
 
-static uint64_t uptime() { return io_read(AM_TIMER_UPTIME).us; }
+// static uint64_t uptime() { return io_read(AM_TIMER_UPTIME).us; }
+
+static uint64_t uptime() {
+  AM_TIMER_UPTIME_T *t;
+  ioe_read(AM_TIMER_UPTIME,t);
+  return t->us; 
+}
 
 static char *format_time(uint64_t us) {
   static char buf[32];
