@@ -93,11 +93,9 @@ int debug_printf(const char *fmt, ...) {
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
         putch(ArgInt);
-        putch(' ');
       }
     }else{
       putch(*fmt);
-      putch(' ');
     } 
     fmt++;
   }
