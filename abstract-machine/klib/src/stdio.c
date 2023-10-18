@@ -105,7 +105,7 @@ int printf(const char *fmt, ...) {
   char str[1024];
   va_list args;
   va_start(args,fmt);
-  // int count = sprintf(str,fmt,args);
+  int count = sprintf(str,fmt,args);
   // for(int i=0; i<count; i++){
   //   putch(str[i]);
   // }
@@ -162,6 +162,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
       if(*fmt == 's'){
         ArgStr = va_arg(args, char*);
+        assert(ArgStr != NULL);
         strcat_out(ArgStr);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
