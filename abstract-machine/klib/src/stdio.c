@@ -54,7 +54,7 @@ char* insert_space(const char *out, int number){
   }
   return out_t;
 }
-
+// for debug
 int debug_printf(const char *fmt, ...) {
   assert(fmt != NULL);
 
