@@ -97,6 +97,7 @@ int debug_printf(const char *fmt, ...) {
       }
     }else{
       putch(*fmt);
+      putch(' ');
     } 
     fmt++;
   }
