@@ -232,7 +232,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   }
   
   *out_t++ = '\0';
-  return strlen(out+1);
+  return out_t-out;
 }
 
 
