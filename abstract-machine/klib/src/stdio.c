@@ -109,8 +109,9 @@ int printf(const char *fmt, ...) {
   for(int i=0; i<count; i++){
     putch(str[i]);
   }
-  debug_printf("debug:aaaa\n");
   va_end(args);
+  debug_printf("debug:aaaa\n");
+  
   return count;
 }
 
