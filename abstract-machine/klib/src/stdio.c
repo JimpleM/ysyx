@@ -109,21 +109,14 @@ int printf(const char *fmt, ...) {
   char str[1024];
   va_list args;
   va_start(args,fmt);
-  // debug_printf("%s",fmt);
-  // debug_printf(fmt,args);
+
   int count = vsprintf(str,fmt,args);
   for(int i=0; i<count; i++){
     putch(str[i]);
   }
-  // sprintf(str,"%d",count);
-  // for(int i=0; i<strlen(str); i++){
-  //   putch(str[i]);
-  // }
   va_end(args);
-  // debug_printf("debug:aaaa\n");
   
-  // return count;
-  return 0;
+  return count;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -167,7 +160,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
       if(*fmt == 's'){
         ArgStr = va_arg(ap, char*);
-        // assert(ArgStr != NULL);
         strcat_out(out_t,ArgStr);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(ap, int);
