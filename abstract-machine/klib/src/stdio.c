@@ -93,9 +93,7 @@ int printf(const char *fmt, ...) {
         printf("%s",str_temp);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
-        ch = (char)ArgInt;
         putch(ArgInt);
-        printf("%d",ArgInt);
       }
     }else{
       putch(*fmt);
