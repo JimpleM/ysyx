@@ -5,8 +5,8 @@
 static uint64_t boot_time = 0;
 
 static uint64_t read_time(){
-  printf("%ld\n",(uint64_t)inl(RTC_ADDR));
-  printf("%d\n",inl(RTC_ADDR));
+  printf("%ld\n",(uint64_t)inl(RTC_ADDR)+ (uint64_t)inl(RTC_ADDR+4)<<32);
+  printf("%d\n",inl(RTC_ADDR)+ (uint64_t)inl(RTC_ADDR+4)<<32);
   return ((uint64_t)inl(RTC_ADDR) + (uint64_t)inl(RTC_ADDR+4)<<32);
 }
 
