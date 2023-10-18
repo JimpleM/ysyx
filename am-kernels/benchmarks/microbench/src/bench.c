@@ -11,8 +11,7 @@ static char *hbrk;
 static uint64_t uptime() { 
   uint64_t temp = io_read(AM_TIMER_UPTIME).us;
   printf("%ld\n",temp);
-  // return io_read(AM_TIMER_UPTIME).us; 
-  return 10000;
+  return io_read(AM_TIMER_UPTIME).us; 
 }
 
 
@@ -105,6 +104,8 @@ int main(const char *args) {
   int pass = 1;
   uint64_t t0 = uptime();
   uint64_t score_time = 0;
+
+  while(io_read(AM_TIMER_UPTIME).us / 1000000 < 1) ;
   
 
   for (int i = 0; i < LENGTH(benchmarks); i ++) {
