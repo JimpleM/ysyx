@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
 
-#define MEMORY_POOL_SIZE 2048
+#define MEMORY_POOL_SIZE 65536
 
 char memory_pool[MEMORY_POOL_SIZE];
 
