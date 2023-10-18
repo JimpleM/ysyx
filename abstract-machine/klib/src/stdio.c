@@ -126,7 +126,7 @@ int printf(const char *fmt, ...) {
 int vsprintf(char *out, const char *fmt, va_list ap) {
   assert(fmt != NULL);
 
-  char str_temp[100];
+  char str_temp[1024];
   unsigned long num_temp;
 
   char* ArgStr = NULL;      // 接收字符型
