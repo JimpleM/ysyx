@@ -9,11 +9,12 @@ Setting *setting;
 static char *hbrk;
 
 static uint64_t uptime() { 
-  uint64_t temp = io_read(AM_TIMER_UPTIME).us;
-  printf("%ld\n",temp);
+  AM_TIMER_UPTIME_T temp = io_read(AM_TIMER_UPTIME);
+  printf("%ld\n",temp.us);
 
   AM_TIMER_RTC_T rtc = io_read(AM_TIMER_RTC);
   printf("%d\n",rtc.year);
+
   return io_read(AM_TIMER_UPTIME).us; 
 }
 
