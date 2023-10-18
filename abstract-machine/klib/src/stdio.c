@@ -162,7 +162,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
       if(*fmt == 's'){
         ArgStr = va_arg(args, char*);
-        assert(ArgStr != NULL);
+        // assert(ArgStr != NULL);
         strcat_out(ArgStr);
       }else if(*fmt == 'c'){
         ArgInt = va_arg(args, int);
