@@ -14,7 +14,7 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uptime->us = read_time() - boot_time;
-  printf("%x\n",uptime->us);
+  // printf("%x\n",uptime->us);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
