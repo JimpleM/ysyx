@@ -55,7 +55,7 @@ char* insert_space(const char *out, int number){
   return out_t;
 }
 
-int printf(const char *fmt, ...) {
+int debug_printf(const char *fmt, ...) {
   assert(fmt != NULL);
 
   int count = 0;
@@ -104,7 +104,7 @@ int printf(const char *fmt, ...) {
   return count;
 }
 
-int debug_printf(const char *fmt, ...) {
+int printf(const char *fmt, ...) {
   assert(fmt != NULL);
   char str[1024];
   va_list args;
@@ -112,9 +112,9 @@ int debug_printf(const char *fmt, ...) {
   debug_printf("%s",fmt);
   debug_printf(fmt,args);
   int count = sprintf(str,fmt,args);
-  // for(int i=0; i<count; i++){
-  //   putch(str[i]);
-  // }
+  for(int i=0; i<count; i++){
+    putch(str[i]);
+  }
   // va_end(args);
   // debug_printf("debug:aaaa\n");
   
