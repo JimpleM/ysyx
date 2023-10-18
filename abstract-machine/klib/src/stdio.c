@@ -140,93 +140,93 @@ int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args,fmt);
 
-  // while(*fmt != '\0'){
-  //   if(*fmt == '%'){
-  //     fmt++;
-  //     if(*fmt == '%'){
-  //       *out++ = '%';
-  //       fmt++;
-  //       continue;
-  //     }
+  while(*fmt != '\0'){
+    if(*fmt == '%'){
+      fmt++;
+      if(*fmt == '%'){
+        *out++ = '%';
+        fmt++;
+        continue;
+      }
 
-  //     if(*fmt == '-' || *fmt == '+' || *fmt == ' '){
-  //       Sign = *fmt;
-  //       fmt++;
-  //     }
+      if(*fmt == '-' || *fmt == '+' || *fmt == ' '){
+        Sign = *fmt;
+        fmt++;
+      }
 
-  //     fmt = parse_number(fmt,&num_before_dig);
-  //     if(*fmt == '.'){
-  //       fmt++;
-  //       fmt = parse_number(fmt,&num_after_dig);
-  //     }
+      fmt = parse_number(fmt,&num_before_dig);
+      if(*fmt == '.'){
+        fmt++;
+        fmt = parse_number(fmt,&num_after_dig);
+      }
 
-  //     if(*fmt == 's'){
-  //       ArgStr = va_arg(args, char*);
-  //       strcat_out(ArgStr);
-  //     }else if(*fmt == 'c'){
-  //       ArgInt = va_arg(args, int);
-  //       *out++ = ArgInt;
-  //     }else if(*fmt == 'd'){
-  //       ArgInt = va_arg(args, int);
-  //       ArgStr = str_temp;
+      if(*fmt == 's'){
+        ArgStr = va_arg(args, char*);
+        strcat_out(ArgStr);
+      }else if(*fmt == 'c'){
+        ArgInt = va_arg(args, int);
+        *out++ = ArgInt;
+      }else if(*fmt == 'd'){
+        ArgInt = va_arg(args, int);
+        ArgStr = str_temp;
 
-  //       if(ArgInt < 0){
-  //         *ArgStr++ = '-';
-  //         ArgUInt = ArgInt;
-  //         ArgUInt = (~ArgUInt)+1;
-  //       }else{
-  //         if(Sign == '+' || Sign == ' '){
-  //           *ArgStr++ = Sign;
-  //         }
-  //         ArgUInt = ArgInt;
-  //         Sign = '\0';
-  //       }
-  //       number_to_str(ArgStr,ArgUInt,10);
-  //       out = insert_space(out,num_before_dig-strlen(str_temp));
+        if(ArgInt < 0){
+          *ArgStr++ = '-';
+          ArgUInt = ArgInt;
+          ArgUInt = (~ArgUInt)+1;
+        }else{
+          if(Sign == '+' || Sign == ' '){
+            *ArgStr++ = Sign;
+          }
+          ArgUInt = ArgInt;
+          Sign = '\0';
+        }
+        number_to_str(ArgStr,ArgUInt,10);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
        
-  //       strcat_out(str_temp);
-  //     }
-  //     else if(*fmt == 'u'){
-  //       ArgUInt = va_arg(args, unsigned int);
-  //       number_to_str(str_temp,(ul)ArgUInt,10);
-  //       out = insert_space(out,num_before_dig-strlen(str_temp));
-  //       strcat_out(str_temp);
-  //     }else if(*fmt == 'x'){
-  //       ArgHex = va_arg(args, unsigned long);
-  //       number_to_str(str_temp,(ul)ArgHex,16);
-  //       out = insert_space(out,num_before_dig-strlen(str_temp));
-  //       strcat_out(str_temp);
-  //     }else if(*fmt == 'f'){
-  //       ArgFloat = va_arg(args, double);
-  //       ArgStr = str_temp;
+        strcat_out(str_temp);
+      }
+      else if(*fmt == 'u'){
+        ArgUInt = va_arg(args, unsigned int);
+        number_to_str(str_temp,(ul)ArgUInt,10);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
+        strcat_out(str_temp);
+      }else if(*fmt == 'x'){
+        ArgHex = va_arg(args, unsigned long);
+        number_to_str(str_temp,(ul)ArgHex,16);
+        out = insert_space(out,num_before_dig-strlen(str_temp));
+        strcat_out(str_temp);
+      }else if(*fmt == 'f'){
+        ArgFloat = va_arg(args, double);
+        ArgStr = str_temp;
         
-  //       // if(ArgFloat < 0){
-  //       //   *ArgStr++ = '-';
-  //       //   ArgFloat = -ArgFloat;
-  //       // }
+        // if(ArgFloat < 0){
+        //   *ArgStr++ = '-';
+        //   ArgFloat = -ArgFloat;
+        // }
 
-  //       // num_temp = (ul)ArgFloat;
-  //       // ArgFloat = ArgFloat - num_temp;
-  //       //整数位
-  //       // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
-  //       //小数点
-  //       *ArgStr++ = '.';
-  //       *ArgStr = '\0';
-  //       //小数位
-  //       // num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
-  //       // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
+        // num_temp = (ul)ArgFloat;
+        // ArgFloat = ArgFloat - num_temp;
+        //整数位
+        // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
+        //小数点
+        *ArgStr++ = '.';
+        *ArgStr = '\0';
+        //小数位
+        // num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
+        // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
 
-  //       // out = insert_space(out,num_before_dig-strlen(str_temp));
-  //       // strcat_out(str_temp);
-  //     }
+        // out = insert_space(out,num_before_dig-strlen(str_temp));
+        // strcat_out(str_temp);
+      }
 
-  //     num_before_dig = 0;
-  //     num_after_dig = 0;
-  //   }else{
-  //     *out++ = *fmt;
-  //   }
-  //   fmt++;
-  // }
+      num_before_dig = 0;
+      num_after_dig = 0;
+    }else{
+      *out++ = *fmt;
+    }
+    fmt++;
+  }
   
   *out++ = '\0';
   va_end(args);
