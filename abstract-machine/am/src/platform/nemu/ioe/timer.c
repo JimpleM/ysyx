@@ -5,14 +5,7 @@
 static uint64_t boot_time = 0;
 
 static uint64_t read_time(){
-  uint32_t a = (uint64_t)inl(RTC_ADDR);
-  uint32_t b = inl(RTC_ADDR) | (uint64_t)inl(RTC_ADDR+4)<<32;
-
-  printf("%d %d\n",a,b);
-
-  printf("%ld\n",(uint64_t)inl(RTC_ADDR)+ ((uint64_t)inl(RTC_ADDR+4))<<32);
-  printf("%d\n",inl(RTC_ADDR) | (uint64_t)inl(RTC_ADDR+4)<<32);
-  return ((uint64_t)inl(RTC_ADDR) + ((uint64_t)inl(RTC_ADDR+4)<<32));
+  return ((uint64_t)inl(RTC_ADDR) | ((uint64_t)inl(RTC_ADDR+4)<<32));
 }
 
 void __am_timer_init() {
