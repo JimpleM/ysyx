@@ -90,6 +90,9 @@ int debug_printf(const char *fmt, ...) {
         num_temp = va_arg(args, ul);
         number_to_str(str_temp,(ul)num_temp,10);
         printf("%s",str_temp);
+      }else if(*fmt == 'c'){
+        ArgInt = va_arg(args, int);
+        putch(ArgInt);
       }
     }else{
       putch(*fmt);
