@@ -113,7 +113,7 @@ int printf(const char *fmt, ...) {
   // debug_printf(fmt,args);
   int count = vsprintf(str,fmt,args);
   putch('\n');
-  for(int i=0; i<count; i++){
+  for(int i=0; i<strlen(str); i++){
     putch(str[i]);
   }
   va_end(args);
