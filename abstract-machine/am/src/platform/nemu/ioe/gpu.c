@@ -19,7 +19,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t config = inl(VGACTL_ADDR);
   int w = (config >> 16) & 0x0000ffff;
   int h = config & 0x0000ffff;
-  
+
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
     .has_accel = false,
@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     for (i = 0; i < w*h; i ++){
       fb[i] = pixels[i] & 0x00ffffff;
     } 
-    outl(SYNC_ADDR, 1);
+    // outl(SYNC_ADDR, 1);
   }
 }
 
