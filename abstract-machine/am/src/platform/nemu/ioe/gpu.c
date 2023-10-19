@@ -19,7 +19,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t config = inl(VGACTL_ADDR);
   int w = (config >> 16) & 0x0000ffff;
   int h = config & 0x0000ffff;
-  printf("%d %d\n",w,h);
+  
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
     .has_accel = false,
