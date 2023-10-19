@@ -8,7 +8,7 @@ void __am_gpu_init() {
   int i;
 
   AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
-  int w = info.width, h = info.height;
+  int w = 400, h = 300;
 
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
@@ -30,15 +30,16 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
+  int i;
+  int x = ctl->x, y = ctl->y;
+  int w = ctl->w, h = ctl->h;
+  uint32_t *pixels = (uint32_t *)ctl->pixels;
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  for (i = 0; i < w*h; i ++){
+    fb[i] = pixels[i] & 0x00ffffff;
+  } 
   if (ctl->sync) {
-    int i;
-    int w = ctl->w, h = ctl->h;
-    uint32_t *pixels = (uint32_t *)ctl->pixels;
-    uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-    for (i = 0; i < w*h; i ++){
-      fb[i] = pixels[i] & 0x00ffffff;
-    } 
-    // outl(SYNC_ADDR, 1);
+    outl(SYNC_ADDR, 1);
   }
 }
 
