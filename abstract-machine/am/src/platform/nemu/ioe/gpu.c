@@ -9,7 +9,6 @@ void __am_gpu_init() {
 
   AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
   int w = info.width, h = info.height;
-  printf("%d %d\n",w,h);
 
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
@@ -18,12 +17,14 @@ void __am_gpu_init() {
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t config = inl(VGACTL_ADDR);
-
+  int w = (config >> 16) & 0x0000ffff;
+  int h = config & 0x0000ffff;
+  printf("%d %d\n",w,h);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
     .has_accel = false,
-    .width = (config >> 16) & 0x0000ffff, 
-    .height = config & 0x0000ffff,
+    .width = w, 
+    .height = h,
     .vmemsz = 0
   };
 }
