@@ -22,9 +22,9 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  uint32_t config = inl(VGACTL_ADDR);
-  int w = (config >> 16) & 0x0000ffff;
-  int h = config & 0x0000ffff;
+  // uint32_t config = inl(VGACTL_ADDR);
+  // int w = (config >> 16) & 0x0000ffff;
+  // int h = config & 0x0000ffff;
 
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
@@ -36,18 +36,17 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  
+  int i,j;
+  int x = ctl->x, y = ctl->y;
+  int w = ctl->w, h = ctl->h;
+  uint32_t *pixels = (uint32_t *)ctl->pixels;
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  for (i = 0; i < h; i ++){
+    for(j = 0; j < w; j++){
+      fb[(i+y)*Width + x + j] = pixels[i*w + j];
+    }
+  } 
   if (ctl->sync) {
-    int i,j;
-    int x = ctl->x, y = ctl->y;
-    int w = ctl->w, h = ctl->h;
-    uint32_t *pixels = (uint32_t *)ctl->pixels;
-    uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-    for (i = 0; i < h; i ++){
-      for(j = 0; j < w; j++){
-        fb[(i+y)*Width + x + j] = pixels[i*w + j];
-      }
-    } 
     outl(SYNC_ADDR, 1);
   }
 }
