@@ -9,5 +9,5 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   
   kbd->keydown = ev.keydown;
   kbd->keycode = ev.keycode | KEYDOWN_MASK;
-  printf("%x %x\n",kbd->keydown,kbd->keycode);
+  printf("%d %d\n",kbd->keydown,kbd->keycode);
 }
