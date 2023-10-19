@@ -239,5 +239,8 @@ config MTRACE_END_ADDR
 config FTRACE
   bool "Enable function trace"
   default y
+config DTRACE
+  bool "Enable device trace"
+  default y
 
 endmenu
