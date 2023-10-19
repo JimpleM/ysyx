@@ -16,14 +16,14 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
-  int w = info.width, h = info.height;
+  // AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
+  // int w = info.width, h = info.height;
 
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
     .has_accel = false,
-    .width = w, 
-    .height = h,
+    .width = 0, 
+    .height = 0,
     .vmemsz = 0
   };
 }
