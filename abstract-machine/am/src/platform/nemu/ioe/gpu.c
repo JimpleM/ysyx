@@ -17,6 +17,7 @@ void __am_gpu_init() {
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   uint32_t config = inl(VGACTL_ADDR);
+  printf("%d\n",config);
 
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, 
