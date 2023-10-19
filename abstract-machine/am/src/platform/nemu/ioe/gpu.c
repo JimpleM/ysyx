@@ -4,14 +4,18 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
+int Width = 0;
+int Height = 0;
+
 void __am_gpu_init() {
   int i;
 
   AM_GPU_CONFIG_T info = io_read(AM_GPU_CONFIG);
-  int w = info.width, h = info.height;
+  Width = info.width; 
+  Height = info.height;
 
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++){
+  for (i = 0; i < Width * Height; i ++){
     fb[i] = i;
   } 
   outl(SYNC_ADDR, 1);
@@ -32,17 +36,16 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  // int i,j;
-  // int x = ctl->x, y = ctl->y;
-  // int w = ctl->w, h = ctl->h;
-  // uint32_t *pixels = (uint32_t *)ctl->pixels;
-  // uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  // for (i = 0; i < w; i ++){
-  //   for(j = 0; j < h; j++){
-
-  //   }
-  //   fb[i] = pixels[i] & 0x00ffffff;
-  // } 
+  int i,j;
+  int x = ctl->x, y = ctl->y;
+  int w = ctl->w, h = ctl->h;
+  uint32_t *pixels = (uint32_t *)ctl->pixels;
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  for (i = 0; i < h; i ++){
+    for(j = 0; j < w; j++){
+      fb[(i+y)*Width + x + j] = pixels[i*w + j];
+    }
+  } 
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
