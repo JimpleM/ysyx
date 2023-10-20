@@ -35,7 +35,7 @@ endif
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
-override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG)#--batch
+ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG)#--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
