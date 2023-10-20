@@ -20,24 +20,24 @@ ifeq ($(findstring $(MAKECMDGOALS),clean|clean-all|html),)
 $(info # Building $(NAME)-$(MAKECMDGOALS) [$(ARCH)])
 
 ### Check: environment variable `$AM_HOME` looks sane
-ifeq ($(wildcard $(AM_HOME)/am/include/am.h),)	###判断am.h文件在不在
+ifeq ($(wildcard $(AM_HOME)/am/include/am.h),)		###wildcard是判断am.h文件在不在
   $(error $$AM_HOME must be an AbstractMachine repo)
 endif
 
 ### Check: environment variable `$ARCH` must be in the supported list
-ARCHS = $(basename $(notdir $(shell ls $(AM_HOME)/scripts/*.mk)))	### 判断ARCH是否存在
-ifeq ($(filter $(ARCHS), $(ARCH)), )	### filter是从ARCHS中有没有找到ARCH
+ARCHS = $(basename $(notdir $(shell ls $(AM_HOME)/scripts/*.mk)))	
+ifeq ($(filter $(ARCHS), $(ARCH)), )				### filter是从ARCHS中有没有找到ARCH
   $(error Expected $$ARCH in {$(ARCHS)}, Got "$(ARCH)")
 endif
 
 ### Extract instruction set architecture (`ISA`) and platform from `$ARCH`. Example: `ARCH=x86_64-qemu -> ISA=x86_64; PLATFORM=qemu`
-ARCH_SPLIT = $(subst -, ,$(ARCH))		###subst将-替换成空格
-ISA        = $(word 1,$(ARCH_SPLIT))	###经过拆分后用word提取第一个单词，第一个是指令集
-PLATFORM   = $(word 2,$(ARCH_SPLIT))	###第二个是运行平台
+ARCH_SPLIT = $(subst -, ,$(ARCH))	###subst将-替换成空格
+ISA        = $(word 1,$(ARCH_SPLIT))###经过拆分后用word提取第一个单词，第一个是指令集
+PLATFORM   = $(word 2,$(ARCH_SPLIT))###第二个是运行平台
 
 ### Check if there is something to build
-ifeq ($(flavor SRCS), undefined)		###flavor用于获取SRCS的类型或性质
-  $(error Nothing to build)
+ifeq ($(flavor SRCS), undefined)	###flavor用于获取SRCS的类型或性质
+  $(error Nothing to build)			
 endif
 
 ### Checks end here
@@ -48,15 +48,16 @@ endif
 ### Create the destination directory (`build/$ARCH`)
 WORK_DIR  = $(shell pwd)
 DST_DIR   = $(WORK_DIR)/build/$(ARCH)
-$(shell mkdir -p $(DST_DIR))
+$(shell mkdir -p $(DST_DIR))		###在make的地方创建build文件夹
 
 ### Compilation targets (a binary image or archive)
 IMAGE_REL = build/$(NAME)-$(ARCH)
-IMAGE     = $(abspath $(IMAGE_REL))
-ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a
+IMAGE     = $(abspath $(IMAGE_REL))					###生成目标文件的存放绝对路径
+ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a		###ARCHIVE用于指定生成的静态链接库文件的路径和名字
 
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
-OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
+### addprefix是在前面加，addsuffix在后面加，addsuffix在后面加.o，basename是将SRCS的扩展名去掉得到基本名称如hello.c->hello
+OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))	###addprefix 把最后面每个文件加上路径$(DST_DIR)/
 LIBS     := $(sort $(LIBS) am klib) # lazy evaluation ("=") causes infinite recursions
 LINKAGE   = $(OBJS) \
   $(addsuffix -$(ARCH).a, $(join \
@@ -80,9 +81,7 @@ INC_PATH += $(WORK_DIR)/include $(addsuffix /include/, $(addprefix $(AM_HOME)/, 
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 
 ARCH_H := arch/$(ARCH).h
-# CFLAGS   += -O2 -MMD -Wall -Werror $(INCFLAGS) \
-
-CFLAGS   += -O2 -MMD  -Werror $(INCFLAGS) \
+CFLAGS   += -O2 -MMD -Wall -Werror $(INCFLAGS) \
             -D__ISA__=\"$(ISA)\" -D__ISA_$(shell echo $(ISA) | tr a-z A-Z)__ \
             -D__ARCH__=$(ARCH) -D__ARCH_$(shell echo $(ARCH) | tr a-z A-Z | tr - _) \
             -D__PLATFORM__=$(PLATFORM) -D__PLATFORM_$(shell echo $(PLATFORM) | tr a-z A-Z | tr - _) \

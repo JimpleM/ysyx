@@ -53,7 +53,7 @@ $(shell mkdir -p $(DST_DIR))		###在make的地方创建build文件夹
 ### Compilation targets (a binary image or archive)
 IMAGE_REL = build/$(NAME)-$(ARCH)
 IMAGE     = $(abspath $(IMAGE_REL))
-ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a		###ARCHIVE用于指定生成的静态链接库文件的路径和名字
+ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a
 
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
