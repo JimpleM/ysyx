@@ -31,7 +31,7 @@ ifeq ($(filter $(ARCHS), $(ARCH)), )				### filter是从ARCHS中有没有找到A
 endif
 
 ### Extract instruction set architecture (`ISA`) and platform from `$ARCH`. Example: `ARCH=x86_64-qemu -> ISA=x86_64; PLATFORM=qemu`
-ARCH_SPLIT = $(subst -, ,$(ARCH))	###subst将-替换成空格
+ARCH_SPLIT = $(subst -, ,$(ARCH))	
 ISA        = $(word 1,$(ARCH_SPLIT))
 PLATFORM   = $(word 2,$(ARCH_SPLIT))
 
