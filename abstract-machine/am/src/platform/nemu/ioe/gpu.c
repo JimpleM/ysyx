@@ -34,7 +34,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
     .vmemsz = Width * Height * sizeof(uint32_t)
   };
 }
-
+// 将要显示地内容拷贝到nemu的vga中
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int i,j;
   int x = ctl->x, y = ctl->y;

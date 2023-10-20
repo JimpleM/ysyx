@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ringbuffer.h>
 
+#ifdef CONFIG_IRINGBUF
 // off_t size = 4096;
 // int fd;
 #define COUNT_MAX 16
@@ -149,3 +150,4 @@ bstring RingBuffer_gets(RingBuffer *buffer, int amount)
 // error:
 //     return NULL;
 }
+#endif

@@ -16,7 +16,7 @@ ul my_pow(int a,int b){
   }
   return ans;
 }
-
+// 递归除法，当结果小于scale后才开始把数字赋值到数组中
 char* number_to_str(const char *str, ul number, ul scale){
   char *str_t = (char *)str;
   if(number < scale){
@@ -35,7 +35,7 @@ char* number_to_str(const char *str, ul number, ul scale){
     return str_t;
   }
 }
-
+//将字符串转换成数字
 char* parse_number(const char *fmt, int *number){
   char *fmt_t = (char *)fmt;
   *number = 0;
@@ -46,7 +46,7 @@ char* parse_number(const char *fmt, int *number){
   }
   return fmt_t;
 }
-
+// 格式化输出补充空格
 char* insert_space(const char *out, int number){
   char *out_t = (char *)out;
   for(int i=0;i<number; i++){
