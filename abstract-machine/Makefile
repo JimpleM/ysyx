@@ -37,7 +37,7 @@ PLATFORM   = $(word 2,$(ARCH_SPLIT))###第二个是运行平台
 
 ### Check if there is something to build
 ifeq ($(flavor SRCS), undefined)
-  $(error Nothing to build)
+  $(error Nothing to build)			###flavor用于获取SRCS的类型或性质
 endif
 
 ### Checks end here
