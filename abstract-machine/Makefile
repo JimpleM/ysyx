@@ -56,6 +56,7 @@ IMAGE     = $(abspath $(IMAGE_REL))###生成目标文件的存放绝对路径
 ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a	###ARCHIVE用于指定生成的静态链接库文件的路径和名字
 
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
+### addprefix是在前面加，addsuffix在后面加，addsuffix在后面加.o，basename是将SRCS的扩展名去掉得到基本名称如hello.c->hello
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS) am klib) # lazy evaluation ("=") causes infinite recursions
 LINKAGE   = $(OBJS) \
