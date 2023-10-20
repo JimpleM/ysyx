@@ -58,11 +58,12 @@ ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a	###ARCHIVE用于指定生成的�
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
 ### addprefix是在前面加，addsuffix在后面加，addsuffix在后面加.o，basename是将SRCS的扩展名去掉得到基本名称如hello.c->hello
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
+### 链接库am和klib
 LIBS     := $(sort $(LIBS) am klib) # lazy evaluation ("=") causes infinite recursions
 LINKAGE   = $(OBJS) \
   $(addsuffix -$(ARCH).a, $(join \
     $(addsuffix /build/, $(addprefix $(AM_HOME)/, $(LIBS))), \
-    $(LIBS) ))
+    $(LIBS) ))### join函数将两个列表逐一组合起来，所以前面要排序
 
 ## 3. General Compilation Flags
 
@@ -77,8 +78,30 @@ OBJCOPY   = $(CROSS_COMPILE)objcopy
 READELF   = $(CROSS_COMPILE)readelf
 
 ### Compilation flags
+### 设置包含路径
 INC_PATH += $(WORK_DIR)/include $(addsuffix /include/, $(addprefix $(AM_HOME)/, $(LIBS)))
-INCFLAGS += $(addprefix -I, $(INC_PATH))
+INCFLAGS += $(addprefix -I, $(INC_PATH))###每个都要加-I
+
+### -MMD 生成依赖关系文件.d文件
+### -Wall 启动编译器警告，-Werror将警告变成error
+### -D__ISA__=\"$(ISA)\" 定义一个__ISA__=$(ISA)的宏
+### -D__ISA_$(shell echo $(ISA) | tr a-z A-Z)__h 和上面一样，不过tr将小写转换成大写
+### -fno-asynchronous-unwind-tables	禁用异步取消选项，这可以减小生成的代码的体积。
+### -fno-builtin 禁用内置函数选项。
+### -fno-stack-protector 禁用堆栈保护选项。
+### -Wno-main 禁用特定的 main 函数警告，
+### -U_FORTIFY_SOURCE 禁用特定安全性增强功能。
+
+### -ffreestanding 生成独立的程序,不依赖于操作系统的标准库或运行时环境。
+### -fno-rtti	禁止使用动态类型识别
+### -fno-exceptions 禁用 C++ 异常处理
+
+### -z noexecstack 禁用堆栈可执行
+
+### CFLAGS  C 编译器选项
+### CXXFLAGS C++编译器选项
+### ASFLAGS 汇编器选项
+### LDFLAGS 链接器选项
 
 ARCH_H := arch/$(ARCH).h
 CFLAGS   += -O2 -MMD -Wall -Werror $(INCFLAGS) \
@@ -95,6 +118,7 @@ LDFLAGS  += -z noexecstack
 ## 4. Arch-Specific Configurations
 
 ### Paste in arch-specific configurations (e.g., from `scripts/x86_64-qemu.mk`)
+### 执行对应$(ARCH)的makefile，在里面分表调用$(ISA)和$(PLATFORM)的makefile
 -include $(AM_HOME)/scripts/$(ARCH).mk
 
 ### Fall back to native gcc/binutils if there is no cross compiler

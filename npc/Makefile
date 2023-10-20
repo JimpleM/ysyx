@@ -28,8 +28,10 @@ CFLAGS += $(LLVM_FLAGS)
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
+ifeq ($(flavor IMG), undefined)	###flavor用于获取SRCS的类型或性质
 IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
-IMG = --img=${IMGS}
+IMG = --img=${IMGS}			
+endif
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
