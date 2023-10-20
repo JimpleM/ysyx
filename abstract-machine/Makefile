@@ -8,7 +8,7 @@ html:
 ## 1. Basic Setup and Checks
 
 ### Default to create a bare-metal kernel image
-ifeq ($(MAKECMDGOALS),)
+ifeq ($(MAKECMDGOALS),)		###如果为空，则创建image
   MAKECMDGOALS  = image
   .DEFAULT_GOAL = image
 endif
