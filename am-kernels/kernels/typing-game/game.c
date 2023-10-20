@@ -153,6 +153,7 @@ int main() {
   int current = 0, rendered = 0;
   while (1) {
     int frames = io_read(AM_TIMER_UPTIME).us / (1000000 / FPS);
+    printf("%d\n",frames);
 
     for (; current < frames; current++) {
       game_logic_update(current);
