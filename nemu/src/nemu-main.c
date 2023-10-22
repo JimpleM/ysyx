@@ -16,31 +16,31 @@
 #include <common.h>
 #include </home/jimple/Documents/ysyx/ysyx-workbench/nemu/src/monitor/sdb/sdb.h>
 
+// #ifdef CONFIG_TEST_EXPR
+// void test_expr(){
+//   FILE *fp = fopen("/home/jimple/Documents/ysyx/ysyx-workbench/nemu/tools/gen-expr/input", "rb");
+//   assert(fp != NULL);
 
-void test_expr(){
-  FILE *fp = fopen("/home/jimple/Documents/ysyx/ysyx-workbench/nemu/tools/gen-expr/input", "rb");
-  assert(fp != NULL);
+//   char str[2048];
+//   int num,result;
+//   int count = 0;
+//   int wrong_count = 0;
 
-  char str[2048];
-  int num,result;
-  int count = 0;
-  int wrong_count = 0;
-
-  while(fscanf(fp,"%d %s",&num,str) != EOF){
-    bool success = true;
-    // printf("%s\n",str);
-    result = (int)expr(str,&success);
-    count++;
-    if(result != num){
-      wrong_count++;
-      printf("%s\n",str);
-      printf("result: %d  ans:%d\n",result, num);
-    }
-  }
-  printf("test example count: %d  wrong ans count:%d\n",count, wrong_count);
-  fclose(fp);
-}
-
+//   while(fscanf(fp,"%d %s",&num,str) != EOF){
+//     bool success = true;
+//     // printf("%s\n",str);
+//     result = (int)expr(str,&success);
+//     count++;
+//     if(result != num){
+//       wrong_count++;
+//       printf("%s\n",str);
+//       printf("result: %d  ans:%d\n",result, num);
+//     }
+//   }
+//   printf("test example count: %d  wrong ans count:%d\n",count, wrong_count);
+//   fclose(fp);
+// }
+// #endif
 
 void init_monitor(int, char *[]);
 void am_init_monitor();
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 #endif
 
 #ifdef CONFIG_TEST_EXPR
-  test_expr();
+  // test_expr();
 #else
   /* Start engine. */
   engine_start();

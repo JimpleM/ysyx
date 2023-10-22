@@ -1275,3 +1275,5 @@ java.util.concurrent.TimeoutException
 [0m
 2023.10.17 23:42:29 WARN  Build server is not auto-connectable.[0m
 2023.10.17 23:42:29 WARN  no build tool detected in workspace '/home/jimple/Documents/ysyx/ysyx-workbench'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+2023.10.18 23:06:19 INFO  Started: Metals version 1.1.0 in folders '/home/jimple/Documents/ysyx/ysyx-workbench' for client Visual Studio Code 1.82.2.[0m
+2023.10.18 23:06:19 WARN  Build server is not auto-connectable.[0m

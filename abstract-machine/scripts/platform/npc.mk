@@ -13,7 +13,7 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
-# NPCFLAGS += --batch
+NPCFLAGS += --batch
 NPCFLAGS += --elf $(IMAGE).elf
 NPCFLAGS += --img $(IMAGE).bin
 NPCFLAGS += --diff ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
@@ -28,7 +28,7 @@ image: $(IMAGE).elf
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
 run: image
-	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) run ARGS="$(NPCFLAGS)" 
+	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) run ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin
 
 gdb: image
 	$(MAKE) -C $(NPC_HOME) ISA=$(ISA) gdb ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin
