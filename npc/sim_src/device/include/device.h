@@ -36,10 +36,6 @@ enum {
 
 
 //timer
-struct timeval {
-	__kernel_old_time_t	tv_sec;		/* seconds */
-	__kernel_suseconds_t	tv_usec;	/* microseconds */
-};
 void timer_init();
 uint32_t timer_read(uint32_t addr);
 
