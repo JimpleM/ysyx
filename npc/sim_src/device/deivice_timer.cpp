@@ -1,5 +1,5 @@
 #include "device.h"
-#include <time.h>
+#include <sys/time.h>
 
 static uint64_t boot_time = 0;
 static uint64_t now_time = 0;
