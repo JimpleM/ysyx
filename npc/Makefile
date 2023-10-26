@@ -47,7 +47,7 @@ sim:
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run:sim
-	./obj_dir/V${TOPNAME} ${ARGS} --batch
+	./obj_dir/V${TOPNAME} ${ARGS} 
 
 wave:
 	gtkwave wave.vcd

@@ -16,6 +16,7 @@ uint32_t device_read(uint32_t addr){
 void device_write(uint32_t addr, uint32_t data){
     if(addr == SERIAL_PORT){
         uart_write(data);
+        return ;
     }
     //Assert(0,"no device addr %8x",addr);
 }
