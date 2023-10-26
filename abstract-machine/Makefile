@@ -128,6 +128,9 @@ ifeq ($(wildcard $(shell which $(CC))),)
 endif
 
 ## 5. Compilation Rules
+### $@目标文件 $<源文件
+### $(dir $@) 提取目标文件的目录路径
+### $(realpath $<)：获取规则的依赖项，即源文件的完整路径
 
 ### Rule (compile): a single `.c` -> `.o` (gcc)
 $(DST_DIR)/%.o: %.c
@@ -150,6 +153,7 @@ $(DST_DIR)/%.o: %.S
 	@$(AS) $(ASFLAGS) -c -o $@ $(realpath $<)
 
 ### Rule (recursive make): build a dependent library (am, klib, ...)
+### 跳转到链接库目录进行构建
 $(LIBS): %:
 	@$(MAKE) -s -C $(AM_HOME)/$* archive
 

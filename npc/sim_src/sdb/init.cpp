@@ -3,6 +3,7 @@
 #include "difftest.h"
 #include "sdb.h"
 #include "trace.h"
+#include "device_lib.h"
 
 #include <getopt.h>
 
@@ -95,6 +96,8 @@ void init_npc(int argc, char *argv[]) {
 
 	  init_sdb();
 
+    
+
 #ifdef CONFIG_ITRACE
     init_disasm("riscv32");
 #endif
@@ -102,5 +105,5 @@ void init_npc(int argc, char *argv[]) {
 #ifdef CONFIG_FTRACE
   init_ftrace(elf_file);
 #endif
-    
+    device_init();
 }

@@ -20,7 +20,7 @@ ifeq ($(wildcard .config),)
 $(warning $(COLOR_RED)Warning: .config does not exists!$(COLOR_END))
 $(warning $(COLOR_RED)To build the project, first run 'make menuconfig'.$(COLOR_END))
 endif
-
+### silent := -s 减少Make命令的输出，使其不再显示编译和链接命令的详细信息
 Q            := @
 KCONFIG_PATH := $(NEMU_HOME)/tools/kconfig
 FIXDEP_PATH  := $(NEMU_HOME)/tools/fixdep
@@ -63,7 +63,7 @@ distclean: clean
 	-@rm -rf $(rm-distclean)
 
 .PHONY: help distclean
-
+### 使用 FIXDEP 工具分析源代码文件的依赖关系
 define call_fixdep
 	@$(FIXDEP) $(1) $(2) unused > $(1).tmp
 	@mv $(1).tmp $(1)

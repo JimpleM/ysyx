@@ -3,6 +3,7 @@
 #include "common.h"
 
 #include "pmem.h"
+#include "device_lib.h"
 
 #include "Vriscv32__Dpi.h"
 #include "verilated_dpi.h"
@@ -33,12 +34,24 @@ extern "C" void get_riscv32_rst(svBit rst_n) {
   }
 }
 
+static bool in_pmem(uint32_t addr){
+	if(addr >= PMEM_LEFT && addr <= 0x8fffffff){
+		return 1;
+	}
+	return 0;
+}
+
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
-		*rdata = pmem_read((uint32_t)raddr,4);
-		if(*rdata == 0x00100073){
-			stop_flag = 1;
+		if(in_pmem(raddr)){
+			*rdata = pmem_read((uint32_t)raddr,4);
+			if(*rdata == 0x00100073){
+				stop_flag = 1;
+			}
+		}else{
+			*rdata = device_read((uint32_t) raddr);
 		}
+		
 #ifdef CONFIG_MTRACE
 	if(top->clk == 0){
 		if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
@@ -50,7 +63,12 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 }
 
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
-	pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
+	if(in_pmem(raddr)){
+		pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
+	}else{
+		device_write((uint32_t) waddr, (uint32_t) wdata);
+	}
+	
 #ifdef CONFIG_MTRACE
 	if(top->clk == 0){
 		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
