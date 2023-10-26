@@ -34,13 +34,6 @@ extern "C" void get_riscv32_rst(svBit rst_n) {
   }
 }
 
-static bool in_pmem(uint32_t addr){
-	if(addr >= PMEM_LEFT && addr <= 0x8fffffff){
-		return 1;
-	}
-	return 0;
-}
-
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		if(in_pmem(raddr)){
