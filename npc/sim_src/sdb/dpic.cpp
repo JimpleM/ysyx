@@ -3,7 +3,7 @@
 #include "common.h"
 
 #include "pmem.h"
-#include "device.h"
+#include "device_lib.h"
 
 #include "Vriscv32__Dpi.h"
 #include "verilated_dpi.h"
