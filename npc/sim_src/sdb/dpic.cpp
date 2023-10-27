@@ -42,7 +42,6 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 				stop_flag = 1;
 			}
 		}else{
-			printf("read address:%08x\n",raddr);
 			*rdata = device_read((uint32_t) raddr);
 		}
 
