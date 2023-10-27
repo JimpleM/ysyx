@@ -1,6 +1,8 @@
 #include "pmem.h"
 
-uint8_t pmem[PMEM_SIZE] = {};
+#define PG_ALIGN __attribute((aligned(4096)))
+
+uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
 
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - PMEM_LEFT; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + PMEM_LEFT; }
