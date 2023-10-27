@@ -7,6 +7,7 @@ void device_init(){
 
 uint32_t device_read(uint32_t addr){
     if(addr == RTC_ADDR || addr == RTC_ADDR + 4){
+        printf("timer\n");
         return timer_read(addr);
     }
     //Assert(0,"no device addr %8x",addr);
@@ -15,6 +16,7 @@ uint32_t device_read(uint32_t addr){
 
 void device_write(uint32_t addr, uint32_t data){
     if(addr == SERIAL_PORT){
+        printf("uart\n");
         uart_write(data);
         return ;
     }
