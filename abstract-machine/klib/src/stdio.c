@@ -47,10 +47,10 @@ char* parse_number(const char *fmt, int *number){
   return fmt_t;
 }
 
-char* insert_space(const char *out, int number){
+char* insert_space(const char *out, int number,char ch){
   char *out_t = (char *)out;
   for(int i=0;i<number; i++){
-    *out_t++ = ' ';
+    *out_t++ = ch;
   }
   return out_t;
 }
@@ -58,50 +58,51 @@ char* insert_space(const char *out, int number){
 int debug_printf(const char *fmt, ...) {
   assert(fmt != NULL);
 
-  int count = 0;
+  // int count = 0;
 
-  char* ArgStr = NULL;      // 接收字符型
-  char ch;
-  int ArgInt = 0;
-  char str_temp[100];
-  ul num_temp = 0;
+  // char* ArgStr = NULL;      // 接收字符型
+  // char ch;
+  // int ArgInt = 0;
+  // char str_temp[100];
+  // ul num_temp = 0;
 
-  va_list args;
-  va_start(args,fmt);
-  while(*fmt != '\0'){
-    if(*fmt == '%'){
-      fmt++;
-      if(*fmt == 's'){
-        ArgStr = va_arg(args, char*);
-        while(*ArgStr !='\0'){
-          putch(*ArgStr);
-          ArgStr++;
-        }
-      }else if(*fmt == 'd'){
-        ArgInt = va_arg(args, ul);
-        if(ArgInt<0){
-          putch('-');
-          ArgInt = -ArgInt;
-          num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
-        }
-        number_to_str(str_temp,(ul)num_temp,10);
-        debug_printf("%s",str_temp);
-      }
-      else if(*fmt == 'u'){
-        num_temp = va_arg(args, ul);
-        number_to_str(str_temp,(ul)num_temp,10);
-        printf("%s",str_temp);
-      }else if(*fmt == 'c'){
-        ArgInt = va_arg(args, int);
-        putch(ArgInt);
-      }
-    }else{
-      putch(*fmt);
-    } 
-    fmt++;
-  }
-  va_end(args);
-  return count;
+  // va_list args;
+  // va_start(args,fmt);
+  // while(*fmt != '\0'){
+  //   if(*fmt == '%'){
+  //     fmt++;
+  //     if(*fmt == 's'){
+  //       ArgStr = va_arg(args, char*);
+  //       while(*ArgStr !='\0'){
+  //         putch(*ArgStr);
+  //         ArgStr++;
+  //       }
+  //     }else if(*fmt == 'd'){
+  //       ArgInt = va_arg(args, ul);
+  //       if(ArgInt<0){
+  //         putch('-');
+  //         ArgInt = -ArgInt;
+  //         num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
+  //       }
+  //       number_to_str(str_temp,(ul)num_temp,10);
+  //       debug_printf("%s",str_temp);
+  //     }
+  //     else if(*fmt == 'u'){
+  //       num_temp = va_arg(args, ul);
+  //       number_to_str(str_temp,(ul)num_temp,10);
+  //       printf("%s",str_temp);
+  //     }else if(*fmt == 'c'){
+  //       ArgInt = va_arg(args, int);
+  //       putch(ArgInt);
+  //     }
+  //   }else{
+  //     putch(*fmt);
+  //   } 
+  //   fmt++;
+  // }
+  // va_end(args);
+  // return count;
+  return 0;
 }
 
 int printf(const char *fmt, ...) {
@@ -126,16 +127,17 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   out_t = out;
 
   char str_temp[1024];
-  unsigned long num_temp;
+  // unsigned long num_temp;
 
   char* ArgStr = NULL;      // 接收字符型
   int ArgInt = 0;           // 接收整型
   unsigned int ArgUInt = 0; // 接收无符号
   unsigned long ArgHex = 0; // 接收十六进制
   unsigned long ArgLong = 0;
-  double  ArgFloat = 0;     // 接收浮点数
+  // double  ArgFloat = 0;     // 接收浮点数
 
-  char Sign = '\0';
+  char Sign = '\0';         //符号
+  char fill_char = ' ';     //填充的字符 空格/0
   int num_before_dig = 0;
   int num_after_dig = 0;
 
@@ -150,6 +152,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
       if(*fmt == '-' || *fmt == '+' || *fmt == ' '){
         Sign = *fmt;
+        fmt++;
+      }
+
+      fill_char = ' ';
+      if(*fmt == '0'){
+        fill_char = *fmt;
         fmt++;
       }
 
@@ -181,29 +189,29 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           Sign = '\0';
         }
         number_to_str(ArgStr,ArgUInt,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
        
         strcat_out(out_t,str_temp);
       }
       else if(*fmt == 'u'){
         ArgUInt = va_arg(ap, unsigned int);
         number_to_str(str_temp,(ul)ArgUInt,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
         strcat_out(out_t,str_temp);
       }else if(*fmt == 'x'){
         ArgHex = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgHex,16);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
         strcat_out(out_t,str_temp);
       }else if(*fmt == 'l' && *(fmt+1) == 'd'){
         fmt++;
         ArgLong = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgLong,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
+        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
         strcat_out(out_t,str_temp);
       }else if(*fmt == 'f'){
-        ArgFloat = va_arg(ap, double);
-        ArgStr = str_temp;
+        // ArgFloat = va_arg(ap, double);
+        // ArgStr = str_temp;
         
         // if(ArgFloat < 0){
         //   *ArgStr++ = '-';
