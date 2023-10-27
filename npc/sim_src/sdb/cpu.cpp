@@ -48,6 +48,8 @@ static void exec_once() {
     
     dump_wave;
 
+    device_update();
+
 }
 
 void reset(){
