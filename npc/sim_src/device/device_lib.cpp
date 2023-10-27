@@ -18,8 +18,8 @@ uint32_t device_read(uint32_t addr){
 
 void device_write(uint32_t addr, uint32_t data){
     count++;
-    printf("%d\n",count);
-    if(addr == SERIAL_PORT ){
+    if(addr == SERIAL_PORT && count >=2){
+        count = 0;
         uart_write(data);
         return ;
     }
