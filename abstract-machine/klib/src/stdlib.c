@@ -6,7 +6,7 @@
 static unsigned long int next = 1;
 
 #define MEMORY_POOL_SIZE 1024*1024
-// 创建一块区域供给malloc
+
 char memory_pool[MEMORY_POOL_SIZE];
 
 char *memory_heep = memory_pool;

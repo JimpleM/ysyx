@@ -28,14 +28,12 @@ CFLAGS += $(LLVM_FLAGS)
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-ifeq ($(flavor IMG), undefined)	
 IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
-IMG = --img=${IMGS}			
-endif
+IMG = --img=${IMGS}
 ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
-ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG)#--batch
+override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG)#--batch
 
 all:defualt
 #	@echo "Write this Makefile by your self."
