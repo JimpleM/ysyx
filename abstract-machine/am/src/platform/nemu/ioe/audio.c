@@ -28,6 +28,6 @@ void __am_audio_status(AM_AUDIO_STATUS_T *stat) {
 }
 
 void __am_audio_play(AM_AUDIO_PLAY_T *ctl) {
-  int len = ctl->buf.end - ctl->buf.start;
+  // int len = ctl->buf.end - ctl->buf.start;
 
 }
