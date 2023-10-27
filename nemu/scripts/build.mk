@@ -1,11 +1,7 @@
 .DEFAULT_GOAL = app
 
 # Add necessary options if the target is a shared library
-### 生成共享库
 ifeq ($(SHARE),1)
-### -fPIC 生成位置独立的代码
-### -fvisibility=hidden 隐藏库中的符号或函数的选项。这可以增加共享库的封装性，只暴露指定的接口。
-### -shared 生成共享库文件
 SO = -so
 CFLAGS  += -fPIC -fvisibility=hidden
 LDFLAGS += -shared -fPIC

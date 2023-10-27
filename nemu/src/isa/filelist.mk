@@ -12,6 +12,6 @@
 #
 # See the Mulan PSL v2 for more details.
 #**************************************************************************************/
-### 根据环境包含所需要的头文件
+
 INC_PATH += $(NEMU_HOME)/src/isa/$(GUEST_ISA)/include
 DIRS-y += src/isa/$(GUEST_ISA)

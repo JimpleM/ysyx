@@ -37,7 +37,6 @@ VM_MODPREFIX = Vriscv32
 VM_USER_CFLAGS = \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/include \
 	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/utils \
-	-I/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/include \
 	-I/usr/lib/llvm-14/include \
 	-std=c++14 \
 	-fno-exceptions \
@@ -55,10 +54,6 @@ VM_USER_LDLIBS = \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-	deivice_timer \
-	device_kb \
-	device_lib \
-	device_uart \
 	cpu \
 	difftest \
 	disasm \
@@ -75,7 +70,6 @@ VM_USER_CLASSES = \
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src \
-	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb \
 
 
@@ -88,14 +82,6 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-deivice_timer.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/deivice_timer.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-device_kb.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_kb.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-device_lib.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_lib.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-device_uart.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_uart.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 difftest.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/difftest.cpp
