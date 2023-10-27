@@ -11,7 +11,7 @@ uint32_t pmem_read(uint32_t addr, int len);
 void pmem_write(uint32_t addr, uint32_t data, int len);
 
 static inline bool in_pmem(paddr_t addr) {
-  return addr - PMEM_LEFT < PMEM_SIZE;
+  return (addr >= PMEM_LEFT) && (addr <= PMEM_LEFT+PMEM_SIZE);
 }
 
 word_t paddr_read(paddr_t addr, int len);
