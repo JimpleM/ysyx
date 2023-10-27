@@ -55,7 +55,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 }
 
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
-	if(in_pmem(raddr)){
+	if(in_pmem(waddr)){
 		pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
 	}else{
 		device_write((uint32_t) waddr, (uint32_t) wdata);
