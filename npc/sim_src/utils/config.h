@@ -12,9 +12,9 @@
 
 #define CONFIG_DIFFTEST
 // #define CONFIG_ITRACE
-// #define CONFIG_FTRACE
+#define CONFIG_FTRACE
 // #define CONFIG_WATCHPOINT
-#define CONFIG_MTRACE
+// #define CONFIG_MTRACE
 
 // #define CONFIG_WAVE
 
