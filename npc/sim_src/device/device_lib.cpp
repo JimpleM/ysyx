@@ -1,6 +1,8 @@
 #include "device_lib.h"
 #include "device.h"
 
+int count = 0;
+
 void device_init(){
     timer_init();
 }
@@ -15,7 +17,9 @@ uint32_t device_read(uint32_t addr){
 }
 
 void device_write(uint32_t addr, uint32_t data){
-    if(addr == SERIAL_PORT){
+    count++;
+    if(addr == SERIAL_PORT && count == 3){
+        count = 0;
         // printf("uart\n");
         uart_write(data);
         return ;

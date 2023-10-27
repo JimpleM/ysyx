@@ -59,7 +59,6 @@ extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
 	if(in_pmem(waddr)){
 		pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
 	}else{
-		// printf("write address:%08x data:%08x\n",waddr,wdata);
 		device_write((uint32_t) waddr, (uint32_t) wdata);
 	}
 
