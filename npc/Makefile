@@ -18,6 +18,7 @@ LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
 #g++ include路径
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
+INC_PATH += $(NPC_HOME)/sim_src/device/include
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
 
