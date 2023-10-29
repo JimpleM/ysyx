@@ -74,7 +74,7 @@ uint32_t keyboard_read(){
     printf("dequeue\n");
   }
 
-  return key_dequeue();
+  return temp;
 }
 
 void keyboard_update(){
