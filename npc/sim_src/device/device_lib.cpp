@@ -4,15 +4,17 @@
 
 static int count = 0;
 
+static void device_update(){
+    keyboard_update();
+}
+
 void device_init(){
     timer_init();
     keyboard_init();
     //device_update();
     SDL_CreateThread(device_update,"device_update",NULL);
 }
-void device_update(){
-    keyboard_update();
-}
+
 
 uint32_t device_read(uint32_t addr){
     if(addr == RTC_ADDR || addr == RTC_ADDR + 4){
