@@ -19,7 +19,10 @@ static void drain_keys() {
   if (has_kbd) {
     while (1) {
       AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
-      if (ev.keycode == AM_KEY_NONE) break;
+      if (ev.keycode == AM_KEY_NONE){
+        printf("%d\n",ev.keycode);
+        break;
+      } 
       printf("Got  (kbd): %s (%d) %s\n", names[ev.keycode], ev.keycode, ev.keydown ? "DOWN" : "UP");
     }
   }
