@@ -58,7 +58,7 @@ void keyboard_update();
 int keyboard_update_adapter(void* data) {
     while(1){
         SDL_Delay(100);
-        print("aaa");
+        printf("aaa");
         keyboard_update();
     }
     return 0;  // 返回一个整数值
