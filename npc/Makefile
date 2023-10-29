@@ -11,6 +11,7 @@ VERILATOR_FLAGS += --trace --cc --exe --build
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 
+LDFLAGS += -lSDL2
 LDFLAGS += -ldl 
 LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
 LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
