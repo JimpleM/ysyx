@@ -33,7 +33,7 @@ void keyboard_test() {
   has_kbd  = io_read(AM_INPUT_CONFIG).present;
   while (1) {
     drain_keys();
-    for(int i=0; i<10000000; i++){
+    for(int i=0; i<1000000000; i++){
 
     }
   }
