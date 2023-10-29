@@ -8,6 +8,7 @@ static const char *names[] = {
 static bool has_uart, has_kbd;
 
 static void drain_keys() {
+  printf("darinkey\n");
   if (has_uart) {
     while (1) {
       char ch = io_read(AM_UART_RX).data;
