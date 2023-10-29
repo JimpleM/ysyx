@@ -27,7 +27,7 @@ static void *vmem = NULL;
 void screen_init(){
     SDL_Window *window = NULL;
     char title[128];
-    sprintf(title, "riscv32-npc");
+    sprintf(title, "riscv32e-npc");
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(
         SCREEN_W * 2,
