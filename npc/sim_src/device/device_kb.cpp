@@ -70,7 +70,7 @@ void keyboard_init(){
 
 uint32_t keyboard_read(){
   uint32_t temp = key_dequeue();
-  // printf("keyboard : %d\n",temp);
+  printf("keyboard : %d\n",temp);
   return temp;
 }
 
