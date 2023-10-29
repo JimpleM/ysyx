@@ -4,24 +4,9 @@
 
 static int count = 0;
 
-static void device_update(){
-    while(1){
-        SDL_Delay(100);
-        keyboard_update();
-    }
-}
-
-int device_update_adapter(void* data) {
-    device_update();  // 调用你的实际设备更新函数
-    return 0;  // 返回一个整数值
-}
-
-
 void device_init(){
     timer_init();
     keyboard_init();
-    //device_update();
-    SDL_CreateThread(device_update_adapter,"device_update",NULL);
 }
 
 
@@ -41,7 +26,9 @@ void device_write(uint32_t addr, uint32_t data){
     if(addr == SERIAL_PORT && count >=3){
         count = 0;
         uart_write(data);
-        return ;
+    }else if(addr == SYNC_ADDR+4 && count >=3){
+        count = 0;
+
     }
     //Assert(0,"no device addr %8x",addr);
 }

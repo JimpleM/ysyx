@@ -53,9 +53,19 @@ static void send_key(uint8_t scancode, bool is_keydown){
         key_enqueue(am_scancode);
     }
 }
+void keyboard_update();
+
+int keyboard_update_adapter(void* data) {
+    while(1){
+        SDL_Delay(100);
+        keyboard_update();
+    }
+    return 0;  // 返回一个整数值
+}
 
 void keyboard_init(){
     init_keymap();
+    SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
 }
 
 uint32_t keyboard_read(){

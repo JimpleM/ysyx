@@ -2,7 +2,7 @@
 #include <nemu.h>
 #include <stdio.h>
 
-#define SYNC_ADDR (VGACTL_ADDR + 4)
+
 
 #define Width 400
 #define Height 300
