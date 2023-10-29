@@ -56,28 +56,9 @@ static void send_key(uint8_t scancode, bool is_keydown){
 void keyboard_update();
 
 int keyboard_update_adapter(void* data) {
-          SDL_Event event;
     while(1){
         SDL_Delay(100);
-        // keyboard_update();
-
-    if(SDL_PollEvent(&event)) {
-    switch (event.type) {
-      case SDL_QUIT:
-        npc_state.state = NPC_QUIT;
-        break;
-      // If a key was pressed
-      case SDL_KEYDOWN:
-      case SDL_KEYUP: {
-        uint8_t k = event.key.keysym.scancode;
-        bool is_keydown = (event.key.type == SDL_KEYDOWN);
-        send_key(k, is_keydown);
-        printf("num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
-        break;
-      }
-      default: break;
-    }
-  }
+        keyboard_update();
     }
     return 0;  // 返回一个整数值
 }
