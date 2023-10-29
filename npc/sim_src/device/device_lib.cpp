@@ -4,13 +4,13 @@
 
 static int count = 0;
 
-static int device_update(){
+static void device_update(){
     while(1){
         SDL_Delay(100);
         keyboard_update();
     }
-    return 0;
 }
+
 int device_update_adapter(void* data) {
     device_update();  // 调用你的实际设备更新函数
     return 0;  // 返回一个整数值
