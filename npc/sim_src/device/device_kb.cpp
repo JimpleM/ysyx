@@ -69,6 +69,7 @@ void keyboard_init(){
 }
 
 uint32_t keyboard_read(){
+  printf("dequeue\n");
   return key_dequeue();
 }
 
