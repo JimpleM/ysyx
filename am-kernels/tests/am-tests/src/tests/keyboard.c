@@ -8,17 +8,18 @@ static const char *names[] = {
 static bool has_uart, has_kbd;
 
 static void drain_keys() {
-  // if (has_uart) {
-  //   while (1) {
-  //     char ch = io_read(AM_UART_RX).data;
-  //     if (ch == -1) break;
-  //     printf("Got (uart): %c (%d)\n", ch, ch & 0xff);
-  //   }
-  // }
+  if (has_uart) {
+    while (1) {
+      char ch = io_read(AM_UART_RX).data;
+      if (ch == -1) break;
+      printf("Got (uart): %c (%d)\n", ch, ch & 0xff);
+    }
+  }
 
   if (has_kbd) {
     while (1) {
       AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
+      printf("ev: %d\n",ev.keycode);
       if (ev.keycode == AM_KEY_NONE) break;
       printf("Got  (kbd): %s (%d) %s\n", names[ev.keycode], ev.keycode, ev.keydown ? "DOWN" : "UP");
     }
