@@ -6,6 +6,8 @@ static int count = 0;
 void device_init(){
     timer_init();
     keyboard_init();
+    //device_update();
+    SDL_CreateThread(device_update,"device_update",NULL);
 }
 void device_update(){
     keyboard_update();
