@@ -6,7 +6,7 @@
 
 
 void device_init();
-void device_update();
+// void device_update();
 
 uint32_t device_read(uint32_t addr);
 

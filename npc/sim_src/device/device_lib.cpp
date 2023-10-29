@@ -6,6 +6,7 @@ static int count = 0;
 
 static void device_update(){
     while(1){
+        SDL_Delay(100);
         keyboard_update();
     }
 }
