@@ -69,7 +69,11 @@ void keyboard_init(){
 }
 
 uint32_t keyboard_read(){
-  printf("dequeue\n");
+  uint32_t temp = key_dequeue();
+  if(temp & KEYDOWN_MASK){
+    printf("dequeue\n");
+  }
+
   return key_dequeue();
 }
 
