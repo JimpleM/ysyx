@@ -1,5 +1,6 @@
 #include "device_lib.h"
 #include "device.h"
+#include <SDL2/SDL.h>
 
 static int count = 0;
 
