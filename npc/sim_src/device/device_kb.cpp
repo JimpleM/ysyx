@@ -36,6 +36,7 @@ static void key_enqueue(uint32_t scancode){
     key_queue[key_tail] = scancode;
     key_tail = (key_tail + 1) % KEY_QUEUE_LEN;
     Assert(key_head != key_tail, "key queue overflow!");
+    printf("num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
 }
 
 static uint32_t key_dequeue(){
