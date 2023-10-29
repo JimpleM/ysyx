@@ -72,6 +72,8 @@ uint32_t keyboard_read(){
   uint32_t temp = key_dequeue();
   if(temp & KEYDOWN_MASK){
     printf("dequeue\n");
+    printf("num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
+
   }
 
   return temp;
