@@ -8,13 +8,13 @@ static const char *names[] = {
 static bool has_uart, has_kbd;
 
 static void drain_keys() {
-  if (has_uart) {
-    while (1) {
-      char ch = io_read(AM_UART_RX).data;
-      if (ch == -1) break;
-      printf("Got (uart): %c (%d)\n", ch, ch & 0xff);
-    }
-  }
+  // if (has_uart) {
+  //   while (1) {
+  //     char ch = io_read(AM_UART_RX).data;
+  //     if (ch == -1) break;
+  //     printf("Got (uart): %c (%d)\n", ch, ch & 0xff);
+  //   }
+  // }
 
   if (has_kbd) {
     while (1) {
