@@ -20,10 +20,10 @@ uint32_t device_read(uint32_t addr){
     //Assert(0,"no device addr %8x",addr);
     return 0;
 }
-
+extern Vriscv32* top;
 void device_write(uint32_t addr, uint32_t data){
     count++;
-    if(addr == SERIAL_PORT){
+    if(addr == SERIAL_PORT && top->clk == 0){
         count = 0;
         uart_write(data);
     }else if(addr == SYNC_ADDR+4 && count >=3){
