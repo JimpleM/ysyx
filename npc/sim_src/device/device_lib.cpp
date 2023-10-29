@@ -15,7 +15,8 @@ uint32_t device_read(uint32_t addr){
     if(addr == RTC_ADDR || addr == RTC_ADDR + 4){
         // printf("timer\n");
         return timer_read(addr);
-    }else if(addr == KBD_ADDR && flag == 1 && top->clk == 1){
+    }else if(addr == KBD_ADDR && flag == 1){
+        printf("%d\n",top->clk);
         return keyboard_read();
     }
     flag = 1;
