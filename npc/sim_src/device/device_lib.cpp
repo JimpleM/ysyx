@@ -11,12 +11,17 @@ static int device_update(){
     }
     return 0;
 }
+int device_update_adapter(void* data) {
+    device_update();  // 调用你的实际设备更新函数
+    return 0;  // 返回一个整数值
+}
+
 
 void device_init(){
     timer_init();
     keyboard_init();
     //device_update();
-    SDL_CreateThread(device_update,"device_update",NULL);
+    SDL_CreateThread(device_update_adapter,"device_update",NULL);
 }
 
 
