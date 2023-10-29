@@ -48,8 +48,10 @@ static inline void update_screen() {
   SDL_RenderPresent(renderer);
 }
 
-void vga_update_screen() {
+void screen_write(uint32_t data) {
+  if(data == 1){
     update_screen();
+  }
 }
 
 

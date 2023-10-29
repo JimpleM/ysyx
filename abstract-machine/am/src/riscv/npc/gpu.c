@@ -1,5 +1,5 @@
 #include <am.h>
-#include <nemu.h>
+#include "npc.h"
 #include <stdio.h>
 
 

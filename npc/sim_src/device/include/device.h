@@ -29,6 +29,7 @@ void uart_write(uint32_t data);
 
 //vga
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-
+void screen_init();
+void screen_write(uint32_t data);
 
 #endif
