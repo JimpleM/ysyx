@@ -2,6 +2,7 @@
 #define NPC_H__
 
 #include "riscv/riscv.h"
+#include <stdio.h>
 
 # define DEVICE_BASE 0xa0000000
 

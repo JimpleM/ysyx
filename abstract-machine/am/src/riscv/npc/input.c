@@ -1,6 +1,5 @@
 #include <am.h>
 #include "npc.h"
-#include <stdio.h>
 
 #define KEYDOWN_MASK 0x8000
 
