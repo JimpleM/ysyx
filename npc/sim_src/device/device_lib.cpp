@@ -16,7 +16,6 @@ uint32_t device_read(uint32_t addr){
         // printf("timer\n");
         return timer_read(addr);
     }else if(addr == KBD_ADDR){
-        printf("read from keyboard");
         return keyboard_read();
     }
     //Assert(0,"no device addr %8x",addr);

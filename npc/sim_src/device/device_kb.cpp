@@ -59,7 +59,9 @@ void keyboard_init(){
 }
 
 uint32_t keyboard_read(){
-  return key_dequeue();
+  uint32_t temp = key_dequeue();
+  printf("keyboard : %d\n",temp);
+  return temp;
 }
 
 void keyboard_update(){
