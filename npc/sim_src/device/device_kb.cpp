@@ -65,7 +65,7 @@ int keyboard_update_adapter(void* data) {
 
 void keyboard_init(){
     init_keymap();
-   // SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
+    SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
 }
 
 uint32_t keyboard_read(){
