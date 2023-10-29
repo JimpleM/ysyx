@@ -2,7 +2,6 @@
 #define DEVIDE_H__
 
 #include "common.h"
-#include <SDL2/SDL.h>
 
 # define DEVICE_BASE 0xa0000000
 
