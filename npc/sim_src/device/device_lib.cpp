@@ -5,7 +5,9 @@
 static int count = 0;
 
 static void device_update(){
-    keyboard_update();
+    while(1){
+        keyboard_update();
+    }
 }
 
 void device_init(){
