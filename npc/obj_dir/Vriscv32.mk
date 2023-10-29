@@ -59,6 +59,7 @@ VM_USER_CLASSES = \
 	device_kb \
 	device_lib \
 	device_uart \
+	device_vga \
 	cpu \
 	difftest \
 	disasm \
@@ -95,6 +96,8 @@ device_kb.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/devic
 device_lib.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_lib.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 device_uart.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_uart.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+device_vga.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_vga.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
