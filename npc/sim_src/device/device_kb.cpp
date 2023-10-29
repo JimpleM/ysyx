@@ -92,7 +92,7 @@ void keyboard_update(){
         bool is_keydown = (event.key.type == SDL_KEYDOWN);
         send_key(k, is_keydown);
         printf("num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
-        SDL_Delay(1);
+        // SDL_Delay(1);
         break;
       }
       default: break;
