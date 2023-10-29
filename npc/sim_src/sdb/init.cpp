@@ -4,6 +4,8 @@
 #include "sdb.h"
 #include "trace.h"
 
+#include "device_lib.h"
+
 #include <getopt.h>
 
 static char *img_file = NULL;
@@ -102,5 +104,7 @@ void init_npc(int argc, char *argv[]) {
 #ifdef CONFIG_FTRACE
   init_ftrace(elf_file);
 #endif
+
+    device_init();
     
 }
