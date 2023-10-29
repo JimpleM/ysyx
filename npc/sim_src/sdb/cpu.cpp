@@ -6,6 +6,8 @@
 #include "trace.h"
 #include "sdb.h"
 
+#include "device_lib.h"
+
 #define MAX_INST_TO_PRINT 1000
 
 #ifdef CONFIG_WAVE
