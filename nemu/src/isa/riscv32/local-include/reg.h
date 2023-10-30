@@ -25,7 +25,7 @@ static inline int check_reg_idx(int idx) {
 }
 
 static inline int check_csr_idx(int idx) {
-  //Log("%x",idx);
+  Log("%x",idx);
   IFDEF(CONFIG_RT_CHECK, assert(idx >= 0 && idx < 3));
   return idx;
 }
