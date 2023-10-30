@@ -38,7 +38,7 @@ void screen_init(){
       SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
 
     vmem = (uint32_t *)malloc(screen_size());
-    memset(vmem,1,screen_size());
+    memset(vmem,ff,screen_size());
 }
 
 static inline void update_screen() {
