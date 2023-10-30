@@ -35,8 +35,8 @@ static inline int check_csr_idx(int idx) {
   }else if(idx == 0x305){
     return MTVEC;
   }
-  Log("%x",idx);
-  Assert(0,"error csr index!");
+  // Log("%x",idx);
+  Assert(0,"error csr address: %x!",idx);
 }
 
 
