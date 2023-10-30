@@ -79,6 +79,7 @@ uint32_t keyboard_read(){
 
 void keyboard_update(){
     SDL_Event event;
+    printf("npc\n");
     while (SDL_PollEvent(&event)) {
     switch (event.type) {
       case SDL_QUIT:
