@@ -89,8 +89,8 @@ void keyboard_update(){
       case SDL_KEYUP: {
         uint8_t k = event.key.keysym.scancode;
         bool is_keydown = (event.key.type == SDL_KEYDOWN) || (event.key.type == SDL_KEYUP);
-        send_key(k, is_keydown);
-        send_key(k, is_keydown);
+        // send_key(k, is_keydown);
+        // send_key(k, is_keydown);
         send_key(k, is_keydown);
         printf("push num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
         break;
