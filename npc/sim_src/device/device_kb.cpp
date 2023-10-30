@@ -72,7 +72,7 @@ uint32_t keyboard_read(){
   uint32_t temp = key_dequeue();
   if(temp & KEYDOWN_MASK){
     // printf("%d\n",temp);
-    printf("pop num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
+    //printf("pop num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
   }
   return temp;
 }
@@ -89,10 +89,12 @@ void keyboard_update(){
       case SDL_KEYUP: {
         uint8_t k = event.key.keysym.scancode;
         bool is_keydown = (event.key.type == SDL_KEYDOWN);
+
+//@Attention device_read触发三次，这里写三次数据
         send_key(k, is_keydown);
         send_key(k, is_keydown);
         send_key(k, is_keydown);
-        printf("push num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
+        //printf("push num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
         break;
       }
       default: break;
