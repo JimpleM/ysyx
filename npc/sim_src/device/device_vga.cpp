@@ -49,6 +49,7 @@ static inline void update_screen() {
 }
 
 void screen_write(uint32_t data) {
+  printf("%d\n",data);
   if(data == 1){
     update_screen();
   }
