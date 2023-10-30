@@ -27,7 +27,7 @@ void device_write(uint32_t addr, uint32_t data){
     }else if(addr == SYNC_ADDR && top->clk == 0){
         screen_sync_write(data);
     }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR && top->clk == 0){
-        screen_write(data);
+        screen_write(addr,data);
     }
     //Assert(0,"no device addr %8x",addr);
 }
