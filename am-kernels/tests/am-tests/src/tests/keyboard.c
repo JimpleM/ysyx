@@ -33,6 +33,5 @@ void keyboard_test() {
   has_kbd  = io_read(AM_INPUT_CONFIG).present;
   while (1) {
     drain_keys();
-    printf("am\n");
   }
 }
