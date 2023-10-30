@@ -37,7 +37,7 @@ void screen_init(){
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
       SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
 
-    vmem = malloc(screen_size());
+    vmem = (uint32_t *)malloc(screen_size());
     memset(vmem,0,screen_size());
 }
 
