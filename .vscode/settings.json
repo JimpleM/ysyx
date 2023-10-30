@@ -16,5 +16,11 @@
         "*.tcc": "c",
         "ringbuffer.h": "c",
         "string_view": "c"
+<<<<<<< HEAD
+=======
+    },
+    "files.watcherExclude": {
+        "**/target": true
+>>>>>>> 77ce75f
     }
 }

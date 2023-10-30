@@ -1,37 +1,57 @@
-BUILD_DIR = ./build
+VERILATOR = verilator
+# project source
+VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
+SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
 
-export PATH := $(PATH):$(abspath ./utils)
+VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
 
-test:
-	mill -i __.test
+TOPNAME = riscv32
 
-verilog:
-	$(call git_commit, "generate verilog")
-	mkdir -p $(BUILD_DIR)
-	mill -i __.test.runMain Elaborate -td $(BUILD_DIR)
+VERILATOR_FLAGS += --trace --cc --exe --build 
+VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
+VERILATOR_FLAGS += --top ${TOPNAME}
 
-help:
-	mill -i __.test.runMain Elaborate --help
+LDFLAGS += -lSDL2
+LDFLAGS += -ldl 
+LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
+LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
 
-compile:
-	mill -i __.compile
+#g++ include路径
+INC_PATH += $(NPC_HOME)/sim_src/include
+INC_PATH += $(NPC_HOME)/sim_src/utils
+INC_PATH += $(NPC_HOME)/sim_src/device/include
+INCFLAGS += $(addprefix -I, $(INC_PATH))
+CFLAGS += $(INCFLAGS)
 
-bsp:
-	mill -i mill.bsp.BSP/install
+# llvm, 用figure—out消除 warning: "__STDC_FORMAT_MACROS" redefined报错
+LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflags))  -fPIE
+CFLAGS += $(LLVM_FLAGS) 
 
-reformat:
-	mill -i __.reformat
 
-checkformat:
-	mill -i __.checkFormat
+DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
+DIFF := --diff=${DIFFTEST}
+IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
+IMG = --img=${IMGS}
+ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
+ELF = --elf=${ELFFILE}
 
-clean:
-	-rm -rf $(BUILD_DIR)
+override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch
 
-.PHONY: test verilog help compile bsp reformat checkformat clean
+all:defualt
+#	@echo "Write this Makefile by your self."
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by yourself."
+	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  \
+	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
--include ../Makefile
+run:sim
+	./obj_dir/V${TOPNAME} ${ARGS} --batch
+
+wave:
+	gtkwave wave.vcd
+
+clean:
+	-rm -rf obj_dir *.log *.dmp *.vpd core
+
+include ../Makefile
