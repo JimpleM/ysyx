@@ -18,6 +18,8 @@
 
 #include <common.h>
 
+enum { MSTATUS, MTVEC, MEPC, MCAUSE};
+
 static inline int check_reg_idx(int idx) {
   //Log("%x",idx);
   IFDEF(CONFIG_RT_CHECK, assert(idx >= 0 && idx < MUXDEF(CONFIG_RVE, 16, 32)));
@@ -25,9 +27,17 @@ static inline int check_reg_idx(int idx) {
 }
 
 static inline int check_csr_idx(int idx) {
-  Log("%x",idx);
-  IFDEF(CONFIG_RT_CHECK, assert(idx >= 0 && idx < 3));
-  return idx;
+  // Log("%x",idx);
+  if(idx == 0x341){
+    return MEPC;
+  }else if(idx == 0x300){
+    return MSTATUS;
+  }else if(idx == 0x342){
+    return MCAUSE;
+  }else if(idx == 0x305){
+    return MTVEC;
+  }
+  Assert(0,"error csr index!");
 }
 
 
