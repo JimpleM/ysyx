@@ -38,7 +38,7 @@ void screen_init(){
       SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
 
     vmem = (uint32_t *)malloc(screen_size());
-    memset(vmem,0xff,screen_size());
+    memset(vmem,0,screen_size());
 }
 
 static inline void update_screen() {
@@ -54,8 +54,8 @@ void screen_sync_write(uint32_t data) {
   }
 }
 void screen_write(uint32_t addr, uint32_t data){
-  int offset = addr - FB_ADDR;
-  printf("%d\n",offset);
+  uint32_t offset = addr - FB_ADDR;
+  // printf("%d\n",offset);
   vmem[offset] = data;
 }
 
