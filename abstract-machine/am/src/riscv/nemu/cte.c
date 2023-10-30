@@ -1,9 +1,9 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
-
+// 声明函数指针
 static Context* (*user_handler)(Event, Context*) = NULL;
-
+// 终端处理
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
