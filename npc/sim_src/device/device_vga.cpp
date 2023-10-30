@@ -22,7 +22,7 @@ static uint32_t screen_size() {
 static SDL_Renderer *renderer = NULL;
 static SDL_Texture *texture = NULL;
 
-static void *vmem = NULL;
+static uint32_t *vmem = NULL;
 
 void screen_init(){
     SDL_Window *window = NULL;
