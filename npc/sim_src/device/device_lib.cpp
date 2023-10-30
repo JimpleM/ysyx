@@ -25,6 +25,8 @@ void device_write(uint32_t addr, uint32_t data){
     if(addr == SERIAL_PORT && top->clk == 0){
         uart_write(data);
     }else if(addr == SYNC_ADDR && top->clk == 0){
+        screen_sync_write(data);
+    }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR && top->clk == 0){
         screen_write(data);
     }
     //Assert(0,"no device addr %8x",addr);
