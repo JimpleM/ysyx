@@ -55,6 +55,7 @@ void screen_sync_write(uint32_t data) {
 }
 void screen_write(uint32_t addr, uint32_t data){
   Assert(addr - FB_ADDR < screen_size(),"screen_addr is overflowed!");
+  // 除以4 从8位数据地址转换成32位数据的数组下标
   uint32_t offset = (addr - FB_ADDR) >> 2;
   vmem[offset] = data;
 }
