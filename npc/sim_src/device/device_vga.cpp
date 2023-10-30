@@ -54,8 +54,8 @@ void screen_sync_write(uint32_t data) {
   }
 }
 void screen_write(uint32_t addr, uint32_t data){
+  Assert(addr - FB_ADDR < screen_size(),"screen_addr is overflowed!");
   uint32_t offset = (addr - FB_ADDR) >> 2;
-  printf("%d\n",offset);
   vmem[offset] = data;
 }
 
