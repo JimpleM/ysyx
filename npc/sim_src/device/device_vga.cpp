@@ -55,6 +55,7 @@ void screen_sync_write(uint32_t data) {
 }
 void screen_write(uint32_t addr, uint32_t data){
   int offset = addr - FB_ADDR;
+  printf("%d\n",offset);
   vmem[offset] = data;
 }
 
