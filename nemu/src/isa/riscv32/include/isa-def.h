@@ -18,6 +18,8 @@
 
 #include <common.h>
 
+enum { MSTATUS, MTVEC, MEPC, MCAUSE};
+
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   vaddr_t pc;

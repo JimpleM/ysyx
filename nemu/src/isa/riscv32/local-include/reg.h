@@ -17,8 +17,7 @@
 #define __RISCV_REG_H__
 
 #include <common.h>
-
-enum { MSTATUS, MTVEC, MEPC, MCAUSE};
+#include "isa-def.h"
 
 static inline int check_reg_idx(int idx) {
   //Log("%x",idx);
