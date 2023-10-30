@@ -26,7 +26,6 @@ static inline int check_reg_idx(int idx) {
 }
 
 static inline int check_csr_idx(int idx) {
-  // Log("%x",idx);
   if(idx == 0x341){
     return MEPC;
   }else if(idx == 0x300){
@@ -36,6 +35,7 @@ static inline int check_csr_idx(int idx) {
   }else if(idx == 0x305){
     return MTVEC;
   }
+  Log("%x",idx);
   Assert(0,"error csr index!");
 }
 
