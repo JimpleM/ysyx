@@ -8,7 +8,7 @@ int output_cnt = 0;
 
 struct FUNC_TRACE{
 	Elf32_Sym symbol;
-	char str[50];
+	char str[100];
 }func_trace[FUNC_NUM];
 
 // Elf32_Sym symbol[SYM_NUM] = {0};
