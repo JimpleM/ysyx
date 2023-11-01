@@ -60,8 +60,8 @@ void init_ftrace(const char *elf_file){
 	Assert(str_hdr.sh_offset != 0, "The string header is not found\n");
 
 	// Read symtab
-	int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
-	ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
+	//int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
+	//ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
 	// const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	// for(int i=0; i<number; i++){
 	// 	if((pSym[i].st_info & 0x0f) == STT_FUNC){
