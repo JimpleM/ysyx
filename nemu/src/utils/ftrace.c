@@ -80,6 +80,7 @@ void init_ftrace(const char *elf_file){
 	for(int i=0; i<func_cnt; i++){
 		strcpy(func_trace[i].str,(char *)&buffer[func_trace[i].symbol.st_name]);
 	}
+	  	assert(0);
 	// for(int i=0; i<func_cnt; i++){
 	// 	printf("%x %d %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_name,func_trace[i].str);
 	// }

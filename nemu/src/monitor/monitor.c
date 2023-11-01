@@ -135,7 +135,6 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Initialize the simple debugger. */
   init_sdb();
-    	assert(0);
 #ifdef CONFIG_FTRACE
   init_ftrace(elf_file);
 #endif
