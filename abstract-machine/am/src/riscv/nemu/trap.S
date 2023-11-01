@@ -59,6 +59,12 @@ __am_asm_trap:
 
   mv a0, sp             #保存栈指针
   jal __am_irq_handle   #跳到中断处理函数
+
+# modified 
+  mv sp,a0
+
+# modified end
+
 # 出栈
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
