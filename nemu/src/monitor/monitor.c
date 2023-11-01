@@ -141,7 +141,7 @@ void init_monitor(int argc, char *argv[]) {
 #ifdef CONFIG_IRINGBUF
   init_buffer();
 #endif
-  
+  	assert(0);
 
 #ifndef CONFIG_ISA_loongarch32r
   IFDEF(CONFIG_ITRACE, init_disasm(
