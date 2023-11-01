@@ -12,13 +12,12 @@ Context* __am_irq_handle(Context *c) {
         ev.event = EVENT_YIELD; 
         // 软件加4问题，不加4会在yield中不断调用__am_irq_handle，
         // 只能输出一对AB。
-        // c->mepc +=4;
+        c->mepc +=4;
         break;
       default:  ev.event = EVENT_ERROR; printf("event_error: %d\n",c->mcause); break;
     }
 
     c = user_handler(ev, c);
-    printf("%x\n",c);
     assert(c != NULL);
   }
 
