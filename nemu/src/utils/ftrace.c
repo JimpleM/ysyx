@@ -60,16 +60,16 @@ void init_ftrace(const char *elf_file){
 	Assert(str_hdr.sh_offset != 0, "The string header is not found\n");
 
 	// Read symtab
-	int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
-	ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
-	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
-	for(int i=0; i<number; i++){
-		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			// printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
-			memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
-		}
-	}
-	Assert(func_cnt < FUNC_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
+	// int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
+	// ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
+	// const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
+	// for(int i=0; i<number; i++){
+	// 	if((pSym[i].st_info & 0x0f) == STT_FUNC){
+	// 		// printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
+	// 		memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
+	// 	}
+	// }
+	// Assert(func_cnt < FUNC_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
 
 	// for(int i=0; i<sym_cnt; i++){
 	// 	printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
