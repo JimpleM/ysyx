@@ -32,7 +32,7 @@ void init_ftrace(const char *elf_file){
 	}
 	Log("ELF is read from %s", elf_file ? elf_file : "stdout");
 
-	uint8_t buffer[2048] = {0};
+	uint8_t buffer[4096] = {0};
 	Elf32_Ehdr elf_hdr = {0};      // ELF文件信息头
 	Elf32_Shdr sym_hdr = {0};   // 符号表头
   	Elf32_Shdr str_hdr = {0};   // 字符串表头
