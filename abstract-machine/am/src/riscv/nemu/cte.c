@@ -35,7 +35,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context*)kstack.end - 1;
 
   c->GPR1 = (uintptr_t)arg;
-  c->GPR2 = (uintptr_t)entry;
+  c->mepc = (uintptr_t)entry;
 
   c->pdir = (void *)__am_asm_trap;
 
