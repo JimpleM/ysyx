@@ -61,7 +61,6 @@ void init_ftrace(const char *elf_file){
 
 	// Read symtab
 	int number = sym_hdr.sh_size/sizeof(Elf32_Sym);
-	printf("%d\n",number);
 	ReadDataFromFile(&buffer, sizeof(Elf32_Sym), number, sym_hdr.sh_offset, elf_fp);
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
@@ -71,7 +70,7 @@ void init_ftrace(const char *elf_file){
 		}
 	}
 	Assert(func_cnt < FUNC_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
-
+	
 	// for(int i=0; i<sym_cnt; i++){
 	// 	printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
 	// }
