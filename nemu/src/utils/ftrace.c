@@ -40,7 +40,7 @@ void init_ftrace(const char *elf_file){
 	// Read ELF Header
 	ReadDataFromFile(&elf_hdr,sizeof(Elf32_Ehdr), 1, 0, elf_fp);
 	Assert(strstr((char *)elf_hdr.e_ident,"ELF")!=NULL,"The type of file is not elf\n");
-
+	assert(0);
 	// Read Section Headers
 	ReadDataFromFile(&buffer,sizeof(Elf32_Shdr), elf_hdr.e_shnum, elf_hdr.e_shoff, elf_fp);
 	
