@@ -36,7 +36,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
   memset(c,0,sizeof(Context));
 
-  c->GPR1 = (uintptr_t)entry;
+  c->gpr[10] = (uintptr_t)entry;
 
   // c->GPR1 = (uintptr_t)arg;
 
