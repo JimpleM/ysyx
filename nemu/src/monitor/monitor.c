@@ -137,6 +137,7 @@ void init_monitor(int argc, char *argv[]) {
   init_sdb();
 #ifdef CONFIG_FTRACE
   init_ftrace(elf_file);
+    	assert(0);
 #endif
 #ifdef CONFIG_IRINGBUF
   init_buffer();
