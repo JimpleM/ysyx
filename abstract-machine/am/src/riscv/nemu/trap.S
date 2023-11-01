@@ -61,7 +61,7 @@ __am_asm_trap:
   jal __am_irq_handle   #跳到中断处理函数
 
 # modified 
-  mv sp,a0
+  mv sp, a0
 
 # modified end
 
