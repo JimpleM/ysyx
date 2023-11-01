@@ -23,7 +23,7 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#define MAX_INST_TO_PRINT 100000
+#define MAX_INST_TO_PRINT 1000
 
 CPU_state cpu = { .csr[MSTATUS] = 0x1800};
 uint64_t g_nr_guest_inst = 0;
