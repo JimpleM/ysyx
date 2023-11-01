@@ -11,7 +11,7 @@ Context* __am_irq_handle(Context *c) {
       case 11:   
         ev.event = EVENT_YIELD; 
         // 软件加4问题，不加4会陷入yield死循环，只能输出一对AB。
-        c->mepc +=4;
+        // c->mepc +=4;
         break;
       default:  ev.event = EVENT_ERROR; printf("event_error: %d\n",c->mcause); break;
     }
