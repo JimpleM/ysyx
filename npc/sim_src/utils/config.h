@@ -16,7 +16,7 @@
 #define CONFIG_WATCHPOINT
 // #define CONFIG_MTRACE
 
-#define CONFIG_WAVE
+// #define CONFIG_WAVE
 
 
 #endif

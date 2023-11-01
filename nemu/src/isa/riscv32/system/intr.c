@@ -23,6 +23,9 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   cpu.csr[MSTATUS] = 0x1800;
   cpu.csr[MCAUSE] = NO;
   // printf("mtvex:%x\n",cpu.csr[MTVEC]);
+  #ifdef CONFIG_ETRACE
+    printf("etrace: epc:%x mcause:%d\n",epc,NO);
+  #endif
   return cpu.csr[MTVEC];
 }
 
