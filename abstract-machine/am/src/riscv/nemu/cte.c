@@ -32,12 +32,13 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  Context *c = (Context*)kstack.end - 1;
+  Context *c = (Context*)((uintptr_t)kstack.end - sizeof(Context));
 
-  c->GPR1 = (uintptr_t)arg;
-  c->mepc = (uintptr_t)entry;
+  memset(c,0,sizeof(Context));
 
-  c->pdir = (void *)__am_asm_trap;
+  c->pdir = (void *)entry;
+
+  // c->GPR1 = (uintptr_t)arg;
 
   return c;
 }
