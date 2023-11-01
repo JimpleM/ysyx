@@ -41,6 +41,7 @@ void yield() {
 #else
   asm volatile("li a7, -1; ecall");
 #endif
+  assert(0);
 }
 
 bool ienabled() {
