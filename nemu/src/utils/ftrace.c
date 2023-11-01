@@ -32,7 +32,7 @@ void init_ftrace(const char *elf_file){
 	}
 	Log("ELF is read from %s", elf_file ? elf_file : "stdout");
 
-	uint8_t buffer[1024] = {0};
+	uint8_t buffer[2048] = {0};
 	Elf32_Ehdr elf_hdr = {0};      // ELF文件信息头
 	Elf32_Shdr sym_hdr = {0};   // 符号表头
   	Elf32_Shdr str_hdr = {0};   // 字符串表头
@@ -65,12 +65,12 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
+			//printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
 			memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
 	Assert(func_cnt < FUNC_NUM, "The number of symbol is out of range, please increse the SYM_NUM\n");
-	
+
 	// for(int i=0; i<sym_cnt; i++){
 	// 	printf("%x %x\n",symbol[i].st_value,symbol[i].st_info);
 	// }
