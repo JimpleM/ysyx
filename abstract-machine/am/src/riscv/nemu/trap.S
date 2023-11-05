@@ -61,7 +61,7 @@ __am_asm_trap:
   jal __am_irq_handle   #跳到中断处理函数
 
 # modified 
-# __am_irq_handle返回Context*指针，返回值存储在a0寄存器中，
+# __am_irq_handle返回Context*指针，返回值存储在a0-a1寄存器中，
 # 将a0的值赋值到sp中就把栈顶指针切过去
   mv sp, a0
 # modified end
