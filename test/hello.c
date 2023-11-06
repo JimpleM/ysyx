@@ -1,12 +1,20 @@
 #include <stdio.h>
-#include <inttypes.h>
 #include <string.h>
-static inline uint32_t inl(uintptr_t addr) { return *(volatile uint32_t *)addr; }
-# define DEVICE_BASE 0x0
-#define RTC_ADDR        (DEVICE_BASE + 0x0000048)
+
+typedef unsigned int		uintptr_t;
+#define NR_REGS 32
+struct Context {
+  // TODO: fix the order of these members to match trap.S
+  // uintptr_t gpr[NR_REGS], mcause, mstatus, mepc;
+  void *pdir;
+};
+#define STACK_SIZE (4096 * 8)
+typedef union {
+  uint8_t stack[STACK_SIZE];
+  struct { Context *cp; };
+} PCB;
+static PCB pcb[2];
 int main(){
-    
-    uint64_t t =  ((uint64_t)inl(RTC_ADDR) + (uint64_t)inl(RTC_ADDR+4)<<32);
-    printf("%ld",t);
+    printf("%x %x\n",(unsigned int)pcb[0].stack,(unsigned int)&pcb[0] + 1);
     return 0;
 }
