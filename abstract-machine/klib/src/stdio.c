@@ -24,7 +24,7 @@ char* number_to_str(const char *str, ul number, ul scale){
       *str_t++ = number + '0';
       *str_t = '\0';
     }else{
-      *str_t++ = number - 10 + 'a';
+      *str_t++ = number + 'A' - 10;
       *str_t = '\0';
     }
     return str_t;
@@ -201,6 +201,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }else if(*fmt == 'x'){
         ArgHex = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgHex,16);
+        printf("%s\n",str_temp);
         out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
         strcat_out(out_t,str_temp);
       }else if(*fmt == 'l' && *(fmt+1) == 'd'){
