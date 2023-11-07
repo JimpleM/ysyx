@@ -24,7 +24,7 @@ char* number_to_str(const char *str, ul number, ul scale){
       *str_t++ = number + '0';
       *str_t = '\0';
     }else{
-      *str_t++ = number - 10 + 'A';
+      *str_t++ = number - 10 + 'a';
       *str_t = '\0';
     }
     return str_t;
