@@ -200,7 +200,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         strcat_out(out_t,str_temp);
       }else if(*fmt == 'x'){
         ArgHex = va_arg(ap, unsigned long);
-        printf("%d\n",ArgHex);
+        printf("%u\n",ArgHex);
         number_to_str(str_temp,(ul)ArgHex,16);
         out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
         strcat_out(out_t,str_temp);
