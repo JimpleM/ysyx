@@ -165,7 +165,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context*)kstack.end - 1;
-
+  printf("context:%x\n",c);
   __am_get_example_uc(c);
   c->uc.uc_mcontext.gregs[REG_RIP] = (uintptr_t)__am_kcontext_start;
   c->uc.uc_mcontext.gregs[REG_RSP] = (uintptr_t)kstack.end;
