@@ -26,6 +26,11 @@ static void irq_handle(Context *c) {
   printf("vm_head: %d\n",thiscpu->vm_head);
   printf("ksp: %d\n",thiscpu->ksp);
   printf("Context: %x\n",c);
+  uintptr_t *temp = (uintptr_t *)c;
+  for(int i=0; i<10; i++){
+    printf("*%x ",*(temp+i));
+  }
+  
 
   if (thiscpu->ev.event == EVENT_ERROR) {
     uintptr_t rip = c->uc.uc_mcontext.gregs[REG_RIP];
