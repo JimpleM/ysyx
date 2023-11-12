@@ -27,17 +27,9 @@ char *strncpy(char *dst, const char *src, size_t n) {
   assert(dst != NULL);
   assert(src != NULL);
   char *dst_t = dst;
-  while(n && (*dst_t++ = *src++) != '\0'){
-    // *dst_t++ = *src++;
-    n--;
+  for(; n; n--){
+    *dst_t++ = *src++;
   }
-  if(n){
-    while(--n){
-      *dst_t++ = '\0';
-    }
-  }
-
-  // printf("%s\n",dst);
   return dst;
 }
 
