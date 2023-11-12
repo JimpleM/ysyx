@@ -27,8 +27,13 @@ char *strncpy(char *dst, const char *src, size_t n) {
   assert(dst != NULL);
   assert(src != NULL);
   char *dst_t = dst;
-  for(; n; n--){
+  while(*src != '\0' && n){
     *dst_t++ = *src++;
+    n--;
+  }
+  while(n){
+    *dst_t++ = '\0';
+    n--;
   }
   return dst;
 }
