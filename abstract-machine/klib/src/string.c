@@ -32,7 +32,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
     n--;
     printf("%d ",n);
   }
-  while(n){
+  while(n>=0){
     *dst_t++ = '\0';
     printf("%d ",n);
     n--;
