@@ -27,9 +27,8 @@ char *strncpy(char *dst, const char *src, size_t n) {
   assert(dst != NULL);
   assert(src != NULL);
   char *dst_t = dst;
-  while(*src != '\0' && n){
-    *dst_t++ = *src++;
-    printf("%d ",n);
+  while(n && (*dst++ = *src++) != '\0'){
+    // *dst_t++ = *src++;
     n--;
   }
   if(n){
