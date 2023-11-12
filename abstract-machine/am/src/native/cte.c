@@ -18,19 +18,19 @@ void __am_panic_on_return() { panic("should not reach here\n"); }
 static void irq_handle(Context *c) {
   c->vm_head = thiscpu->vm_head;
   c->ksp = thiscpu->ksp;
-  printf("-------irq-----\n");
-  printf("event: %d\n",thiscpu->ev.event);
-  printf("msg: %s\n",thiscpu->ev.msg);
-  printf("ref: %x\n",thiscpu->ev.ref);
-  printf("cause: %x\n",thiscpu->ev.cause);
-  printf("vm_head: %d\n",thiscpu->vm_head);
-  printf("ksp: %d\n",thiscpu->ksp);
-  printf("Context: %x\n",c);
-  uintptr_t *temp = (uintptr_t *)c;
-  for(int i=0; i<30; i++){
-    printf("%x ",*(temp+i));
-  }
-  
+  // printf("-------irq-----\n");
+  // // printf("event: %d\n",thiscpu->ev.event);
+  // // printf("msg: %s\n",thiscpu->ev.msg);
+  // // printf("ref: %x\n",thiscpu->ev.ref);
+  // // printf("cause: %x\n",thiscpu->ev.cause);
+  // // printf("vm_head: %d\n",thiscpu->vm_head);
+  // // printf("ksp: %d\n",thiscpu->ksp);
+  // // printf("Context: %x\n",c);
+  // uintptr_t *temp = (uintptr_t *)c;
+  // for(int i=0; i<30; i++){
+  //   printf("%x ",*(temp+i));
+  // }
+  // printf("\n-------irq end-----\n");
 
   if (thiscpu->ev.event == EVENT_ERROR) {
     uintptr_t rip = c->uc.uc_mcontext.gregs[REG_RIP];
@@ -178,7 +178,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context*)kstack.end - 1;
-  // printf("context:%x\n",c);
+  
   __am_get_example_uc(c);
   c->uc.uc_mcontext.gregs[REG_RIP] = (uintptr_t)__am_kcontext_start;
   c->uc.uc_mcontext.gregs[REG_RSP] = (uintptr_t)kstack.end;
@@ -194,6 +194,7 @@ Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
 }
 
 void yield() {
+  printf("yield\n");
   raise(SIGUSR2);
 }
 
