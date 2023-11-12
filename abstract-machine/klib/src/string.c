@@ -29,8 +29,8 @@ char *strncpy(char *dst, const char *src, size_t n) {
   char *dst_t = dst;
   while(*src != '\0' && n){
     *dst_t++ = *src++;
+        printf("%d ",n);
     n--;
-    printf("%d ",n);
   }
   while(n>=1){
     *dst_t++ = '\0';
