@@ -9,15 +9,15 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
     switch (c->mcause) {
       case 11:   
-        // ev.event = EVENT_YIELD; 
+        ev.event = EVENT_YIELD; 
         // 软件加4问题，不加4会在yield中不断调用__am_irq_handle，
         // 只能输出一对AB。
-        if (c->GPR1 == -1) {
-          ev.event = EVENT_YIELD;
-        }
-        else {
-          ev.event = EVENT_SYSCALL;
-        }
+        // if (c->GPR1 == -1) {
+        //   ev.event = EVENT_YIELD;
+        // }
+        // else {
+        //   ev.event = EVENT_SYSCALL;
+        // }
         c->mepc +=4;
         break;
       default:  ev.event = EVENT_ERROR; printf("event_error: %d\n",c->mcause); break;
