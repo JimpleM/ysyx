@@ -27,9 +27,16 @@ char *strncpy(char *dst, const char *src, size_t n) {
   assert(dst != NULL);
   assert(src != NULL);
   char *dst_t = dst;
-  for(; n; n--){
-    *dst_t++ = *src++;
+  int k = strlen(src);
+  int min_n = k<n ? k:n;
+  for(int i=0; i<n; i++){
+    if(i<min_n){
+      *dst_t++ = *src++;
+    }else{
+      *dst_t++ = '\0';
+    }
   }
+
   return dst;
 }
 
