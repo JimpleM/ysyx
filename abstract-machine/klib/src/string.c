@@ -35,6 +35,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
     *dst_t++ = '\0';
     n--;
   }
+  printf("#s\n",dst);
   return dst;
 }
 
