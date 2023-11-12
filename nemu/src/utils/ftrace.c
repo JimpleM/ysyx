@@ -31,7 +31,7 @@ void init_ftrace(const char *elf_file){
 		elf_fp = fp;
 	}
 	Log("ELF is read from %s", elf_file ? elf_file : "stdout");
-
+	// 遇到stack smashing detected需要将buffer调大
 	uint8_t buffer[20000] = {0};
 	Elf32_Ehdr elf_hdr = {0};      // ELF文件信息头
 	Elf32_Shdr sym_hdr = {0};   // 符号表头
