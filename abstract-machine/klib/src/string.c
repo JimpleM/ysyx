@@ -20,7 +20,6 @@ char *strcpy(char *dst, const char *src) {
   while(*src != '\0'){
     *dst_t++ = *src++;
   }
-  // *dst_t = '\0';
   return dst;
 }
 
@@ -31,7 +30,6 @@ char *strncpy(char *dst, const char *src, size_t n) {
   for(; n; n--){
     *dst_t++ = *src++;
   }
-  // *dst_t = '\0';
   return dst;
 }
 
