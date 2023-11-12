@@ -194,7 +194,6 @@ Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
 }
 
 void yield() {
-  printf("yield\n");
   raise(SIGUSR2);
 }
 
