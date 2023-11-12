@@ -32,11 +32,14 @@ char *strncpy(char *dst, const char *src, size_t n) {
     printf("%d ",n);
     n--;
   }
-  while(n>=1){
-    *dst_t++ = '\0';
-    printf("%d ",n);
-    n--;
+  if(n){
+    while(--n){
+      *dst_t++ = '\0';
+      printf("%d ",n);
+      // n--;
+    }
   }
+
   printf("%s\n",dst);
   return dst;
 }
