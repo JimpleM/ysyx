@@ -28,6 +28,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
   assert(dst != NULL);
   assert(src != NULL);
   char *dst_t = dst;
+  n--;
   for(; n; n--){
     *dst_t++ = *src++;
   }
