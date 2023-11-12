@@ -27,8 +27,8 @@ static void irq_handle(Context *c) {
   printf("ksp: %d\n",thiscpu->ksp);
   printf("Context: %x\n",c);
   uintptr_t *temp = (uintptr_t *)c;
-  for(int i=0; i<10; i++){
-    printf("*%x ",*(temp+i));
+  for(int i=0; i<30; i++){
+    printf("%x ",*(temp+i));
   }
   
 
