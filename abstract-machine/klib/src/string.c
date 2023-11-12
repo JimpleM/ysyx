@@ -37,7 +37,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
     }
   }
 
-  printf("%s\n",dst);
+  // printf("%s\n",dst);
   return dst;
 }
 
