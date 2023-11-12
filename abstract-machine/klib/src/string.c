@@ -35,12 +35,10 @@ char *strncpy(char *dst, const char *src, size_t n) {
 
 char *strcat(char *dst, const char *src) {
   char *dst_t = dst;
-  while(*dst_t != '\0'){
+  while(*dst_t){
     dst_t++;
   }
-  while(*src != '\0'){
-    *dst_t++ = *src++;
-  }
+  while( (*dst_t++ = *src++)!='\0' );
   // *dst_t = '\0';
   return dst;
 }
