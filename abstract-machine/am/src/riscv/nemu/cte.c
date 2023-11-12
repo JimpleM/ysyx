@@ -49,6 +49,8 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   // printf("%x\n",sizeof(Context));
   memset(c,0,sizeof(Context));
 
+  assert(kstack.end - (void *)c == sizeof(Context));
+
   c->mepc = (uintptr_t)entry;
   //系统调用参数从a0-a7寄存器中传递,gpr[10]是a0寄存器
   c->gpr[10] = (uintptr_t)arg;
