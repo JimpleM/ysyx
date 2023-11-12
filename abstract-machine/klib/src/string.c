@@ -30,7 +30,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
   while(*src != '\0' && n){
     *dst_t++ = *src++;
     n--;
-    printf("%d",n);
+    printf("%d ",n);
   }
   while(n){
     *dst_t++ = '\0';
