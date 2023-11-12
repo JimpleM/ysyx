@@ -38,7 +38,7 @@ char *strcat(char *dst, const char *src) {
   while(*dst_t){
     dst_t++;
   }
-  while( (*dst_t++ = *src++));
+  // while( (*dst_t++ = *src++));
   // *dst_t = '\0';
   return dst;
 }
