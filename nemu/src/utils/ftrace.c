@@ -2,7 +2,7 @@
 #include <common.h>
 #include <elf.h>
 
-#define FUNC_NUM	500
+#define FUNC_NUM	5000
 int func_cnt = 0;
 int output_cnt = 0;
 
