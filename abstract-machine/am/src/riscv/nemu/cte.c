@@ -64,6 +64,7 @@ void yield() {
 #ifdef __riscv_e
   asm volatile("li a5, -1; ecall");
 #else
+// 使用a7寄存器调用自陷入指令
   asm volatile("li a7, -1; ecall");
 #endif
 }
