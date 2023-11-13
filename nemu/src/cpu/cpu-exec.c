@@ -41,9 +41,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   // if(_this->pc >= 0){
   //   puts(_this->logbuf);
   // }
-  if(_this->pc == 0x80016420){
-    assert(0);
-  }
   
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
