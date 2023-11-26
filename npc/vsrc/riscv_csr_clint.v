@@ -1,4 +1,4 @@
-module riscv_csr_regfile (
+module riscv_csr_clint (
     input 	                            clk,
     input 	                            rst_n, 
 
