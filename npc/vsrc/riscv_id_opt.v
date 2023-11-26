@@ -176,7 +176,7 @@ riscv_mux#(
 
 
 always @(*)begin
-    csr_opt = 4'd0;
+    csr_opt = `CSR_OPT_WIDTH'd0;
     case(opcode)  
         `SYS   :begin 
             case(funct3)
