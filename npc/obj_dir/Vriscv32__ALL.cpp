@@ -5,6 +5,7 @@
 #include "Vriscv32___024root__DepSet_ha271e5bc__0.cpp"
 #include "Vriscv32__Dpi.cpp"
 #include "Vriscv32__Trace__0.cpp"
+#include "Vriscv32__ConstPool_0.cpp"
 #include "Vriscv32___024root__Slow.cpp"
 #include "Vriscv32___024root__DepSet_h91ec0c4e__0__Slow.cpp"
 #include "Vriscv32___024root__DepSet_ha271e5bc__0__Slow.cpp"
