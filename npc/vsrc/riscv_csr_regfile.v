@@ -21,7 +21,7 @@ module riscv_csr_regfile (
     input                               csr_write_valid_i,
 
     input       [`CSR_REG_WIDTH-1:0]    csr_read_addr_i,
-    output      [`DATA_WIDTH-1:0]       csr_read_data_o,
+    output      [`DATA_WIDTH-1:0]       csr_read_data_o
 
 );
 
