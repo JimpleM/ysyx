@@ -5,7 +5,8 @@ module riscv_id_opt(
     input 	    [6:0]                   funct7,
     output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output      [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt
+    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt,
+    output  reg [`CSR_OPT_WIDTH-1:0]    csr_opt
 );
 
 always @(*)begin
@@ -159,6 +160,37 @@ riscv_mux#(
             `STORE ,{`LSU_OPT_STORE}
   })
 );
+
+riscv_mux#(
+    .NR_KEY      (2), 
+    .KEY_LEN     (7), 
+    .DATA_LEN    (`LSU_OPT_WIDTH)
+)riscv_mux_id_csr_opt(
+    .key              ({opcode}),//opcode
+    .default_out      (`LSU_OPT_NONE),
+    .out              (lsu_opt),
+    .lut({  `LOAD  ,{`LSU_OPT_LOAD},
+            `STORE ,{`LSU_OPT_STORE}
+  })
+);
+
+
+always @(*)begin
+    csr_opt = 4'd0;
+    case(opcode)  
+        `SYS   :begin 
+            case(funct3)
+                3'b000 :begin csr_opt = `CSR_OPT_EINST ;  end
+                3'b001 :begin csr_opt = `CSR_OPT_CSRRW ;  end
+                3'b010 :begin csr_opt = `CSR_OPT_CSRRS ;  end
+                3'b011 :begin csr_opt = `CSR_OPT_CSRRC ;  end
+                3'b101 :begin csr_opt = `CSR_OPT_CSRRWI ;  end
+                3'b110 :begin csr_opt = `CSR_OPT_CSRRSI;  end
+                3'b111 :begin csr_opt = `CSR_OPT_CSRRCI;  end
+            endcase
+        end
+    endcase
+end
 
 endmodule
 
