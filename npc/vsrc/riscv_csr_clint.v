@@ -8,11 +8,11 @@ module riscv_csr_regfile (
 
     input       [`CSR_OPT_WIDTH-1:0]    csr_opt,
 
-    output 
+    output      [`DATA_WIDTH-1:0]       csr_pc
 
 );
 
-always(*)begin
+always@(*)begin
     case(csr_opt)
         `CSR_OPT_EINST : begin 
             case(imm[11:0])

@@ -40,7 +40,7 @@ reg mepc_en   ;
 reg mcause_en ;
 reg mtvec_en  ;
 
-always(*)begin
+always@(*)begin
     mstatus_en  = csr_mstatus_write_valid_i ; 
     mepc_en     = csr_mepc_write_data_i     ; 
     mcause_en   = csr_mcause_write_valid_i  ;
@@ -55,7 +55,7 @@ always(*)begin
 end
 
 reg [`DATA_WIDTH-1:0] csr_read_data;
-always(*)begin
+always@(*)begin
     case(csr_write_addr_i)
         `CSR_MEPC   : csr_read_data = mstatus_dout   ;
         `CSR_MSTATUS: csr_read_data = mepc_dout      ;
