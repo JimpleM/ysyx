@@ -187,8 +187,10 @@ always @(*)begin
                 3'b101 :begin csr_opt = `CSR_OPT_CSRRWI ;  end
                 3'b110 :begin csr_opt = `CSR_OPT_CSRRSI;  end
                 3'b111 :begin csr_opt = `CSR_OPT_CSRRCI;  end
+                default: csr_opt = `CSR_OPT_EINST;
             endcase
         end
+        default: csr_opt = `CSR_OPT_EINST;
     endcase
 end
 
