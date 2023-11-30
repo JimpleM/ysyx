@@ -10,7 +10,6 @@ static char *hbrk;
 
 static uint64_t uptime() { return io_read(AM_TIMER_UPTIME).us; }
 
-
 static char *format_time(uint64_t us) {
   static char buf[32];
   uint32_t ms = us / 1000;
@@ -100,7 +99,6 @@ int main(const char *args) {
   int pass = 1;
   uint64_t t0 = uptime();
   uint64_t score_time = 0;
-  
 
   for (int i = 0; i < LENGTH(benchmarks); i ++) {
     Benchmark *bench = &benchmarks[i];
@@ -156,27 +154,15 @@ int main(const char *args) {
 
 // Libraries
 
-// void* bench_alloc(size_t size) {
-//   size  = (size_t)ROUNDUP(size, 8);
-//   char *old = hbrk;
-//   hbrk += size;
-//   assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
-//   for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) {
-//     *p = 0;
-//   }
-//   assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
-//   return old;
-// }
-
 void* bench_alloc(size_t size) {
   size  = (size_t)ROUNDUP(size, 8);
   char *old = hbrk;
   hbrk += size;
-  // assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
+  assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
   for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
-  // assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
+  assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
   return old;
 }
 
