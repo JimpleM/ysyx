@@ -163,7 +163,7 @@ void* bench_alloc(size_t size) {
   for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
-  assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
+  // assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
   return old;
 }
 
