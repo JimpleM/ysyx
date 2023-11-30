@@ -109,7 +109,7 @@ static void execute_bf() {
   unsigned int pc = 0, ptr = 0;
   while (PROGRAM[pc].operator != OP_END && ptr < DATA_SIZE) {
     switch (PROGRAM[pc].operator) {
-      case OP_INC_DP: ptr++; printf("%d\n",pc);break;
+      case OP_INC_DP: ptr++;break;
       case OP_DEC_DP: ptr--; break;
       case OP_INC_VAL: data[ptr]++; break;
       case OP_DEC_VAL: data[ptr]--; break;
