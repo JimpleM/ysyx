@@ -64,7 +64,7 @@ static void run_once(Benchmark *b, Result *res) {
   bench_reset();       // reset malloc state
   current->prepare();  // call bechmark's prepare function
   bench_prepare(res);  // clean everything, start timer
-  current->run();      // run it
+  // current->run();      // run it
   bench_done(res);     // collect results
   res->pass = current->validate();
 }

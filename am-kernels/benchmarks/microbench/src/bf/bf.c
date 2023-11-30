@@ -142,7 +142,6 @@ void bench_bf_prepare() {
 
 void bench_bf_run() {
   compile_bf();
-    return ;
   execute_bf();
 }
 
