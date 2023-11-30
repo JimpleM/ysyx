@@ -5,11 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
 
-#define MEMORY_POOL_SIZE 1024*1024
 
-char memory_pool[MEMORY_POOL_SIZE];
-
-char *memory_heep = memory_pool;
 
 int rand(void) {
   // RAND_MAX assumed to be 32767
@@ -34,18 +30,51 @@ int atoi(const char* nptr) {
   }
   return x;
 }
+
+// #define MEMORY_POOL_SIZE 1024*1024
+
+// char memory_pool[MEMORY_POOL_SIZE];
+
+// char *memory_heep = memory_pool;
+// void *malloc(size_t size) {
+//   // On native, malloc() will be called during initializaion of C runtime.
+//   // Therefore do not call panic() here, else it will yield a dead recursion:
+//   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
+// #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
+//   if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
+//     assert(0);
+//     return NULL;
+//   }
+//   void *ptr = (void *)memory_heep;
+//   memory_heep += size;
+//   return ptr;
+
+// #endif
+//   return NULL;
+// }
+char *memory_heep = NULL;
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
-    assert(0);
-    return NULL;
+  // if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
+  //   assert(0);
+  //   return NULL;
+  // }
+  // void *ptr = (void *)memory_heep;
+  // memory_heep += size;
+
+  if(memory_heep == NULL){
+    memory_heep = (void *)ROUNDUP(heap.start, 4);
   }
-  void *ptr = (void *)memory_heep;
-  memory_heep += size;
-  return ptr;
+  size = (size_t)ROUNDUP(size, 4);
+  assert((uintptr_t)(memory_heep + size) <= (uintptr_t)heap.end);
+  for(uint32_t i=0;i<size;i++){
+    *(memory_heep + i) = 0;
+  }
+
+  return memory_heep;
 
 #endif
   return NULL;
