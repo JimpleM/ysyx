@@ -57,19 +57,19 @@ void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
-  if(memory_heep == NULL){
-    memory_heep = (void *)ROUNDUP(heap.start, 8);
-  }
-  size  = (size_t)ROUNDUP(size, 8);
-  char *memory_heep_old = memory_heep;
-  memory_heep += size;
-  assert((uintptr_t)heap.start <= (uintptr_t)memory_heep && (uintptr_t)memory_heep < (uintptr_t)heap.end);
-  for (uint64_t *p = (uint64_t *)memory_heep_old; p != (uint64_t *)memory_heep; p ++) {
-    *p = 0;
-  }
-  return memory_heep_old;
+  // if(memory_heep == NULL){
+  //   memory_heep = (void *)ROUNDUP(heap.start, 8);
+  // }
+  // size  = (size_t)ROUNDUP(size, 8);
+  // char *memory_heep_old = memory_heep;
+  // memory_heep += size;
+  // assert((uintptr_t)heap.start <= (uintptr_t)memory_heep && (uintptr_t)memory_heep < (uintptr_t)heap.end);
+  // for (uint64_t *p = (uint64_t *)memory_heep_old; p != (uint64_t *)memory_heep; p ++) {
+  //   *p = 0;
+  // }
+  // return memory_heep_old;
 
-
+  return NULL;
 }
 
 void free(void *ptr) {

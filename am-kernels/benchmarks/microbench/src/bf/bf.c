@@ -98,8 +98,6 @@ static int compile_bf() {
     return FAILURE;
   }
   PROGRAM[pc].operator = OP_END;
-  printf("adds");
-
   return SUCCESS;
 }
 
