@@ -47,8 +47,9 @@ void bench_fib_run() {
       put(A, i, j, x);
       put(T, i, j, x);
       put(ans, i, j, i == j);
+      printf(" ");
     }
-
+  printf("\n");
   for (int n = N; n > 0; n >>= 1) {
     if (n & 1) {
       mult(tmp, ans, T);
