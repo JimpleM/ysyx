@@ -120,7 +120,6 @@ static void execute_bf() {
       default: return;
     }
     pc++;
-    printf("%d\n",pc);
   }
 }
 
