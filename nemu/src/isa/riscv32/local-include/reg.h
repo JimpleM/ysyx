@@ -17,7 +17,6 @@
 #define __RISCV_REG_H__
 
 #include <common.h>
-#include "isa-def.h"
 
 static inline int check_reg_idx(int idx) {
   //Log("%x",idx);
@@ -25,23 +24,7 @@ static inline int check_reg_idx(int idx) {
   return idx;
 }
 
-static inline int check_csr_idx(int idx) {
-  if(idx == 0x341){
-    return MEPC;
-  }else if(idx == 0x300){
-    return MSTATUS;
-  }else if(idx == 0x342){
-    return MCAUSE;
-  }else if(idx == 0x305){
-    return MTVEC;
-  }
-  // Log("%x",idx);
-  Assert(0,"error csr address: %x!",idx);
-}
-
-
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
-#define csr(idx) (cpu.csr[check_csr_idx(idx)])
 
 static inline const char* reg_name(int idx) {
   extern const char* regs[];

@@ -1,4 +1,4 @@
-module riscv_gpr_regfile (
+module riscv_regfile (
     input                               clk,
     input                               rst_n,
 

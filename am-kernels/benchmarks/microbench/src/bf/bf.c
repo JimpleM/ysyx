@@ -109,7 +109,7 @@ static void execute_bf() {
   unsigned int pc = 0, ptr = 0;
   while (PROGRAM[pc].operator != OP_END && ptr < DATA_SIZE) {
     switch (PROGRAM[pc].operator) {
-      case OP_INC_DP: ptr++;break;
+      case OP_INC_DP: ptr++; break;
       case OP_DEC_DP: ptr--; break;
       case OP_INC_VAL: data[ptr]++; break;
       case OP_DEC_VAL: data[ptr]--; break;
@@ -131,7 +131,7 @@ void bench_bf_prepare() {
   data = bench_alloc(sizeof(data[0]) * DATA_SIZE);
   code = CODE;
   input = bench_alloc(ARR_SIZE + 1);
-  output = bench_alloc(DATA_SIZE); 
+  output = bench_alloc(DATA_SIZE);
   noutput = 0;
 
   bench_srand(1);

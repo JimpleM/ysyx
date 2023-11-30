@@ -40,7 +40,6 @@ typedef struct{
     uint32_t pc;
 }CPU_state;
 
-enum { MEPC, MSTATUS, MCAUSE};
 
 enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
 

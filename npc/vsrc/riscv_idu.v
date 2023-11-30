@@ -2,7 +2,6 @@
 module riscv_idu(
     input 	    [`INST_WIDTH-1:0]       inst,
 
-    output                              system,
     output                              branch,
     output                              jal,
     output                              jalr,
@@ -18,11 +17,10 @@ module riscv_idu(
     output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output      [`SRC_SEL_WIDTH-1:0]    src_sel,
     output      [`LSU_OPT_WIDTH-1:0]    lsu_opt,
-    output      [`CSR_OPT_WIDTH-1:0]    csr_opt,
     output      [2:0]                   funct3
 
 );
-assign  system  = (inst[6:0] == `SYS)       ? 1'b1 : 1'b0;
+
 assign  branch  = (inst[6:0] == `BRANCH)    ? 1'b1 : 1'b0;
 assign  jal     = (inst[6:0] == `JAL)       ? 1'b1 : 1'b0;
 assign  jalr    = (inst[6:0] == `JALR)      ? 1'b1 : 1'b0;
@@ -56,7 +54,7 @@ riscv_mux#(
             `OP_IMM,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
             `OP    ,  {inst[19:15], inst[24:20], inst[11:7], 1'b1},
             `FENCE ,  {reg_zero   , reg_zero   , reg_zero  , 1'b0},
-            `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1}
+            `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b0}
   })
 );
 
@@ -71,8 +69,7 @@ riscv_id_opt riscv_id_opt_idu(
     .funct7     (funct7),
     .alu_opt    (alu_opt  ),
     .src_sel    (src_sel  ),
-    .lsu_opt    (lsu_opt  ),
-    .csr_opt    (csr_opt  )
+    .lsu_opt    (lsu_opt  )
 );
 
 endmodule

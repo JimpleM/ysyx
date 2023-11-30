@@ -22,7 +22,6 @@ wire [`DATA_WIDTH-1:0]      ifu_pc;
 wire [`INST_WIDTH-1:0]      ifu_inst;
 
 // idu
-wire                        idu_system      ;
 wire                       	idu_branch		;
 wire                       	idu_jal		;
 wire                       	idu_jalr		;
@@ -34,7 +33,6 @@ wire [`DATA_WIDTH-1:0]     	idu_imm		;
 wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	;
 wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	;
 wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	;
-wire [`CSR_OPT_WIDTH-1:0]   idu_csr_opt ;
 wire [2:0]                  idu_funct3	;
 
 //regfile
@@ -57,7 +55,6 @@ riscv_ifu riscv_ifu_u0(
 
 riscv_idu riscv_idu_u0(
     .inst			(ifu_inst	),
-    .system         (idu_system ),    
     .branch			(idu_branch	),
     .jal			(idu_jal		),
     .jalr			(idu_jalr	),
@@ -69,11 +66,10 @@ riscv_idu riscv_idu_u0(
     .alu_opt		(idu_alu_opt	),
     .src_sel		(idu_src_sel	),
     .lsu_opt		(idu_lsu_opt	),
-    .csr_opt        (idu_csr_opt    ),
-    .funct3		    (idu_funct3	)
+    .funct3		(idu_funct3	)
 );
 
-riscv_gpr_regfile riscv_gpr_regfile_u0(
+riscv_regfile riscv_regfile_u0(
     .clk			(clk		),
     .rst_n          (rst_n      ),
     .rs1_addr		(idu_rs1	),

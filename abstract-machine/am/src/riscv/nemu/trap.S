@@ -40,33 +40,26 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
-  addi sp, sp, -CONTEXT_SIZE  #为上下文分配空间
-# 将寄存器压栈。保存到上下文区域
-  MAP(REGS, PUSH)             
-# PC和处理器状态，异常号，备份后续要用
+  addi sp, sp, -CONTEXT_SIZE
+
+  MAP(REGS, PUSH)
+
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
-# 将上面寄存器压栈
+
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
 
   # set mstatus.MPRV to pass difftest
-  li a0, (1 << 17)      #设置 mstatus 寄存器中 MPRV 的掩码，管理内存特权模式
-  or t1, t1, a0         #将 MPRV 位设置为1，来启用特权模式
-  csrw mstatus, t1      #将 MPRV 位设置为1
+  li a0, (1 << 17)
+  or t1, t1, a0
+  csrw mstatus, t1
 
-  mv a0, sp             #保存栈指针
-  jal __am_irq_handle   #跳到中断处理函数
+  mv a0, sp
+  jal __am_irq_handle
 
-# modified 
-# __am_irq_handle返回Context*指针，返回值存储在a0-a1寄存器中，
-# 将a0的值赋值到sp中就把栈顶指针切过去
-  mv sp, a0
-# modified end
-
-# 出栈
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1

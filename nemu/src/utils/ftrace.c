@@ -2,13 +2,13 @@
 #include <common.h>
 #include <elf.h>
 
-#define FUNC_NUM	5000
+#define FUNC_NUM	50
 int func_cnt = 0;
 int output_cnt = 0;
 
 struct FUNC_TRACE{
 	Elf32_Sym symbol;
-	char str[100];
+	char str[50];
 }func_trace[FUNC_NUM];
 
 // Elf32_Sym symbol[SYM_NUM] = {0};
@@ -27,12 +27,12 @@ void init_ftrace(const char *elf_file){
 	elf_fp = stdout;
 	if (elf_fp != NULL) {
 		FILE *fp = fopen(elf_file, "r");
-		Assert(fp, "Can not open elf_file '%s'", elf_file);
+		Assert(fp, "Can not open '%s'", elf_file);
 		elf_fp = fp;
 	}
 	Log("ELF is read from %s", elf_file ? elf_file : "stdout");
-	// 遇到stack smashing detected需要将buffer调大
-	uint8_t buffer[20000] = {0};
+
+	uint8_t buffer[1024] = {0};
 	Elf32_Ehdr elf_hdr = {0};      // ELF文件信息头
 	Elf32_Shdr sym_hdr = {0};   // 符号表头
   	Elf32_Shdr str_hdr = {0};   // 字符串表头
@@ -65,7 +65,7 @@ void init_ftrace(const char *elf_file){
 	const Elf32_Sym* pSym = (const Elf32_Sym *) buffer;
 	for(int i=0; i<number; i++){
 		if((pSym[i].st_info & 0x0f) == STT_FUNC){
-			//printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
+			// printf("%x %d\n",pSym[i].st_value,pSym[i].st_name);
 			memcpy(&func_trace[func_cnt++].symbol, &pSym[i], sizeof(Elf32_Sym));
 		}
 	}
@@ -80,7 +80,7 @@ void init_ftrace(const char *elf_file){
 	for(int i=0; i<func_cnt; i++){
 		strcpy(func_trace[i].str,(char *)&buffer[func_trace[i].symbol.st_name]);
 	}
-	
+
 	// for(int i=0; i<func_cnt; i++){
 	// 	printf("%x %d %s\n",func_trace[i].symbol.st_value,func_trace[i].symbol.st_name,func_trace[i].str);
 	// }

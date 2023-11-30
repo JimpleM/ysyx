@@ -10,7 +10,6 @@
 void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &rdata, CData/*0:0*/ ren);
 void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc);
 void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__get_riscv32_rst_TOP(CData/*0:0*/ rst_n);
-extern const VlUnpacked<CData/*2:0*/, 1024> Vriscv32__ConstPool__TABLE_h37e588a6_0;
 void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, IData/*31:0*/ wmask);
 
 VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* vlSelf) {
@@ -22,11 +21,6 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__ifu_inst = vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata;
     Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP(vlSelf->riscv32__DOT__ifu_pc);
     Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__get_riscv32_rst_TOP(vlSelf->rst_n);
-    vlSelf->__Vtableidx1 = ((0x380U & (vlSelf->riscv32__DOT__ifu_inst 
-                                       >> 5U)) | (0x7fU 
-                                                  & vlSelf->riscv32__DOT__ifu_inst));
-    vlSelf->riscv32__DOT__idu_csr_opt = Vriscv32__ConstPool__TABLE_h37e588a6_0
-        [vlSelf->__Vtableidx1];
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[9U] 
         = (0x1700000000ULL | (QData)((IData)((0xfffff000U 
                                               & vlSelf->riscv32__DOT__ifu_inst))));
@@ -58,16 +52,16 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
                                                   >> 4U)) 
                                       | (0x7c0U & (vlSelf->riscv32__DOT__ifu_inst 
                                                    >> 0xeU)));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI 
+        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
+                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
+                                                >> 0x14U));
     vlSelf->__VdfgTmp_heb135ca6__0 = (1U | ((0xf800U 
                                              & (vlSelf->riscv32__DOT__ifu_inst 
                                                 >> 4U)) 
                                             | (0x3eU 
                                                & (vlSelf->riscv32__DOT__ifu_inst 
                                                   >> 6U))));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI 
-        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
-                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
-                                                >> 0x14U));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key 
         = (((0x63U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst)) 
             << 3U) | (7U & (vlSelf->riscv32__DOT__ifu_inst 
@@ -92,28 +86,8 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
            | ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
               == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list
               [1U]));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out 
-        = ((- (IData)(((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-                       == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-                       [0U]))) & vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__data_list
-           [0U]);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit 
-        = ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-           == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-           [0U]);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out 
-        = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out) 
-           | ((- (IData)(((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-                          == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-                          [1U]))) & vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__data_list
-              [1U]));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit 
-        = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit) 
-           | ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-              == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-              [1U]));
-    vlSelf->riscv32__DOT__idu_lsu_opt = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit)
-                                          ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out)
+    vlSelf->riscv32__DOT__idu_lsu_opt = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__hit)
+                                          ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__lut_out)
                                           : 0U);
     vlSelf->riscv32__DOT__idu_alu_opt = ((0x40U & vlSelf->riscv32__DOT__ifu_inst)
                                           ? ((0x20U 
@@ -503,10 +477,6 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__idu_src_sel = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__hit)
                                           ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__lut_out)
                                           : 1U);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__data_list[0U] 
-        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
-                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
-                                                >> 0x14U));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__data_list[3U] 
         = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
                         >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
@@ -665,20 +635,18 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
         = (0x230000U | (IData)(vlSelf->__VdfgTmp_h2d99613b__0));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[6U] 
         = (0x630000U | (IData)(vlSelf->__VdfgTmp_h2d99613b__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[3U] 
-        = (0x130000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[5U] 
-        = (0x30000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[7U] 
-        = (0x670000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[0U] 
-        = (0x7300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[3U] 
         = (0x1300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[5U] 
         = (0x300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[7U] 
         = (0x6700000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[3U] 
+        = (0x130000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[5U] 
+        = (0x30000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[7U] 
+        = (0x670000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
     vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellinp__riscv_mux_ls_lsu_opt__key 
         = (((IData)(vlSelf->riscv32__DOT__idu_lsu_opt) 
             << 3U) | (7U & (vlSelf->riscv32__DOT__ifu_inst 
@@ -991,10 +959,10 @@ VL_INLINE_OPT void Vriscv32___024root___ico_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__idu_imm = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__hit)
                                       ? vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out
                                       : 0U);
-    vlSelf->riscv32__DOT__src2 = vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr
+    vlSelf->riscv32__DOT__src2 = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr
         [(0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                    >> 6U))];
-    vlSelf->riscv32__DOT__src1 = vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr
+    vlSelf->riscv32__DOT__src1 = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr
         [(0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                    >> 0xbU))];
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[0U][0U] 
@@ -1573,23 +1541,23 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     Vriscv32__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root___nba_sequent__TOP__0\n"); );
     // Init
-    CData/*4:0*/ __Vdlyvdim0__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0;
-    __Vdlyvdim0__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 = 0;
-    IData/*31:0*/ __Vdlyvval__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0;
-    __Vdlyvval__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 = 0;
-    CData/*0:0*/ __Vdlyvset__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0;
-    __Vdlyvset__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 = 0;
+    CData/*4:0*/ __Vdlyvdim0__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0;
+    __Vdlyvdim0__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 0;
+    IData/*31:0*/ __Vdlyvval__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0;
+    __Vdlyvval__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 0;
+    CData/*0:0*/ __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0;
+    __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 0;
     // Body
-    __Vdlyvset__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 = 0U;
+    __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 0U;
     if ((1U & (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out))) {
-        __Vdlyvval__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 
+        __Vdlyvval__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 
             = ((0U == (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                                 >> 1U))) ? 0U : ((0U 
                                                   == (IData)(vlSelf->riscv32__DOT__idu_lsu_opt))
                                                   ? vlSelf->riscv32__DOT__exu_result
                                                   : vlSelf->riscv32__DOT__lsu_result));
-        __Vdlyvset__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 = 1U;
-        __Vdlyvdim0__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0 
+        __Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 = 1U;
+        __Vdlyvdim0__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0 
             = (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                         >> 1U));
     }
@@ -1603,7 +1571,7 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
             = (IData)(((((QData)((IData)(vlSelf->riscv32__DOT__exu_result)) 
                          << 0x20U) | (QData)((IData)(vlSelf->riscv32__DOT__src2))) 
                        >> 0x20U));
-        vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout 
+        vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout 
             = ((0x20U & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                          << 5U)) | (0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                                              >> 1U)));
@@ -1612,12 +1580,12 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[0U] = 0U;
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[1U] = 0U;
         vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellout__riscv_dff_pc__dout[2U] = 0U;
-        vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout = 0U;
+        vlSelf->riscv32__DOT__riscv_regfile_u0__DOT____Vcellout__riscv_dff_reg_t__dout = 0U;
         vlSelf->riscv32__DOT__ifu_pc = 0x80000000U;
     }
-    if (__Vdlyvset__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0) {
-        vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr[__Vdlyvdim0__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0] 
-            = __Vdlyvval__riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr__v0;
+    if (__Vdlyvset__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0) {
+        vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr[__Vdlyvdim0__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0] 
+            = __Vdlyvval__riscv32__DOT__riscv_regfile_u0__DOT__gpr__v0;
     }
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[1U][0U] 
         = (IData)((4ULL | ((QData)((IData)(vlSelf->riscv32__DOT__ifu_pc)) 
@@ -1633,11 +1601,6 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__ifu_inst = vlSelf->__Vtask_riscv32__DOT__riscv_ifu_u0__DOT__riscv_pmem_read__0__rdata;
     Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP(vlSelf->riscv32__DOT__ifu_pc);
     Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_ifu_u0__DOT__get_riscv32_rst_TOP(vlSelf->rst_n);
-    vlSelf->__Vtableidx1 = ((0x380U & (vlSelf->riscv32__DOT__ifu_inst 
-                                       >> 5U)) | (0x7fU 
-                                                  & vlSelf->riscv32__DOT__ifu_inst));
-    vlSelf->riscv32__DOT__idu_csr_opt = Vriscv32__ConstPool__TABLE_h37e588a6_0
-        [vlSelf->__Vtableidx1];
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[9U] 
         = (0x1700000000ULL | (QData)((IData)((0xfffff000U 
                                               & vlSelf->riscv32__DOT__ifu_inst))));
@@ -1669,16 +1632,16 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
                                                   >> 4U)) 
                                       | (0x7c0U & (vlSelf->riscv32__DOT__ifu_inst 
                                                    >> 0xeU)));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI 
+        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
+                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
+                                                >> 0x14U));
     vlSelf->__VdfgTmp_heb135ca6__0 = (1U | ((0xf800U 
                                              & (vlSelf->riscv32__DOT__ifu_inst 
                                                 >> 4U)) 
                                             | (0x3eU 
                                                & (vlSelf->riscv32__DOT__ifu_inst 
                                                   >> 6U))));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI 
-        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
-                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
-                                                >> 0x14U));
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT____Vcellinp__riscv_mux_ex_branch__key 
         = (((0x63U == (0x7fU & vlSelf->riscv32__DOT__ifu_inst)) 
             << 3U) | (7U & (vlSelf->riscv32__DOT__ifu_inst 
@@ -1703,28 +1666,8 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
            | ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
               == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__key_list
               [1U]));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out 
-        = ((- (IData)(((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-                       == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-                       [0U]))) & vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__data_list
-           [0U]);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit 
-        = ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-           == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-           [0U]);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out 
-        = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out) 
-           | ((- (IData)(((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-                          == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-                          [1U]))) & vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__data_list
-              [1U]));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit 
-        = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit) 
-           | ((0x7fU & vlSelf->riscv32__DOT__ifu_inst) 
-              == vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__key_list
-              [1U]));
-    vlSelf->riscv32__DOT__idu_lsu_opt = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__hit)
-                                          ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_csr_opt__DOT__i1__DOT__lut_out)
+    vlSelf->riscv32__DOT__idu_lsu_opt = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__hit)
+                                          ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_lsu_opt__DOT__i1__DOT__lut_out)
                                           : 0U);
     vlSelf->riscv32__DOT__idu_alu_opt = ((0x40U & vlSelf->riscv32__DOT__ifu_inst)
                                           ? ((0x20U 
@@ -2114,10 +2057,6 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__idu_src_sel = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__hit)
                                           ? (IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_opt_idu__DOT__riscv_mux_id_src_sel__DOT__i1__DOT__lut_out)
                                           : 1U);
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__data_list[0U] 
-        = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
-                        >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
-                                                >> 0x14U));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__data_list[3U] 
         = (((- (IData)((vlSelf->riscv32__DOT__ifu_inst 
                         >> 0x1fU))) << 0xcU) | (vlSelf->riscv32__DOT__ifu_inst 
@@ -2276,20 +2215,18 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
         = (0x230000U | (IData)(vlSelf->__VdfgTmp_h2d99613b__0));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[6U] 
         = (0x630000U | (IData)(vlSelf->__VdfgTmp_h2d99613b__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[3U] 
-        = (0x130000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[5U] 
-        = (0x30000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[7U] 
-        = (0x670000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
-    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[0U] 
-        = (0x7300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[3U] 
         = (0x1300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[5U] 
         = (0x300000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
     vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__pair_list[7U] 
         = (0x6700000000ULL | (QData)((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI)));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[3U] 
+        = (0x130000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[5U] 
+        = (0x30000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
+    vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__pair_list[7U] 
+        = (0x670000U | (IData)(vlSelf->__VdfgTmp_heb135ca6__0));
     vlSelf->riscv32__DOT__riscv_lsu_u0__DOT____Vcellinp__riscv_mux_ls_lsu_opt__key 
         = (((IData)(vlSelf->riscv32__DOT__idu_lsu_opt) 
             << 3U) | (7U & (vlSelf->riscv32__DOT__ifu_inst 
@@ -2602,10 +2539,10 @@ VL_INLINE_OPT void Vriscv32___024root___nba_sequent__TOP__0(Vriscv32___024root* 
     vlSelf->riscv32__DOT__idu_imm = ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__hit)
                                       ? vlSelf->riscv32__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__riscv_mux_id_imm__DOT__i1__DOT__lut_out
                                       : 0U);
-    vlSelf->riscv32__DOT__src2 = vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr
+    vlSelf->riscv32__DOT__src2 = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr
         [(0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                    >> 6U))];
-    vlSelf->riscv32__DOT__src1 = vlSelf->riscv32__DOT__riscv_gpr_regfile_u0__DOT__gpr
+    vlSelf->riscv32__DOT__src1 = vlSelf->riscv32__DOT__riscv_regfile_u0__DOT__gpr
         [(0x1fU & ((IData)(vlSelf->riscv32__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out) 
                    >> 0xbU))];
     vlSelf->riscv32__DOT__riscv_exu_u0__DOT__riscv_mux_ex_src_sel__DOT__i1__DOT__pair_list[0U][0U] 

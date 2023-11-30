@@ -10,6 +10,7 @@ static char *hbrk;
 
 static uint64_t uptime() { return io_read(AM_TIMER_UPTIME).us; }
 
+
 static char *format_time(uint64_t us) {
   static char buf[32];
   uint32_t ms = us / 1000;
@@ -49,7 +50,6 @@ static void bench_reset() {
 
 static void bench_done(Result *res) {
   res->usec = uptime() - res->usec;
-  printf("res->usec:%ld\n",res->usec);
 }
 
 static const char *bench_check(Benchmark *bench) {
@@ -100,6 +100,7 @@ int main(const char *args) {
   int pass = 1;
   uint64_t t0 = uptime();
   uint64_t score_time = 0;
+  
 
   for (int i = 0; i < LENGTH(benchmarks); i ++) {
     Benchmark *bench = &benchmarks[i];
@@ -166,7 +167,6 @@ void* bench_alloc(size_t size) {
   assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
   return old;
 }
-
 
 void bench_free(void *ptr) {
 }

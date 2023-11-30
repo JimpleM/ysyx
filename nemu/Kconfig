@@ -242,8 +242,5 @@ config FTRACE
 config DTRACE
   bool "Enable device trace"
   default y
-config ETRACE
-  bool "Enable exception trace"
-  default y
 
 endmenu
