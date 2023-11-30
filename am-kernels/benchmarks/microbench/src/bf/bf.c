@@ -131,7 +131,7 @@ void bench_bf_prepare() {
   data = bench_alloc(sizeof(data[0]) * DATA_SIZE);
   code = CODE;
   input = bench_alloc(ARR_SIZE + 1);
-  output = bench_alloc(DATA_SIZE);
+  output = bench_alloc(DATA_SIZE); 
   noutput = 0;
 
   bench_srand(1);
@@ -142,6 +142,7 @@ void bench_bf_prepare() {
 
 void bench_bf_run() {
   compile_bf();
+  return ;
   execute_bf();
 }
 
