@@ -1,54 +1,61 @@
+TOPNAME = top
+NXDC_FILES = constr/top.nxdc
+INC_PATH ?=
+
 VERILATOR = verilator
+VERILATOR_CFLAGS += -MMD --build -cc  \
+				-O3 --x-assign fast --x-initial fast --noassert
+
+BUILD_DIR = ./build
+OBJ_DIR = $(BUILD_DIR)/obj_dir
+BIN = $(BUILD_DIR)/$(TOPNAME)
+
+default: $(BIN)
+
+$(shell mkdir -p $(BUILD_DIR))
+
+# constraint file
+SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
+$(SRC_AUTO_BIND): $(NXDC_FILES)
+	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
+
 # project source
-VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
-SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
+VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
+CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+CSRCS += $(SRC_AUTO_BIND)
 
-VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
+SIM_SRCS = ./sim_src/sim_main.cpp
 
-TOPNAME = riscv32
+# rules for NVBoard
+include $(NVBOARD_HOME)/scripts/nvboard.mk
 
-VERILATOR_FLAGS += --trace --cc --exe --build 
-VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
-VERILATOR_FLAGS += --top ${TOPNAME}
+# rules for verilator
+INCFLAGS = $(addprefix -I, $(INC_PATH))
+CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
+LDFLAGS += -lSDL2 -lSDL2_image
 
-LDFLAGS += -lSDL2
-LDFLAGS += -ldl 
-LDFLAGS += -lreadline	#导入readline库，否则找不到readline函数
-LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
-
-#g++ include路径
-INC_PATH += $(NPC_HOME)/sim_src/include
-INC_PATH += $(NPC_HOME)/sim_src/utils
-INC_PATH += $(NPC_HOME)/sim_src/device/include
-INCFLAGS += $(addprefix -I, $(INC_PATH))
-CFLAGS += $(INCFLAGS)
-
-# llvm, 用figure—out消除 warning: "__STDC_FORMAT_MACROS" redefined报错
-LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflags))  -fPIE
-CFLAGS += $(LLVM_FLAGS) 
-
-
-DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
-DIFF := --diff=${DIFFTEST}
-IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
-IMG = --img=${IMGS}
-ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
-ELF = --elf=${ELFFILE}
-
-override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch
+$(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+	@rm -rf $(OBJ_DIR)
+	$(VERILATOR) $(VERILATOR_CFLAGS) \
+		--top-module $(TOPNAME) $^ \
+		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
 all:defualt
 #	@echo "Write this Makefile by your self."
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  \
-	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+	#@echo "Write this Makefile by your self."
+	$(VERILATOR) -cc  --trace --exe --build \
+		--top-module top \
+	$(VSRC) $(CSRC) 
 
-run:sim
-	./obj_dir/V${TOPNAME} ${ARGS} --batch
+run: $(BIN)
+	@$^
 
-wave:
+wave: sim
+	./obj_dir/Vtop
 	gtkwave wave.vcd
 
 clean:

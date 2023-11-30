@@ -1,34 +1,17 @@
 `include"riscv_define.vh"
-module ysyx_23060077_riscv_ex_alu #(
+module ysyx_23060077_riscv_ex_store #(
     DATA_WIDTH = 32,
     INST_WIDTH = 32
 ) (
     input               [INST_WIDTH-1:0]    inst_id_to_ex,
-    input       signed  [DATA_WIDTH-1:0]    alu_a_data_ex,
-    input       signed  [DATA_WIDTH-1:0]    alu_b_data_ex,
-    output reg 	signed  [DATA_WIDTH-1:0]    alu_out_data_ex,
+    input               [DATA_WIDTH-1:0]    alu_a_data_ex,
+    input               [DATA_WIDTH-1:0]    alu_b_data_ex,
+    output reg 	        [DATA_WIDTH-1:0]    alu_out_data_ex,
     output reg                              zero_flag
 );
 
 wire [3:0]   funcode;
 
-ysyx_23060077_riscv_ex_funcode riscv_ex_funcode
-(
-    .inst_id_to_ex      (inst_id_to_ex),
-    .funcode            (funcode)
-);
-
-wire [DATA_WIDTH-1:0]    u_alu_a;
-wire [DATA_WIDTH-1:0]    u_alu_b;
-wire [DATA_WIDTH-1:0]    add_data;
-wire [DATA_WIDTH-1:0]    sub_data;
-
-assign u_alu_a  = alu_a_data_ex;
-assign u_alu_b  = alu_b_data_ex;
-assign add_data = alu_a_data_ex + alu_b_data_ex;
-assign sub_data = alu_a_data_ex - alu_b_data_ex;
-
-assign zero_flag = (alu_out_data_ex == 'd0);
 
 ysyx_23060077_riscv_mux#(
     NR_KEY      (11), 

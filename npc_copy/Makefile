@@ -10,22 +10,21 @@ BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 BIN = $(BUILD_DIR)/$(TOPNAME)
 
-# default: $(BIN)
+default: $(BIN)
 
-# $(shell mkdir -p $(BUILD_DIR))
+$(shell mkdir -p $(BUILD_DIR))
 
-# # constraint file
-# SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
-# $(SRC_AUTO_BIND): $(NXDC_FILES)
-# 	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
+# constraint file
+SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
+$(SRC_AUTO_BIND): $(NXDC_FILES)
+	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
 
 # project source
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 CSRCS += $(SRC_AUTO_BIND)
 
-SIM_SRCS = ./sim_src/sim_main.cpp
-INCLUDE = ./obj_dir
+SIM_SRCS = $(shell find $(abspath ./sim_src) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 
 # rules for NVBoard
 include $(NVBOARD_HOME)/scripts/nvboard.mk
@@ -42,18 +41,24 @@ LDFLAGS += -lSDL2 -lSDL2_image
 # 		$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 # 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
-all: default
+all:defualt
+#	@echo "Write this Makefile by your self."
+
+sim:
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+# @echo "Write this Makefile by your self."
+	$(VERILATOR) $(VERILATOR_CFLAGS)\
+		--top-module $(TOPNAME)  \
+	$(VSRCS) $(SIM_SRCS) $(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 
 run: $(BIN)
 	@$^
 
-wave:
-	$(VERILATOR) -cc  --trace --exe --build  \
-		--top-module top \
-	$(SIM_SRCS) $(VSRCS) 
+wave: sim
 	./obj_dir/Vtop
-	# gtkwave wave.vcd
-clean:
-	rm -rf $(BUILD_DIR)
+	gtkwave wave.vcd
 
-.PHONY: default all clean run
+clean:
+	-rm -rf obj_dir *.log *.dmp *.vpd core
+
+include ../Makefile

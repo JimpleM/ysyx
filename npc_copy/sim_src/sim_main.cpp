@@ -8,15 +8,7 @@
 #include "verilated_vcd_c.h"
 
 #include "verilated_dpi.h"
-#include "Vtop__Dpi.h"
-
-void mem_read(int pc, int *inst, svBit en){
-	if(pc == 1){
-		*inst = 111;
-	}else{
-		*inst = 0;
-	}
-}
+#include "Vour__Dpi.h"
 
 int main(int argc, char ** argv, char** env){
 	VerilatedContext* contextp = new VerilatedContext;
@@ -29,23 +21,23 @@ int main(int argc, char ** argv, char** env){
 	tfp->open("wave.vcd");
 
 	int count = 0;
-	// int value = 0;
+	int value = 0;
+	publicSetBool(value);
 
 	while(!contextp->gotFinish()){
-        int a = rand() % 5;
-		int b = rand() % 5;
+        int a = rand() % 2;
+		int b = rand() % 2;
 		top->a = a;
-		top->b = b;
+		top->a = b;
 		top->eval();
 		
 		tfp->dump(contextp->time());
 		contextp->timeInc(1);
 		
 		// assert(top->f == (y==3?(y==2?(y==1? 1:0):2):3));
-		printf("%d+%d=%d\n",a,b,top->f);
 	
 		count++;
-		if(count >10){
+		if(count >100){
 			break;
 		}
 	}

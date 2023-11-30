@@ -145,6 +145,7 @@ config ITRACE
   depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
   bool "Enable instruction tracer"
   default y
+
 config ITRACE_COND
   depends on ITRACE
   string "Only trace instructions when the condition is true"
@@ -238,9 +239,6 @@ config MTRACE_END_ADDR
   default 0x87ffffff
 config FTRACE
   bool "Enable function trace"
-  default y
-config DTRACE
-  bool "Enable device trace"
   default y
 
 endmenu

@@ -17,7 +17,7 @@ class Vtop___024root final : public VerilatedModule {
     VL_IN(a,31,0);
     VL_IN(b,31,0);
     VL_OUT(f,31,0);
-    IData/*31:0*/ __Vtask_top__DOT__mem_read__0__inst;
+    IData/*31:0*/ __Vfunc_top__DOT__add__0__Vfuncout;
     IData/*31:0*/ __VstlIterCount;
     IData/*31:0*/ __VicoIterCount;
     IData/*31:0*/ __VactIterCount;

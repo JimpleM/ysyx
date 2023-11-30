@@ -7,15 +7,15 @@
 
 #include "Vtop___024root.h"
 
-void Vtop___024root____Vdpiimwrap_top__DOT__mem_read_TOP(IData/*31:0*/ pc, IData/*31:0*/ &inst, CData/*0:0*/ en);
+void Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(IData/*31:0*/ a, IData/*31:0*/ b, IData/*31:0*/ &add__Vfuncrtn);
 
 VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ico_sequent__TOP__0\n"); );
     // Body
-    Vtop___024root____Vdpiimwrap_top__DOT__mem_read_TOP(vlSelf->a, vlSelf->__Vtask_top__DOT__mem_read__0__inst, 1U);
-    vlSelf->f = vlSelf->__Vtask_top__DOT__mem_read__0__inst;
+    Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(vlSelf->a, vlSelf->b, vlSelf->__Vfunc_top__DOT__add__0__Vfuncout);
+    vlSelf->f = vlSelf->__Vfunc_top__DOT__add__0__Vfuncout;
 }
 
 void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {

@@ -35,11 +35,6 @@ endef
 	-@$(call git_soft_checkout, $(WORK_BRANCH))                          `# switch to work branch`
 	-@mv $(WORK_INDEX) .git/index                                        `# restore git index`
 
-my_git:
-	-@git add . -A --ignore-errors
-	-@git push ysyx_pi $(WORK_BRANCH)
-	-@git push ysyx	 $(WORK_BRANCH)
-
 .clean_index:
 	rm -f $(WORK_INDEX)
 

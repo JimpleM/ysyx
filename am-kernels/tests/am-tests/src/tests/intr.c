@@ -9,7 +9,7 @@ Context *simple_trap(Event ev, Context *ctx) {
     case EVENT_YIELD:
       putch('y'); break;
     default:
-      panic("Unhandled event"); break;
+      break;
   }
   return ctx;
 }

@@ -39,11 +39,11 @@ static word_t pmem_read(paddr_t addr, int len) {
 
 static void pmem_write(paddr_t addr, int len, word_t data) {
   host_write(guest_to_host(addr), len, data);
-  // #ifdef CONFIG_MTRACE
-//   if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
-//     printf("write address:%08x data:%08x\n",addr,data);
-//   } 
-// #endif
+  #ifdef CONFIG_MTRACE
+  if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
+    printf("write address:%08x data:%08x\n",addr,data);
+  } 
+#endif
 }
 
 static void out_of_bound(paddr_t addr) {

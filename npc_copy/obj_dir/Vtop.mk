@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vtop.mk
 
-default: Vtop
+default: Vtop__ALL.a
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -35,9 +35,13 @@ VM_PREFIX = Vtop
 VM_MODPREFIX = Vtop
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+	-I/home/jimple/Documents/ysyx/ysyx-workbench/nvboard/include \
+	-DTOP_NAME="Vtop" \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+	-lSDL2 \
+	-lSDL2_image \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
@@ -45,7 +49,7 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	./sim_src \
+	/home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/sim_src \
 
 
 ### Default rules...
@@ -53,16 +57,7 @@ VM_USER_DIR = \
 include Vtop_classes.mk
 # Include global rules
 include $(VERILATOR_ROOT)/include/verilated.mk
-
-### Executable rules... (from --exe)
-VPATH += $(VM_USER_DIR)
-
-sim_main.o: ./sim_src/sim_main.cpp
+sim_main.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/sim_src/sim_main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-
-### Link rules... (from --exe)
-Vtop: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
-	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
-
 
 # Verilated -*- Makefile -*-

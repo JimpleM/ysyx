@@ -23,12 +23,18 @@ VL_ATTR_COLD void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     Vtop___024root___eval_initial__TOP(vlSelf);
 }
 
+void Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(IData/*31:0*/ a, IData/*31:0*/ b, IData/*31:0*/ &add__Vfuncrtn);
+
 VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial__TOP\n"); );
+    // Init
+    IData/*31:0*/ __Vfunc_top__DOT__add__1__Vfuncout;
+    __Vfunc_top__DOT__add__1__Vfuncout = 0;
     // Body
-    VL_WRITEF("ffffffff\n");
+    Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(1U, 2U, __Vfunc_top__DOT__add__1__Vfuncout);
+    VL_WRITEF("00000001 + 00000002 = %x\n",32,__Vfunc_top__DOT__add__1__Vfuncout);
 }
 
 VL_ATTR_COLD void Vtop___024root___eval_final(Vtop___024root* vlSelf) {
@@ -141,8 +147,8 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->a = VL_RAND_RESET_I(32);
-    vlSelf->b = VL_RAND_RESET_I(32);
-    vlSelf->f = VL_RAND_RESET_I(32);
-    vlSelf->__Vtask_top__DOT__mem_read__0__inst = 0;
+    vlSelf->a = 0;
+    vlSelf->b = 0;
+    vlSelf->f = 0;
+    vlSelf->__Vfunc_top__DOT__add__0__Vfuncout = 0;
 }
