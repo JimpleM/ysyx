@@ -30,7 +30,7 @@ static inline void assign(uint32_t *a, uint32_t *b) {
 }
 
 // static uint32_t *A, *ans, *T, *tmp;
-static uint32_t A[500],ans[500],T[500],tmp[500];
+static uint32_t A[1000],ans[1000],T[1000],tmp[1000];
 
 void bench_fib_prepare() {
   M = setting->size;
@@ -39,7 +39,6 @@ void bench_fib_prepare() {
   // T = bench_alloc(sz);
   // ans = bench_alloc(sz);
   // tmp = bench_alloc(sz);
-    // int sz = sizeof(uint32_t) * M * M;
 }
 
 void bench_fib_run() {
