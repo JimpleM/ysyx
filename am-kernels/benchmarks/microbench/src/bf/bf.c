@@ -98,6 +98,8 @@ static int compile_bf() {
     return FAILURE;
   }
   PROGRAM[pc].operator = OP_END;
+  printf("adds");
+
   return SUCCESS;
 }
 
@@ -120,7 +122,6 @@ static void execute_bf() {
       default: return;
     }
     pc++;
-    printf(" ");
   }
 }
 
