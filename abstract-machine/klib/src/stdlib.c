@@ -52,22 +52,22 @@ int atoi(const char* nptr) {
 // #endif
 //   return NULL;
 // }
-char *addr_n = NULL;
+char *memory_heep = NULL;
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
-  if(addr_n == NULL){
-    addr_n = (void *)ROUNDUP(heap.start, 8);
+  if(memory_heep == NULL){
+    memory_heep = (void *)ROUNDUP(heap.start, 8);
   }
   size  = (size_t)ROUNDUP(size, 8);
-  char *addr_c = addr_n;
-  addr_n += size;
-  assert((uintptr_t)heap.start <= (uintptr_t)addr_n && (uintptr_t)addr_n < (uintptr_t)heap.end);
-  for (uint64_t *p = (uint64_t *)addr_c; p != (uint64_t *)addr_n; p ++) {
+  char *memory_heep_old = memory_heep;
+  memory_heep += size;
+  assert((uintptr_t)heap.start <= (uintptr_t)memory_heep && (uintptr_t)memory_heep < (uintptr_t)heap.end);
+  for (uint64_t *p = (uint64_t *)memory_heep_old; p != (uint64_t *)memory_heep; p ++) {
     *p = 0;
   }
-  return addr_c;
+  return memory_heep_old;
 
 
 }
