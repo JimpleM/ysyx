@@ -43,6 +43,7 @@ void bench_15pz_run() {
   N_puzzle<N> puzzle;
   int MAXN;
 
+
   switch (setting->size) {
     case 0: puzzle = N_puzzle<N>(PUZZLE_S); MAXN = 10; break;
     case 1: puzzle = N_puzzle<N>(PUZZLE_M); MAXN = 2048; break;
