@@ -120,6 +120,7 @@ static void execute_bf() {
       default: return;
     }
     pc++;
+    printf("%d\n",pc);
   }
 }
 
@@ -142,7 +143,6 @@ void bench_bf_prepare() {
 
 void bench_bf_run() {
   compile_bf();
-  return ;
   execute_bf();
 }
 
