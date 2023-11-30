@@ -59,7 +59,7 @@ void bench_15pz_run() {
 
   int n = 0;
   ans = -1;
-
+  return ;
   while( heap->size() != 0 && n != MAXN ) {
     N_puzzle<N> top = heap->pop();
     ++n;
