@@ -120,6 +120,7 @@ static void execute_bf() {
       default: return;
     }
     pc++;
+    printf(" ");
   }
 }
 
@@ -138,7 +139,6 @@ void bench_bf_prepare() {
   for (int i = 0; i < ARR_SIZE; i ++) {
     input[i] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"[bench_rand() % 62];
   }
-  printf("asdfs\n");
 }
 
 void bench_bf_run() {
