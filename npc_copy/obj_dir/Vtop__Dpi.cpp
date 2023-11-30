@@ -14,11 +14,3 @@
 #include "Vtop__Dpi.h"
 #include "Vtop.h"
 
-#ifndef VL_DPIDECL_publicSetBool_
-#define VL_DPIDECL_publicSetBool_
-void publicSetBool(svBit in_bool) {
-    // DPI export at /home/jimple/Documents/ysyx/ysyx-workbench/npc_copy/vsrc/top.v:20:6
-    return Vtop::publicSetBool(in_bool);
-}
-#endif
-

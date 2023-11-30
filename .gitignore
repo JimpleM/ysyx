@@ -2,4 +2,6 @@
 /*.png
 /wave.vcd
 /.git
+/cpu-tests/build
+/npc_chisel
 

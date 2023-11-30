@@ -1,26 +1,21 @@
 module top(
 	input [31:0] a,
 	input [31:0]b,
-	output reg [31:0]f
+	output [31:0]f
 );
 
 
-import "DPI-C" function int add(input int a, input int b);
-always @(*) begin
-	f = add(a,b);
+import "DPI-C" function void mem_read(input int pc, output int inst, input en);
+
+always @(*)begin
+	mem_read(a,f,1'b1);
 end
-// export "DPI-C" function integer \$f;
 
 initial begin
-   $display("%x + %x = %x", 1, 2, add(1,2));
+	$display("%x",14-15);
 end
 
-export "DPI-C" task publicSetBool;
 
-task publicSetBool;
-   input bit in_bool;
-//    var_bool = in_bool;
-endtask
 
 endmodule
 

@@ -8,23 +8,18 @@
 #include "Vtop__Syms.h"
 #include "Vtop___024root.h"
 
-extern "C" int add(int a, int b);
+extern "C" void mem_read(int pc, int* inst, svLogic en);
 
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__add_TOP(IData/*31:0*/ a, IData/*31:0*/ b, IData/*31:0*/ &add__Vfuncrtn) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__add_TOP\n"); );
+VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__mem_read_TOP(IData/*31:0*/ pc, IData/*31:0*/ &inst, CData/*0:0*/ en) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__mem_read_TOP\n"); );
     // Body
-    int a__Vcvt;
-    for (size_t a__Vidx = 0; a__Vidx < 1; ++a__Vidx) a__Vcvt = a;
-    int b__Vcvt;
-    for (size_t b__Vidx = 0; b__Vidx < 1; ++b__Vidx) b__Vcvt = b;
-    int add__Vfuncrtn__Vcvt;
-    add__Vfuncrtn__Vcvt = add(a__Vcvt, b__Vcvt);
-    add__Vfuncrtn = add__Vfuncrtn__Vcvt;
-}
-
-void Vtop___024root____Vdpiexp_top__DOT__publicSetBool_TOP(Vtop__Syms* __restrict vlSymsp, CData/*0:0*/ in_bool) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiexp_top__DOT__publicSetBool_TOP\n"); );
-    // Init
+    int pc__Vcvt;
+    for (size_t pc__Vidx = 0; pc__Vidx < 1; ++pc__Vidx) pc__Vcvt = pc;
+    int inst__Vcvt;
+    svLogic en__Vcvt;
+    for (size_t en__Vidx = 0; en__Vidx < 1; ++en__Vidx) en__Vcvt = en;
+    mem_read(pc__Vcvt, &inst__Vcvt, en__Vcvt);
+    inst = inst__Vcvt;
 }
 
 #ifdef VL_DEBUG

@@ -52,7 +52,7 @@ static struct rule {
     {" +", TK_NOTYPE},                        // spaces
     {"0[xX][0-9a-fA-F]+", TK_HNUM},           // hnum
     {"[0-9]+", TK_DNUM},                      // dnum
-    {"(\\$[0a-zA-Z]+)|([xX][0-9]+)", TK_REG}, // reg
+    {"(\\$[a-zA-Z0-9]+)|([xX][0-9]+)", TK_REG}, // reg
     {"\\|\\|", TK_OR},                        // or
     {"&&", TK_AND},                           // and
     {"==", TK_EQ},                            // equal
