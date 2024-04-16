@@ -21,7 +21,7 @@ LDFLAGS   += --gc-sections -e _start
 ### 传递nemu的flags，用于传递一些文件路径或运行模式
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
 NEMUFLAGS += -b 
-# NEMUFLAGS += -e $(IMAGE).elf
+NEMUFLAGS += -e $(IMAGE).elf
 
 ### 定义了一个名为 MAINARGS 的宏，并为它设置一个字符串值，该字符串的内容由 $(mainargs) 变量的值
 CFLAGS += -DMAINARGS=\"$(mainargs)\"

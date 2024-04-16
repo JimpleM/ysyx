@@ -1,8 +1,22 @@
-#include <stdint.h>
-int32_t fun1(int32_t a, int32_t b) { return a + b; }
-uint32_t fun2(uint32_t a, uint32_t b) { return a + b; }
-
+#include <stdio.h>
+#include <inttypes.h>
+#include <string.h>
+// typedef unsigned int		uintptr_t;
+#define NR_REGS 32
+struct Context {
+  // TODO: fix the order of these members to match trap.S
+  uintptr_t gpr[NR_REGS], mcause, mstatus, mepc;
+  void *pdir;
+};
+#define STACK_SIZE (4096 * 8)
+typedef union {
+  uint8_t stack[STACK_SIZE];
+//   struct { Context *cp; };
+} PCB;
+static PCB pcb[2];
 int main(){
+    printf("%lx %lx\n",(uintptr_t)pcb[0].stack,(uintptr_t)&pcb[0] + 1);
+    return 0;
 <<<<<<< HEAD
 	printf("Hello World!\n");
 =======

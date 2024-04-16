@@ -25,7 +25,7 @@
  */
 #define MAX_INST_TO_PRINT 1000
 
-CPU_state cpu = {};
+CPU_state cpu = { .csr[MSTATUS] = 0x1800};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
@@ -38,6 +38,10 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
+  // if(_this->pc >= 0){
+  //   puts(_this->logbuf);
+  // }
+  
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){
