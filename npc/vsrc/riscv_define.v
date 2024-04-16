@@ -15,8 +15,8 @@
 `define STORE   7'b01000_11     //sb,sh,sw
 `define OP_IMM  7'b00100_11     //addi,slti,sltiu,xori,ori,andi,slli,srli,srai
 `define OP      7'b01100_11     //add,sub,sll,slt,ltu,xor,srl,sra,or,and
-`define FENCE   7'b00011_11     //fence,fence.i,ecall,ebreak
-`define SYS     7'b11100_11     //csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
+`define FENCE   7'b00011_11     //fence,fence.i
+`define SYS     7'b11100_11     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
 
 `define ALU_OPT_WIDTH      4
 `define ALU_ADD         `ALU_OPT_WIDTH'd1

@@ -19,18 +19,23 @@ ul my_pow(int a,int b){
 
 char* number_to_str(const char *str, ul number, ul scale){
   char *str_t = (char *)str;
+  int temp;
   if(number < scale){
     if(number < 10){
       *str_t++ = number + '0';
-      *str_t = '\0';
     }else{
       *str_t++ = number + 'A' - 10;
-      *str_t = '\0';
     }
+    *str_t = '\0';
     return str_t;
   }else{
     str_t = number_to_str(str,number/scale,scale);
-    *str_t++ = number%scale + '0';
+    temp = number%scale;
+    if(temp < 10){
+      *str_t++ = temp + '0';
+    }else{
+      *str_t++ = temp + 'A' - 10;
+    }
     *str_t = '\0';
     return str_t;
   }
