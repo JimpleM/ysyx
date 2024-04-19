@@ -1,10 +1,7 @@
 #include <am.h>
 #include <klib-macros.h>
-<<<<<<< HEAD
-=======
 #include "npc.h"
 #include <assert.h>
->>>>>>> 77ce75f
 
 extern char _heap_start;
 int main(const char *args);
@@ -20,11 +17,6 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 static const char mainargs[] = MAINARGS;
 
 void putch(char ch) {
-<<<<<<< HEAD
-}
-
-void halt(int code) {
-=======
   //这里要加东西
   outb(SERIAL_PORT, ch);
 }
@@ -34,7 +26,6 @@ void halt(int code) {
   // from #include <nemu.h>
   asm volatile("mv a0, %0; ebreak" : :"r"(code)); 
 
->>>>>>> 77ce75f
   while (1);
 }
 
