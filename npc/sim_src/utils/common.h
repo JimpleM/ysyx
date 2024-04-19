@@ -41,8 +41,12 @@ typedef struct{
     uint32_t csr[4];
 }CPU_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 enum { MEPC, MSTATUS, MCAUSE};
+=======
+enum { MSTATUS, MTVEC, MEPC, MCAUSE};
+>>>>>>> pa4.1
 =======
 enum { MSTATUS, MTVEC, MEPC, MCAUSE};
 >>>>>>> pa4.1

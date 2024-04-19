@@ -19,6 +19,7 @@ int main(){
     return 0;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	printf("Hello World!\n");
 =======
 	fun1(1,2);
@@ -26,6 +27,8 @@ int main(){
 	
 >>>>>>> 77ce75f
 	return 0;
+=======
+>>>>>>> pa4.1
 =======
 >>>>>>> pa4.1
 }
