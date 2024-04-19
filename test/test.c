@@ -17,18 +17,4 @@ static PCB pcb[2];
 int main(){
     printf("%lx %lx\n",(uintptr_t)pcb[0].stack,(uintptr_t)&pcb[0] + 1);
     return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	printf("Hello World!\n");
-=======
-	fun1(1,2);
-	fun2(3,4);
-	
->>>>>>> 77ce75f
-	return 0;
-=======
->>>>>>> pa4.1
-=======
->>>>>>> pa4.1
 }
