@@ -148,7 +148,7 @@ riscv_mux#(
 
 
 riscv_mux#(
-    .NR_KEY      (2), 
+    .NR_KEY      (3), 
     .KEY_LEN     (7), 
     .DATA_LEN    (`LSU_OPT_WIDTH)
 )riscv_mux_id_lsu_opt(
@@ -156,7 +156,8 @@ riscv_mux#(
     .default_out      (`LSU_OPT_NONE),
     .out              (lsu_opt),
     .lut({  `LOAD  ,{`LSU_OPT_LOAD},
-            `STORE ,{`LSU_OPT_STORE}
+            `STORE ,{`LSU_OPT_STORE},
+            `SYS   ,{`LSU_OPT_SYS}
   })
 );
 

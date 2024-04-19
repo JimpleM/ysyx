@@ -67,6 +67,17 @@ VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__
     riscv_pmem_write(waddr__Vcvt, wdata__Vcvt, wmask__Vcvt);
 }
 
+extern "C" void set_csr_ptr(const svOpenArrayHandle csr_reg);
+
+VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_csr_u0__DOT__set_csr_ptr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 4096> &csr_reg) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_csr_u0__DOT__set_csr_ptr__Vdpioc2_TOP\n"); );
+    // Body
+    static const int csr_reg__Vopenprops__ulims[2] = {4095, 0};
+    static const VerilatedVarProps csr_reg__Vopenprops(VLVT_UINT32, VLVD_IN, VerilatedVarProps::Packed(), 31, 0, VerilatedVarProps::Unpacked(), 1, csr_reg__Vopenprops__ulims);
+    VerilatedDpiOpenVar csr_reg__Vopenarray (&csr_reg__Vopenprops, &csr_reg);
+    set_csr_ptr(&csr_reg__Vopenarray);
+}
+
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vriscv32___024root___dump_triggers__ico(Vriscv32___024root* vlSelf);
 #endif  // VL_DEBUG

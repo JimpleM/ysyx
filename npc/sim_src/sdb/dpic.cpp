@@ -14,6 +14,7 @@ int stop_flag = 0;
 
 uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
+uint32_t *csr_gpr = NULL;
 
 extern Vriscv32* top;
 
@@ -24,6 +25,10 @@ extern "C" void set_pc_ptr(int pc) {
 
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
   cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
+}
+
+extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
+  csr_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 
 extern "C" void get_riscv32_rst(svBit rst_n) {
@@ -41,6 +46,9 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 			if(*rdata == 0x00100073){
 				stop_flag = 1;
 			}
+			// if(raddr == 0x80016b60){
+			// 	stop_flag = 1;
+			// }
 		}else{
 			*rdata = device_read((uint32_t) raddr);
 		}

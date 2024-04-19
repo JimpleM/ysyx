@@ -38,9 +38,9 @@ typedef word_t vaddr_t;
 typedef struct{
     uint32_t gpr[32];
     uint32_t pc;
+    uint32_t csr[4];
 }CPU_state;
-
-enum { MEPC, MSTATUS, MCAUSE};
+enum { MSTATUS, MTVEC, MEPC, MCAUSE};
 
 enum { NPC_RUNNING, NPC_STOP, NPC_END, NPC_ABORT, NPC_QUIT };
 

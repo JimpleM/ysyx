@@ -1,6 +1,7 @@
 
 `define INST_WIDTH          32
 `define DATA_WIDTH          32
+`define CSR_WIDTH           12
 `define REG_WIDTH            5
 `define REG_COUNT           (1<<`REG_WIDTH)
 
@@ -41,3 +42,18 @@
 `define LSU_OPT_NONE    `LSU_OPT_WIDTH'd0
 `define LSU_OPT_LOAD    `LSU_OPT_WIDTH'd1
 `define LSU_OPT_STORE   `LSU_OPT_WIDTH'd2
+`define LSU_OPT_SYS     `LSU_OPT_WIDTH'd3
+
+
+
+// csr reg addr
+`define CSR_M_CYCLE     `CSR_WIDTH'hb00    
+`define CSR_MSTATUS     `CSR_WIDTH'h300
+`define CSR_MIE         `CSR_WIDTH'h304
+`define CSR_MTVEC       `CSR_WIDTH'h305    
+`define CSR_MEPC        `CSR_WIDTH'h341
+`define CSR_MCAUSE      `CSR_WIDTH'h342
+`define CSR_MTVAL       `CSR_WIDTH'h343
+`define CSR_MINSTRET    `CSR_WIDTH'hb02
+`define CSR_MSCRATCH    `CSR_WIDTH'h340
+

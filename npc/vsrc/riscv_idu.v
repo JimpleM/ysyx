@@ -54,7 +54,7 @@ riscv_mux#(
             `OP_IMM,  {inst[19:15], reg_zero   , inst[11:7], 1'b1},
             `OP    ,  {inst[19:15], inst[24:20], inst[11:7], 1'b1},
             `FENCE ,  {reg_zero   , reg_zero   , reg_zero  , 1'b0},
-            `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b0}
+            `SYS   ,  {inst[19:15], reg_zero   , inst[11:7], 1'b1}
   })
 );
 
