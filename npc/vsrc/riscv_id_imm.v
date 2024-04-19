@@ -69,7 +69,7 @@ riscv_mux#(
             `OP_IMM,{imm_typeI},
             `OP    ,{imm_typeR},
             `FENCE ,{imm_type_NONE},
-            `SYS   ,{imm_type_NONE}
+            `SYS   ,{imm_typeI}
   })
 );
 

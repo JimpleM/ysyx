@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <inttypes.h>
 #include <string.h>
 
 typedef unsigned int		uintptr_t;
@@ -16,8 +15,6 @@ typedef union {
 } PCB;
 static PCB pcb[2];
 int main(){
-    
-    uint64_t t =  ((uint64_t)inl(RTC_ADDR) + (uint64_t)inl(RTC_ADDR+4)<<32);
-    printf("%ld",t);
+    printf("%x %x\n",(unsigned int)pcb[0].stack,(unsigned int)&pcb[0] + 1);
     return 0;
 }

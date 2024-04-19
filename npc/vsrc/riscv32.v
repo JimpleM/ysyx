@@ -18,7 +18,7 @@ module riscv32(
 // );
 
 // ifu
-wire [`DATA_WIDTH-1:0]      ifu_pc;
+reg  [`DATA_WIDTH-1:0]      ifu_pc;
 wire [`INST_WIDTH-1:0]      ifu_inst;
 
 // idu
@@ -47,11 +47,58 @@ wire [`DATA_WIDTH-1:0]      exu_result		;
 //lsu
 wire [`DATA_WIDTH-1:0]     	lsu_result		;
 
+//csr
+wire                        csr_ecall;
+wire                        csr_mret;
+wire [`DATA_WIDTH-1:0]     	wr_csr_data		;
+wire [`DATA_WIDTH-1:0]     	rd_csr_data		;
+wire [`DATA_WIDTH-1:0]      csr_mstatus     ;
+wire [`DATA_WIDTH-1:0]      csr_mtvec       ;
+wire [`INST_WIDTH-1:0]      csr_mpec        ;
+
+// riscv_bpu   riscv_bpu_u0(
+//     .clk            (clk      ),
+//     .rst_n          (rst_n    ),
+//     .zero_flag      (zero_flag),
+//     .branch         (idu_branch   ),
+//     .jal            (idu_jal      ),
+//     .jalr           (idu_jalr     ),
+//     .src1           (src1     ),
+//     .imm            (idu_imm      ),
+//     .pc             (ifu_pc       )
+// );
+
+initial begin
+    ifu_pc = 32'h8000_0000;
+end
+always @(posedge clk) begin
+    if(!rst_n)begin
+        ifu_pc <= 32'h8000_0000;
+    end
+    else if(csr_mret)begin
+        ifu_pc <= csr_mpec;
+    end
+    else if(csr_ecall)begin
+        ifu_pc <= csr_mtvec;
+    end
+    else if((idu_branch && !zero_flag) || idu_jal)begin
+        ifu_pc <= ifu_pc + idu_imm;
+    end
+    else if(idu_jalr)begin
+        ifu_pc <= src1 + idu_imm;
+    end
+    else begin
+        ifu_pc <= ifu_pc + 4;
+    end
+end
+
+
 riscv_ifu riscv_ifu_u0(
     .rst_n	(rst_n),
     .pc		(ifu_pc),
     .inst	(ifu_inst)
 );
+
 
 riscv_idu riscv_idu_u0(
     .inst			(ifu_inst	),
@@ -66,7 +113,7 @@ riscv_idu riscv_idu_u0(
     .alu_opt		(idu_alu_opt	),
     .src_sel		(idu_src_sel	),
     .lsu_opt		(idu_lsu_opt	),
-    .funct3		(idu_funct3	)
+    .funct3		    (idu_funct3	)
 );
 
 riscv_regfile riscv_regfile_u0(
@@ -105,25 +152,38 @@ riscv_lsu riscv_lsu_u0(
     .lsu_result		(lsu_result)
 );
 
+assign wr_csr_data = ifu_inst[14] ? {27'd0,ifu_inst[19:15]} : src1;
+assign csr_ecall = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000 && ifu_inst[31:20] == 12'd0);
+assign csr_mret  = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000 && ifu_inst[31:20] == 12'b0011_0000_0010);
+
+riscv_csr  riscv_csr_u0 (
+    .clk                     ( clk                          ),
+    .rst_n                   ( rst_n                        ),
+    .wr_addr                 ( idu_imm[`CSR_WIDTH-1:0]      ),
+    .wr_data                 ( wr_csr_data                  ),
+    .rd_addr                 ( idu_imm[`CSR_WIDTH-1:0]      ),
+    .rd_data                 ( rd_csr_data                  ),
+
+    .i_csr_ecall             ( csr_ecall                    ),
+    .i_csr_mret              ( csr_mret                     ),
+
+    .i_inst                  ( ifu_inst                     ),
+    .i_pc                    ( ifu_pc                       ),
+
+    .o_mstatus               ( csr_mstatus                  ),
+    .o_mtvec                 ( csr_mtvec                    ),
+    .o_mpec                  ( csr_mpec                     )
+);
+
 riscv_wbu riscv_wbu_u0(
     .lsu_opt		(idu_lsu_opt),
     .exu_result		(exu_result),
     .lsu_result		(lsu_result),
+    .csr_result     (rd_csr_data),
     .wbu_result		(rd_data)
+    
 );
 
-
-riscv_bpu   riscv_bpu_u0(
-    .clk            (clk      ),
-    .rst_n          (rst_n    ),
-    .zero_flag      (zero_flag),
-    .branch         (idu_branch   ),
-    .jal            (idu_jal      ),
-    .jalr           (idu_jalr     ),
-    .src1           (src1     ),
-    .imm            (idu_imm      ),
-    .pc             (ifu_pc       )
-);
 
 endmodule
 

@@ -18,6 +18,7 @@ int main(){
     printf("%lx %lx\n",(uintptr_t)pcb[0].stack,(uintptr_t)&pcb[0] + 1);
     return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	printf("Hello World!\n");
 =======
 	fun1(1,2);
@@ -25,4 +26,6 @@ int main(){
 	
 >>>>>>> 77ce75f
 	return 0;
+=======
+>>>>>>> pa4.1
 }

@@ -17,7 +17,6 @@ module riscv_bpu(
 );
 
 wire [`DATA_WIDTH-1:0]       npc;
-
 assign npc = ((branch && !zero_flag) || jal) ? (pc + imm) : (jalr ? (src1 + imm) : (pc + 4));
 
 riscv_dff #(
@@ -31,6 +30,7 @@ riscv_dff #(
     .dout   (pc)
   
 );
+
 
 
 endmodule
