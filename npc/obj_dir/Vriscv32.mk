@@ -61,6 +61,9 @@ VM_USER_CLASSES = \
 	device_lib \
 	device_uart \
 	device_vga \
+	map \
+	mmio \
+	port-io \
 	cpu \
 	difftest \
 	disasm \
@@ -78,6 +81,7 @@ VM_USER_CLASSES = \
 VM_USER_DIR = \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device \
+	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/io \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb \
 
 
@@ -99,6 +103,12 @@ device_lib.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/devi
 device_uart.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_uart.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 device_vga.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/device_vga.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+map.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/io/map.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+mmio.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/io/mmio.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+port-io.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device/io/port-io.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 cpu.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/cpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

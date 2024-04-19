@@ -15,7 +15,7 @@ void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
 extern uint32_t cpu_pc;
 extern uint32_t *cpu_gpr;
-extern uint32_t *csr_gpr;
+extern uint32_t *cpu_csr;
 extern CPU_state cpu;
 
 #ifdef CONFIG_DIFFTEST
@@ -80,7 +80,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 
   ref_difftest_init(port);
   ref_difftest_memcpy(PMEM_LEFT, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
-  CPU_state cpu_t = package_cpu(cpu_gpr,csr_gpr, PMEM_LEFT);
+  CPU_state cpu_t = package_cpu(cpu_gpr,cpu_csr, PMEM_LEFT);
   ref_difftest_regcpy(&cpu_t, DIFFTEST_TO_REF);
 }
 

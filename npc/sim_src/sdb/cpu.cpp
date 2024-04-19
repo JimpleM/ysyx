@@ -11,7 +11,7 @@
 #define MAX_INST_TO_PRINT 1000
 
 #ifdef CONFIG_WAVE
-  #define dump_wave contextp->timeInc(1); tfp->dump(contextp->time()); 
+  #define dump_wave  tfp->dump(contextp->time());  contextp->timeInc(1);
 #else
   #define dump_wave
 #endif

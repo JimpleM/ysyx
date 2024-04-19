@@ -35,6 +35,8 @@ typedef int32_t sword_t;
 
 typedef word_t vaddr_t;
 
+typedef uint16_t ioaddr_t;
+
 typedef struct{
     uint32_t gpr[32];
     uint32_t pc;

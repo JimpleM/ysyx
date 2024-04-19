@@ -14,7 +14,7 @@ int stop_flag = 0;
 
 uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
-uint32_t *csr_gpr = NULL;
+uint32_t *cpu_csr = NULL;
 
 extern Vriscv32* top;
 
@@ -28,7 +28,7 @@ extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
 }
 
 extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
-  csr_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
+  cpu_csr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 
 extern "C" void get_riscv32_rst(svBit rst_n) {
