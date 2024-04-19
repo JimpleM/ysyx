@@ -23,7 +23,7 @@ gen:
 	./build/gen-expr 100
 
 run:
-	gcc test-expr.c -o test-expr
+	CC test-expr.c -o test-expr
 	./test-expr
 	
 

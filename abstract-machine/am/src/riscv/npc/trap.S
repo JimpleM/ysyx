@@ -54,6 +54,8 @@ __am_asm_trap:
 
   mv a0, sp
   jal __am_irq_handle
+# 将a0的值赋值到sp中就把栈顶指针切过去
+  mv sp, a0
 
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
