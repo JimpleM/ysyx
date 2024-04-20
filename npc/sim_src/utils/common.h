@@ -50,7 +50,7 @@ typedef struct {
   uint32_t halt_ret;
 } NPCState;
 
-
+extern NPCState npc_state;
 
 #define FMT_WORD MUXDEF(CONFIG_ISA64, "0x%016" PRIx64, "0x%08" PRIx32)
 

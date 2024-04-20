@@ -7,7 +7,7 @@
 
 static int is_batch_mode = false;
 
-extern NPCState npc_state ;
+// extern NPCState npc_state ;
 
 static char* rl_gets() {
   static char *line_read = NULL;

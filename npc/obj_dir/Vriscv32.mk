@@ -72,9 +72,11 @@ VM_USER_CLASSES = \
 	reg \
 	sdb \
 	watchpoint \
+	sim_main \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
+	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/device \
 	/home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb \
 
@@ -119,6 +121,8 @@ reg.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/reg.cpp
 sdb.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 watchpoint.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sdb/watchpoint.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sim_main.o: /home/jimple/Documents/ysyx/ysyx-workbench/npc/sim_src/sim_main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
