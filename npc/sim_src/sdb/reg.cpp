@@ -11,6 +11,8 @@ extern uint32_t cpu_pc;
 extern uint32_t *cpu_gpr;
 extern uint32_t *cpu_csr;
 
+extern CPU_state cpu;
+
 #define CSR_MSTATUS  0x300
 #define CSR_MTVEC    0x305 
 #define CSR_MEPC     0x341
@@ -63,17 +65,15 @@ bool isa_difftest_checkregs(CPU_state *ref){
     return true;
 }
 
-CPU_state package_cpu(uint32_t *gpr, uint32_t *csr, uint32_t pc){
-    CPU_state cpu;
+void package_cpu(uint32_t pc){
     cpu.pc = pc;
     for(int i=0; i<32; i++){
-        cpu.gpr[i] = gpr[i];
+        cpu.gpr[i] = cpu_gpr[i];
     }
-	  cpu.csr[MSTATUS] = csr[CSR_MSTATUS];
-	  cpu.csr[MTVEC] = csr[CSR_MTVEC];
-	  cpu.csr[MEPC] = csr[CSR_MEPC];
-	  cpu.csr[MCAUSE] = csr[CSR_MCAUSE];
-    return cpu;
+	  cpu.csr[MSTATUS] = cpu_csr[CSR_MSTATUS];
+	  cpu.csr[MTVEC] = cpu_csr[CSR_MTVEC];
+	  cpu.csr[MEPC] = cpu_csr[CSR_MEPC];
+	  cpu.csr[MCAUSE] = cpu_csr[CSR_MCAUSE];
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

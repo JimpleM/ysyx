@@ -4,8 +4,8 @@
 #include "common.h"
 #include "map.h"
 
-#define DEVICE_BASE 0xb0000000
-#define MMIO_BASE 0xb0000000
+#define DEVICE_BASE 0xa0000000
+#define MMIO_BASE 0xa0000000
 
 #define SERIAL_PORT     (DEVICE_BASE + 0x00003f8)
 #define KBD_ADDR        (DEVICE_BASE + 0x0000060)
@@ -33,5 +33,5 @@ void uart_write(uint32_t data);
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 void init_vga();
 void vga_update_screen(uint32_t data);
-void write_screen(uint32_t addr, uint32_t data);
+// void write_screen(uint32_t addr, uint32_t data);
 #endif

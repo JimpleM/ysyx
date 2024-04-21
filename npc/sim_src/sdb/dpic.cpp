@@ -11,6 +11,8 @@
 
 bool riscv32_rst = false;
 int stop_flag = 0;
+// 有外设读取的情况
+uint32_t device_flag = 0;
 
 uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
@@ -42,14 +44,17 @@ extern "C" void get_riscv32_rst(svBit rst_n) {
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		if(in_pmem(raddr)){
+			// printf("%8x\n",raddr);
 			*rdata = pmem_read((uint32_t)raddr,4);
 			if(*rdata == 0x00100073){
 				stop_flag = 1;
 			}
-			// if(raddr == 0x80016b60){
+			// if(raddr == 0x80001200){ //gpr 13
 			// 	stop_flag = 1;
 			// }
 		}else{
+			device_flag = 1;
+			// printf("%8x\n",raddr);
 			*rdata = device_read((uint32_t) raddr);
 		}
 
@@ -63,13 +68,15 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	}
 }
 
-extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask){
-	if(in_pmem(waddr)){
-		pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
-	}else{
-		device_write((uint32_t) waddr, (uint32_t) wdata);
+extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
+	if(wen){
+		// printf("%8x\n",waddr);
+		if(in_pmem(waddr)){
+			pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
+		}else{
+			device_write((uint32_t) waddr, (uint32_t) wdata);
+		}
 	}
-
 #ifdef CONFIG_MTRACE
 	if(top->clk == 0){
 		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){

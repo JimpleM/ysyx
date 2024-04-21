@@ -15,10 +15,11 @@
 // #define CONFIG_FTRACE
 // #define CONFIG_WATCHPOINT
 // #define CONFIG_MTRACE
+// #define CONFIG_DTRACE
 
 #define CONFIG_VGA
 
-#define CONFIG_WAVE
+// #define CONFIG_WAVE
 
 
 #endif

@@ -20,8 +20,8 @@ extern "C" {
     extern void get_riscv32_rst(svBit rst_n);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_ifu.v:10:30
     extern void riscv_pmem_read(int raddr, int* rdata, svLogic ren);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_lsu.v:73:30
-    extern void riscv_pmem_write(int waddr, int wdata, int wmask);
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_lsu.v:66:30
+    extern void riscv_pmem_write(int waddr, int wdata, int wmask, svLogic wen);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_csr.v:31:30
     extern void set_csr_ptr(const svOpenArrayHandle csr_reg);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/riscv_regfile.v:71:30

@@ -1,7 +1,5 @@
 #include "device.h"
 
-#include <SDL2/SDL.h>
-
 #define SCREEN_W 400
 #define SCREEN_H 300
 
@@ -18,14 +16,14 @@ static uint32_t screen_size() {
   return screen_width() * screen_height() * sizeof(uint32_t);
 }
 
-
+#include <SDL2/SDL.h>
 static SDL_Renderer *renderer = NULL;
 static SDL_Texture *texture = NULL;
 
 static uint32_t *vgactl_port_base=NULL;
 static uint32_t *vmem = NULL;
 
-void init_screen(){
+static void init_screen(){
     SDL_Window *window = NULL;
     char title[128];
     sprintf(title, "riscv32e-npc");
@@ -53,27 +51,27 @@ static inline void update_screen() {
 }
 
 void vga_update_screen(uint32_t data) {
-  if(data == 1){
+  // if(vgactl_port_base[1]){
     update_screen();
-  }
+  // }
 }
-void write_screen(uint32_t addr, uint32_t data){
-  Assert(addr - FB_ADDR < screen_size(),"screen_addr is overflowed!");
-  // 除以4 从8位数据地址转换成32位数据的数组下标
-  uint32_t offset = (addr - FB_ADDR) >> 2;
-  vmem[offset] = data;
-}
+// void write_screen(uint32_t addr, uint32_t data){
+//   Assert(addr - FB_ADDR < screen_size(),"screen_addr is overflowed!");
+//   // 除以4 从8位数据地址转换成32位数据的数组下标
+//   uint32_t offset = (addr - FB_ADDR) >> 2;
+//   vmem[offset] = data;
+// }
 
 void init_vga(){
     vgactl_port_base = (uint32_t *)new_space(8);
     vgactl_port_base[0] = (screen_width() << 16) | screen_height();
 
     add_mmio_map("vgactl", VGACTL_ADDR, vgactl_port_base, 8, NULL);
-
+    // printf("%x\n",screen_size());
     vmem = (uint32_t *)new_space(screen_size());
     add_mmio_map("vmem", FB_ADDR, vmem, screen_size(), NULL);
 
     init_screen();
-    memset(vmem,0,screen_size());
+    memset(vmem,0xf8,screen_size());
     update_screen();
 }

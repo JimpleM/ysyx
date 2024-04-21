@@ -9,7 +9,7 @@
 void difftest_skip_ref();
 void init_difftest(char *ref_so_file, long img_size, int port);
 bool checkregs();
-void difftest_step();
+void difftest_step(vaddr_t pc, vaddr_t npc);
 
 
 
