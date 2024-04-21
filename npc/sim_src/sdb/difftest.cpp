@@ -80,14 +80,15 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 
   ref_difftest_init(port);
   ref_difftest_memcpy(PMEM_LEFT, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
-  CPU_state cpu_t = package_cpu(cpu_gpr,csr_gpr, PMEM_LEFT);
-  ref_difftest_regcpy(&cpu_t, DIFFTEST_TO_REF);
+  package_cpu(PMEM_LEFT);
+  ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
 
 bool checkregs() {
     CPU_state ref;
     ref_difftest_regcpy(&ref, DIFFTEST_TO_DUT);
     if(!isa_difftest_checkregs(&ref)){
+      printf("diff\n");
         isa_reg_display();
         return 1;
     }else{
@@ -95,7 +96,7 @@ bool checkregs() {
     }
 }
 
-void difftest_step() {
+void difftest_step(vaddr_t pc, vaddr_t npc) {
     // CPU_state ref_r;
 
     // if (skip_dut_nr_inst > 0) {
@@ -113,6 +114,7 @@ void difftest_step() {
 
     if (is_skip_ref) {
       // to skip the checking of an instruction, just copy the reg state to reference design
+      package_cpu(pc);
       ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
       is_skip_ref = false;
       return;

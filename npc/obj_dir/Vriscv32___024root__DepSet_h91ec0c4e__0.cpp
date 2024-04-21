@@ -53,9 +53,9 @@ VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_regfile_
     set_gpr_ptr(&a__Vopenarray);
 }
 
-extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask);
+extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask, svLogic wen);
 
-VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, IData/*31:0*/ wmask) {
+VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP(IData/*31:0*/ waddr, IData/*31:0*/ wdata, IData/*31:0*/ wmask, CData/*0:0*/ wen) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__DOT__riscv_pmem_write_TOP\n"); );
     // Body
     int waddr__Vcvt;
@@ -64,7 +64,9 @@ VL_INLINE_OPT void Vriscv32___024root____Vdpiimwrap_riscv32__DOT__riscv_lsu_u0__
     for (size_t wdata__Vidx = 0; wdata__Vidx < 1; ++wdata__Vidx) wdata__Vcvt = wdata;
     int wmask__Vcvt;
     for (size_t wmask__Vidx = 0; wmask__Vidx < 1; ++wmask__Vidx) wmask__Vcvt = wmask;
-    riscv_pmem_write(waddr__Vcvt, wdata__Vcvt, wmask__Vcvt);
+    svLogic wen__Vcvt;
+    for (size_t wen__Vidx = 0; wen__Vidx < 1; ++wen__Vidx) wen__Vcvt = wen;
+    riscv_pmem_write(waddr__Vcvt, wdata__Vcvt, wmask__Vcvt, wen__Vcvt);
 }
 
 extern "C" void set_csr_ptr(const svOpenArrayHandle csr_reg);

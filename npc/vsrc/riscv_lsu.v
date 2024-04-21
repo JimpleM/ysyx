@@ -12,6 +12,7 @@ module riscv_lsu(
     output  	  [`DATA_WIDTH-1:0]       lsu_result
 );
 wire ren;
+wire wen;
 wire [`DATA_WIDTH-1:0] raddr;
 wire [`DATA_WIDTH-1:0] rdata;
 wire [`DATA_WIDTH-1:0] waddr;
@@ -19,9 +20,12 @@ wire [`DATA_WIDTH-1:0] wdata;
 wire [`DATA_WIDTH-1:0] wmask;
 wire [`DATA_WIDTH-1:0]  mask;
 
-assign ren = (|lsu_opt);
+assign ren = (lsu_opt == `LSU_OPT_LOAD);
+assign wen = (lsu_opt == `LSU_OPT_STORE);
 assign raddr = exu_result;
-
+assign waddr = exu_result;
+assign wdata = src2;
+assign wmask = mask;
 
 riscv_mux#(
     .NR_KEY      (5), 
@@ -54,27 +58,16 @@ riscv_mux#(
   })
 );
 
-riscv_dff #(
-  .WIDTH(`DATA_WIDTH*3), 
-  .RESET_VAL(0)
-)riscv_dff_pc(
-    .clk    (clk),
-    .rst_n  (rst_n),
-    .wen    (1'b1),
-    .din    ({exu_result,src2,mask}),
-    .dout   ({waddr,wdata,wmask})
-  
-);
 
 
 
 // sim
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
-import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask);
+import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask, input wen);
 
 always @(*)begin
     riscv_pmem_read(raddr,rdata,ren);
-    riscv_pmem_write(waddr,wdata,wmask);
+    riscv_pmem_write(waddr,wdata,wmask,wen);
 end
 
 endmodule

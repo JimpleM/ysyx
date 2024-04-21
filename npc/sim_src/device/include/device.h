@@ -2,6 +2,7 @@
 #define DEVIDE_H__
 
 #include "common.h"
+#include "map.h"
 
 #define DEVICE_BASE 0xa0000000
 #define MMIO_BASE 0xa0000000
@@ -30,7 +31,7 @@ void uart_write(uint32_t data);
 
 //vga
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-void screen_init();
-void screen_sync_write(uint32_t data);
-void screen_write(uint32_t addr, uint32_t data);
+void init_vga();
+void vga_update_screen(uint32_t data);
+// void write_screen(uint32_t addr, uint32_t data);
 #endif

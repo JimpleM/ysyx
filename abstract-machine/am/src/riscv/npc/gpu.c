@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-static uint32_t Width  = 400;
+static uint32_t Width = 400;
 static uint32_t Height = 300;
 
 void __am_gpu_init() {
@@ -14,12 +13,12 @@ void __am_gpu_init() {
   uint32_t config = inl(VGACTL_ADDR);
   Width = (config >> 16) & 0x0000ffff;
   Height = config & 0x0000ffff;
-
+  // printf("%d %d\n",Width,Height);
   // uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   // for (i = 0; i < Width * Height; i ++){
   //   fb[i] = i;
   // } 
-  // outl(SYNC_ADDR, 1);
+  outl(SYNC_ADDR, 1);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
@@ -37,9 +36,12 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  // int i,j;
-  int x = ctl->x, y = ctl->y;
-  int w = ctl->w, h = ctl->h;
+  uint32_t x = ctl->x, y = ctl->y;
+  uint32_t w = ctl->w, h = ctl->h;
+  // uint32_t *pixels = (uint32_t *)ctl->pixels;
+  // uint32_t *fb = (uint32_t *)FB_ADDR;
+  // memcpy(fb + ((y * Width) + x),pixels,w*h*4);
+  int i,j;
   uint32_t *pixels = (uint32_t *)ctl->pixels;
   uint32_t *fb = (uint32_t *)FB_ADDR;
   memset(fb + (y*Width + x), (int)pixels, h*w*4);
@@ -51,6 +53,12 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }else{
+    outl(SYNC_ADDR, 0);
+  }
+  else{
+    outl(SYNC_ADDR, 0);
+  }
+  else{
     outl(SYNC_ADDR, 0);
   }
 }

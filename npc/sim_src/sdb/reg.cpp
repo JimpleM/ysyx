@@ -9,7 +9,9 @@ const char *regs[] = {
 
 extern uint32_t cpu_pc;
 extern uint32_t *cpu_gpr;
-extern uint32_t *csr_gpr;
+extern uint32_t *cpu_csr;
+
+extern CPU_state cpu;
 
 #define CSR_MSTATUS  0x300
 #define CSR_MTVEC    0x305 
@@ -25,10 +27,10 @@ void isa_reg_display() {
 		printf("%3s : 0x%08x  ",regs[4*i+3],cpu_gpr[4*i+3]);
 		printf("\n");
 	}
-	printf("MSTATUS:0x%08x  \n",csr_gpr[CSR_MSTATUS]);
-	printf("MTVEC: 0x%08x  \n",csr_gpr[CSR_MTVEC]);
-	printf("MEPC:0x%08x  \n",csr_gpr[CSR_MEPC]);
-	printf("MCAUSE: 0x%08x  \n",csr_gpr[CSR_MCAUSE]);
+	printf("MSTATUS:0x%08x  \n",cpu_csr[CSR_MSTATUS]);
+	printf("MTVEC: 0x%08x  \n",cpu_csr[CSR_MTVEC]);
+	printf("MEPC:0x%08x  \n",cpu_csr[CSR_MEPC]);
+	printf("MCAUSE: 0x%08x  \n",cpu_csr[CSR_MCAUSE]);
 //   printf("$pc : 0x%08x\n",cpu.pc);
 //   printf("------------------------------reg display end -----------------------------\n");
 }
@@ -44,36 +46,34 @@ bool isa_difftest_checkregs(CPU_state *ref){
             return false;
         }
     }
-	if(csr_gpr[CSR_MSTATUS] != ref->csr[MSTATUS]){
-		printf("MSTATUS: ref:0x%08x dut:0x%08x  \n",ref->csr[MSTATUS],csr_gpr[CSR_MSTATUS]);
+	if(cpu_csr[CSR_MSTATUS] != ref->csr[MSTATUS]){
+		printf("MSTATUS: ref:0x%08x dut:0x%08x  \n",ref->csr[MSTATUS],cpu_csr[CSR_MSTATUS]);
         return false;
 	}
-	if(csr_gpr[CSR_MTVEC] != ref->csr[MTVEC]){
-		printf("MTVEC: ref:0x%08x dut:0x%08x  \n",ref->csr[MTVEC],csr_gpr[CSR_MTVEC]);
+	if(cpu_csr[CSR_MTVEC] != ref->csr[MTVEC]){
+		printf("MTVEC: ref:0x%08x dut:0x%08x  \n",ref->csr[MTVEC],cpu_csr[CSR_MTVEC]);
         return false;
 	}
-	if(csr_gpr[CSR_MEPC] != ref->csr[MEPC]){
-		printf("MEPC: ref:0x%08x dut:0x%08x  \n",ref->csr[MEPC],csr_gpr[CSR_MEPC]);
+	if(cpu_csr[CSR_MEPC] != ref->csr[MEPC]){
+		printf("MEPC: ref:0x%08x dut:0x%08x  \n",ref->csr[MEPC],cpu_csr[CSR_MEPC]);
         return false;
 	}
-	if(csr_gpr[CSR_MCAUSE] != ref->csr[MCAUSE]){
-		printf("MCAUSE: ref:0x%08x dut:0x%08x  \n",ref->csr[MCAUSE],csr_gpr[CSR_MCAUSE]);
+	if(cpu_csr[CSR_MCAUSE] != ref->csr[MCAUSE]){
+		printf("MCAUSE: ref:0x%08x dut:0x%08x  \n",ref->csr[MCAUSE],cpu_csr[CSR_MCAUSE]);
         return false;
 	}
     return true;
 }
 
-CPU_state package_cpu(uint32_t *gpr, uint32_t *csr, uint32_t pc){
-    CPU_state cpu;
+void package_cpu(uint32_t pc){
     cpu.pc = pc;
     for(int i=0; i<32; i++){
-        cpu.gpr[i] = gpr[i];
+        cpu.gpr[i] = cpu_gpr[i];
     }
-	  cpu.csr[MSTATUS] = csr[CSR_MSTATUS];
-	  cpu.csr[MTVEC] = csr[CSR_MTVEC];
-	  cpu.csr[MEPC] = csr[CSR_MEPC];
-	  cpu.csr[MCAUSE] = csr[CSR_MCAUSE];
-    return cpu;
+	  cpu.csr[MSTATUS] = cpu_csr[CSR_MSTATUS];
+	  cpu.csr[MTVEC] = cpu_csr[CSR_MTVEC];
+	  cpu.csr[MEPC] = cpu_csr[CSR_MEPC];
+	  cpu.csr[MCAUSE] = cpu_csr[CSR_MCAUSE];
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

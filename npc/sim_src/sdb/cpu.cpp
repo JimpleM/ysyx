@@ -11,7 +11,7 @@
 #define MAX_INST_TO_PRINT 1000
 
 #ifdef CONFIG_WAVE
-  #define dump_wave contextp->timeInc(1); tfp->dump(contextp->time()); 
+  #define dump_wave  tfp->dump(contextp->time());  contextp->timeInc(1);
 #else
   #define dump_wave
 #endif
@@ -73,15 +73,18 @@ void assert_fail_msg() {
 #endif
   statistic();
 }
-
+extern uint32_t device_flag;
 static void trace_and_difftest() {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(cpu_pc)); }
-
 #ifdef CONFIG_DIFFTEST
-  difftest_step();
+  if(device_flag){
+    difftest_skip_ref();
+    device_flag = 0;
+  }
+  difftest_step(cpu_pc,cpu_pc);
   if(checkregs()){
     npc_state.halt_pc = cpu_pc;
     npc_state.state = NPC_ABORT;
@@ -115,7 +118,9 @@ static void execute(uint64_t n) {
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif
 
-
+      exec_once();
+      trace_and_difftest();
+      
       
       if (npc_state.state != NPC_RUNNING) break;
       if (stop_flag == 1){
@@ -123,9 +128,6 @@ static void execute(uint64_t n) {
           npc_state.state = NPC_END;
           break;
       } 
-
-      exec_once();
-      trace_and_difftest();
 
       #ifdef CONFIG_FTRACE
         ftrace_print(cpu_lpc,cpu_pc,cpu_inst);

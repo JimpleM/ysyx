@@ -3,6 +3,8 @@ module riscv_id_imm(
     input 	    [`INST_WIDTH-1:0]   inst,
     output  	[`DATA_WIDTH-1:0]   imm
 );
+reg [`DATA_WIDTH-1:0]   imm_r;
+assign imm = imm_r;
 
 wire [`DATA_WIDTH-1:0]  imm_typeI;
 wire [`DATA_WIDTH-1:0]  imm_typeU;
@@ -51,27 +53,43 @@ riscv_id_imm_ext #(
     .imm_out     (imm_typeJ)
 );
 
-riscv_mux#(
-    .NR_KEY      (11), 
-    .KEY_LEN     (7), 
-    .DATA_LEN    (`DATA_WIDTH)
-)riscv_mux_id_imm(
-    .key              (inst[6:0]),//opcode
-    .default_out      (0),
-    .out              (imm),
-    .lut({  `LUI   ,{imm_typeU},
-            `AUIPC ,{imm_typeU},
-            `JAL   ,{imm_typeJ},
-            `JALR  ,{imm_typeI},
-            `BRANCH,{imm_typeB},
-            `LOAD  ,{imm_typeI},
-            `STORE ,{imm_typeS},
-            `OP_IMM,{imm_typeI},
-            `OP    ,{imm_typeR},
-            `FENCE ,{imm_type_NONE},
-            `SYS   ,{imm_typeI}
-  })
-);
+// riscv_mux#(
+//     .NR_KEY      (11), 
+//     .KEY_LEN     (7), 
+//     .DATA_LEN    (`DATA_WIDTH)
+// )riscv_mux_id_imm(
+//     .key              (inst[6:0]),//opcode
+//     .default_out      (0),
+//     .out              (imm),
+//     .lut({  `LUI   ,{imm_typeU},
+//             `AUIPC ,{imm_typeU},
+//             `JAL   ,{imm_typeJ},
+//             `JALR  ,{imm_typeI},
+//             `BRANCH,{imm_typeB},
+//             `LOAD  ,{imm_typeI},
+//             `STORE ,{imm_typeS},
+//             `OP_IMM,{imm_typeI},
+//             `OP    ,{imm_typeR},
+//             `FENCE ,{imm_type_NONE},
+//             `SYS   ,{imm_typeI}
+//   })
+// );
+    always @(*) begin
+        case(inst[6:0])
+            `LUI   : imm_r = imm_typeU    ;
+            `AUIPC : imm_r = imm_typeU    ;
+            `JAL   : imm_r = imm_typeJ    ;
+            `JALR  : imm_r = imm_typeI    ;
+            `BRANCH: imm_r = imm_typeB    ;
+            `LOAD  : imm_r = imm_typeI    ;
+            `STORE : imm_r = imm_typeS    ;
+            `OP_IMM: imm_r = imm_typeI    ;
+            `OP    : imm_r = imm_typeR    ;
+            `FENCE : imm_r = imm_type_NONE;
+            `SYS   : imm_r = imm_typeI    ;
+            default: imm_r = imm_type_NONE; 
+        endcase
+    end
 
 endmodule
 

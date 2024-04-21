@@ -2,7 +2,7 @@ VERILATOR = verilator
 # project source
 VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
 SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
-
+# INC_PATH :=$(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.h")
 VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
 
 TOPNAME = riscv32
@@ -20,6 +20,7 @@ LDFLAGS += $(shell llvm-config --libs) -flto 	#llvm库
 INC_PATH += $(NPC_HOME)/sim_src/include
 INC_PATH += $(NPC_HOME)/sim_src/utils
 INC_PATH += $(NPC_HOME)/sim_src/device/include
+# INC_PATH += $(NPC_HOME)/sim_src/device/io
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS)
 
