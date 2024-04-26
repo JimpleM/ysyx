@@ -11,7 +11,9 @@ void device_init(){
     timer_init();
     // keyboard_init();
     // IFDEF(CONFIG_VGA, init_vga());
+#ifdef CONFIG_VGA
     init_vga();
+#endif
 }
 
 extern Vriscv32* top;

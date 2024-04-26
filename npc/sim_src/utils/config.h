@@ -17,7 +17,7 @@
 // #define CONFIG_MTRACE
 // #define CONFIG_DTRACE
 
-#define CONFIG_VGA
+// #define CONFIG_VGA
 
 // #define CONFIG_WAVE
 
