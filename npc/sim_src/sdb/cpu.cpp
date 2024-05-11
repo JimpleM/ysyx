@@ -17,7 +17,7 @@
 #endif
 
 extern VerilatedContext* contextp;
-extern Vriscv32* top;
+extern Vysyx_23060077_top* top;
 extern VerilatedVcdC* tfp;
 
 extern int stop_flag;

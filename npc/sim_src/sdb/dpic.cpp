@@ -5,7 +5,7 @@
 #include "pmem.h"
 #include "device_lib.h"
 
-#include "Vriscv32__Dpi.h"
+#include "Vysyx_23060077_top__Dpi.h"
 #include "verilated_dpi.h"
 
 
@@ -18,7 +18,7 @@ uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
-extern Vriscv32* top;
+extern Vysyx_23060077_top* top;
 
 
 extern "C" void set_pc_ptr(int pc) {

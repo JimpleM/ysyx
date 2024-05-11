@@ -14,7 +14,7 @@ static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 VerilatedContext* contextp = NULL;
-Vriscv32* top = NULL;
+Vysyx_23060077_top* top = NULL;
 VerilatedVcdC* tfp = NULL;
 
 extern uint8_t pmem [PMEM_SIZE];
@@ -73,7 +73,7 @@ static int parse_args(int argc, char *argv[]) {
 void init_sim(){
     contextp = new VerilatedContext;
     // contextp->commandArgs(argc, argv);
-    top = new Vriscv32(contextp);
+    top = new Vysyx_23060077_top(contextp);
 
     tfp = new VerilatedVcdC;
     contextp->traceEverOn(true);
