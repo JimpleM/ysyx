@@ -19,7 +19,11 @@
 
 // #define CONFIG_VGA
 
-// #define CONFIG_WAVE
+#define CONFIG_WAVE
 
+#ifdef CONFIG_WAVE
+    #define CONFIG_WAVE_PC_BEGIN    0x80012a50
+    #define CONFIG_WAVE_PC_END      0x8000e600
+#endif
 
 #endif

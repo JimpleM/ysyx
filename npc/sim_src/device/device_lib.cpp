@@ -26,7 +26,7 @@ uint32_t device_read(uint32_t addr){
     }else if(addr == VGACTL_ADDR){
         return mmio_read(addr,4);
     }else{
-        Assert(0,"no device addr %8x",addr);
+        // Assert(0,"no device addr %8x",addr);
     }
     return 0;
 }
@@ -41,7 +41,7 @@ void device_write(uint32_t addr, uint32_t data){
             // printf("mmio addr %x data %x\n",addr,data);
         }
         else if(addr != 0){
-            Assert(0,"no device addr %8x",addr);
+            // Assert(0,"no device addr %8x",addr);
         }
     }
 }

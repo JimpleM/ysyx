@@ -10,11 +10,6 @@
 
 #define MAX_INST_TO_PRINT 1000
 
-#ifdef CONFIG_WAVE
-  #define dump_wave  tfp->dump(contextp->time());  contextp->timeInc(1);
-#else
-  #define dump_wave
-#endif
 
 extern VerilatedContext* contextp;
 extern Vysyx_23060077_top* top;
@@ -30,6 +25,10 @@ NPCState npc_state = { .state = NPC_STOP };
 CPU_state cpu = {};
 static bool g_print_step = false;
 
+#ifdef CONFIG_WAVE
+static bool wave_flag = false;
+#endif
+
 
 int is_exit_status_bad() {
   int good = (npc_state.state == NPC_END && npc_state.halt_ret == 0) ||
@@ -39,16 +38,31 @@ int is_exit_status_bad() {
   // return 100;
 }
 
+static void dump_wave(){
+#ifdef CONFIG_WAVE
+  if(cpu_pc == CONFIG_WAVE_PC_BEGIN){
+    wave_flag = true;
+  }
+  if(cpu_pc == CONFIG_WAVE_PC_END){
+    wave_flag = false;
+  }
+  if(wave_flag){
+    tfp->dump(contextp->time());  
+    contextp->timeInc(1);
+  }
+#endif
+}
+
 static void exec_once() {
     top->clk = 1;
     top->eval();
 
-    dump_wave;
+    dump_wave();
 
     top->clk = 0;
     top->eval();
     
-    dump_wave;
+    dump_wave();
 
 }
 
