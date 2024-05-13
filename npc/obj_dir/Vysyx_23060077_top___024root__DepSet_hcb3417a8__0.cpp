@@ -8,6 +8,16 @@
 #include "Vysyx_23060077_top__Syms.h"
 #include "Vysyx_23060077_top___024root.h"
 
+extern "C" void set_pc_ptr(int pc);
+
+VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__set_pc_ptr_TOP\n"); );
+    // Body
+    int pc__Vcvt;
+    for (size_t pc__Vidx = 0; pc__Vidx < 1; ++pc__Vidx) pc__Vcvt = pc;
+    set_pc_ptr(pc__Vcvt);
+}
+
 extern "C" void riscv_pmem_read(int raddr, int* rdata, svLogic ren);
 
 VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__riscv_pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &rdata, CData/*0:0*/ ren) {
@@ -20,16 +30,6 @@ VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top_
     for (size_t ren__Vidx = 0; ren__Vidx < 1; ++ren__Vidx) ren__Vcvt = ren;
     riscv_pmem_read(raddr__Vcvt, &rdata__Vcvt, ren__Vcvt);
     rdata = rdata__Vcvt;
-}
-
-extern "C" void set_pc_ptr(int pc);
-
-VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__set_pc_ptr_TOP\n"); );
-    // Body
-    int pc__Vcvt;
-    for (size_t pc__Vidx = 0; pc__Vidx < 1; ++pc__Vidx) pc__Vcvt = pc;
-    set_pc_ptr(pc__Vcvt);
 }
 
 extern "C" void get_riscv32_rst(svBit rst_n);

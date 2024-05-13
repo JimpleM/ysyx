@@ -184,6 +184,10 @@ ysyx_23060077_riscv_wbu riscv_wbu_u0(
     
 );
 
+import "DPI-C" function void set_pc_ptr(input int pc);
+always @(*)begin
+    set_pc_ptr(ifu_pc);
+end
 
 endmodule
 
