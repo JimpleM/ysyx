@@ -21,6 +21,9 @@ module ysyx_23060077_top(
 reg  [`DATA_WIDTH-1:0]      ifu_pc;
 wire [`INST_WIDTH-1:0]      ifu_inst;
 
+wire [`DATA_WIDTH-1:0]      jump_pc;
+wire                        jump_pc_valid;
+
 // idu
 wire                       	idu_branch		;
 wire                       	idu_jal		    ;
@@ -68,35 +71,17 @@ wire [`INST_WIDTH-1:0]      csr_mpec        ;
 //     .pc             (ifu_pc       )
 // );
 
-initial begin
-    ifu_pc = 32'h8000_0000;
-end
-always @(posedge clk) begin
-    if(!rst_n)begin
-        ifu_pc <= 32'h8000_0000;
-    end
-    else if(csr_mret)begin
-        ifu_pc <= csr_mpec;
-    end
-    else if(csr_ecall)begin
-        ifu_pc <= csr_mtvec;
-    end
-    else if((idu_branch && !zero_flag) || idu_jal)begin
-        ifu_pc <= ifu_pc + idu_imm;
-    end
-    else if(idu_jalr)begin
-        ifu_pc <= src1 + idu_imm;
-    end
-    else begin
-        ifu_pc <= ifu_pc + 4;
-    end
-end
+assign jump_pc = csr_mret ? csr_mpec : (csr_ecall ? csr_mtvec :(((idu_branch && !zero_flag) || idu_jal) ? ifu_pc + idu_imm : (idu_jalr ? src1 + idu_imm : 'd0)));
+assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu_jal) | idu_jalr;
 
 
 ysyx_23060077_riscv_ifu riscv_ifu_u0(
-    .rst_n	(rst_n),
-    .pc		(ifu_pc),
-    .inst	(ifu_inst)
+    .clk            (clk            ),
+    .rst_n          ( rst_n         ),
+    .jump_pc        ( jump_pc       ),
+    .jump_pc_valid  ( jump_pc_valid ),
+    .ifu_pc_o       ( ifu_pc        ),
+    .ifu_inst_o     ( ifu_inst      )
 );
 
 
@@ -184,9 +169,11 @@ ysyx_23060077_riscv_wbu riscv_wbu_u0(
     
 );
 
-import "DPI-C" function void set_pc_ptr(input int pc);
+wire valid;
+assign valid = (ifu_pc != 'd0);
+import "DPI-C" function void set_pc_ptr(input int pc, input bit valid);
 always @(*)begin
-    set_pc_ptr(ifu_pc);
+    set_pc_ptr(ifu_pc,valid);
 end
 
 endmodule

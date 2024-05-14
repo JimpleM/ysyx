@@ -8,14 +8,16 @@
 #include "Vysyx_23060077_top__Syms.h"
 #include "Vysyx_23060077_top___024root.h"
 
-extern "C" void set_pc_ptr(int pc);
+extern "C" void set_pc_ptr(int pc, svBit valid);
 
-VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc) {
+VL_INLINE_OPT void Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__set_pc_ptr_TOP(IData/*31:0*/ pc, CData/*0:0*/ valid) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vysyx_23060077_top___024root____Vdpiimwrap_ysyx_23060077_top__DOT__set_pc_ptr_TOP\n"); );
     // Body
     int pc__Vcvt;
     for (size_t pc__Vidx = 0; pc__Vidx < 1; ++pc__Vidx) pc__Vcvt = pc;
-    set_pc_ptr(pc__Vcvt);
+    svBit valid__Vcvt;
+    for (size_t valid__Vidx = 0; valid__Vidx < 1; ++valid__Vidx) valid__Vcvt = valid;
+    set_pc_ptr(pc__Vcvt, valid__Vcvt);
 }
 
 extern "C" void riscv_pmem_read(int raddr, int* rdata, svLogic ren);

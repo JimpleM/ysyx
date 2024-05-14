@@ -21,8 +21,10 @@ uint32_t *cpu_csr = NULL;
 extern Vysyx_23060077_top* top;
 
 
-extern "C" void set_pc_ptr(int pc) {
-  cpu_pc = (uint32_t) pc;
+extern "C" void set_pc_ptr(int pc,svBit valid){
+	if(valid){
+		cpu_pc = (uint32_t) pc;
+	}
 }
 
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {

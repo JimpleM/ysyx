@@ -121,9 +121,9 @@ static void execute(uint64_t n) {
   static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
+      // if (!in_pmem(cpu_pc)){continue;}
+      cpu_inst = paddr_read((uint32_t)cpu_pc,4);
 
-      cpu_inst = pmem_read((uint32_t)cpu_pc,4);
-      cpu_lpc  = cpu_pc;
         //反汇编结果
       #ifdef CONFIG_ITRACE
         disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
@@ -131,11 +131,13 @@ static void execute(uint64_t n) {
       #else
         p[0] = '\0'; // the upstream llvm does not support loongarch32r
       #endif
-
       exec_once();
-      trace_and_difftest();
+      if(cpu_lpc != cpu_pc){
+        trace_and_difftest();
+        // printf("%8x\n",cpu_pc);
+      }
       
-      
+      cpu_lpc  = cpu_pc;
       if (npc_state.state != NPC_RUNNING) break;
       if (stop_flag == 1){
           npc_state.halt_pc = cpu_pc;

@@ -31,9 +31,12 @@ uint32_t device_read(uint32_t addr){
     return 0;
 }
 void device_write(uint32_t addr, uint32_t data){
-    if(top->clk == 0){
+    // printf("%8x addr",addr);
+    // if(top->clk == 0){
+        // printf("%8x addr",addr);
         if(addr == SERIAL_PORT){
             uart_write(data);
+            //  printf("%8x add\n");
         }else if(addr == SYNC_ADDR){
             vga_update_screen(data);
         }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR){
@@ -43,5 +46,5 @@ void device_write(uint32_t addr, uint32_t data){
         else if(addr != 0){
             // Assert(0,"no device addr %8x",addr);
         }
-    }
+    // }
 }
