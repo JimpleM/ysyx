@@ -26,21 +26,6 @@ assign rs1_data = gpr[rs1_addr];
 // read rs2
 assign rs2_data = gpr[rs2_addr];
 
-wire  [`REG_WIDTH-1:0]        rd_addr_t;
-wire                          rd_en_t;
-
-// write rd
-ysyx_23060077_riscv_dff #(
-  .WIDTH(6), 
-  .RESET_VAL(0)
-)riscv_dff_reg_t(
-    .clk    (clk),
-    .rst_n  (rst_n),
-    .wen    (1'b1),
-    .din    ({rd_en,rd_addr}),
-    .dout   ({rd_en_t,rd_addr_t})
-);
-
 //这玩意时序有问题
 // ysyx_23060077_riscv_dff #(
 //   .WIDTH(`DATA_WIDTH), 
