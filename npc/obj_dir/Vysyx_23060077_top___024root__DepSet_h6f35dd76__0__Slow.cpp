@@ -1687,6 +1687,8 @@ VL_ATTR_COLD void Vysyx_23060077_top___024root___ctor_var_reset(Vysyx_23060077_t
     vlSelf->ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__ifu_inst_o_r = VL_RAND_RESET_I(32);
     vlSelf->ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__pc = VL_RAND_RESET_I(32);
     vlSelf->ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__inst = VL_RAND_RESET_I(32);
+    vlSelf->ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__cpu_r_valid_i = VL_RAND_RESET_I(1);
+    vlSelf->ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__cpu_r_ready_o = VL_RAND_RESET_I(1);
     VL_RAND_RESET_W(253, vlSelf->ysyx_23060077_top__DOT__riscv_idu_u0__DOT____Vcellinp__riscv_mux_id_reg__lut);
     vlSelf->ysyx_23060077_top__DOT__riscv_idu_u0__DOT____Vcellout__riscv_mux_id_reg__out = VL_RAND_RESET_I(16);
     for (int __Vi0 = 0; __Vi0 < 11; ++__Vi0) {

@@ -20,6 +20,9 @@ assign ifu_inst_o = ifu_inst_o_r;
 reg   [`DATA_WIDTH-1:0]       pc;
 wire  [`INST_WIDTH-1:0]       inst;
 
+reg cpu_r_valid_i;
+wire cpu_r_ready_o;
+
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
 import "DPI-C" function void get_riscv32_rst(input bit rst_n);
 always @(*)begin
