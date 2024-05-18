@@ -22,6 +22,7 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         CData/*1:0*/ ysyx_23060077_top__DOT__idu_src_sel;
         CData/*1:0*/ ysyx_23060077_top__DOT__idu_lsu_opt;
         CData/*2:0*/ ysyx_23060077_top__DOT__idu_funct3;
+        CData/*0:0*/ ysyx_23060077_top__DOT__mem_stall;
         CData/*0:0*/ ysyx_23060077_top__DOT__csr_ecall;
         CData/*0:0*/ ysyx_23060077_top__DOT__csr_mret;
         CData/*0:0*/ ysyx_23060077_top__DOT__commit_valid_t;
@@ -78,13 +79,14 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         SData/*15:0*/ ysyx_23060077_top__DOT__riscv_idu_u0__DOT__riscv_mux_id_reg__DOT__i1__DOT__lut_out;
         SData/*11:0*/ ysyx_23060077_top__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT____Vcellinp__riscv_id_imm_ext_typeI__imm_in;
         SData/*15:0*/ __VdfgTmp_h96487c18__0;
-        SData/*15:0*/ __VdfgTmp_h7c9f55bf__0;
     };
     struct {
+        SData/*15:0*/ __VdfgTmp_h7c9f55bf__0;
         IData/*31:0*/ ysyx_23060077_top__DOT__ifu_pc_lst;
         IData/*31:0*/ ysyx_23060077_top__DOT__ifu_inst;
         IData/*31:0*/ ysyx_23060077_top__DOT__src1;
         IData/*31:0*/ ysyx_23060077_top__DOT__exu_result;
+        IData/*31:0*/ ysyx_23060077_top__DOT__exu_result_t;
         IData/*31:0*/ ysyx_23060077_top__DOT__lsu_result;
         IData/*31:0*/ ysyx_23060077_top__DOT__wr_csr_data;
         IData/*31:0*/ ysyx_23060077_top__DOT__csr_mstatus;
@@ -107,6 +109,7 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_exu_u0__DOT__alu_out_data;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__lut_out;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__lut_out;
+        IData/*31:0*/ ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__raddr;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__wdata;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__mask;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__rdata_t;
@@ -142,11 +145,11 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         VlUnpacked<CData/*3:0*/, 11> ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 11> ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_ex_alu__DOT__riscv_mux_ex_data__DOT__i1__DOT__data_list;
         VlUnpacked<QData/*35:0*/, 6> ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__pair_list;
+    };
+    struct {
         VlUnpacked<CData/*3:0*/, 6> ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 6> ysyx_23060077_top__DOT__riscv_exu_u0__DOT__riscv_mux_ex_branch__DOT__i1__DOT__data_list;
         VlUnpacked<QData/*36:0*/, 5> ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__pair_list;
-    };
-    struct {
         VlUnpacked<CData/*4:0*/, 5> ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 5> ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_lsu_opt__DOT__i1__DOT__data_list;
         VlUnpacked<QData/*36:0*/, 3> ysyx_23060077_top__DOT__riscv_lsu_u0__DOT__riscv_mux_ls_wmask__DOT__i1__DOT__pair_list;

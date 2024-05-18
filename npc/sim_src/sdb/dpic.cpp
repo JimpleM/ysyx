@@ -67,6 +67,8 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 		}
 	}
 #endif
+	}else{
+		*rdata = 0;
 	}
 }
 

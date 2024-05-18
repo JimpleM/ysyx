@@ -3,13 +3,15 @@ module ysyx_23060077_riscv_lsu(
     input 	                            clk,
     input 	                            rst_n,    
 
-    input       [`DATA_WIDTH-1:0]       exu_result,
-
+    input  	    [`DATA_WIDTH-1:0]       src1,
     input  	    [`DATA_WIDTH-1:0]       src2,
+    input       [`DATA_WIDTH-1:0]       imm,
+
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
     input       [2:0]                   funct3,
 
     output                              mem_stall,
+    output                              lsu_rd_wen,
     output  	  [`DATA_WIDTH-1:0]       lsu_result
 );
 wire ren;
@@ -31,8 +33,8 @@ assign mem_stall = ren | wen;
 
 assign ren = (lsu_opt == `LSU_OPT_LOAD);
 assign wen = (lsu_opt == `LSU_OPT_STORE);
-assign raddr = exu_result;
-assign waddr = exu_result;
+assign raddr = src1 + imm;
+assign waddr = src1 + imm;
 assign wdata = src2;
 assign wmask = mask;
 
@@ -91,6 +93,7 @@ always @(posedge clk ) begin
     wen_t <= 'd0;
   end
 end
+assign lsu_rd_wen = ren | wen;
 
 // sim
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
@@ -100,5 +103,22 @@ always @(*)begin
     riscv_pmem_read(raddr,rdata_t,ren);
     riscv_pmem_write(waddr,wdata,wmask,wen_t);
 end
+
+// ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
+//     .aclk                   ( clk                                  ),
+//     .areset_n               ( rst_n                                ),
+
+//     .cpu_r_valid_i          (cpu_r_valid_i),
+//     .cpu_r_addr_i           (raddr),
+//     .cpu_r_ready_o          (cpu_r_ready_o),
+//     .cpu_r_data_o           (inst),
+
+//     .cpu_w_valid_i          (),
+//     .cpu_w_addr_i           (),
+//     .cpu_w_ready_o          (),
+//     .cpu_w_data_i           (),
+//     .cpu_w_strb_i           ()
+// );
+
 
 endmodule

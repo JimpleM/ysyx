@@ -20,6 +20,7 @@
 `define SYS     7'b11100_11     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
 
 `define ALU_OPT_WIDTH      4
+`define ALU_NONE        `ALU_OPT_WIDTH'd0
 `define ALU_ADD         `ALU_OPT_WIDTH'd1
 `define ALU_SUB         `ALU_OPT_WIDTH'd2
 `define ALU_SLL         `ALU_OPT_WIDTH'd3

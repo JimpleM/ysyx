@@ -49,11 +49,16 @@ wire [`DATA_WIDTH-1:0]     	rd_data		    ;
 
 //exu
 wire                        zero_flag		;
-wire [`DATA_WIDTH-1:0]      exu_result		;
+reg [`DATA_WIDTH-1:0]      exu_result		;
+wire [`DATA_WIDTH-1:0]      exu_result_t	;
 
 //lsu
 wire [`DATA_WIDTH-1:0]     	lsu_result		;
-wire                        mem_stall;            
+wire                        mem_stall       ;     
+wire                        lsu_rd_wen      ; 
+
+//wbu
+wire                        wbu_rd_wen      ;
 
 //csr
 wire                        csr_ecall;
@@ -82,7 +87,9 @@ assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu
 always @(posedge clk) begin
     ifu_pc_lst <= ifu_pc;
 end
-assign stall = mem_stall & (ifu_pc_lst != ifu_pc);
+wire diff_pc;
+assign diff_pc = (ifu_pc_lst != ifu_pc);
+assign stall = mem_stall & diff_pc;
 assign ifu_inst = ifu_stall ? 'd0 : ifu_inst_t;
 
 ysyx_23060077_riscv_ifu riscv_ifu_u0(
@@ -120,8 +127,8 @@ ysyx_23060077_riscv_regfile riscv_regfile_u0(
     .rs1_data		(src1		),
     .rs2_addr		(idu_rs2	),
     .rs2_data		(src2		),
-    .rd_en			(idu_rd_wen		),
-    .rd_addr		(idu_rd	),
+    .rd_en			(wbu_rd_wen	),
+    .rd_addr		(idu_rd	    ),
     .rd_data		(rd_data	)	
 );
 
@@ -142,11 +149,13 @@ ysyx_23060077_riscv_exu riscv_exu_u0(
 ysyx_23060077_riscv_lsu riscv_lsu_u0(
     .clk			(clk		),
     .rst_n          (rst_n      ),
-    .exu_result		(exu_result),
-    .src2			(src2),
+    .src1           (src1),
+    .src2           (src2),
+    .imm            (idu_imm ),
     .lsu_opt		(idu_lsu_opt),
     .funct3		    (idu_funct3),
     .mem_stall      (mem_stall),
+    .lsu_rd_wen     (lsu_rd_wen),
     .lsu_result		(lsu_result)
 );
 
@@ -175,9 +184,14 @@ ysyx_23060077_riscv_csr  riscv_csr_u0 (
 
 ysyx_23060077_riscv_wbu riscv_wbu_u0(
     .lsu_opt		(idu_lsu_opt),
+
     .exu_result		(exu_result),
     .lsu_result		(lsu_result),
     .csr_result     (rd_csr_data),
+
+    .lsu_rd_wen     (lsu_rd_wen),
+    .idu_rd_wen     (idu_rd_wen),
+    .wbu_rd_wen     (wbu_rd_wen),
     .wbu_result		(rd_data)
     
 );
