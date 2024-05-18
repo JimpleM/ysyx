@@ -21,6 +21,8 @@ module ysyx_23060077_top(
 reg  [`DATA_WIDTH-1:0]      ifu_pc_lst;
 wire [`DATA_WIDTH-1:0]      ifu_pc;
 wire [`INST_WIDTH-1:0]      ifu_inst;
+wire [`INST_WIDTH-1:0]      ifu_inst_t;
+wire                        ifu_stall;
 
 wire [`DATA_WIDTH-1:0]      jump_pc;
 wire                        jump_pc_valid;
@@ -81,6 +83,7 @@ always @(posedge clk) begin
     ifu_pc_lst <= ifu_pc;
 end
 assign stall = mem_stall & (ifu_pc_lst != ifu_pc);
+assign ifu_inst = ifu_stall ? 'd0 : ifu_inst_t;
 
 ysyx_23060077_riscv_ifu riscv_ifu_u0(
     .clk            ( clk           ),
@@ -88,8 +91,9 @@ ysyx_23060077_riscv_ifu riscv_ifu_u0(
     .jump_pc        ( jump_pc       ),
     .jump_pc_valid  ( jump_pc_valid ),
     .stall          ( stall     ),
+    .ifu_stall      ( ifu_stall ),
     .ifu_pc_o       ( ifu_pc        ),
-    .ifu_inst_o     ( ifu_inst      )
+    .ifu_inst_o     ( ifu_inst_t      )
 );
 
 
@@ -184,7 +188,10 @@ wire [`DATA_WIDTH-1:0] commit_pc;
 
 always @(posedge clk ) begin
     if(!rst_n)begin
-        commit_pc_t <= 32'h8000_0000;
+        commit_pc_t <= ifu_pc;
+    end
+    else if(ifu_stall)begin
+        commit_pc_t <= 'd0;
         commit_valid_t <= 'd0;
     end
     else if(stall)begin

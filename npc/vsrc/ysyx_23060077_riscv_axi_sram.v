@@ -42,7 +42,7 @@ parameter [`AXI_W_STATE_WIDTH-1:0] SRAM_W_RESP   = 'd3;
 
 reg [`AXI_ADDR_WIDTH-1:0] w_addr;
 reg [`AXI_DATA_WIDTH-1:0] w_data;
-reg [`AXI_STRB_WIDTH-1:0] w_mask;
+reg [`AXI_DATA_WIDTH-1:0] w_mask;
 
 reg axi_aw_ready_o_r;
 reg axi_w_ready_o_r;
@@ -76,7 +76,7 @@ always @(posedge aclk ) begin
                 if(axi_w_valid_i)begin
                     sram_w_state    <= SRAM_W_DATA;
                     w_data          <= axi_w_data_i;
-                    w_mask          <= axi_w_strb_i;
+                    w_mask[`AXI_STRB_WIDTH-1:0]  <= axi_w_strb_i;
                     axi_w_ready_o_r <= 'd1;
                 end
             end
@@ -91,6 +91,9 @@ always @(posedge aclk ) begin
                 axi_b_valid_o_r <= 'd0;
                 sram_w_state    <= SRAM_W_IDLE;
             end
+            default:begin
+                sram_w_state <= SRAM_W_IDLE;
+            end
         endcase
     end
 end
@@ -98,20 +101,21 @@ end
 
 
 //读逻辑
-reg [`AXI_W_STATE_WIDTH-1:0] sram_r_state;
+reg [`AXI_R_STATE_WIDTH-1:0] sram_r_state;
 parameter [`AXI_R_STATE_WIDTH-1:0] SRAM_R_IDLE   = 'd0;
 parameter [`AXI_R_STATE_WIDTH-1:0] SRAM_R_ADDR   = 'd1;
 parameter [`AXI_R_STATE_WIDTH-1:0] SRAM_R_DATA   = 'd2;
 
-reg [`AXI_ADDR_WIDTH-1:0] r_addr;
+reg  [`AXI_ADDR_WIDTH-1:0] r_addr;
 wire [`AXI_DATA_WIDTH-1:0] r_data;
-assign axi_r_data_o  = r_data;
 
 reg axi_ar_ready_o_r;
 reg axi_r_valid_o_r;
+reg [`AXI_DATA_WIDTH-1:0] axi_r_data_o_r;
 
 assign axi_ar_ready_o = axi_ar_ready_o_r;
 assign axi_r_valid_o = axi_r_valid_o_r;
+assign axi_r_data_o = axi_r_data_o_r;
 
 
 always @(posedge aclk ) begin
@@ -119,7 +123,7 @@ always @(posedge aclk ) begin
         sram_r_state <= SRAM_R_IDLE;
         r_addr  <= 'd0;
         axi_ar_ready_o_r <= 'd0;
-        r_data  <= 'd0;
+        axi_r_data_o_r <= 'd0;
     end
     else begin
         case(sram_r_state)
@@ -131,15 +135,21 @@ always @(posedge aclk ) begin
                 end
             end
             SRAM_R_ADDR:begin
+                if(axi_ar_ready_o_r)begin
+                    axi_r_data_o_r <= r_data;
+                end
                 axi_ar_ready_o_r <= 'd0;
                 if(axi_r_ready_i)begin
-                    axi_w_state <= SRAM_R_DATA;
+                    sram_r_state <= SRAM_R_DATA;
                     axi_r_valid_o_r <= 'd1;
                 end
             end
             SRAM_R_DATA:begin
                 sram_r_state <= SRAM_R_IDLE;
                 axi_r_valid_o_r <= 'd0;
+            end
+            default:begin
+                sram_r_state <= SRAM_R_IDLE;
             end
         endcase
     end

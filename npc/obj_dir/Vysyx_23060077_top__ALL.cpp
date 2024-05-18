@@ -5,6 +5,7 @@
 #include "Vysyx_23060077_top___024root__DepSet_h6f35dd76__0.cpp"
 #include "Vysyx_23060077_top__Dpi.cpp"
 #include "Vysyx_23060077_top__Trace__0.cpp"
+#include "Vysyx_23060077_top__ConstPool_0.cpp"
 #include "Vysyx_23060077_top___024root__Slow.cpp"
 #include "Vysyx_23060077_top___024root__DepSet_hcb3417a8__0__Slow.cpp"
 #include "Vysyx_23060077_top___024root__DepSet_h6f35dd76__0__Slow.cpp"

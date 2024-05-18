@@ -93,13 +93,16 @@ always @(posedge aclk ) begin
                     axi_w_state <= AXI_W_IDLE;
                 end
             end
+            default:begin
+                axi_w_state <= AXI_W_IDLE;
+            end
         endcase
     end
 end
 
 
 //读逻辑
-reg [`AXI_W_STATE_WIDTH-1:0] axi_r_state;
+reg [`AXI_R_STATE_WIDTH-1:0] axi_r_state;
 parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_IDLE   = 'd0;
 parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_ADDR   = 'd1;
 parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_DATA   = 'd2;
@@ -126,13 +129,16 @@ always @(posedge aclk ) begin
             end
             AXI_R_ADDR:begin
                 if(axi_ar_valid_o & axi_ar_ready_i)begin
-                    axi_w_state <= AXI_R_DATA;
+                    axi_r_state <= AXI_R_DATA;
                 end
             end
             AXI_R_DATA:begin
                 if(axi_r_ready_o & axi_r_valid_i)begin
-                    axi_w_state <= AXI_R_IDLE;
+                    axi_r_state <= AXI_R_IDLE;
                 end
+            end
+            default:begin
+                axi_r_state <= AXI_R_IDLE;
             end
         endcase
     end

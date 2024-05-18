@@ -7,6 +7,7 @@ module ysyx_23060077_riscv_ifu(
     input                               jump_pc_valid,
     input                               stall,
 
+    output                              ifu_stall,            
     output  	[`INST_WIDTH-1:0]       ifu_pc_o,
     output  	[`INST_WIDTH-1:0]       ifu_inst_o
 );
@@ -23,45 +24,67 @@ wire  [`INST_WIDTH-1:0]       inst;
 reg cpu_r_valid_i;
 wire cpu_r_ready_o;
 
-import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
+assign ifu_stall = cpu_r_valid_i;
+
+// import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
 import "DPI-C" function void get_riscv32_rst(input bit rst_n);
 always @(*)begin
-    riscv_pmem_read(pc,inst,rst_n);
+    // riscv_pmem_read(pc,inst,rst_n);
     get_riscv32_rst(rst_n);
 end
 
 initial begin
     pc = 32'h8000_0000;
-    ifu_pc_o_r = pc;
+    ifu_pc_o_r = 32'h8000_0000;
 end
 always @(posedge clk) begin
     if(!rst_n)begin
         pc <= 32'h8000_0000;
+        cpu_r_valid_i <= 'd1;
     end
-    else if(stall)begin
+    else if(cpu_r_ready_o)begin
+        pc <= pc;
+        cpu_r_valid_i <= 'd0;
+    end
+    else if(stall | cpu_r_valid_i)begin
         pc <= pc;
     end
     else if(jump_pc_valid)begin
         pc <= jump_pc;
+        cpu_r_valid_i <= 'd1;
     end
     else begin
         pc <= pc + 4;
+        cpu_r_valid_i <= 'd1;
     end
 end
 
 always @(posedge clk) begin
-    if(jump_pc_valid)begin
-        ifu_pc_o_r <= 'd0;
-        ifu_inst_o_r <= 'd0;
-    end
-    else if(stall)begin
-        ifu_pc_o_r <= ifu_pc_o_r;
-        ifu_inst_o_r <= ifu_inst_o_r;
-    end
-    else begin
+    if(cpu_r_ready_o)begin
         ifu_pc_o_r <= pc;
         ifu_inst_o_r <= inst;
     end
+    else begin
+        ifu_pc_o_r <= ifu_pc_o_r;
+        ifu_inst_o_r <= ifu_inst_o_r;
+    end
 end
+
+ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
+    .aclk                   ( clk                                  ),
+    .areset_n               ( rst_n                                ),
+
+    .cpu_r_valid_i          (cpu_r_valid_i),
+    .cpu_r_addr_i           (pc),
+    .cpu_r_ready_o          (cpu_r_ready_o),
+    .cpu_r_data_o           (inst),
+
+    .cpu_w_valid_i          (),
+    .cpu_w_addr_i           (),
+    .cpu_w_ready_o          (),
+    .cpu_w_data_i           (),
+    .cpu_w_strb_i           ()
+);
+
 
 endmodule
