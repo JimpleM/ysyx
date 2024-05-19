@@ -14,8 +14,7 @@ module ysyx_23060077_riscv_lsu(
     output                              lsu_rd_wen,
     output  	  [`DATA_WIDTH-1:0]       lsu_result
 );
-wire ren;
-wire wen;
+
 wire [`DATA_WIDTH-1:0] raddr;
 wire [`DATA_WIDTH-1:0] rdata;
 wire [`DATA_WIDTH-1:0] waddr;
@@ -23,16 +22,7 @@ wire [`DATA_WIDTH-1:0] wdata;
 wire [`DATA_WIDTH-1:0] wmask;
 wire [`DATA_WIDTH-1:0]  mask;
 
-wire [`DATA_WIDTH-1:0] rdata_t;
-reg  [`DATA_WIDTH-1:0] rdata_r;
-assign rdata = rdata_r;
 
-reg wen_t;
-
-assign mem_stall = ren | wen;
-
-assign ren = (lsu_opt == `LSU_OPT_LOAD);
-assign wen = (lsu_opt == `LSU_OPT_STORE);
 assign raddr = src1 + imm;
 assign waddr = src1 + imm;
 assign wdata = src2;
@@ -69,56 +59,57 @@ ysyx_23060077_riscv_mux#(
   })
 );
 
+reg ren;
+reg wen;
+
+wire lsu_rd_wen_r;
+wire lsu_rd_wen_w;
+assign lsu_rd_wen = lsu_rd_wen_r | lsu_rd_wen_w;
 
 always @(posedge clk ) begin
   if(!rst_n)begin
-    rdata_r <= 'd0;
+    ren <= 'd0;
   end
-  else if(ren) begin
-    rdata_r <= rdata_t;
+  else if(lsu_rd_wen_r)begin
+    ren <= 'd0;
   end
-  else begin
-    rdata_r <= 'd0;
+  else if(lsu_opt == `LSU_OPT_LOAD)begin
+    ren <= 'd1;
   end
+
 end
 
 always @(posedge clk ) begin
   if(!rst_n)begin
-    wen_t <= 'd0;
+    wen <= 'd0;
   end
-  else if(wen) begin
-    wen_t <= 'd1;
+  else if(lsu_rd_wen_w)begin
+    wen <= 'd0;
   end
-  else begin
-    wen_t <= 'd0;
+  else if(lsu_opt == `LSU_OPT_STORE)begin
+    wen <= 'd1;
   end
-end
-assign lsu_rd_wen = ren | wen;
 
-// sim
-import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
-import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask, input wen);
-
-always @(*)begin
-    riscv_pmem_read(raddr,rdata_t,ren);
-    riscv_pmem_write(waddr,wdata,wmask,wen_t);
 end
 
-// ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
-//     .aclk                   ( clk                                  ),
-//     .areset_n               ( rst_n                                ),
+assign mem_stall = (ren | wen) & !lsu_rd_wen;
 
-//     .cpu_r_valid_i          (cpu_r_valid_i),
-//     .cpu_r_addr_i           (raddr),
-//     .cpu_r_ready_o          (cpu_r_ready_o),
-//     .cpu_r_data_o           (inst),
 
-//     .cpu_w_valid_i          (),
-//     .cpu_w_addr_i           (),
-//     .cpu_w_ready_o          (),
-//     .cpu_w_data_i           (),
-//     .cpu_w_strb_i           ()
-// );
+ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
+    .aclk                   ( clk    ),
+    .areset_n               ( rst_n  ),
+
+    .cpu_r_valid_i          (ren),
+    .cpu_r_addr_i           (raddr),
+    .cpu_r_ready_o          (lsu_rd_wen_r),
+    .cpu_r_data_o           (rdata),
+
+    .cpu_w_valid_i          (wen),
+    .cpu_w_addr_i           (waddr),
+    .cpu_w_ready_o          (lsu_rd_wen_w),
+    .cpu_w_data_i           (wdata),
+    .cpu_w_strb_i           (wmask[2:0])
+);
 
 
 endmodule

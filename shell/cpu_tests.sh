@@ -1,2 +1,2 @@
 cd ../am-kernels/tests/cpu-tests/
-make ARCH="riscv32e-npc"  ALL="$1" run 
+make ARCH="riscv32e-npc" $1 run 

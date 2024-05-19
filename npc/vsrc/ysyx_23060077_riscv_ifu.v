@@ -6,6 +6,7 @@ module ysyx_23060077_riscv_ifu(
     input       [`DATA_WIDTH-1:0]       jump_pc,
     input                               jump_pc_valid,
     input                               stall,
+    input                               wbu_stall,
 
     output                              ifu_stall,            
     output  	[`INST_WIDTH-1:0]       ifu_pc_o,
@@ -46,12 +47,15 @@ always @(posedge clk) begin
         pc <= pc;
         cpu_r_valid_i <= 'd0;
     end
-    else if(stall | cpu_r_valid_i)begin
+    else if(stall | wbu_stall)begin
         pc <= pc;
     end
     else if(jump_pc_valid)begin
         pc <= jump_pc;
         cpu_r_valid_i <= 'd1;
+    end
+    else if(cpu_r_valid_i)begin
+        pc <= pc;
     end
     else begin
         pc <= pc + 4;
@@ -60,7 +64,15 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if(cpu_r_ready_o)begin
+    if(stall)begin
+        ifu_pc_o_r <= ifu_pc_o_r;
+        ifu_inst_o_r <= ifu_inst_o_r;
+    end
+    else if(!cpu_r_valid_i)begin
+        ifu_pc_o_r <= pc;
+        ifu_inst_o_r <= inst;
+    end
+    else if(cpu_r_ready_o)begin
         ifu_pc_o_r <= pc;
         ifu_inst_o_r <= inst;
     end

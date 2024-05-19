@@ -124,6 +124,7 @@ always @(posedge aclk ) begin
         r_addr  <= 'd0;
         axi_ar_ready_o_r <= 'd0;
         axi_r_data_o_r <= 'd0;
+        axi_r_valid_o_r <= 'd0;
     end
     else begin
         case(sram_r_state)

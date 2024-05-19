@@ -89,8 +89,8 @@ always @(posedge clk) begin
 end
 wire diff_pc;
 assign diff_pc = (ifu_pc_lst != ifu_pc);
-assign stall = mem_stall & diff_pc;
-assign ifu_inst = ifu_stall ? 'd0 : ifu_inst_t;
+assign stall = mem_stall;
+// assign ifu_inst = ifu_stall | mem_stall ? 'd0 : ifu_inst_t;
 
 ysyx_23060077_riscv_ifu riscv_ifu_u0(
     .clk            ( clk           ),
@@ -98,9 +98,10 @@ ysyx_23060077_riscv_ifu riscv_ifu_u0(
     .jump_pc        ( jump_pc       ),
     .jump_pc_valid  ( jump_pc_valid ),
     .stall          ( stall     ),
+    .wbu_stall      (lsu_rd_wen),
     .ifu_stall      ( ifu_stall ),
     .ifu_pc_o       ( ifu_pc        ),
-    .ifu_inst_o     ( ifu_inst_t      )
+    .ifu_inst_o     ( ifu_inst      )
 );
 
 
@@ -190,39 +191,39 @@ ysyx_23060077_riscv_wbu riscv_wbu_u0(
     .csr_result     (rd_csr_data),
 
     .lsu_rd_wen     (lsu_rd_wen),
-    .idu_rd_wen     (idu_rd_wen),
+    .idu_rd_wen     (idu_rd_wen & !ifu_stall),
     .wbu_rd_wen     (wbu_rd_wen),
     .wbu_result		(rd_data)
     
 );
-reg  [`DATA_WIDTH-1:0]      commit_pc_t;
-reg  commit_valid_t;
-wire commit_valid;
-wire [`DATA_WIDTH-1:0] commit_pc;
+// reg  [`DATA_WIDTH-1:0]      commit_pc_t;
+// reg  commit_valid_t;
+// wire commit_valid;
+// wire [`DATA_WIDTH-1:0] commit_pc;
 
-always @(posedge clk ) begin
-    if(!rst_n)begin
-        commit_pc_t <= ifu_pc;
-    end
-    else if(ifu_stall)begin
-        commit_pc_t <= 'd0;
-        commit_valid_t <= 'd0;
-    end
-    else if(stall)begin
-        commit_pc_t <= ifu_pc;
-        commit_valid_t <= 'd1;
-    end
-    else begin
-        commit_pc_t <= 'd0;
-        commit_valid_t <= 'd0;
-    end
-end
+// always @(posedge clk ) begin
+//     if(!rst_n)begin
+//         commit_pc_t <= ifu_pc;
+//     end
+//     else if(ifu_stall)begin
+//         commit_pc_t <= 'd0;
+//         commit_valid_t <= 'd0;
+//     end
+//     else if(stall)begin
+//         commit_pc_t <= ifu_pc;
+//         commit_valid_t <= 'd1;
+//     end
+//     else begin
+//         commit_pc_t <= 'd0;
+//         commit_valid_t <= 'd0;
+//     end
+// end
 
-wire commit_pc = commit_valid_t ? commit_pc_t : ifu_pc;
-wire commit_valid = commit_valid_t ? commit_valid_t : (ifu_pc != 'd0);
+// wire commit_pc = commit_valid_t ? commit_pc_t : ifu_pc;
+// wire commit_valid = commit_valid_t ? commit_valid_t : (ifu_pc != 'd0);
 import "DPI-C" function void set_pc_ptr(input int pc, input bit valid);
 always @(*)begin
-    set_pc_ptr(commit_pc,commit_valid);
+    set_pc_ptr(ifu_pc,1'b1);
 end
 
 endmodule
