@@ -54,11 +54,25 @@ assign axi_b_valid_o  = axi_b_valid_o_r;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
-        sram_w_state <= SRAM_W_IDLE;
         w_addr       <= 'd0;
-        axi_aw_ready_o_r <= 'd0;
         w_data          <= 'd0;
         w_mask          <= 'd0;
+    end
+    else begin
+        if(axi_aw_valid_i)begin
+            w_addr          <= axi_aw_addr_i;
+        end
+        if(axi_w_valid_i)begin
+            w_data          <= axi_w_data_i;
+            w_mask[`AXI_STRB_WIDTH-1:0]  <= axi_w_strb_i;
+        end
+    end
+end
+
+always @(posedge aclk ) begin
+    if(!areset_n)begin
+        sram_w_state <= SRAM_W_IDLE;
+        axi_aw_ready_o_r <= 'd0;
         axi_w_ready_o_r <= 'd0;
         axi_b_valid_o_r <= 'd0;
     end
@@ -67,7 +81,6 @@ always @(posedge aclk ) begin
             SRAM_W_IDLE:begin
                 if(axi_aw_valid_i)begin
                     sram_w_state    <= SRAM_W_ADDR;
-                    w_addr          <= axi_aw_addr_i;
                     axi_aw_ready_o_r <= 'd1;
                 end
             end
@@ -75,8 +88,6 @@ always @(posedge aclk ) begin
                 axi_aw_ready_o_r <= 'd0;
                 if(axi_w_valid_i)begin
                     sram_w_state    <= SRAM_W_DATA;
-                    w_data          <= axi_w_data_i;
-                    w_mask[`AXI_STRB_WIDTH-1:0]  <= axi_w_strb_i;
                     axi_w_ready_o_r <= 'd1;
                 end
             end
@@ -120,10 +131,23 @@ assign axi_r_data_o = axi_r_data_o_r;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
-        sram_r_state <= SRAM_R_IDLE;
-        r_addr  <= 'd0;
-        axi_ar_ready_o_r <= 'd0;
         axi_r_data_o_r <= 'd0;
+        r_addr  <= 'd0;
+    end
+    else begin
+        if(axi_ar_ready_o_r)begin
+            axi_r_data_o_r <= r_data;
+        end
+        if(axi_ar_valid_i)begin
+            r_addr  <= axi_ar_addr_i;
+        end
+    end
+end
+
+always @(posedge aclk ) begin
+    if(!areset_n)begin
+        sram_r_state <= SRAM_R_IDLE;
+        axi_ar_ready_o_r <= 'd0;
         axi_r_valid_o_r <= 'd0;
     end
     else begin
@@ -136,9 +160,6 @@ always @(posedge aclk ) begin
                 end
             end
             SRAM_R_ADDR:begin
-                if(axi_ar_ready_o_r)begin
-                    axi_r_data_o_r <= r_data;
-                end
                 axi_ar_ready_o_r <= 'd0;
                 if(axi_r_ready_i)begin
                     sram_r_state <= SRAM_R_DATA;
