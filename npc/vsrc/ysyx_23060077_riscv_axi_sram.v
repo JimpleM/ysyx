@@ -128,6 +128,7 @@ assign axi_ar_ready_o = axi_ar_ready_o_r;
 assign axi_r_valid_o = axi_r_valid_o_r;
 assign axi_r_data_o = axi_r_data_o_r;
 
+reg [3:0] r_delay_cnt = 0;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
@@ -149,21 +150,36 @@ always @(posedge aclk ) begin
         sram_r_state <= SRAM_R_IDLE;
         axi_ar_ready_o_r <= 'd0;
         axi_r_valid_o_r <= 'd0;
+
+        r_delay_cnt     <= 'd0;
     end
     else begin
         case(sram_r_state)
             SRAM_R_IDLE:begin
                 if(axi_ar_valid_i)begin
-                    sram_r_state <= SRAM_R_ADDR;
-                    r_addr  <= axi_ar_addr_i;
-                    axi_ar_ready_o_r <= 'd1;
+                    if(r_delay_cnt < 5)begin
+                        r_delay_cnt <= r_delay_cnt + 1;
+                    end
+                    else begin
+                        r_delay_cnt <= 'd0;
+
+                        sram_r_state <= SRAM_R_ADDR;
+                        axi_ar_ready_o_r <= 'd1;
+                    end
                 end
             end
             SRAM_R_ADDR:begin
                 axi_ar_ready_o_r <= 'd0;
                 if(axi_r_ready_i)begin
-                    sram_r_state <= SRAM_R_DATA;
-                    axi_r_valid_o_r <= 'd1;
+                    if(r_delay_cnt < 5)begin
+                        r_delay_cnt <= r_delay_cnt + 1;
+                    end
+                    else begin
+                        r_delay_cnt <= 'd0;
+
+                        sram_r_state <= SRAM_R_DATA;
+                        axi_r_valid_o_r <= 'd1;
+                    end
                 end
             end
             SRAM_R_DATA:begin

@@ -9,6 +9,7 @@ module ysyx_23060077_riscv_lsu(
 
     input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
     input       [2:0]                   funct3,
+    input                               ifu_stall,
 
     output                              mem_stall,
     output                              lsu_rd_wen,
@@ -73,7 +74,7 @@ always @(posedge clk ) begin
   else if(lsu_rd_wen_r)begin
     ren <= 'd0;
   end
-  else if(lsu_opt == `LSU_OPT_LOAD)begin
+  else if(lsu_opt == `LSU_OPT_LOAD && ifu_stall == 'b0)begin
     ren <= 'd1;
   end
 
@@ -86,7 +87,7 @@ always @(posedge clk ) begin
   else if(lsu_rd_wen_w)begin
     wen <= 'd0;
   end
-  else if(lsu_opt == `LSU_OPT_STORE)begin
+  else if(lsu_opt == `LSU_OPT_STORE && ifu_stall == 'b0)begin
     wen <= 'd1;
   end
 

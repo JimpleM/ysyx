@@ -155,6 +155,7 @@ ysyx_23060077_riscv_lsu riscv_lsu_u0(
     .imm            (idu_imm ),
     .lsu_opt		(idu_lsu_opt),
     .funct3		    (idu_funct3),
+    .ifu_stall      (ifu_stall),
     .mem_stall      (mem_stall),
     .lsu_rd_wen     (lsu_rd_wen),
     .lsu_result		(lsu_result)
