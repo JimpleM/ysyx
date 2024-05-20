@@ -8,3 +8,6 @@
 
 
 `define AXI_R_STATE_WIDTH       2        
+
+`define AXI_ARB_STATE_WIDTH     2   
+

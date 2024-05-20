@@ -1,3 +1,4 @@
+`include"ysyx_23060077_riscv_axi_define.v"
 module ysyx_23060077_top(
 	input clk,
 	input rst_n
@@ -28,6 +29,11 @@ wire [`DATA_WIDTH-1:0]      jump_pc;
 wire                        jump_pc_valid;
 wire                        stall;  
 
+wire                             ifu_r_valid_o  ;
+wire [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_o   ;
+wire                             ifu_r_ready_i  ;
+wire [`AXI_DATA_WIDTH-1:0]       ifu_r_data_i   ;
+
 // idu
 wire                       	idu_branch		;
 wire                       	idu_jal		    ;
@@ -56,6 +62,16 @@ wire [`DATA_WIDTH-1:0]      exu_result_t	;
 wire [`DATA_WIDTH-1:0]     	lsu_result		;
 wire                        mem_stall       ;     
 wire                        lsu_rd_wen      ; 
+
+wire                             lsu_r_valid_o  ;
+wire [`AXI_ADDR_WIDTH-1:0]       lsu_r_addr_o   ;
+wire                             lsu_r_ready_i  ;
+wire [`AXI_DATA_WIDTH-1:0]       lsu_r_data_i   ;
+wire                             lsu_w_valid_o  ;
+wire [`AXI_ADDR_WIDTH-1:0]       lsu_w_addr_o   ;
+wire                             lsu_w_ready_i  ;
+wire [`AXI_DATA_WIDTH-1:0]       lsu_w_data_o   ;
+wire [`AXI_STRB_WIDTH-1:0]       lsu_w_strb_o   ;
 
 //wbu
 wire                        wbu_rd_wen      ;
@@ -99,6 +115,12 @@ ysyx_23060077_riscv_ifu riscv_ifu_u0(
     .jump_pc_valid  ( jump_pc_valid ),
     .stall          ( stall     ),
     .wbu_stall      (lsu_rd_wen),
+
+    .ifu_r_valid_o  ( ifu_r_valid_o),
+    .ifu_r_addr_o   ( ifu_r_addr_o ),
+    .ifu_r_ready_i  ( ifu_r_ready_i),
+    .ifu_r_data_i   ( ifu_r_data_i ),
+
     .ifu_stall      ( ifu_stall ),
     .ifu_pc_o       ( ifu_pc        ),
     .ifu_inst_o     ( ifu_inst      )
@@ -156,6 +178,17 @@ ysyx_23060077_riscv_lsu riscv_lsu_u0(
     .lsu_opt		(idu_lsu_opt),
     .funct3		    (idu_funct3),
     .ifu_stall      (ifu_stall),
+
+    .lsu_r_valid_o  (lsu_r_valid_o),
+    .lsu_r_addr_o   (lsu_r_addr_o ),
+    .lsu_r_ready_i  (lsu_r_ready_i),
+    .lsu_r_data_i   (lsu_r_data_i ),
+    .lsu_w_valid_o  (lsu_w_valid_o),
+    .lsu_w_addr_o   (lsu_w_addr_o ),
+    .lsu_w_ready_i  (lsu_w_ready_i),
+    .lsu_w_data_o   (lsu_w_data_o ),
+    .lsu_w_strb_o   (lsu_w_strb_o ),
+
     .mem_stall      (mem_stall),
     .lsu_rd_wen     (lsu_rd_wen),
     .lsu_result		(lsu_result)
@@ -197,6 +230,26 @@ ysyx_23060077_riscv_wbu riscv_wbu_u0(
     .wbu_result		(rd_data)
     
 );
+
+ysyx_23060077_riscv_axi_arbiter riscv_axi_arbiter_u0(
+    .aclk                   ( clk ),
+    .areset_n               ( rst_n ),
+    .ifu_r_valid_i          ( ifu_r_valid_o),
+    .ifu_r_addr_i           ( ifu_r_addr_o ),
+    .ifu_r_ready_o          ( ifu_r_ready_i),
+    .ifu_r_data_o           ( ifu_r_data_i ),
+
+    .lsu_r_valid_i          (lsu_r_valid_o),
+    .lsu_r_addr_i           (lsu_r_addr_o ),
+    .lsu_r_ready_o          (lsu_r_ready_i),
+    .lsu_r_data_o           (lsu_r_data_i ),
+    .lsu_w_valid_i          (lsu_w_valid_o),
+    .lsu_w_addr_i           (lsu_w_addr_o ),
+    .lsu_w_ready_o          (lsu_w_ready_i),
+    .lsu_w_data_i           (lsu_w_data_o ),
+    .lsu_w_strb_i           (lsu_w_strb_o )
+);
+
 // reg  [`DATA_WIDTH-1:0]      commit_pc_t;
 // reg  commit_valid_t;
 // wire commit_valid;
@@ -222,6 +275,7 @@ ysyx_23060077_riscv_wbu riscv_wbu_u0(
 
 // wire commit_pc = commit_valid_t ? commit_pc_t : ifu_pc;
 // wire commit_valid = commit_valid_t ? commit_valid_t : (ifu_pc != 'd0);
+
 import "DPI-C" function void set_pc_ptr(input int pc, input bit valid);
 always @(*)begin
     set_pc_ptr(ifu_pc,1'b1);

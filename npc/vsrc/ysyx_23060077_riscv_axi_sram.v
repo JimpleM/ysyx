@@ -207,6 +207,32 @@ always @(posedge aclk ) begin
         endcase
     end
 end
+// // for test
+// reg [`AXI_DATA_WIDTH-1:0] mem_r [255:0];
+// reg [`AXI_DATA_WIDTH-1:0] mem_w [255:0];
+
+// reg [`AXI_DATA_WIDTH-1:0] r_data_r;
+// assign r_data = r_data_r;
+
+// integer i;
+// initial begin
+//     for(i=0; i<256; i=i+1)begin
+//         mem_r[i] = 0;
+//         mem_w[i] = 0;
+//     end   
+// end
+
+// always @(posedge aclk) begin
+//     if (axi_ar_ready_o_r)begin
+//         r_data_r <= mem_r[r_addr];
+//     end 
+// end
+// always @(posedge aclk) begin
+//     if (axi_w_ready_o_r)begin
+//         mem_w[w_addr] <= w_data;
+//     end 
+// end
+
 
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input ren);
 import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask, input wen);

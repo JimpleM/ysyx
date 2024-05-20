@@ -11,6 +11,18 @@ module ysyx_23060077_riscv_lsu(
     input       [2:0]                   funct3,
     input                               ifu_stall,
 
+    // LSU Interface
+    output                              lsu_r_valid_o,
+    output   [`AXI_ADDR_WIDTH-1:0]      lsu_r_addr_o,
+    input                               lsu_r_ready_i,
+    input    [`AXI_DATA_WIDTH-1:0]      lsu_r_data_i,
+
+    output                              lsu_w_valid_o,
+    output   [`AXI_ADDR_WIDTH-1:0]      lsu_w_addr_o,
+    input                               lsu_w_ready_i,
+    output   [`AXI_DATA_WIDTH-1:0]      lsu_w_data_o,
+    output   [`AXI_STRB_WIDTH-1:0]      lsu_w_strb_o,
+
     output                              mem_stall,
     output                              lsu_rd_wen,
     output  	  [`DATA_WIDTH-1:0]       lsu_result
@@ -95,22 +107,34 @@ end
 
 assign mem_stall = (ren | wen) & !lsu_rd_wen;
 
+assign lsu_r_valid_o  = ren;
+assign lsu_r_addr_o   = raddr;
+assign lsu_rd_wen_r   = lsu_r_ready_i;
+assign rdata          = lsu_r_data_i;
 
-ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
-    .aclk                   ( clk    ),
-    .areset_n               ( rst_n  ),
+assign lsu_w_valid_o  = wen;
+assign lsu_w_addr_o   = waddr;
+assign lsu_rd_wen_w  = lsu_w_ready_i;
+assign lsu_w_data_o   = wdata;
+assign lsu_w_strb_o   = wmask[2:0];
 
-    .cpu_r_valid_i          (ren),
-    .cpu_r_addr_i           (raddr),
-    .cpu_r_ready_o          (lsu_rd_wen_r),
-    .cpu_r_data_o           (rdata),
 
-    .cpu_w_valid_i          (wen),
-    .cpu_w_addr_i           (waddr),
-    .cpu_w_ready_o          (lsu_rd_wen_w),
-    .cpu_w_data_i           (wdata),
-    .cpu_w_strb_i           (wmask[2:0])
-);
+
+// ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
+//     .aclk                   ( clk    ),
+//     .areset_n               ( rst_n  ),
+
+//     .cpu_r_valid_i          (ren),
+//     .cpu_r_addr_i           (raddr),
+//     .cpu_r_ready_o          (lsu_rd_wen_r),
+//     .cpu_r_data_o           (rdata),
+
+//     .cpu_w_valid_i          (wen),
+//     .cpu_w_addr_i           (waddr),
+//     .cpu_w_ready_o          (lsu_rd_wen_w),
+//     .cpu_w_data_i           (wdata),
+//     .cpu_w_strb_i           (wmask[2:0])
+// );
 
 
 endmodule

@@ -16,17 +16,17 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_ifu.v:31:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_ifu.v:38:30
     extern void get_riscv32_rst(svBit rst_n);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_sram.v:211:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_sram.v:237:30
     extern void riscv_pmem_read(int raddr, int* rdata, svLogic ren);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_sram.v:212:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_sram.v:238:30
     extern void riscv_pmem_write(int waddr, int wdata, int wmask, svLogic wen);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_csr.v:31:30
     extern void set_csr_ptr(const svOpenArrayHandle csr_reg);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_regfile.v:56:30
     extern void set_gpr_ptr(const svOpenArrayHandle a);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_top.v:225:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_top.v:278:30
     extern void set_pc_ptr(int pc, svBit valid);
 
 #ifdef __cplusplus
