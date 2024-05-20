@@ -33,6 +33,23 @@ module ysyx_23060077_riscv_axi_sram(
     output  [`AXI_DATA_WIDTH-1:0]       axi_r_data_o
 );
 
+reg [5:0] lfsr_out;
+
+reg [5:0] r_delay_cnt = 0;
+reg [5:0] w_delay_cnt = 0;
+
+always @(posedge aclk ) begin
+    if(!areset_n)begin
+        lfsr_out <= 'd1;
+    end
+    else if(axi_b_ready_i | axi_r_ready_i)begin
+        lfsr_out <= lfsr_out;
+    end
+    else begin
+        lfsr_out <= {lfsr_out[4:0], (lfsr_out[4] ^ lfsr_out[3] ^ lfsr_out[0])};
+    end
+end
+
 // 写逻辑
 reg [`AXI_W_STATE_WIDTH-1:0] sram_w_state;
 parameter [`AXI_W_STATE_WIDTH-1:0] SRAM_W_IDLE   = 'd0;
@@ -94,8 +111,15 @@ always @(posedge aclk ) begin
             SRAM_W_DATA:begin
                 axi_w_ready_o_r <= 'd0;
                 if(axi_b_ready_i)begin
-                    sram_w_state    <= SRAM_W_RESP;
-                    axi_b_valid_o_r <= 'd1;
+                    if(w_delay_cnt < lfsr_out)begin
+                        w_delay_cnt <= w_delay_cnt + 1;
+                    end
+                    else begin
+                        w_delay_cnt <= 'd0;
+
+                        sram_w_state    <= SRAM_W_RESP;
+                        axi_b_valid_o_r <= 'd1;
+                    end
                 end
             end
             SRAM_W_RESP:begin
@@ -128,8 +152,6 @@ assign axi_ar_ready_o = axi_ar_ready_o_r;
 assign axi_r_valid_o = axi_r_valid_o_r;
 assign axi_r_data_o = axi_r_data_o_r;
 
-reg [3:0] r_delay_cnt = 0;
-
 always @(posedge aclk ) begin
     if(!areset_n)begin
         axi_r_data_o_r <= 'd0;
@@ -157,21 +179,14 @@ always @(posedge aclk ) begin
         case(sram_r_state)
             SRAM_R_IDLE:begin
                 if(axi_ar_valid_i)begin
-                    if(r_delay_cnt < 5)begin
-                        r_delay_cnt <= r_delay_cnt + 1;
-                    end
-                    else begin
-                        r_delay_cnt <= 'd0;
-
-                        sram_r_state <= SRAM_R_ADDR;
-                        axi_ar_ready_o_r <= 'd1;
-                    end
+                    sram_r_state <= SRAM_R_ADDR;
+                    axi_ar_ready_o_r <= 'd1;
                 end
             end
             SRAM_R_ADDR:begin
                 axi_ar_ready_o_r <= 'd0;
                 if(axi_r_ready_i)begin
-                    if(r_delay_cnt < 5)begin
+                    if(r_delay_cnt < lfsr_out)begin
                         r_delay_cnt <= r_delay_cnt + 1;
                     end
                     else begin
