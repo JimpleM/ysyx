@@ -71,7 +71,6 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
         CData/*0:0*/ __VactContinue;
         SData/*15:0*/ ysyx_23060077_top__DOT__riscv_lsu_u0__DOT____VdfgTmp_h56d28e90__0;
-        IData/*31:0*/ ysyx_23060077_top__DOT__ifu_pc_lst;
         IData/*31:0*/ ysyx_23060077_top__DOT__ifu_inst_t;
         IData/*31:0*/ ysyx_23060077_top__DOT__src1;
         IData/*31:0*/ ysyx_23060077_top__DOT__exu_result_t;
@@ -79,9 +78,9 @@ class Vysyx_23060077_top___024root final : public VerilatedModule {
         IData/*31:0*/ ysyx_23060077_top__DOT__csr_mstatus;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__ifu_pc_o_r;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__ifu_inst_o_r;
+        IData/*31:0*/ ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__pc;
     };
     struct {
-        IData/*31:0*/ ysyx_23060077_top__DOT__riscv_ifu_u0__DOT__pc;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_r;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_idu_u0__DOT__riscv_id_imm_idu__DOT__imm_typeI;
         IData/*31:0*/ ysyx_23060077_top__DOT__riscv_regfile_u0__DOT__i;

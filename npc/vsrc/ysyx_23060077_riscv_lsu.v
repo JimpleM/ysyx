@@ -53,21 +53,6 @@ always @(*) begin
   	    default: 				lsu_result_r = 'd0 ; 
   	endcase
 end
-// ysyx_23060077_riscv_mux#(
-//     .NR_KEY      (5), 
-//     .KEY_LEN     (`LSU_OPT_WIDTH+3), 
-//     .DATA_LEN    (`DATA_WIDTH)
-// )riscv_mux_ls_lsu_opt(
-//   .key              ({lsu_opt,funct3}),
-//   .default_out      (0),
-//   .out              ({lsu_result}),
-//   .lut({{`LSU_OPT_LOAD,3'b000}, {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]},       //lb
-//         {`LSU_OPT_LOAD,3'b001}, {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]},      //lh
-//         {`LSU_OPT_LOAD,3'b010}, {{(`DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]},      //lw
-//         {`LSU_OPT_LOAD,3'b100}, {{(`DATA_WIDTH-8){1'b0}}        ,rdata[7:0]},       //lbu
-//         {`LSU_OPT_LOAD,3'b101}, {{(`DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}       //lhu
-//   })
-// );
 
 always @(*) begin
 	case({lsu_opt,funct3})
@@ -78,19 +63,6 @@ always @(*) begin
 	endcase
 end
 
-// ysyx_23060077_riscv_mux#(
-//     .NR_KEY      (3), 
-//     .KEY_LEN     (`LSU_OPT_WIDTH+3), 
-//     .DATA_LEN    (`DATA_WIDTH)
-// )riscv_mux_ls_wmask(
-//   .key              ({lsu_opt,funct3}),
-//   .default_out      (0),
-//   .out              ({mask}),
-//   .lut({{`LSU_OPT_STORE,3'b000}, {32'd1},         //sb
-//         {`LSU_OPT_STORE,3'b001}, {32'd2},         //sh
-//         {`LSU_OPT_STORE,3'b010}, {32'd4}          //sw
-//   })
-// );
 
 reg ren;
 reg wen;

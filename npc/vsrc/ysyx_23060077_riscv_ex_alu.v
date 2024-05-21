@@ -28,28 +28,6 @@ wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!
 wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]}[`DATA_WIDTH-1:0] ;
 // wire [`DATA_WIDTH-1:0]sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]} ;
 
-
-// ysyx_23060077_riscv_mux#(
-//   .NR_KEY      (11), 
-//   .KEY_LEN     (4), 
-//   .DATA_LEN    (`DATA_WIDTH)
-// )riscv_mux_ex_data(
-//   .key              (alu_opt),
-//   .default_out      (0),
-//   .out              (alu_out_data),
-//   .lut({`ALU_ADD    , add_out[`DATA_WIDTH-1:0],                                           
-//         `ALU_SUB    , add_out[`DATA_WIDTH-1:0],
-//         `ALU_SLL    , alu_a_data << alu_b_data[5:0],
-//         `ALU_SLT    , {{(`DATA_WIDTH-1){1'b0}},sign_flag^over_flag},
-//         `ALU_SLTU   , {{(`DATA_WIDTH-1){1'b0}},carry_flag},
-//         `ALU_XOR    , alu_a_data ^ alu_b_data,
-//         `ALU_SRL    , alu_a_data >> alu_b_data[5:0],
-//         `ALU_SRA    , sra_result,
-//         `ALU_OR     , alu_a_data | alu_b_data,
-//         `ALU_AND    , alu_a_data & alu_b_data,
-//         `ALU_SUBU   , add_out[`DATA_WIDTH-1:0]
-//   })
-// );
 reg [`DATA_WIDTH-1:0]       alu_out_data_r;
 assign alu_out_data = alu_out_data_r;
 always @(*) begin
