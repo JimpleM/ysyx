@@ -4,33 +4,33 @@ module ysyx_23060077_riscv_axi_sram(
     input                               aclk,
     input                               areset_n,
     // 写地址通道
-    output                              axi_aw_ready_o,
-    input                               axi_aw_valid_i,
-    input   [`AXI_PORT_WIDTH-1:0]       axi_aw_port_i,
-    input   [`AXI_ADDR_WIDTH-1:0]       axi_aw_addr_i,
+    output                              axi_sram_aw_ready_o,
+    input                               axi_sram_aw_valid_i,
+    input   [`AXI_PORT_WIDTH-1:0]       axi_sram_aw_port_i,
+    input   [`AXI_ADDR_WIDTH-1:0]       axi_sram_aw_addr_i,
 
     // 写数据通道
-    output                              axi_w_ready_o,
-    input                               axi_w_valid_i,
-    input   [`AXI_STRB_WIDTH-1:0]       axi_w_strb_i,
-    input   [`AXI_DATA_WIDTH-1:0]       axi_w_data_i,
+    output                              axi_sram_w_ready_o,
+    input                               axi_sram_w_valid_i,
+    input   [`AXI_STRB_WIDTH-1:0]       axi_sram_w_strb_i,
+    input   [`AXI_DATA_WIDTH-1:0]       axi_sram_w_data_i,
 
     // 写应答通道
-    output  [`AXI_RESP_WIDTH-1:0]       axi_b_resp_o,
-    output                              axi_b_valid_o,
-    input                               axi_b_ready_i,
+    output  [`AXI_RESP_WIDTH-1:0]       axi_sram_b_resp_o,
+    output                              axi_sram_b_valid_o,
+    input                               axi_sram_b_ready_i,
 
     // 读地址通道
-    output                              axi_ar_ready_o,
-    input                               axi_ar_valid_i,
-    input   [`AXI_PORT_WIDTH-1:0]       axi_ar_port_i,
-    input   [`AXI_ADDR_WIDTH-1:0]       axi_ar_addr_i,
+    output                              axi_sram_ar_ready_o,
+    input                               axi_sram_ar_valid_i,
+    input   [`AXI_PORT_WIDTH-1:0]       axi_sram_ar_port_i,
+    input   [`AXI_ADDR_WIDTH-1:0]       axi_sram_ar_addr_i,
 
     // 读数据通道
-    input                               axi_r_ready_i,
-    output                              axi_r_valid_o,
-    output  [`AXI_RESP_WIDTH-1:0]       axi_r_resp_o,
-    output  [`AXI_DATA_WIDTH-1:0]       axi_r_data_o
+    input                               axi_sram_r_ready_i,
+    output                              axi_sram_r_valid_o,
+    output  [`AXI_RESP_WIDTH-1:0]       axi_sram_r_resp_o,
+    output  [`AXI_DATA_WIDTH-1:0]       axi_sram_r_data_o
 );
 
 reg [5:0] lfsr_out;
@@ -42,7 +42,7 @@ always @(posedge aclk ) begin
     if(!areset_n)begin
         lfsr_out <= 'd1;
     end
-    else if(axi_b_ready_i | axi_r_ready_i)begin
+    else if(axi_sram_b_ready_i | axi_sram_r_ready_i)begin
         lfsr_out <= lfsr_out;
     end
     else begin
@@ -61,13 +61,13 @@ reg [`AXI_ADDR_WIDTH-1:0] w_addr;
 reg [`AXI_DATA_WIDTH-1:0] w_data;
 reg [`AXI_DATA_WIDTH-1:0] w_mask;
 
-reg axi_aw_ready_o_r;
-reg axi_w_ready_o_r;
-reg axi_b_valid_o_r;
+reg axi_sram_aw_ready_o_r;
+reg axi_sram_w_ready_o_r;
+reg axi_sram_b_valid_o_r;
 
-assign axi_aw_ready_o = axi_aw_ready_o_r;
-assign axi_w_ready_o  = axi_w_ready_o_r;
-assign axi_b_valid_o  = axi_b_valid_o_r;
+assign axi_sram_aw_ready_o = axi_sram_aw_ready_o_r;
+assign axi_sram_w_ready_o  = axi_sram_w_ready_o_r;
+assign axi_sram_b_valid_o  = axi_sram_b_valid_o_r;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
@@ -76,12 +76,12 @@ always @(posedge aclk ) begin
         w_mask          <= 'd0;
     end
     else begin
-        if(axi_aw_valid_i)begin
-            w_addr          <= axi_aw_addr_i;
+        if(axi_sram_aw_valid_i)begin
+            w_addr          <= axi_sram_aw_addr_i;
         end
-        if(axi_w_valid_i)begin
-            w_data          <= axi_w_data_i;
-            w_mask[`AXI_STRB_WIDTH-1:0]  <= axi_w_strb_i;
+        if(axi_sram_w_valid_i)begin
+            w_data          <= axi_sram_w_data_i;
+            w_mask[`AXI_STRB_WIDTH-1:0]  <= axi_sram_w_strb_i;
         end
     end
 end
@@ -89,28 +89,28 @@ end
 always @(posedge aclk ) begin
     if(!areset_n)begin
         sram_w_state <= SRAM_W_IDLE;
-        axi_aw_ready_o_r <= 'd0;
-        axi_w_ready_o_r <= 'd0;
-        axi_b_valid_o_r <= 'd0;
+        axi_sram_aw_ready_o_r <= 'd0;
+        axi_sram_w_ready_o_r <= 'd0;
+        axi_sram_b_valid_o_r <= 'd0;
     end
     else begin
         case(sram_w_state)
             SRAM_W_IDLE:begin
-                if(axi_aw_valid_i)begin
+                if(axi_sram_aw_valid_i)begin
                     sram_w_state    <= SRAM_W_ADDR;
-                    axi_aw_ready_o_r <= 'd1;
+                    axi_sram_aw_ready_o_r <= 'd1;
                 end
             end
             SRAM_W_ADDR:begin
-                axi_aw_ready_o_r <= 'd0;
-                if(axi_w_valid_i)begin
+                axi_sram_aw_ready_o_r <= 'd0;
+                if(axi_sram_w_valid_i)begin
                     sram_w_state    <= SRAM_W_DATA;
-                    axi_w_ready_o_r <= 'd1;
+                    axi_sram_w_ready_o_r <= 'd1;
                 end
             end
             SRAM_W_DATA:begin
-                axi_w_ready_o_r <= 'd0;
-                if(axi_b_ready_i)begin
+                axi_sram_w_ready_o_r <= 'd0;
+                if(axi_sram_b_ready_i)begin
                     if(w_delay_cnt < lfsr_out)begin
                         w_delay_cnt <= w_delay_cnt + 1;
                     end
@@ -118,12 +118,12 @@ always @(posedge aclk ) begin
                         w_delay_cnt <= 'd0;
 
                         sram_w_state    <= SRAM_W_RESP;
-                        axi_b_valid_o_r <= 'd1;
+                        axi_sram_b_valid_o_r <= 'd1;
                     end
                 end
             end
             SRAM_W_RESP:begin
-                axi_b_valid_o_r <= 'd0;
+                axi_sram_b_valid_o_r <= 'd0;
                 sram_w_state    <= SRAM_W_IDLE;
             end
             default:begin
@@ -144,25 +144,25 @@ parameter [`AXI_R_STATE_WIDTH-1:0] SRAM_R_DATA   = 'd2;
 reg  [`AXI_ADDR_WIDTH-1:0] r_addr;
 wire [`AXI_DATA_WIDTH-1:0] r_data;
 
-reg axi_ar_ready_o_r;
-reg axi_r_valid_o_r;
-reg [`AXI_DATA_WIDTH-1:0] axi_r_data_o_r;
+reg axi_sram_ar_ready_o_r;
+reg axi_sram_r_valid_o_r;
+reg [`AXI_DATA_WIDTH-1:0] axi_sram_r_data_o_r;
 
-assign axi_ar_ready_o = axi_ar_ready_o_r;
-assign axi_r_valid_o = axi_r_valid_o_r;
-assign axi_r_data_o = axi_r_data_o_r;
+assign axi_sram_ar_ready_o = axi_sram_ar_ready_o_r;
+assign axi_sram_r_valid_o = axi_sram_r_valid_o_r;
+assign axi_sram_r_data_o = axi_sram_r_data_o_r;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
-        axi_r_data_o_r <= 'd0;
+        axi_sram_r_data_o_r <= 'd0;
         r_addr  <= 'd0;
     end
     else begin
-        if(axi_ar_ready_o_r)begin
-            axi_r_data_o_r <= r_data;
+        if(axi_sram_ar_ready_o_r)begin
+            axi_sram_r_data_o_r <= r_data;
         end
-        if(axi_ar_valid_i)begin
-            r_addr  <= axi_ar_addr_i;
+        if(axi_sram_ar_valid_i)begin
+            r_addr  <= axi_sram_ar_addr_i;
         end
     end
 end
@@ -170,22 +170,22 @@ end
 always @(posedge aclk ) begin
     if(!areset_n)begin
         sram_r_state <= SRAM_R_IDLE;
-        axi_ar_ready_o_r <= 'd0;
-        axi_r_valid_o_r <= 'd0;
+        axi_sram_ar_ready_o_r <= 'd0;
+        axi_sram_r_valid_o_r <= 'd0;
 
         r_delay_cnt     <= 'd0;
     end
     else begin
         case(sram_r_state)
             SRAM_R_IDLE:begin
-                if(axi_ar_valid_i)begin
+                if(axi_sram_ar_valid_i)begin
                     sram_r_state <= SRAM_R_ADDR;
-                    axi_ar_ready_o_r <= 'd1;
+                    axi_sram_ar_ready_o_r <= 'd1;
                 end
             end
             SRAM_R_ADDR:begin
-                axi_ar_ready_o_r <= 'd0;
-                if(axi_r_ready_i)begin
+                axi_sram_ar_ready_o_r <= 'd0;
+                if(axi_sram_r_ready_i)begin
                     if(r_delay_cnt < lfsr_out)begin
                         r_delay_cnt <= r_delay_cnt + 1;
                     end
@@ -193,13 +193,13 @@ always @(posedge aclk ) begin
                         r_delay_cnt <= 'd0;
 
                         sram_r_state <= SRAM_R_DATA;
-                        axi_r_valid_o_r <= 'd1;
+                        axi_sram_r_valid_o_r <= 'd1;
                     end
                 end
             end
             SRAM_R_DATA:begin
                 sram_r_state <= SRAM_R_IDLE;
-                axi_r_valid_o_r <= 'd0;
+                axi_sram_r_valid_o_r <= 'd0;
             end
             default:begin
                 sram_r_state <= SRAM_R_IDLE;
@@ -223,12 +223,12 @@ end
 // end
 
 // always @(posedge aclk) begin
-//     if (axi_ar_ready_o_r)begin
+//     if (axi_sram_ar_ready_o_r)begin
 //         r_data_r <= mem_r[r_addr];
 //     end 
 // end
 // always @(posedge aclk) begin
-//     if (axi_w_ready_o_r)begin
+//     if (axi_sram_w_ready_o_r)begin
 //         mem_w[w_addr] <= w_data;
 //     end 
 // end
@@ -238,8 +238,8 @@ import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, 
 import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask, input wen);
 
 always @(*)begin
-    riscv_pmem_read(r_addr,r_data,axi_ar_ready_o_r);
-    riscv_pmem_write(w_addr,w_data,w_mask,axi_w_ready_o_r);
+    riscv_pmem_read(r_addr,r_data,axi_sram_ar_ready_o_r);
+    riscv_pmem_write(w_addr,w_data,w_mask,axi_sram_w_ready_o_r);
 end
 
 endmodule

@@ -157,7 +157,7 @@ ysyx_23060077_riscv_axi u_ysyx_23060077_riscv_axi (
     .axi_r_data_i           ( axi_r_data_i   )
 );
 
-ysyx_23060077_riscv_axi_sram u_ysyx_23060077_riscv_axi_xbar(
+ysyx_23060077_riscv_axi_xbar u_ysyx_23060077_riscv_axi_xbar(
     .aclk                     ( aclk           ),
     .areset_n                 ( areset_n       ),
 

@@ -26,7 +26,7 @@ extern "C" {
     extern void set_csr_ptr(const svOpenArrayHandle csr_reg);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_regfile.v:56:30
     extern void set_gpr_ptr(const svOpenArrayHandle a);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_top.v:279:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_top.v:268:30
     extern void set_pc_ptr(int pc, svBit valid);
 
 #ifdef __cplusplus

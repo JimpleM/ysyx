@@ -85,17 +85,6 @@ wire [`DATA_WIDTH-1:0]      csr_mstatus     ;
 wire [`DATA_WIDTH-1:0]      csr_mtvec       ;
 wire [`INST_WIDTH-1:0]      csr_mpec        ;
 
-// ysyx_23060077_riscv_bpu   ysyx_23060077_riscv_bpu_u0(
-//     .clk            (clk      ),
-//     .rst_n          (rst_n    ),
-//     .zero_flag      (zero_flag),
-//     .branch         (idu_branch   ),
-//     .jal            (idu_jal      ),
-//     .jalr           (idu_jalr     ),
-//     .src1           (src1     ),
-//     .imm            (idu_imm      ),
-//     .pc             (ifu_pc       )
-// );
 
 assign jump_pc = csr_mret ? csr_mpec : (csr_ecall ? csr_mtvec :(((idu_branch && !zero_flag) || idu_jal) ? ifu_pc + idu_imm : (idu_jalr ? src1 + idu_imm : 'd0)));
 assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu_jal) | idu_jalr;
