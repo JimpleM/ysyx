@@ -120,21 +120,4 @@ assign lsu_w_strb_o   = wmask[2:0];
 
 
 
-// ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
-//     .aclk                   ( clk    ),
-//     .areset_n               ( rst_n  ),
-
-//     .cpu_r_valid_i          (ren),
-//     .cpu_r_addr_i           (raddr),
-//     .cpu_r_ready_o          (lsu_rd_wen_r),
-//     .cpu_r_data_o           (rdata),
-
-//     .cpu_w_valid_i          (wen),
-//     .cpu_w_addr_i           (waddr),
-//     .cpu_w_ready_o          (lsu_rd_wen_w),
-//     .cpu_w_data_i           (wdata),
-//     .cpu_w_strb_i           (wmask[2:0])
-// );
-
-
 endmodule

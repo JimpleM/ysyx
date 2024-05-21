@@ -4,19 +4,6 @@ module ysyx_23060077_top(
 	input rst_n
 );
 
-// wire rst_n;
-
-// ysyx_23060077_riscv_dff #(
-//   .WIDTH(1), 
-//   .RESET_VAL(1'b0)
-// )riscv_dff_pc(
-//     .clk    (clk),
-//     .rst_n  (1'b1),
-//     .wen    (1'b1),
-//     .din    (i_rst_n),
-//     .dout   (rst_n)
-  
-// );
 
 // ifu
 reg  [`DATA_WIDTH-1:0]      ifu_pc_lst;

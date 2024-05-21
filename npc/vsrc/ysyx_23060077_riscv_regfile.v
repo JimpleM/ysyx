@@ -26,18 +26,6 @@ assign rs1_data = gpr[rs1_addr];
 // read rs2
 assign rs2_data = gpr[rs2_addr];
 
-//这玩意时序有问题
-// ysyx_23060077_riscv_dff #(
-//   .WIDTH(`DATA_WIDTH), 
-//   .RESET_VAL(32'd0)
-// )riscv_dff_reg(
-//     .clk    (clk),
-//     .rst_n  (1'b1),
-//     .wen    (rd_en),
-//     .din    (rd_data),
-//     .dout   (gpr[rd_addr])
-// );
-
 
 always @(posedge clk) begin
     if (rd_en)begin

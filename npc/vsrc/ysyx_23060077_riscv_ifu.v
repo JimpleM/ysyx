@@ -74,10 +74,6 @@ always @(posedge clk) begin
         ifu_pc_o_r <= ifu_pc_o_r;
         ifu_inst_o_r <= ifu_inst_o_r;
     end
-    // else if(!cpu_r_valid_i)begin
-    //     ifu_pc_o_r <= pc;
-    //     ifu_inst_o_r <= inst;
-    // end
     else if(cpu_r_ready_o)begin
         ifu_pc_o_r <= pc;
         ifu_inst_o_r <= inst;
@@ -93,21 +89,6 @@ assign ifu_r_addr_o  = pc;
 assign inst          = ifu_r_data_i;
 assign cpu_r_ready_o = ifu_r_ready_i;
 
-// ysyx_23060077_riscv_axi_lite  u_ysyx_23060077_riscv_axi_lite (
-//     .aclk                   ( clk                                  ),
-//     .areset_n               ( rst_n                                ),
-
-//     .cpu_r_valid_i          (cpu_r_valid_i),
-//     .cpu_r_addr_i           (pc),
-//     .cpu_r_ready_o          (cpu_r_ready_o),
-//     .cpu_r_data_o           (inst),
-
-//     .cpu_w_valid_i          (),
-//     .cpu_w_addr_i           (),
-//     .cpu_w_ready_o          (),
-//     .cpu_w_data_i           (),
-//     .cpu_w_strb_i           ()
-// );
 
 
 endmodule
