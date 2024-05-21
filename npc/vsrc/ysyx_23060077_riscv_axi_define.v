@@ -11,3 +11,5 @@
 
 `define AXI_ARB_STATE_WIDTH     2   
 
+`define AXI_UART_ADDR           32'ha00003f8
+`define AXI_SRAM_ADDR           32'h8???_???? 

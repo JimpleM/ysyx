@@ -91,3 +91,9 @@ extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 	
 }
 
+extern "C" void riscv_uart_write(int wdata,svBit wen){
+	if(wen){
+		uart_write(wdata);
+	}
+}
+

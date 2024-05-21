@@ -71,7 +71,7 @@ assign axi_sram_b_valid_o  = axi_sram_b_valid_o_r;
 
 always @(posedge aclk ) begin
     if(!areset_n)begin
-        w_addr       <= 'd0;
+        w_addr          <= 'd0;
         w_data          <= 'd0;
         w_mask          <= 'd0;
     end

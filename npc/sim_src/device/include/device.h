@@ -26,8 +26,7 @@ uint32_t keyboard_read();
 void timer_init();
 uint32_t timer_read(uint32_t addr);
 
-//uart
-void uart_write(uint32_t data);
+
 
 //vga
 #define SYNC_ADDR (VGACTL_ADDR + 4)

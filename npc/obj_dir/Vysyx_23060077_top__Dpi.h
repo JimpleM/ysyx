@@ -22,6 +22,8 @@ extern "C" {
     extern void riscv_pmem_read(int raddr, int* rdata, svLogic ren);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_sram.v:238:30
     extern void riscv_pmem_write(int waddr, int wdata, int wmask, svLogic wen);
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_axi_uart.v:122:30
+    extern void riscv_uart_write(int wdata, svLogic wen);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_csr.v:31:30
     extern void set_csr_ptr(const svOpenArrayHandle csr_reg);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_riscv_regfile.v:44:30
