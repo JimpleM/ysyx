@@ -26,7 +26,7 @@ wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!
 // wire carry_flag = ((top_A&top_B&top_C) | (!top_A&!top_B&top_C) | (top_A&!top_B&!top_C) | (!top_A&top_B&!top_C)) ^ sub_flag;
 
 wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]}[`DATA_WIDTH-1:0] ;
-// wire sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]} ;
+// wire [`DATA_WIDTH-1:0]sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]} ;
 
 
 ysyx_23060077_riscv_mux#(
