@@ -4,8 +4,8 @@ module ysyx_23060077_riscv_id_opt(
     input 	    [2:0]                   funct3,
     input 	    [6:0]                   funct7,
     output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    output      [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt
+    output  reg [`SRC_SEL_WIDTH-1:0]    src_sel,
+    output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt
 );
 
 always @(*)begin
@@ -80,42 +80,67 @@ always @(*)begin
 end
 
 
-ysyx_23060077_riscv_mux#(
-    .NR_KEY      (11), 
-    .KEY_LEN     (7), 
-    .DATA_LEN    (`SRC_SEL_WIDTH)
-)riscv_mux_id_src_sel(
-    .key              (opcode),//opcode
-    .default_out      (`SRC_SEL_RS1_IMM),
-    .out              (src_sel),
-    .lut({  `LUI   ,{`SRC_SEL_RS1_IMM},
-            `AUIPC ,{`SRC_SEL_PC_IMM},
-            `JAL   ,{`SRC_SEL_PC_4},
-            `JALR  ,{`SRC_SEL_PC_4},
-            `BRANCH,{`SRC_SEL_RS1_2},
-            `LOAD  ,{`SRC_SEL_RS1_IMM},
-            `STORE ,{`SRC_SEL_RS1_IMM},
-            `OP_IMM,{`SRC_SEL_RS1_IMM},
-            `OP    ,{`SRC_SEL_RS1_2},
-            `FENCE ,{`SRC_SEL_RS1_IMM},
-            `SYS   ,{`SRC_SEL_RS1_IMM}
-  })
-);
+always @(*) begin
+    case(opcode)
+        `LUI   : src_sel = `SRC_SEL_RS1_IMM ;
+        `AUIPC : src_sel = `SRC_SEL_PC_IMM  ;
+        `JAL   : src_sel = `SRC_SEL_PC_4    ;
+        `JALR  : src_sel = `SRC_SEL_PC_4    ;
+        `BRANCH: src_sel = `SRC_SEL_RS1_2   ;
+        `LOAD  : src_sel = `SRC_SEL_RS1_IMM ;
+        `STORE : src_sel = `SRC_SEL_RS1_IMM ;
+        `OP_IMM: src_sel = `SRC_SEL_RS1_IMM ;
+        `OP    : src_sel = `SRC_SEL_RS1_2   ;
+        `FENCE : src_sel = `SRC_SEL_RS1_IMM ;
+        `SYS   : src_sel = `SRC_SEL_RS1_IMM ;
+        default: src_sel = `SRC_SEL_RS1_IMM ; 
+    endcase
+end
 
+// ysyx_23060077_riscv_mux#(
+//     .NR_KEY      (11), 
+//     .KEY_LEN     (7), 
+//     .DATA_LEN    (`SRC_SEL_WIDTH)
+// )riscv_mux_id_src_sel(
+//     .key              (opcode),//opcode
+//     .default_out      (`SRC_SEL_RS1_IMM),
+//     .out              (src_sel),
+//     .lut({  `LUI   ,{`SRC_SEL_RS1_IMM},
+//             `AUIPC ,{`SRC_SEL_PC_IMM},
+//             `JAL   ,{`SRC_SEL_PC_4},
+//             `JALR  ,{`SRC_SEL_PC_4},
+//             `BRANCH,{`SRC_SEL_RS1_2},
+//             `LOAD  ,{`SRC_SEL_RS1_IMM},
+//             `STORE ,{`SRC_SEL_RS1_IMM},
+//             `OP_IMM,{`SRC_SEL_RS1_IMM},
+//             `OP    ,{`SRC_SEL_RS1_2},
+//             `FENCE ,{`SRC_SEL_RS1_IMM},
+//             `SYS   ,{`SRC_SEL_RS1_IMM}
+//   })
+// );
 
-ysyx_23060077_riscv_mux#(
-    .NR_KEY      (3), 
-    .KEY_LEN     (7), 
-    .DATA_LEN    (`LSU_OPT_WIDTH)
-)ysyx_23060077_riscv_mux_id_lsu_opt(
-    .key              ({opcode}),//opcode
-    .default_out      (`LSU_OPT_NONE),
-    .out              (lsu_opt),
-    .lut({  `LOAD  ,{`LSU_OPT_LOAD},
-            `STORE ,{`LSU_OPT_STORE},
-            `SYS   ,{`LSU_OPT_SYS}
-  })
-);
+always @(*) begin
+    case(opcode)
+        `LOAD  : lsu_opt = `LSU_OPT_LOAD    ;
+        `STORE : lsu_opt = `LSU_OPT_STORE   ;
+        `SYS   : lsu_opt = `LSU_OPT_SYS     ;
+        default: lsu_opt = `LSU_OPT_NONE    ; 
+    endcase
+end
+
+// ysyx_23060077_riscv_mux#(
+//     .NR_KEY      (3), 
+//     .KEY_LEN     (7), 
+//     .DATA_LEN    (`LSU_OPT_WIDTH)
+// )ysyx_23060077_riscv_mux_id_lsu_opt(
+//     .key              ({opcode}),//opcode
+//     .default_out      (`LSU_OPT_NONE),
+//     .out              (lsu_opt),
+//     .lut({  `LOAD  ,{`LSU_OPT_LOAD},
+//             `STORE ,{`LSU_OPT_STORE},
+//             `SYS   ,{`LSU_OPT_SYS}
+//   })
+// );
 
 endmodule
 
