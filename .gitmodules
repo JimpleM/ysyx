@@ -1,6 +1,0 @@
-[submodule "ysyxSoc"]
-	path = ysyxSoc
-	url = git@github.com:OSCPU/ysyxSoC.git
-[submodule "ysyxSoC"]
-	path = ysyxSoC
-	url = git@github.com:OSCPU/ysyxSoC.git
