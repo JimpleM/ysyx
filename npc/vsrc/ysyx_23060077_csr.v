@@ -2,7 +2,7 @@
 
 module ysyx_23060077_csr(
     input 	                            clk,
-    input 	                            rst_n,
+    input 	                            reset,
 
     // input                               wr_en,
     input       [`CSR_WIDTH-1:0]        wr_addr,
@@ -42,7 +42,7 @@ assign wr_data_r = (i_inst[13:12] == 2'b01) ? wr_data : (i_inst[13:12] == 2'b10)
 
 //rd_data
 always @(*) begin
-    if(!rst_n)begin  
+    if(reset)begin  
         rd_data_r = 'd0; 
     end
     else if(rd_en)begin
@@ -59,7 +59,7 @@ assign o_mstatus_r = csr_reg[`CSR_MSTATUS];
 assign o_mstatus = o_mstatus_r;
 
 always @(posedge clk) begin
-    if(!rst_n)begin
+    if(reset)begin
         csr_reg[`CSR_MSTATUS]   <= 'd0;
     end
     else if(i_csr_ecall)begin
@@ -79,7 +79,7 @@ end
 //mtvec
 assign o_mtvec = csr_reg[`CSR_MTVEC];
 always @(posedge clk) begin
-    if(!rst_n)begin
+    if(reset)begin
         csr_reg[`CSR_MTVEC] <= 'd0;
     end
     else if(wr_en && wr_addr == `CSR_MTVEC)begin
@@ -95,7 +95,7 @@ reg [`INST_WIDTH-1:0] mepc_inst_r;
 assign o_mpec = csr_reg[`CSR_MEPC];
 
 always @(posedge clk) begin
-    if(!rst_n)begin
+    if(reset)begin
         csr_reg[`CSR_MEPC]  <= 'd0;
         mepc_inst_r         <= 'd0;
     end
@@ -117,7 +117,7 @@ end
 wire [`DATA_WIDTH-1:0] mcause;
 assign mcause = csr_reg[`CSR_MCAUSE];
 always @(posedge clk) begin
-    if(!rst_n)begin
+    if(reset)begin
         csr_reg[`CSR_MCAUSE]    <= 'd0;
     end
     else if(i_csr_ecall)begin

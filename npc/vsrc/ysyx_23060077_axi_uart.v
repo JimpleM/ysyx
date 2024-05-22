@@ -26,7 +26,7 @@ reg [5:0] lfsr_out;
 reg [5:0] w_delay_cnt = 0;
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         lfsr_out <= 'd1;
     end
     else if(axi_uart_b_ready_i )begin
@@ -57,7 +57,7 @@ assign axi_uart_w_ready_o  = axi_uart_w_ready_o_r;
 assign axi_uart_b_valid_o  = axi_uart_b_valid_o_r;
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         w_addr          <= 'd0;
         w_data          <= 'd0;
     end
@@ -72,7 +72,7 @@ always @(posedge aclk ) begin
 end
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         uart_w_state <= UART_W_IDLE;
         axi_uart_aw_ready_o_r <= 'd0;
         axi_uart_w_ready_o_r <= 'd0;

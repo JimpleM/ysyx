@@ -15,6 +15,7 @@ int stop_flag = 0;
 uint32_t device_flag = 0;
 
 uint32_t cpu_pc;
+uint32_t cpu_inst;
 uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
@@ -24,12 +25,15 @@ extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 	assert(0); 
 }
 extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
-	assert(0); 
+	if(addr == 0x20000000){
+		*data = 0x00100073;
+	}
 }
 
-extern "C" void set_pc_ptr(int pc,svBit valid){
+extern "C" void set_pc_ptr(int pc,int inst,svBit valid){
 	if(valid){
 		cpu_pc = (uint32_t) pc;
+		cpu_inst = (uint32_t) inst;
 	}
 }
 
@@ -44,6 +48,7 @@ extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
 extern "C" void get_riscv32_rst(svBit reset) {
   if(reset){
 	riscv32_rst = true;
+	// printf("reseting\n");
   }else{
 	riscv32_rst = false;
   }

@@ -3,7 +3,7 @@
 
 module ysyx_23060077_ifu(
     input                               clk             ,
-    input                               rst_n           ,
+    input                               reset           ,
 
     input       [`DATA_WIDTH-1:0]       jump_pc         ,
     input                               jump_pc_valid   ,
@@ -39,16 +39,16 @@ assign ifu_stall = ifu_stall_r;
 
 import "DPI-C" function void get_riscv32_rst(input bit reset);
 always @(*)begin
-    get_riscv32_rst(rst_n);
+    get_riscv32_rst(reset);
 end
 
 initial begin
-    pc = 32'h8000_0000;
-    ifu_pc_o_r = 32'h8000_0000;
+    pc = 32'h2000_0000;
+    ifu_pc_o_r = 32'h2000_0000;
 end
 always @(posedge clk) begin
-    if(!rst_n)begin
-        pc <= 32'h8000_0000;
+    if(reset)begin
+        pc <= 32'h2000_0000;
         ifu_stall_r <= 'd1;
     end
     else if(flush_inst)begin

@@ -148,7 +148,7 @@ assign stall = mem_stall;
 
 ysyx_23060077_ifu ifu_u0(
     .clk            ( clock         ),
-    .rst_n          ( reset         ),
+    .reset          ( reset         ),
     .jump_pc        ( jump_pc       ),
     .jump_pc_valid  ( jump_pc_valid ),
     .stall          ( stall         ),
@@ -185,7 +185,7 @@ ysyx_23060077_idu idu_u0(
 
 ysyx_23060077_regfile regfile_u0(
     .clk			( clock		    ),
-    .rst_n          ( reset         ),
+    .reset          ( reset         ),
     .rs1_addr		( idu_rs1	    ),
     .rs1_data		( src1		    ),
     .rs2_addr		( idu_rs2	    ),
@@ -211,7 +211,7 @@ ysyx_23060077_exu exu_u0(
 
 ysyx_23060077_lsu lsu_u0(
     .clk			( clock		    ),
-    .rst_n          ( reset         ),
+    .reset          ( reset         ),
     .src1           ( src1          ),
     .src2           ( src2          ),
     .imm            ( idu_imm       ),
@@ -244,7 +244,7 @@ assign csr_mret  = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000 && ifu_in
 
 ysyx_23060077_csr  csr_u0 (
     .clk            ( clock                     ),
-    .rst_n          ( reset                     ),
+    .reset          ( reset                     ),
     .wr_addr        ( idu_imm[`CSR_WIDTH-1:0]   ),
     .wr_data        ( wr_csr_data               ),
     .rd_addr        ( idu_imm[`CSR_WIDTH-1:0]   ),
@@ -330,9 +330,9 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .axi_r_id_i     ( io_master_rid     )
 );
 
-import "DPI-C" function void set_pc_ptr(input int pc, input bit valid);
+import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit valid);
 always @(*)begin
-    set_pc_ptr(ifu_pc,1'b1);
+    set_pc_ptr(ifu_pc,ifu_inst,1'b1);
 end
 
 endmodule

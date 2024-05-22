@@ -39,7 +39,7 @@ reg [5:0] r_delay_cnt = 0;
 reg [5:0] w_delay_cnt = 0;
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         lfsr_out <= 'd1;
     end
     else if(axi_sram_b_ready_i | axi_sram_r_ready_i)begin
@@ -70,7 +70,7 @@ assign axi_sram_w_ready_o  = axi_sram_w_ready_o_r;
 assign axi_sram_b_valid_o  = axi_sram_b_valid_o_r;
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         w_addr          <= 'd0;
         w_data          <= 'd0;
         w_mask          <= 'd0;
@@ -87,7 +87,7 @@ always @(posedge aclk ) begin
 end
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         sram_w_state <= SRAM_W_IDLE;
         axi_sram_aw_ready_o_r <= 'd0;
         axi_sram_w_ready_o_r <= 'd0;
@@ -153,7 +153,7 @@ assign axi_sram_r_valid_o = axi_sram_r_valid_o_r;
 assign axi_sram_r_data_o = axi_sram_r_data_o_r;
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         axi_sram_r_data_o_r <= 'd0;
         r_addr  <= 'd0;
     end
@@ -168,7 +168,7 @@ always @(posedge aclk ) begin
 end
 
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         sram_r_state <= SRAM_R_IDLE;
         axi_sram_ar_ready_o_r <= 'd0;
         axi_sram_r_valid_o_r <= 'd0;

@@ -17,7 +17,7 @@ extern VerilatedVcdC* tfp;
 
 extern int stop_flag;
 extern uint32_t cpu_pc;
-uint32_t cpu_inst = 0;
+extern uint32_t cpu_inst;
 uint32_t cpu_lpc = 0x80000000;
 
 NPCState npc_state = { .state = NPC_STOP };
@@ -68,10 +68,10 @@ static void exec_once() {
 
 void reset(){
   for(int i=0; i<5; i++){
-    top->reset = 0;
+    top->reset = 1;
     exec_once();
   }
-  top->reset = 1;
+  top->reset = 0;
 }
 
 
@@ -121,11 +121,11 @@ static void execute(uint64_t n) {
   static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-      if (!in_pmem(cpu_pc)){
-        npc_state.state = NPC_ABORT;
-        printf("pc is not in pmem!\n");
-      }
-      cpu_inst = paddr_read((uint32_t)cpu_pc,4);
+      // if (!in_pmem(cpu_pc)){
+      //   npc_state.state = NPC_ABORT;
+      //   printf("pc is not in pmem!\n");
+      // }
+      // cpu_inst = paddr_read((uint32_t)cpu_pc,4);
 
         //反汇编结果
       #ifdef CONFIG_ITRACE
@@ -142,7 +142,7 @@ static void execute(uint64_t n) {
       
       cpu_lpc  = cpu_pc;
       if (npc_state.state != NPC_RUNNING) break;
-      if (stop_flag == 1){
+      if (cpu_inst == 0x00100073){
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_END;
           break;

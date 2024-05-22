@@ -81,7 +81,7 @@ assign cpu_w_last_o     = axi_b_valid_i; //考虑用axi_b_valid_i还是axi_w_las
 
 reg [`AXI_LEN_WIDTH-1:0]    axi_w_cnt;
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         axi_w_state <= AXI_W_IDLE;
         axi_w_cnt       <= 'd0;
     end
@@ -143,7 +143,7 @@ assign cpu_r_last_o     = axi_r_last_i;
      
 reg [`AXI_LEN_WIDTH-1:0]    axi_r_cnt;
 always @(posedge aclk ) begin
-    if(!areset_n)begin
+    if(areset_n)begin
         axi_r_state <= AXI_R_IDLE;
     end
     else begin

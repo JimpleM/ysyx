@@ -1,7 +1,7 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_lsu(
     input 	                            clk 			,
-    input 	                            rst_n 			,    
+    input 	                            reset 			,    
 
     input  	[`DATA_WIDTH-1:0]       	src1  			,
     input  	[`DATA_WIDTH-1:0]       	src2  			,
@@ -74,7 +74,7 @@ wire lsu_rd_wen_w;
 assign lsu_rd_wen = lsu_rd_wen_r | lsu_rd_wen_w;
 
 always @(posedge clk ) begin
-  if(!rst_n)begin
+  if(reset)begin
     ren <= 'd0;
   end
   else if(lsu_rd_wen_r)begin
@@ -87,7 +87,7 @@ always @(posedge clk ) begin
 end
 
 always @(posedge clk ) begin
-  if(!rst_n)begin
+  if(reset)begin
     wen <= 'd0;
   end
   else if(lsu_rd_wen_w)begin
