@@ -12,7 +12,7 @@
 
 
 extern VerilatedContext* contextp;
-extern Vysyx_23060077* top;
+extern VysyxSoCFull* top;
 extern VerilatedVcdC* tfp;
 
 extern int stop_flag;

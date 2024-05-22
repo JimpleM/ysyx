@@ -82,6 +82,8 @@ wire                        ifu_r_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  ifu_r_addr_o    ;
 wire                        ifu_r_ready_i   ;
 wire [`AXI_DATA_WIDTH-1:0]  ifu_r_data_i    ;
+wire [`AXI_LEN_WIDTH-1:0]   ifu_r_len_o     ;
+wire                        ifu_r_last_i    ;
 
 // idu
 wire                       	idu_branch		;
@@ -116,11 +118,15 @@ wire                        lsu_r_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    ;
 wire                        lsu_r_ready_i   ;
 wire [`AXI_DATA_WIDTH-1:0]  lsu_r_data_i    ;
+wire [`AXI_LEN_WIDTH-1:0]   lsu_r_len_o     ;
+wire                        lsu_r_last_i    ;
 wire                        lsu_w_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    ;
 wire                        lsu_w_ready_i   ;
 wire [`AXI_DATA_WIDTH-1:0]  lsu_w_data_o    ;
-wire [`AXI_STRB_WIDTH-1:0]  lsu_w_strb_o    ;
+wire [`AXI_SIZE_WIDTH-1:0]  lsu_w_size_o    ;
+wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     ;
+wire                        lsu_w_last_i    ;
 
 //wbu
 wire                        wbu_rd_wen      ;
@@ -152,6 +158,8 @@ ysyx_23060077_ifu ifu_u0(
     .ifu_r_addr_o   ( ifu_r_addr_o  ),
     .ifu_r_ready_i  ( ifu_r_ready_i ),
     .ifu_r_data_i   ( ifu_r_data_i  ),
+    .ifu_r_len_o    ( ifu_r_len_o   ),
+    .ifu_r_last_i   ( ifu_r_last_i  ),
 
     .ifu_stall      ( ifu_stall     ),
     .ifu_pc_o       ( ifu_pc        ),
@@ -215,11 +223,15 @@ ysyx_23060077_lsu lsu_u0(
     .lsu_r_addr_o   ( lsu_r_addr_o  ),
     .lsu_r_ready_i  ( lsu_r_ready_i ),
     .lsu_r_data_i   ( lsu_r_data_i  ),
+    .lsu_r_len_o    ( lsu_r_len_o   ),
+    .lsu_r_last_i   ( lsu_r_last_i  ),
     .lsu_w_valid_o  ( lsu_w_valid_o ),
     .lsu_w_addr_o   ( lsu_w_addr_o  ),
     .lsu_w_ready_i  ( lsu_w_ready_i ),
     .lsu_w_data_o   ( lsu_w_data_o  ),
-    .lsu_w_strb_o   ( lsu_w_strb_o  ),
+    .lsu_w_size_o   ( lsu_w_size_o  ),
+    .lsu_w_len_o    ( lsu_w_len_o   ),
+    .lsu_w_last_i   ( lsu_w_last_i  ),
 
     .mem_stall      ( mem_stall     ),
     .lsu_rd_wen     ( lsu_rd_wen    ),
@@ -264,22 +276,58 @@ ysyx_23060077_wbu wbu_u0(
 );
 
 ysyx_23060077_axi_arbiter axi_arbiter_u0(
-    .aclk           ( clock         ),
-    .areset_n       ( reset         ),
-    .ifu_r_valid_i  ( ifu_r_valid_o ),
-    .ifu_r_addr_i   ( ifu_r_addr_o  ),
-    .ifu_r_ready_o  ( ifu_r_ready_i ),
-    .ifu_r_data_o   ( ifu_r_data_i  ),
+    .aclk           ( clock             ),
+    .areset_n       ( reset             ),
+    .ifu_r_valid_i  ( ifu_r_valid_o     ),
+    .ifu_r_addr_i   ( ifu_r_addr_o      ),
+    .ifu_r_ready_o  ( ifu_r_ready_i     ),
+    .ifu_r_data_o   ( ifu_r_data_i      ),
+    .ifu_r_len_i    ( ifu_r_len_o       ),
+    .ifu_r_last_o   ( ifu_r_last_i      ),
 
-    .lsu_r_valid_i  ( lsu_r_valid_o ),
-    .lsu_r_addr_i   ( lsu_r_addr_o  ),
-    .lsu_r_ready_o  ( lsu_r_ready_i ),
-    .lsu_r_data_o   ( lsu_r_data_i  ),
-    .lsu_w_valid_i  ( lsu_w_valid_o ),
-    .lsu_w_addr_i   ( lsu_w_addr_o  ),
-    .lsu_w_ready_o  ( lsu_w_ready_i ),
-    .lsu_w_data_i   ( lsu_w_data_o  ),
-    .lsu_w_strb_i   ( lsu_w_strb_o  )
+    .lsu_r_valid_i  ( lsu_r_valid_o     ),
+    .lsu_r_addr_i   ( lsu_r_addr_o      ),
+    .lsu_r_ready_o  ( lsu_r_ready_i     ),
+    .lsu_r_data_o   ( lsu_r_data_i      ),
+    .lsu_r_len_i    ( lsu_r_len_o       ),
+    .lsu_r_last_o   ( lsu_r_last_i      ),
+    .lsu_w_valid_i  ( lsu_w_valid_o     ),
+    .lsu_w_addr_i   ( lsu_w_addr_o      ),
+    .lsu_w_ready_o  ( lsu_w_ready_i     ),
+    .lsu_w_data_i   ( lsu_w_data_o      ),
+    .lsu_w_size_i   ( lsu_w_size_o      ),
+    .lsu_w_len_i    ( lsu_w_len_o       ),
+    .lsu_w_last_o   ( lsu_w_last_i      ),
+
+    .axi_aw_ready_i ( io_master_awready ),
+    .axi_aw_valid_o ( io_master_awvalid ),
+    .axi_aw_addr_o  ( io_master_awaddr  ),
+    .axi_aw_id_o    ( io_master_awid    ),
+    .axi_aw_len_o   ( io_master_awlen   ),
+    .axi_aw_size_o  ( io_master_awsize  ),
+    .axi_aw_burst_o ( io_master_awburst ),
+    .axi_w_ready_i  ( io_master_wready  ),
+    .axi_w_valid_o  ( io_master_wvalid  ),
+    .axi_w_data_o   ( io_master_wdata [31:0]  ),
+    .axi_w_strb_o   ( io_master_wstrb   ),
+    .axi_w_last_o   ( io_master_wlast   ),
+    .axi_b_ready_o  ( io_master_bready  ),
+    .axi_b_valid_i  ( io_master_bvalid  ),
+    .axi_b_resp_i   ( io_master_bresp   ),
+    .axi_b_id_i     ( io_master_bid     ),
+    .axi_ar_ready_i ( io_master_arready ),
+    .axi_ar_valid_o ( io_master_arvalid ),
+    .axi_ar_addr_o  ( io_master_araddr  ),
+    .axi_ar_id_o    ( io_master_arid    ),
+    .axi_ar_len_o   ( io_master_arlen   ),
+    .axi_ar_size_o  ( io_master_arsize  ),
+    .axi_ar_burst_o ( io_master_arburst ),
+    .axi_r_ready_o  ( io_master_rready  ),
+    .axi_r_valid_i  ( io_master_rvalid  ),
+    .axi_r_resp_i   ( io_master_rresp   ),
+    .axi_r_data_i   ( io_master_rdata  [31:0]  ),
+    .axi_r_last_i   ( io_master_rlast   ),
+    .axi_r_id_i     ( io_master_rid     )
 );
 
 import "DPI-C" function void set_pc_ptr(input int pc, input bit valid);

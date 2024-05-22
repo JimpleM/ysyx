@@ -16,7 +16,7 @@ void device_init(){
 #endif
 }
 
-extern Vysyx_23060077* top;
+extern VysyxSoCFull* top;
 //@Attention device_read和device_write会触发三次，这个问题还没有解决，这里通过一些特殊手段暂时度过
 uint32_t device_read(uint32_t addr){
     if(addr == RTC_ADDR || addr == RTC_ADDR + 4){

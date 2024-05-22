@@ -1,11 +1,11 @@
 
 
 #include "common.h"
-
+#include <assert.h>
 #include "pmem.h"
 #include "device_lib.h"
 
-#include "Vysyx_23060077__Dpi.h"
+// #include "VysyxSoCFull__Dpi.h"
 #include "verilated_dpi.h"
 
 
@@ -18,8 +18,14 @@ uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
-extern Vysyx_23060077* top;
+extern VysyxSoCFull* top;
 
+extern "C" void flash_read(uint32_t addr, uint32_t *data) {
+	assert(0); 
+}
+extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
+	assert(0); 
+}
 
 extern "C" void set_pc_ptr(int pc,svBit valid){
 	if(valid){

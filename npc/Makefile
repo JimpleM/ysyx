@@ -1,15 +1,22 @@
 VERILATOR = verilator
 # project source
-VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
+VSRCS += $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
+VSRCS += $(shell find $(abspath $(YSYXSOC_HOME)/perip) -name "*.v" )
+VSRCS += $(YSYXSOC_HOME)/build/ysyxSoCFull.v
+
 SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
 # INC_PATH :=$(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.h")
-VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
+VERILATOR_INC_PATH += -I$(NPC_HOME)/vsrc
+VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/uart16550/rtl
+VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/spi/rtl
 
-TOPNAME = ysyx_23060077
+TOPNAME = ysyxSoCFull
 
 VERILATOR_FLAGS += --trace --cc --exe --build 
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
+VERILATOR_FLAGS += --no-timing
+VERILATOR_FLAGS += --timescale "1ns/1ns"
 
 LDFLAGS += -lSDL2
 LDFLAGS += -ldl 

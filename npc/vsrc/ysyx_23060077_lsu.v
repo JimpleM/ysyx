@@ -1,31 +1,33 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_lsu(
-    input 	                            clk,
-    input 	                            rst_n,    
+    input 	                            clk 			,
+    input 	                            rst_n 			,    
 
-    input  	    [`DATA_WIDTH-1:0]       src1,
-    input  	    [`DATA_WIDTH-1:0]       src2,
-    input       [`DATA_WIDTH-1:0]       imm,
+    input  	[`DATA_WIDTH-1:0]       	src1  			,
+    input  	[`DATA_WIDTH-1:0]       	src2  			,
+    input  	[`DATA_WIDTH-1:0]       	imm 			,
 
-    input       [`LSU_OPT_WIDTH-1:0]    lsu_opt,
-    input       [2:0]                   funct3,
-    input                               ifu_stall,
-
+    input   [`LSU_OPT_WIDTH-1:0]    	lsu_opt 		,
+    input   [2:0]                   	funct3  		,
+    input                               ifu_stall 		,
     // LSU Interface
-    output                              lsu_r_valid_o,
-    output   [`AXI_ADDR_WIDTH-1:0]      lsu_r_addr_o,
-    input                               lsu_r_ready_i,
-    input    [`AXI_DATA_WIDTH-1:0]      lsu_r_data_i,
-
-    output                              lsu_w_valid_o,
-    output   [`AXI_ADDR_WIDTH-1:0]      lsu_w_addr_o,
-    input                               lsu_w_ready_i,
-    output   [`AXI_DATA_WIDTH-1:0]      lsu_w_data_o,
-    output   [`AXI_STRB_WIDTH-1:0]      lsu_w_strb_o,
-
-    output                              mem_stall,
-    output                              lsu_rd_wen,
-    output  	  [`DATA_WIDTH-1:0]     lsu_result
+    output                              lsu_r_valid_o 	,
+    output 	[`AXI_ADDR_WIDTH-1:0]      	lsu_r_addr_o  	,
+    input                               lsu_r_ready_i 	,
+    input   [`AXI_DATA_WIDTH-1:0]      	lsu_r_data_i  	,
+    output  [`AXI_LEN_WIDTH-1:0]       	lsu_r_len_o     ,
+    input                               lsu_r_last_i  	,
+    output                              lsu_w_valid_o 	,
+    output  [`AXI_ADDR_WIDTH-1:0]      	lsu_w_addr_o  	,
+    input                               lsu_w_ready_i 	,
+    output  [`AXI_DATA_WIDTH-1:0]      	lsu_w_data_o  	,
+	output 	[`AXI_SIZE_WIDTH-1:0]       lsu_w_size_o    ,
+	output  [`AXI_LEN_WIDTH-1:0]       	lsu_w_len_o     ,
+    input                              	lsu_w_last_i    ,
+    
+    output                              mem_stall 		,
+    output                              lsu_rd_wen  	,
+    output 	[`DATA_WIDTH-1:0]       	lsu_result
 );
 
 wire [`DATA_WIDTH-1:0] raddr;
@@ -101,14 +103,16 @@ assign mem_stall = (ren | wen) & !lsu_rd_wen;
 
 assign lsu_r_valid_o  = ren;
 assign lsu_r_addr_o   = raddr;
-assign lsu_rd_wen_r   = lsu_r_ready_i;
+assign lsu_rd_wen_r   = lsu_r_ready_i & lsu_r_last_i;
 assign rdata          = lsu_r_data_i;
+assign lsu_r_len_o	  = 8'd1;
 
 assign lsu_w_valid_o  = wen;
 assign lsu_w_addr_o   = waddr;
-assign lsu_rd_wen_w  = lsu_w_ready_i;
+assign lsu_rd_wen_w   = lsu_w_ready_i & lsu_w_last_i;
 assign lsu_w_data_o   = wdata;
-assign lsu_w_strb_o   = wmask[2:0];
+assign lsu_w_size_o   = wmask[2:0];
+assign lsu_w_len_o	  = 8'd1;
 
 
 

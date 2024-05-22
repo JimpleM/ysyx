@@ -5,8 +5,8 @@
 #include "init.h"
 
 
-#include "Vysyx_23060077.h"
-#include "Vysyx_23060077__Dpi.h"
+#include "VysyxSoCFull.h"
+#include "VysyxSoCFull__Dpi.h"
 
 
 

@@ -18,7 +18,7 @@
 #endif
 
 
-#include "Vysyx_23060077.h"
+#include "VysyxSoCFull.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
