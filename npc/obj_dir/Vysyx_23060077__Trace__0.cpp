@@ -424,7 +424,65 @@ void Vysyx_23060077___024root__trace_chg_sub_0(Vysyx_23060077___024root* vlSelf,
     bufp->chgBit(oldp+178,(vlSelf->clock));
     bufp->chgBit(oldp+179,(vlSelf->reset));
     bufp->chgBit(oldp+180,(vlSelf->io_interrupt));
-    bufp->chgIData(oldp+181,(((0U == (IData)(vlSelf->ysyx_23060077__DOT__idu_lsu_opt))
+    bufp->chgBit(oldp+181,(vlSelf->io_master_awrea));
+    bufp->chgBit(oldp+182,(vlSelf->io_master_awval));
+    bufp->chgIData(oldp+183,(vlSelf->io_master_awadd),32);
+    bufp->chgCData(oldp+184,(vlSelf->io_master_awid),4);
+    bufp->chgCData(oldp+185,(vlSelf->io_master_awlen),8);
+    bufp->chgCData(oldp+186,(vlSelf->io_master_awsiz),3);
+    bufp->chgCData(oldp+187,(vlSelf->io_master_awbur),2);
+    bufp->chgBit(oldp+188,(vlSelf->io_master_wread));
+    bufp->chgBit(oldp+189,(vlSelf->io_master_wvali));
+    bufp->chgQData(oldp+190,(vlSelf->io_master_wdata),64);
+    bufp->chgCData(oldp+192,(vlSelf->io_master_wstrb),8);
+    bufp->chgBit(oldp+193,(vlSelf->io_master_wlast));
+    bufp->chgBit(oldp+194,(vlSelf->io_master_bread));
+    bufp->chgBit(oldp+195,(vlSelf->io_master_bvali));
+    bufp->chgCData(oldp+196,(vlSelf->io_master_bresp),2);
+    bufp->chgCData(oldp+197,(vlSelf->io_master_bid),4);
+    bufp->chgBit(oldp+198,(vlSelf->io_master_arrea));
+    bufp->chgBit(oldp+199,(vlSelf->io_master_arval));
+    bufp->chgIData(oldp+200,(vlSelf->io_master_aradd),32);
+    bufp->chgCData(oldp+201,(vlSelf->io_master_arid),4);
+    bufp->chgCData(oldp+202,(vlSelf->io_master_arlen),8);
+    bufp->chgCData(oldp+203,(vlSelf->io_master_arsiz),3);
+    bufp->chgCData(oldp+204,(vlSelf->io_master_arbur),2);
+    bufp->chgBit(oldp+205,(vlSelf->io_master_rread));
+    bufp->chgBit(oldp+206,(vlSelf->io_master_rvali));
+    bufp->chgCData(oldp+207,(vlSelf->io_master_rresp),2);
+    bufp->chgQData(oldp+208,(vlSelf->io_master_rdata),64);
+    bufp->chgBit(oldp+210,(vlSelf->io_master_rlast));
+    bufp->chgCData(oldp+211,(vlSelf->io_master_rid),4);
+    bufp->chgBit(oldp+212,(vlSelf->io_slave_awready));
+    bufp->chgBit(oldp+213,(vlSelf->io_slave_awvalid));
+    bufp->chgIData(oldp+214,(vlSelf->io_slave_awaddr),32);
+    bufp->chgCData(oldp+215,(vlSelf->io_slave_awid),4);
+    bufp->chgCData(oldp+216,(vlSelf->io_slave_awlen),8);
+    bufp->chgCData(oldp+217,(vlSelf->io_slave_awsize),3);
+    bufp->chgCData(oldp+218,(vlSelf->io_slave_awburst),2);
+    bufp->chgBit(oldp+219,(vlSelf->io_slave_wready));
+    bufp->chgBit(oldp+220,(vlSelf->io_slave_wvalid));
+    bufp->chgQData(oldp+221,(vlSelf->io_slave_wdata),64);
+    bufp->chgCData(oldp+223,(vlSelf->io_slave_wstrb),8);
+    bufp->chgBit(oldp+224,(vlSelf->io_slave_wlast));
+    bufp->chgBit(oldp+225,(vlSelf->io_slave_bready));
+    bufp->chgBit(oldp+226,(vlSelf->io_slave_bvalid));
+    bufp->chgCData(oldp+227,(vlSelf->io_slave_bresp),2);
+    bufp->chgCData(oldp+228,(vlSelf->io_slave_bid),4);
+    bufp->chgBit(oldp+229,(vlSelf->io_slave_arready));
+    bufp->chgBit(oldp+230,(vlSelf->io_slave_arvalid));
+    bufp->chgIData(oldp+231,(vlSelf->io_slave_araddr),32);
+    bufp->chgCData(oldp+232,(vlSelf->io_slave_arid),4);
+    bufp->chgCData(oldp+233,(vlSelf->io_slave_arlen),8);
+    bufp->chgCData(oldp+234,(vlSelf->io_slave_arsize),3);
+    bufp->chgCData(oldp+235,(vlSelf->io_slave_arburst),2);
+    bufp->chgBit(oldp+236,(vlSelf->io_slave_rready));
+    bufp->chgBit(oldp+237,(vlSelf->io_slave_rvalid));
+    bufp->chgCData(oldp+238,(vlSelf->io_slave_rresp),2);
+    bufp->chgQData(oldp+239,(vlSelf->io_slave_rdata),64);
+    bufp->chgBit(oldp+241,(vlSelf->io_slave_rlast));
+    bufp->chgCData(oldp+242,(vlSelf->io_slave_rid),4);
+    bufp->chgIData(oldp+243,(((0U == (IData)(vlSelf->ysyx_23060077__DOT__idu_lsu_opt))
                                ? vlSelf->ysyx_23060077__DOT__exu_u0__DOT__exu_result_r
                                : ((3U == (IData)(vlSelf->ysyx_23060077__DOT__idu_lsu_opt))
                                    ? ((IData)(vlSelf->reset)
@@ -480,7 +538,7 @@ void Vysyx_23060077___024root__trace_chg_sub_0(Vysyx_23060077___024root* vlSelf,
                                                        << 8U) 
                                                       | (IData)(vlSelf->ysyx_23060077__DOT__lsu_u0__DOT____VdfgTmp_h56d2889a__0)))))
                                                 : 0U))))),32);
-    bufp->chgIData(oldp+182,(((IData)(vlSelf->reset)
+    bufp->chgIData(oldp+244,(((IData)(vlSelf->reset)
                                ? ((IData)(vlSelf->ysyx_23060077__DOT__csr_u0__DOT__wr_en)
                                    ? vlSelf->ysyx_23060077__DOT__csr_u0__DOT__csr_reg
                                   [(0xfffU & vlSelf->ysyx_23060077__DOT__idu_u0__DOT__id_imm_idu__DOT__imm_r)]

@@ -15,6 +15,64 @@ Vysyx_23060077::Vysyx_23060077(VerilatedContext* _vcontextp__, const char* _vcna
     , clock{vlSymsp->TOP.clock}
     , reset{vlSymsp->TOP.reset}
     , io_interrupt{vlSymsp->TOP.io_interrupt}
+    , io_master_awrea{vlSymsp->TOP.io_master_awrea}
+    , io_master_awval{vlSymsp->TOP.io_master_awval}
+    , io_master_awid{vlSymsp->TOP.io_master_awid}
+    , io_master_awlen{vlSymsp->TOP.io_master_awlen}
+    , io_master_awsiz{vlSymsp->TOP.io_master_awsiz}
+    , io_master_awbur{vlSymsp->TOP.io_master_awbur}
+    , io_master_wread{vlSymsp->TOP.io_master_wread}
+    , io_master_wvali{vlSymsp->TOP.io_master_wvali}
+    , io_master_wstrb{vlSymsp->TOP.io_master_wstrb}
+    , io_master_wlast{vlSymsp->TOP.io_master_wlast}
+    , io_master_bread{vlSymsp->TOP.io_master_bread}
+    , io_master_bvali{vlSymsp->TOP.io_master_bvali}
+    , io_master_bresp{vlSymsp->TOP.io_master_bresp}
+    , io_master_bid{vlSymsp->TOP.io_master_bid}
+    , io_master_arrea{vlSymsp->TOP.io_master_arrea}
+    , io_master_arval{vlSymsp->TOP.io_master_arval}
+    , io_master_arid{vlSymsp->TOP.io_master_arid}
+    , io_master_arlen{vlSymsp->TOP.io_master_arlen}
+    , io_master_arsiz{vlSymsp->TOP.io_master_arsiz}
+    , io_master_arbur{vlSymsp->TOP.io_master_arbur}
+    , io_master_rread{vlSymsp->TOP.io_master_rread}
+    , io_master_rvali{vlSymsp->TOP.io_master_rvali}
+    , io_master_rresp{vlSymsp->TOP.io_master_rresp}
+    , io_master_rlast{vlSymsp->TOP.io_master_rlast}
+    , io_master_rid{vlSymsp->TOP.io_master_rid}
+    , io_slave_awready{vlSymsp->TOP.io_slave_awready}
+    , io_slave_awvalid{vlSymsp->TOP.io_slave_awvalid}
+    , io_slave_awid{vlSymsp->TOP.io_slave_awid}
+    , io_slave_awlen{vlSymsp->TOP.io_slave_awlen}
+    , io_slave_awsize{vlSymsp->TOP.io_slave_awsize}
+    , io_slave_awburst{vlSymsp->TOP.io_slave_awburst}
+    , io_slave_wready{vlSymsp->TOP.io_slave_wready}
+    , io_slave_wvalid{vlSymsp->TOP.io_slave_wvalid}
+    , io_slave_wstrb{vlSymsp->TOP.io_slave_wstrb}
+    , io_slave_wlast{vlSymsp->TOP.io_slave_wlast}
+    , io_slave_bready{vlSymsp->TOP.io_slave_bready}
+    , io_slave_bvalid{vlSymsp->TOP.io_slave_bvalid}
+    , io_slave_bresp{vlSymsp->TOP.io_slave_bresp}
+    , io_slave_bid{vlSymsp->TOP.io_slave_bid}
+    , io_slave_arready{vlSymsp->TOP.io_slave_arready}
+    , io_slave_arvalid{vlSymsp->TOP.io_slave_arvalid}
+    , io_slave_arid{vlSymsp->TOP.io_slave_arid}
+    , io_slave_arlen{vlSymsp->TOP.io_slave_arlen}
+    , io_slave_arsize{vlSymsp->TOP.io_slave_arsize}
+    , io_slave_arburst{vlSymsp->TOP.io_slave_arburst}
+    , io_slave_rready{vlSymsp->TOP.io_slave_rready}
+    , io_slave_rvalid{vlSymsp->TOP.io_slave_rvalid}
+    , io_slave_rresp{vlSymsp->TOP.io_slave_rresp}
+    , io_slave_rlast{vlSymsp->TOP.io_slave_rlast}
+    , io_slave_rid{vlSymsp->TOP.io_slave_rid}
+    , io_master_awadd{vlSymsp->TOP.io_master_awadd}
+    , io_master_aradd{vlSymsp->TOP.io_master_aradd}
+    , io_slave_awaddr{vlSymsp->TOP.io_slave_awaddr}
+    , io_slave_araddr{vlSymsp->TOP.io_slave_araddr}
+    , io_master_wdata{vlSymsp->TOP.io_master_wdata}
+    , io_master_rdata{vlSymsp->TOP.io_master_rdata}
+    , io_slave_wdata{vlSymsp->TOP.io_slave_wdata}
+    , io_slave_rdata{vlSymsp->TOP.io_slave_rdata}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
