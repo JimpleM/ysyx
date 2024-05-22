@@ -6,31 +6,31 @@ module ysyx_23060077(
 	input                       reset               ,
     input                       io_interrupt        ,
 
-    input                       io_master_awrea     ,
-    output                      io_master_awval     ,
-    output      [31:0]          io_master_awadd     ,
+    input                       io_master_awready   ,
+    output                      io_master_awvalid   ,
+    output      [31:0]          io_master_awaddr    ,
     output      [3:0]           io_master_awid      ,
     output      [7:0]           io_master_awlen     ,
-    output      [2:0]           io_master_awsiz     ,
-    output      [1:0]           io_master_awbur     ,
-    input                       io_master_wread     ,
-    output                      io_master_wvali     ,
+    output      [2:0]           io_master_awsize    ,
+    output      [1:0]           io_master_awburst   ,
+    input                       io_master_wready    ,
+    output                      io_master_wvalid    ,
     output      [63:0]          io_master_wdata     ,
     output      [7:0]           io_master_wstrb     ,
     output                      io_master_wlast     ,
-    output                      io_master_bread     ,
-    input                       io_master_bvali     ,
+    output                      io_master_bready    ,
+    input                       io_master_bvalid    ,
     input       [1:0]           io_master_bresp     ,
     input       [3:0]           io_master_bid       ,
-    input                       io_master_arrea     ,
-    output                      io_master_arval     ,
-    output      [31:0]          io_master_aradd     ,
+    input                       io_master_arready   ,
+    output                      io_master_arvalid   ,
+    output      [31:0]          io_master_araddr    ,
     output      [3:0]           io_master_arid      ,
     output      [7:0]           io_master_arlen     ,
-    output      [2:0]           io_master_arsiz     ,
-    output      [1:0]           io_master_arbur     ,
-    output                      io_master_rread     ,
-    input                       io_master_rvali     ,
+    output      [2:0]           io_master_arsize    ,
+    output      [1:0]           io_master_arburst   ,
+    output                      io_master_rready    ,
+    input                       io_master_rvalid    ,
     input       [1:0]           io_master_rresp     ,
     input       [63:0]          io_master_rdata     ,
     input                       io_master_rlast     ,
@@ -104,7 +104,7 @@ wire [`DATA_WIDTH-1:0]     	rd_data		    ;
 
 //exu
 wire                        zero_flag		;
-reg [`DATA_WIDTH-1:0]       exu_result		;
+reg  [`DATA_WIDTH-1:0]      exu_result		;
 wire [`DATA_WIDTH-1:0]      exu_result_t	;
 
 //lsu
