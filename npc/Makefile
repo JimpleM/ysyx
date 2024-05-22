@@ -5,7 +5,7 @@ SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name 
 # INC_PATH :=$(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.h")
 VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
 
-TOPNAME = ysyx_23060077_top
+TOPNAME = ysyx_23060077
 
 VERILATOR_FLAGS += --trace --cc --exe --build 
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}

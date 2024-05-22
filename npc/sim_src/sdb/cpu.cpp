@@ -12,7 +12,7 @@
 
 
 extern VerilatedContext* contextp;
-extern Vysyx_23060077_top* top;
+extern Vysyx_23060077* top;
 extern VerilatedVcdC* tfp;
 
 extern int stop_flag;
@@ -54,12 +54,12 @@ static void dump_wave(){
 }
 
 static void exec_once() {
-    top->clk = 1;
+    top->clock = 1;
     top->eval();
 
     dump_wave();
 
-    top->clk = 0;
+    top->clock = 0;
     top->eval();
     
     dump_wave();
@@ -68,10 +68,10 @@ static void exec_once() {
 
 void reset(){
   for(int i=0; i<5; i++){
-    top->rst_n = 0;
+    top->reset = 0;
     exec_once();
   }
-  top->rst_n = 1;
+  top->reset = 1;
 }
 
 

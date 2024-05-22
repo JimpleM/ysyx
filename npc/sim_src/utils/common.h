@@ -18,7 +18,7 @@
 #endif
 
 
-#include "Vysyx_23060077_top.h"
+#include "Vysyx_23060077.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 

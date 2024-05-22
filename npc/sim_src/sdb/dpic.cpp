@@ -5,7 +5,7 @@
 #include "pmem.h"
 #include "device_lib.h"
 
-#include "Vysyx_23060077_top__Dpi.h"
+#include "Vysyx_23060077__Dpi.h"
 #include "verilated_dpi.h"
 
 
@@ -18,7 +18,7 @@ uint32_t cpu_pc;
 uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
-extern Vysyx_23060077_top* top;
+extern Vysyx_23060077* top;
 
 
 extern "C" void set_pc_ptr(int pc,svBit valid){
@@ -35,8 +35,8 @@ extern "C" void set_csr_ptr(const svOpenArrayHandle r) {
   cpu_csr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 
-extern "C" void get_riscv32_rst(svBit rst_n) {
-  if(rst_n){
+extern "C" void get_riscv32_rst(svBit reset) {
+  if(reset){
 	riscv32_rst = true;
   }else{
 	riscv32_rst = false;
@@ -61,7 +61,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 		}
 
 #ifdef CONFIG_MTRACE
-	if(top->clk == 0){
+	if(top->clock == 0){
 		if(raddr >= CONFIG_MTRACE_START_ADDR && raddr <= CONFIG_MTRACE_END_ADDR){
 			printf("read address:%08x data:%08x\n",raddr,*rdata);
 		}
@@ -82,7 +82,7 @@ extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 		}
 	}
 #ifdef CONFIG_MTRACE
-	if(top->clk == 0){
+	if(top->clock == 0){
 		if(waddr >= CONFIG_MTRACE_START_ADDR && waddr <= CONFIG_MTRACE_END_ADDR){
 			printf("write address:%08x data:%08x\n",waddr,wdata);
 		}

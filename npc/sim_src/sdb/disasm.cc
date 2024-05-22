@@ -104,7 +104,7 @@ void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte) {
   raw_string_ostream os(s);
   gIP->printInst(&inst, pc, "", *gSTI, os);
 
-  int skip = s.find_first_not_of('\t');
+  int skip = s.find_first_of('\t');
   const char *p = s.c_str() + skip;
   assert((int)s.length() - skip < size);
   strcpy(str, p);
