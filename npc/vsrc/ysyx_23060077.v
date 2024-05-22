@@ -69,19 +69,19 @@ module ysyx_23060077(
 
 
 // ifu
-wire [`DATA_WIDTH-1:0]      ifu_pc;
-wire [`INST_WIDTH-1:0]      ifu_inst;
-wire [`INST_WIDTH-1:0]      ifu_inst_t;
-wire                        ifu_stall;
+wire [`DATA_WIDTH-1:0]      ifu_pc          ;
+wire [`INST_WIDTH-1:0]      ifu_inst        ;
+wire [`INST_WIDTH-1:0]      ifu_inst_t      ;
+wire                        ifu_stall       ;
 
-wire [`DATA_WIDTH-1:0]      jump_pc;
-wire                        jump_pc_valid;
-wire                        stall;  
+wire [`DATA_WIDTH-1:0]      jump_pc         ;
+wire                        jump_pc_valid   ;
+wire                        stall           ; 
 
-wire                             ifu_r_valid_o  ;
-wire [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_o   ;
-wire                             ifu_r_ready_i  ;
-wire [`AXI_DATA_WIDTH-1:0]       ifu_r_data_i   ;
+wire                        ifu_r_valid_o   ;
+wire [`AXI_ADDR_WIDTH-1:0]  ifu_r_addr_o    ;
+wire                        ifu_r_ready_i   ;
+wire [`AXI_DATA_WIDTH-1:0]  ifu_r_data_i    ;
 
 // idu
 wire                       	idu_branch		;
@@ -104,7 +104,7 @@ wire [`DATA_WIDTH-1:0]     	rd_data		    ;
 
 //exu
 wire                        zero_flag		;
-reg [`DATA_WIDTH-1:0]      exu_result		;
+reg [`DATA_WIDTH-1:0]       exu_result		;
 wire [`DATA_WIDTH-1:0]      exu_result_t	;
 
 //lsu
@@ -112,22 +112,22 @@ wire [`DATA_WIDTH-1:0]     	lsu_result		;
 wire                        mem_stall       ;     
 wire                        lsu_rd_wen      ; 
 
-wire                             lsu_r_valid_o  ;
-wire [`AXI_ADDR_WIDTH-1:0]       lsu_r_addr_o   ;
-wire                             lsu_r_ready_i  ;
-wire [`AXI_DATA_WIDTH-1:0]       lsu_r_data_i   ;
-wire                             lsu_w_valid_o  ;
-wire [`AXI_ADDR_WIDTH-1:0]       lsu_w_addr_o   ;
-wire                             lsu_w_ready_i  ;
-wire [`AXI_DATA_WIDTH-1:0]       lsu_w_data_o   ;
-wire [`AXI_STRB_WIDTH-1:0]       lsu_w_strb_o   ;
+wire                        lsu_r_valid_o   ;
+wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    ;
+wire                        lsu_r_ready_i   ;
+wire [`AXI_DATA_WIDTH-1:0]  lsu_r_data_i    ;
+wire                        lsu_w_valid_o   ;
+wire [`AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    ;
+wire                        lsu_w_ready_i   ;
+wire [`AXI_DATA_WIDTH-1:0]  lsu_w_data_o    ;
+wire [`AXI_STRB_WIDTH-1:0]  lsu_w_strb_o    ;
 
 //wbu
 wire                        wbu_rd_wen      ;
 
 //csr
-wire                        csr_ecall;
-wire                        csr_mret;
+wire                        csr_ecall       ;
+wire                        csr_mret        ;
 wire [`DATA_WIDTH-1:0]     	wr_csr_data		;
 wire [`DATA_WIDTH-1:0]     	rd_csr_data		;
 wire [`DATA_WIDTH-1:0]      csr_mstatus     ;
