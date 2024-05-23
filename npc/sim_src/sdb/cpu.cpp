@@ -67,7 +67,7 @@ static void exec_once() {
 }
 
 void reset(){
-  for(int i=0; i<5; i++){
+  for(int i=0; i<10; i++){
     top->reset = 1;
     exec_once();
   }

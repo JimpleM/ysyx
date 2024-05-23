@@ -29,8 +29,9 @@ reg  	[`INST_WIDTH-1:0]       ifu_inst_o_r;
 assign ifu_pc_o = ifu_pc_o_r;
 assign ifu_inst_o = ifu_inst_o_r;
 
-reg   [`DATA_WIDTH-1:0]       pc;
-wire  [`INST_WIDTH-1:0]       inst;
+reg   [`DATA_WIDTH-1:0]         pc;
+wire  [`INST_WIDTH-1:0]         inst;
+reg   [`INST_WIDTH-1:0]         inst_t;
 
 reg ifu_stall_r;
 wire flush_inst;
@@ -90,7 +91,7 @@ assign ifu_r_valid_o = ifu_stall_r;
 assign ifu_r_addr_o  = pc;
 assign flush_inst    = ifu_r_ready_i & ifu_r_last_i;
 assign inst          = ifu_r_data_i;
-assign ifu_r_len_o   = 8'd1;
+assign ifu_r_len_o   = 8'd0;
 
 
 endmodule

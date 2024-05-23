@@ -17,6 +17,7 @@ VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 VERILATOR_FLAGS += --no-timing
 VERILATOR_FLAGS += --timescale "1ns/1ns"
+VERILATOR_FLAGS += --autoflush
 
 LDFLAGS += -lSDL2
 LDFLAGS += -ldl 
@@ -38,9 +39,9 @@ CFLAGS += $(LLVM_FLAGS)
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
+IMGS ?= ../test/char-test.bin
 IMG = --img=${IMGS}
-ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
+ELFFILE = ../test/char-test.elf
 ELF = --elf=${ELFFILE}
 
 override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch

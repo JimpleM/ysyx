@@ -71,7 +71,7 @@ assign axi_aw_burst_o   = `AXI_BURST_INCR;
 assign axi_w_valid_o    = (axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
 assign axi_w_data_o     = cpu_w_data_i;
 assign axi_w_strb_o     = 8'b1111_1111;
-assign axi_w_last_o     = axi_w_ready_i & (axi_w_cnt == cpu_w_len_i-1) ? 1'b1 : 1'b0;;
+assign axi_w_last_o     = axi_w_valid_o & axi_w_ready_i & (axi_w_cnt == cpu_w_len_i) ? 1'b1 : 1'b0;
 // 新加axi_w_state == AXI_W_DATA 能让从机早一个周期回复写完成
 assign axi_b_ready_o    = (axi_w_state == AXI_W_RESP | axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
 
@@ -99,14 +99,12 @@ always @(posedge aclk ) begin
                 end
             end
             AXI_W_DATA:begin
-                if(axi_w_cnt < cpu_w_len_i)begin
-                    if(axi_w_ready_i)begin
-                        axi_w_cnt       <= axi_w_cnt + 1;
+                if(axi_w_ready_i)begin
+                    axi_w_cnt       <= axi_w_cnt + 1;
+                    if(axi_w_cnt == cpu_w_len_i)begin
+                        axi_w_cnt       <= 'd0;
+                        axi_w_state     <= AXI_W_RESP;
                     end
-                end
-                else begin
-                    axi_w_cnt       <= 'd0;
-                    axi_w_state     <= AXI_W_RESP;
                 end
             end
             AXI_W_RESP:begin
