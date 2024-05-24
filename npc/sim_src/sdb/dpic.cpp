@@ -26,13 +26,16 @@ extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 }
 extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0x20000000 && addr <= 0x20000fff){
-		uint32_t raddr = addr+0x60000000;
+		uint32_t raddr = addr;
 		*data = pmem_read((uint32_t)raddr,4);
 		// if(*data == 0x0000006f){
 		// 	*data = 0x00100073;
 		// }
+		printf("%08x %08x\n",addr,*data);
+	}else{
+		panic("address =  0x%8x  is out of bound",addr);
 	}
-	// printf("%8x %8x\n",addr,*data);
+	
 }
 
 extern "C" void set_pc_ptr(int pc,int inst,svBit valid){

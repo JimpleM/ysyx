@@ -49,12 +49,16 @@ override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch
 all:defualt
 #	@echo "Write this Makefile by your self."
 
-sim:
+run:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  \
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+	./obj_dir/V${TOPNAME} ${ARGS} --batch
 
-run:sim
+gdb:
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	$(VERILATOR) ${VERILATOR_FLAGS} --gdb $(VSRCS) $(SIM_SRCS)  \
+	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
 	./obj_dir/V${TOPNAME} ${ARGS} --batch
 
 wave:

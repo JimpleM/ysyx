@@ -23,8 +23,25 @@ static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
+#define SRAM_LEFT			0x0F000000
+#define SRAM_RIGHT		0x0FFFFFFF
+#define SRAM_MBASE		0x08000000
+#define MROM_LEFT			0x20000000
+#define MROM_RIGHT 		0x20000FFF
+#define MROM_MBASE		0x1F000000
+// SRAM 0x0F000000~0x0FFFFFFF  ---->  pmem 0x07000000~0x07FFFFFF
+// MROM 0x20000000~0x20000FFF  ---->  pmem 0x01000000~0x01000FFF
 
-uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
+uint8_t* guest_to_host(paddr_t paddr){
+	if(SRAM_LEFT <= paddr && paddr <= SRAM_RIGHT){
+		return pmem + paddr - SRAM_MBASE;	
+	}else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
+		return pmem + paddr - MROM_MBASE;
+	}else{
+		panic("address = " FMT_PADDR " is out of bound", paddr);
+		return pmem + paddr - CONFIG_MBASE; 
+	}
+}
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {

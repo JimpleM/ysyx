@@ -18,7 +18,7 @@ extern VerilatedVcdC* tfp;
 extern int stop_flag;
 extern uint32_t cpu_pc;
 extern uint32_t cpu_inst;
-uint32_t cpu_lpc = 0x80000000;
+uint32_t cpu_lpc = 0x20000000;
 
 NPCState npc_state = { .state = NPC_STOP };
 
@@ -121,10 +121,10 @@ static void execute(uint64_t n) {
   static char p[64];
 
   for (;!contextp->gotFinish() && n > 0; n --) {
-      // if (!in_pmem(cpu_pc)){
-      //   npc_state.state = NPC_ABORT;
-      //   printf("pc is not in pmem!\n");
-      // }
+      if (!in_pmem(cpu_pc)){
+        npc_state.state = NPC_ABORT;
+        printf("pc is not in pmem!\n");
+      }
       // cpu_inst = paddr_read((uint32_t)cpu_pc,4);
 
         //反汇编结果

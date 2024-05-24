@@ -9,10 +9,10 @@
 int main(int argc, char *argv[]){
 	init_sim();
 
+	reset();
 
 	init_npc(argc,argv);
 
-	reset();
 	
 	sdb_mainloop();
 
