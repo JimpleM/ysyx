@@ -19,6 +19,7 @@ uint32_t cpu_inst;
 uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
+extern NPCState npc_state;
 extern VysyxSoCFull* top;
 
 extern "C" void flash_read(uint32_t addr, uint32_t *data) {
@@ -35,7 +36,18 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 	}else{
 		panic("address =  0x%8x  is out of bound",addr);
 	}
-	
+
+}
+
+extern "C" void set_axi_resp(int b_resp,int r_resp){
+	if(b_resp){
+		npc_state.state = NPC_ABORT;
+		printf("axi write errors, err_code: %d!\n",b_resp);
+	}
+	if(r_resp){
+		npc_state.state = NPC_ABORT;
+		printf("axi write errors, err_code: %d!\n",r_resp);
+	}
 }
 
 extern "C" void set_pc_ptr(int pc,int inst,svBit valid){

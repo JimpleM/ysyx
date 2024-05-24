@@ -168,5 +168,9 @@ always @(posedge aclk ) begin
     end
 end
 
+import "DPI-C" function void set_axi_resp(input int b_resp,input int r_resp);
 
+always @(*)begin
+    set_axi_resp({30'd0,axi_b_resp_i},{30'd0,axi_r_resp_i});
+end
 endmodule
