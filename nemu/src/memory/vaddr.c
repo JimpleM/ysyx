@@ -25,8 +25,9 @@ word_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, int len, word_t data) {
+  // Access Fault
   if(MROM_LEFT <= addr && addr <= MROM_RIGHT){
-		panic("MROM address = " FMT_PADDR " can not write" , addr);
+		panic("Access Fault! MROM address = " FMT_PADDR " can not write" , addr);
 	}
   paddr_write(addr, len, data);
 }
