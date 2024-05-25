@@ -116,7 +116,7 @@ assign lsu_w_len_o	  = 8'd0;
 
 // always @(posedge clk ) begin
 //   if(lsu_rd_wen_r)begin
-//     $display("addr = %x data = %x\n",raddr,rdata);
+//     $display("read addr = %x data = %x\n",raddr,rdata);
 //   end
 // end
 

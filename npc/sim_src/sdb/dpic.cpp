@@ -32,7 +32,7 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 		// if(*data == 0x0000006f){
 		// 	*data = 0x00100073;
 		// }
-		printf("%08x %08x\n",addr,*data);
+		// printf("%08x %08x\n",addr,*data);
 	}else{
 		panic("address =  0x%8x  is out of bound",addr);
 	}

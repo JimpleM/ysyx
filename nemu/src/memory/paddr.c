@@ -71,6 +71,9 @@ void init_mem() {
   for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
     p[i] = rand();
   }
+  for(i = (int) ((SRAM_LEFT-SRAM_MBASE) / sizeof(p[0])); i< (int) ((SRAM_RIGHT-SRAM_MBASE)/ sizeof(p[0]));i++){
+    p[i] = 0;
+  }
 #endif
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 }
