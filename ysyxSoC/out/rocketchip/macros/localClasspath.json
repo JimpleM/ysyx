@@ -1,9 +1,0 @@
-{
-    "value": [
-        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/compile-resources",
-        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/src/main/resources",
-        "ref:v0:5778bdf9:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/rocketchip/macros/compile.dest/classes"
-    ],
-    "valueHash": 64360539,
-    "inputsHash": 65655089
-}
