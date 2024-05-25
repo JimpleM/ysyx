@@ -14,7 +14,7 @@ module ysyx_23060077_ifu(
     output                              ifu_r_valid_o   ,
     output  [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_o    ,
     input                               ifu_r_ready_i   ,
-    input   [`AXI_DATA_WIDTH-1:0]       ifu_r_data_i    ,
+    input   [`DATA_WIDTH-1:0]           ifu_r_data_i    ,
     output  [`AXI_LEN_WIDTH-1:0]        ifu_r_len_o     ,
     input                               ifu_r_last_i    ,
 

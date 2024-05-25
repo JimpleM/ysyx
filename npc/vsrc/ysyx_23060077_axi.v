@@ -10,7 +10,7 @@ module ysyx_23060077_axi(
     input                               cpu_r_valid_i   ,
     input   [`AXI_ADDR_WIDTH-1:0]       cpu_r_addr_i    ,
     output                              cpu_r_ready_o   ,
-    output  [`AXI_DATA_WIDTH-1:0]       cpu_r_data_o    ,
+    output  [`DATA_WIDTH-1:0]           cpu_r_data_o    ,
     input   [`AXI_SIZE_WIDTH-1:0]       cpu_r_size_i    ,
     input   [`AXI_LEN_WIDTH-1:0]        cpu_r_len_i     ,
     output                              cpu_r_last_o    ,
@@ -18,7 +18,7 @@ module ysyx_23060077_axi(
     input                               cpu_w_valid_i   ,
     input   [`AXI_ADDR_WIDTH-1:0]       cpu_w_addr_i    ,
     output                              cpu_w_ready_o   ,
-    input   [`AXI_DATA_WIDTH-1:0]       cpu_w_data_i    ,
+    input   [`DATA_WIDTH-1:0]           cpu_w_data_i    ,
     input   [`AXI_SIZE_WIDTH-1:0]       cpu_w_size_i    ,
     input   [`AXI_LEN_WIDTH-1:0]        cpu_w_len_i     ,
     output                              cpu_w_last_o    ,
@@ -69,8 +69,12 @@ assign axi_aw_size_o    = cpu_w_size_i;
 assign axi_aw_burst_o   = `AXI_BURST_INCR;
 
 assign axi_w_valid_o    = (axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
-assign axi_w_data_o     = cpu_w_data_i;
-assign axi_w_strb_o     = 8'b1111_1111;
+// 先这么弄
+wire[`AXI_DATA_WIDTH-1:0]  axi_w_data_t = {32'd0,cpu_w_data_i};
+assign axi_w_data_o     = axi_w_data_t << {cpu_w_addr_i[2:0],3'd0};
+wire [`AXI_STRB_WIDTH-1:0] axi_w_strb_t = (cpu_w_size_i == `AXI_SIZE_1) ? 8'b0000_0001 : (cpu_w_size_i == `AXI_SIZE_2) ? 8'b0000_0011 : 8'b0000_1111;
+assign axi_w_strb_o     = axi_w_strb_t << cpu_w_addr_i[2:0];
+
 assign axi_w_last_o     = axi_w_valid_o & axi_w_ready_i & (axi_w_cnt == cpu_w_len_i) ? 1'b1 : 1'b0;
 // 新加axi_w_state == AXI_W_DATA 能让从机早一个周期回复写完成
 assign axi_b_ready_o    = (axi_w_state == AXI_W_RESP | axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
@@ -136,7 +140,7 @@ assign axi_ar_burst_o   = `AXI_BURST_INCR;
 assign axi_r_ready_o    = (axi_r_state == AXI_R_DATA) ? 'b1 : 'b0;
 
 assign cpu_r_ready_o    = axi_r_valid_i;
-assign cpu_r_data_o     = axi_r_data_i;
+assign cpu_r_data_o     = {axi_r_data_i >> {cpu_r_addr_i[2:0],3'd0}}[`DATA_WIDTH-1:0];
 assign cpu_r_last_o     = axi_r_last_i;
      
 reg [`AXI_LEN_WIDTH-1:0]    axi_r_cnt;

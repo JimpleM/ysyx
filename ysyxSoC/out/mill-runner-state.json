@@ -1,0 +1,37 @@
+{
+    "workerCache": {
+        "mill.scalalib.ZincWorkerModule.worker": {
+            "identityHashCode": 99326907,
+            "inputHash": 159773084
+        }
+    },
+    "evalWatched": [
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src/main/scala",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src/main/java",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/compile-resources",
+        "ref:v0:b776fb69:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/src/main/scala",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/src/main/java",
+        "ref:v0:aa3c2f9f:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/src/main/scala",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/src/main/java",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/src/main/resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src/main/resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/cde/resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/hardfloat/src/main/resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/cde/compile-resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/compile-resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/hardfloat/compile-resources",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/macros/compile-resources",
+        "ref:v0:d357705a:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/hardfloat/src/main/scala",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/hardfloat/src/main/java",
+        "ref:v0:3d5cccfa:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/cde/src",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src/main/scala",
+        "ref:v0:c984eca8:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src/main/java",
+        "ref:v0:7f9d1e7c:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/src",
+        "ref:v0:ad88fc89:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/src/main/resources"
+    ],
+    "moduleWatched": [],
+    "scriptImportGraph": [],
+    "classLoaderIdentity": [],
+    "runClasspath": [],
+    "runClasspathHash": 473519988
+}

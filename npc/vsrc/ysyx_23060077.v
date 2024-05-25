@@ -81,7 +81,7 @@ wire                        stall           ;
 wire                        ifu_r_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  ifu_r_addr_o    ;
 wire                        ifu_r_ready_i   ;
-wire [`AXI_DATA_WIDTH-1:0]  ifu_r_data_i    ;
+wire [`DATA_WIDTH-1:0]      ifu_r_data_i    ;
 wire [`AXI_LEN_WIDTH-1:0]   ifu_r_len_o     ;
 wire                        ifu_r_last_i    ;
 
@@ -117,13 +117,13 @@ wire                        lsu_rd_wen      ;
 wire                        lsu_r_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    ;
 wire                        lsu_r_ready_i   ;
-wire [`AXI_DATA_WIDTH-1:0]  lsu_r_data_i    ;
+wire [`DATA_WIDTH-1:0]      lsu_r_data_i    ;
 wire [`AXI_LEN_WIDTH-1:0]   lsu_r_len_o     ;
 wire                        lsu_r_last_i    ;
 wire                        lsu_w_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    ;
 wire                        lsu_w_ready_i   ;
-wire [`AXI_DATA_WIDTH-1:0]  lsu_w_data_o    ;
+wire [`DATA_WIDTH-1:0]      lsu_w_data_o    ;
 wire [`AXI_SIZE_WIDTH-1:0]  lsu_w_size_o    ;
 wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     ;
 wire                        lsu_w_last_i    ;
@@ -308,7 +308,7 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .axi_aw_burst_o ( io_master_awburst ),
     .axi_w_ready_i  ( io_master_wready  ),
     .axi_w_valid_o  ( io_master_wvalid  ),
-    .axi_w_data_o   ( io_master_wdata [31:0]  ),
+    .axi_w_data_o   ( io_master_wdata   ),
     .axi_w_strb_o   ( io_master_wstrb   ),
     .axi_w_last_o   ( io_master_wlast   ),
     .axi_b_ready_o  ( io_master_bready  ),
@@ -325,7 +325,7 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .axi_r_ready_o  ( io_master_rready  ),
     .axi_r_valid_i  ( io_master_rvalid  ),
     .axi_r_resp_i   ( io_master_rresp   ),
-    .axi_r_data_i   ( io_master_rdata  [31:0]  ),
+    .axi_r_data_i   ( io_master_rdata   ),
     .axi_r_last_i   ( io_master_rlast   ),
     .axi_r_id_i     ( io_master_rid     )
 );

@@ -1,7 +1,16 @@
-#define UART_BASE 0x10000000
-#define UART_TX   0
-void _start() {
-  *(volatile char *)(UART_BASE + UART_TX) = 'A';
-  *(volatile char *)(UART_BASE + UART_TX) = '\n';
-  while (1);
+#include <stdio.h>
+#include <stdint.h>
+
+int main(){
+    uint32_t mem[64];
+    unsigned i;
+    uint8_t *temp = (uint8_t *)mem;
+    for(i = 0; i< 16; i++){
+        temp[i] = i;
+    }
+    for(i = 0; i< 16; i++){
+        if(temp[i] != i){
+            printf("SAfsaf\n");
+        }
+    }
 }

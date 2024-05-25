@@ -14,13 +14,13 @@ module ysyx_23060077_lsu(
     output                              lsu_r_valid_o 	,
     output 	[`AXI_ADDR_WIDTH-1:0]      	lsu_r_addr_o  	,
     input                               lsu_r_ready_i 	,
-    input   [`AXI_DATA_WIDTH-1:0]      	lsu_r_data_i  	,
+    input   [`DATA_WIDTH-1:0]      	    lsu_r_data_i  	,
     output  [`AXI_LEN_WIDTH-1:0]       	lsu_r_len_o     ,
     input                               lsu_r_last_i  	,
     output                              lsu_w_valid_o 	,
     output  [`AXI_ADDR_WIDTH-1:0]      	lsu_w_addr_o  	,
     input                               lsu_w_ready_i 	,
-    output  [`AXI_DATA_WIDTH-1:0]      	lsu_w_data_o  	,
+    output  [`DATA_WIDTH-1:0]      	    lsu_w_data_o  	,
 	  output 	[`AXI_SIZE_WIDTH-1:0]       lsu_w_size_o    ,
 	  output  [`AXI_LEN_WIDTH-1:0]       	lsu_w_len_o     ,
     input                              	lsu_w_last_i    ,
@@ -114,6 +114,10 @@ assign lsu_w_data_o   = wdata;
 assign lsu_w_size_o   = wmask[2:0];
 assign lsu_w_len_o	  = 8'd0;
 
-
+// always @(posedge clk ) begin
+//   if(lsu_rd_wen_r)begin
+//     $display("addr = %x data = %x\n",raddr,rdata);
+//   end
+// end
 
 endmodule

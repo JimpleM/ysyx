@@ -1,0 +1,60 @@
+{
+    "value": {
+        "seenScripts": [
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/build.sc",
+                "import mill._\nimport mill.scalalib._\nimport mill.scalalib.publish._\nimport _root_._\n\nobject v {\n  val scala = \"2.13.10\"\n  val chiselCrossVersions = Map(\n    \"3.5.6\" -> (ivy\"edu.berkeley.cs::chisel3:3.5.6\", ivy\"edu.berkeley.cs:::chisel3-plugin:3.5.6\"),\n    \"3.6.0\" -> (ivy\"edu.berkeley.cs::chisel3:3.6.0\", ivy\"edu.berkeley.cs:::chisel3-plugin:3.6.0\"),\n    \"5.0.0\" -> (ivy\"org.chipsalliance::chisel:5.0.0\", ivy\"org.chipsalliance:::chisel-plugin:5.0.0\"),\n  )\n  val scalatest = ivy\"org.scalatest::scalatest:3.2.0\"\n  val scalapar = ivy\"org.scala-lang.modules::scala-parallel-collections:1.0.4\"\n}\n\nobject hardfloat extends Cross[Hardfloat](v.chiselCrossVersions.keys.toSeq)\n\ntrait Hardfloat\n  extends common.HardfloatModule\n    with HardfloatPublishModule\n    with Cross.Module[String] {\n\n  override def scalaVersion = T(v.scala)\n\n  override def millSourcePath = os.pwd / \"hardfloat\"\n\n  def chiselModule = None\n\n  def chiselPluginJar = None\n\n  def chiselIvy = Some(v.chiselCrossVersions(crossValue)._1)\n\n  def chiselPluginIvy = Some(v.chiselCrossVersions(crossValue)._2)\n}\n\nobject hardfloatdut extends Cross[HardfloatDut](v.chiselCrossVersions.keys.toSeq)\n\ntrait HardfloatDut\n  extends common.HardfloatTestModule\n    with Cross.Module[String] {\n\n  override def scalaVersion = T(v.scala)\n\n  override def millSourcePath = os.pwd / \"hardfloat\" / \"tests\"\n\n  def hardfloatModule = hardfloat(crossValue)\n\n  def chiselModule = None\n\n  def chiselPluginJar = None\n\n  def chiselIvy = Some(v.chiselCrossVersions(crossValue)._1)\n\n  def chiselPluginIvy = Some(v.chiselCrossVersions(crossValue)._2)\n\n  def scalatestIvy = v.scalatest\n\n  def scalaparIvy = v.scalapar\n}\n\n\ntrait HardfloatPublishModule extends PublishModule {\n  def pomSettings = PomSettings(\n    description = artifactName(),\n    organization = \"edu.berkeley.cs\",\n    url = \"http://chisel.eecs.berkeley.edu\",\n    licenses = Seq(License.`BSD-3-Clause`),\n    versionControl = VersionControl.github(\"ucb-bar\", \"berkeley-hardfloat\"),\n    developers = Seq(\n      Developer(\"jhauser-ucberkeley\", \"John Hauser\", \"https://www.colorado.edu/faculty/hauser/about/\"),\n      Developer(\"aswaterman\", \"Andrew Waterman\", \"https://aspire.eecs.berkeley.edu/author/waterman/\"),\n      Developer(\"yunsup\", \"Yunsup Lee\", \"https://aspire.eecs.berkeley.edu/author/yunsup/\")\n    )\n  )\n\n  def publishVersion = \"1.5-SNAPSHOT\"\n}\n"
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/common.sc",
+                "import mill._\nimport mill.scalalib._\n\ntrait HasChisel\n  extends ScalaModule {\n  // Define these for building chisel from source\n  def chiselModule: Option[ScalaModule]\n\n  override def moduleDeps = super.moduleDeps ++ chiselModule\n\n  def chiselPluginJar: T[Option[PathRef]]\n\n  override def scalacOptions = T(super.scalacOptions() ++ chiselPluginJar().map(path => s\"-Xplugin:${path.path}\"))\n\n  override def scalacPluginClasspath: T[Agg[PathRef]] = T(super.scalacPluginClasspath() ++ chiselPluginJar())\n\n  // Define these for building chisel from ivy\n  def chiselIvy: Option[Dep]\n\n  override def ivyDeps = T(super.ivyDeps() ++ chiselIvy)\n\n  def chiselPluginIvy: Option[Dep]\n\n  override def scalacPluginIvyDeps: T[Agg[Dep]] = T(super.scalacPluginIvyDeps() ++ chiselPluginIvy.map(Agg(_)).getOrElse(Agg.empty[Dep]))\n}\n\ntrait HardfloatModule\n  extends HasChisel\n\ntrait HardfloatTestModule\n  extends TestModule\n    with HasChisel\n    with TestModule.ScalaTest {\n\n  def hardfloatModule: HardfloatModule\n\n  def chiselModule = hardfloatModule.chiselModule\n\n  def chiselPluginJar: T[Option[PathRef]] = T(hardfloatModule.chiselPluginJar())\n\n  def chiselIvy: Option[Dep] = hardfloatModule.chiselIvy\n\n  def chiselPluginIvy: Option[Dep] = hardfloatModule.chiselPluginIvy\n\n  def scalatestIvy: Dep\n\n  def scalaparIvy: Dep\n\n  override def moduleDeps = super.moduleDeps ++ Some(hardfloatModule)\n\n  override def defaultCommandName() = \"test\"\n\n  override def ivyDeps = T(\n    super.ivyDeps() ++ Agg(\n      scalatestIvy,\n      scalaparIvy\n    )\n  )\n}"
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/build.sc",
+                "import mill._\nimport scalalib._\nimport millbuild.`rocket-chip`.common\nimport millbuild.`rocket-chip`.cde.common\nimport millbuild.`rocket-chip`.hardfloat.build\n\nval chiselVersion = \"7.0.0-M1\"\nval defaultScalaVersion = \"2.13.10\"\n\ntrait HasChisel extends SbtModule {\n  def chiselModule: Option[ScalaModule] = None\n  def chiselPluginJar: T[Option[PathRef]] = None\n  def chiselIvy: Option[Dep] = Some(ivy\"org.chipsalliance::chisel:${chiselVersion}\")\n  def chiselPluginIvy: Option[Dep] = Some(ivy\"org.chipsalliance:::chisel-plugin:${chiselVersion}\")\n  override def scalaVersion = defaultScalaVersion\n  override def scalacOptions = super.scalacOptions() ++\n    Agg(\"-language:reflectiveCalls\", \"-Ymacro-annotations\", \"-Ytasty-reader\")\n  override def ivyDeps = super.ivyDeps() ++ Agg(chiselIvy.get)\n  override def scalacPluginIvyDeps = super.scalacPluginIvyDeps() ++ Agg(chiselPluginIvy.get)\n}\n\nobject rocketchip extends RocketChip\ntrait RocketChip extends millbuild.`rocket-chip`.common.RocketChipModule with HasChisel {\n  def scalaVersion: T[String] = T(defaultScalaVersion)\n  override def millSourcePath = os.pwd / \"rocket-chip\"\n  def dependencyPath = millSourcePath\n  def macrosModule = macros\n  def hardfloatModule = hardfloat\n  def cdeModule = cde\n  def mainargsIvy = ivy\"com.lihaoyi::mainargs:0.5.4\"\n  def json4sJacksonIvy = ivy\"org.json4s::json4s-jackson:4.0.6\"\n\n  object macros extends Macros\n  trait Macros extends millbuild.`rocket-chip`.common.MacrosModule with SbtModule {\n    def scalaVersion: T[String] = T(defaultScalaVersion)\n    def scalaReflectIvy = ivy\"org.scala-lang:scala-reflect:${defaultScalaVersion}\"\n  }\n\n  object hardfloat extends Hardfloat\n  trait Hardfloat extends millbuild.`rocket-chip`.hardfloat.common.HardfloatModule with HasChisel {\n    def scalaVersion: T[String] = T(defaultScalaVersion)\n    override def millSourcePath = dependencyPath / \"hardfloat\" / \"hardfloat\"\n  }\n\n  object cde extends CDE\n  trait CDE extends millbuild.`rocket-chip`.cde.common.CDEModule with ScalaModule {\n    def scalaVersion: T[String] = T(defaultScalaVersion)\n    override def millSourcePath = dependencyPath / \"cde\" / \"cde\"\n  }\n}\n\ntrait ysyxSoCModule extends ScalaModule {\n  def rocketModule: ScalaModule\n  override def moduleDeps = super.moduleDeps ++ Seq(\n    rocketModule,\n  )\n}\n\nobject ysyxsoc extends ysyxSoC\ntrait ysyxSoC extends ysyxSoCModule with HasChisel {\n  override def millSourcePath = os.pwd\n  def rocketModule = rocketchip\n  override def sources = T.sources {\n    super.sources() ++ Seq(PathRef(millSourcePath / \"src\"))\n  }\n}\n"
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/common.sc",
+                "import mill._\nimport mill.scalalib._\n\ntrait HasChisel\n  extends ScalaModule {\n  // Define these for building chisel from source\n  def chiselModule: Option[ScalaModule]\n\n  override def moduleDeps = super.moduleDeps ++ chiselModule\n\n  def chiselPluginJar: T[Option[PathRef]]\n\n  override def scalacOptions = T(super.scalacOptions() ++ chiselPluginJar().map(path => s\"-Xplugin:${path.path}\"))\n\n  override def scalacPluginClasspath: T[Agg[PathRef]] = T(super.scalacPluginClasspath() ++ chiselPluginJar())\n\n  // Define these for building chisel from ivy\n  def chiselIvy: Option[Dep]\n\n  override def ivyDeps = T(super.ivyDeps() ++ chiselIvy)\n\n  def chiselPluginIvy: Option[Dep]\n\n  override def scalacPluginIvyDeps: T[Agg[Dep]] = T(super.scalacPluginIvyDeps() ++ chiselPluginIvy.map(Agg(_)).getOrElse(Agg.empty[Dep]))\n}\n\ntrait MacrosModule\n  extends ScalaModule {\n\n  def scalaReflectIvy: Dep\n\n  override def ivyDeps = T(super.ivyDeps() ++ Some(scalaReflectIvy))\n}\n\n\ntrait RocketChipModule\n  extends HasChisel {\n  override def mainClass = T(Some(\"freechips.rocketchip.diplomacy.Main\"))\n\n  def macrosModule: MacrosModule\n\n  // should be hardfloat/common.sc#HardfloatModule\n  def hardfloatModule: ScalaModule\n\n  // should be cde/common.sc#CDEModule\n  def cdeModule: ScalaModule\n\n  def mainargsIvy: Dep\n\n  def json4sJacksonIvy: Dep\n\n  override def moduleDeps = super.moduleDeps ++ Seq(macrosModule, hardfloatModule, cdeModule)\n\n  override def ivyDeps = T(\n    super.ivyDeps() ++ Agg(\n      mainargsIvy,\n      json4sJacksonIvy\n    )\n  )\n}\n"
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/common.sc",
+                "import mill._\nimport scalalib._\n\ntrait CDEModule\n  extends ScalaModule\n\ntrait CDETestModule\n  extends TestModule\n    with ScalaModule\n    with TestModule.Utest {\n\n  def cdeModule: CDEModule\n\n  def utestIvy: Dep\n\n  override def moduleDeps = super.moduleDeps ++ Some(cdeModule)\n\n  override def ivyDeps = T(\n    super.ivyDeps() ++ Agg(\n      utestIvy\n    )\n  )\n\n  override def defaultCommandName() = \"test\"\n}\n"
+            ]
+        ],
+        "repos": [],
+        "ivyDeps": [],
+        "importGraphEdges": [
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/build.sc",
+                [
+                    "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/common.sc"
+                ]
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/common.sc",
+                []
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/build.sc",
+                [
+                    "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/common.sc",
+                    "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/common.sc",
+                    "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/hardfloat/build.sc"
+                ]
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/common.sc",
+                []
+            ],
+            [
+                "/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/rocket-chip/cde/common.sc",
+                []
+            ]
+        ],
+        "errors": [],
+        "millImport": false
+    },
+    "valueHash": -1609462385,
+    "inputsHash": -1643232437
+}

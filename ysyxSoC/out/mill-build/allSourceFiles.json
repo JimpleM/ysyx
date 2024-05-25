@@ -1,0 +1,11 @@
+{
+    "value": [
+        "ref:v0:24825ea1:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/mill-build/generateScriptSources.dest/millbuild/build.sc",
+        "ref:v0:8fca1e42:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/mill-build/generateScriptSources.dest/millbuild/rocket-chip/cde/common.sc",
+        "ref:v0:9bbad6e1:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/mill-build/generateScriptSources.dest/millbuild/rocket-chip/common.sc",
+        "ref:v0:a7d53aa5:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/mill-build/generateScriptSources.dest/millbuild/rocket-chip/hardfloat/common.sc",
+        "ref:v0:f3a2af10:/home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/out/mill-build/generateScriptSources.dest/millbuild/rocket-chip/hardfloat/build.sc"
+    ],
+    "valueHash": 1266905250,
+    "inputsHash": 3066798
+}

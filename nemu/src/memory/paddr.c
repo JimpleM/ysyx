@@ -23,14 +23,6 @@ static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
-#define SRAM_LEFT			0x0F000000
-#define SRAM_RIGHT		0x0FFFFFFF
-#define SRAM_MBASE		0x08000000
-#define MROM_LEFT			0x20000000
-#define MROM_RIGHT 		0x20000FFF
-#define MROM_MBASE		0x1F000000
-// SRAM 0x0F000000~0x0FFFFFFF  ---->  pmem 0x07000000~0x07FFFFFF
-// MROM 0x20000000~0x20000FFF  ---->  pmem 0x01000000~0x01000FFF
 
 uint8_t* guest_to_host(paddr_t paddr){
 	if(SRAM_LEFT <= paddr && paddr <= SRAM_RIGHT){
@@ -47,9 +39,9 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
   #ifdef CONFIG_MTRACE
-  if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
-    printf("read address:%08x data:%08x\n",addr,ret);
-  } 
+  // if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
+  //   printf("read address:%08x data:%08x\n",addr,ret);
+  // } 
 #endif
   return ret;
 }

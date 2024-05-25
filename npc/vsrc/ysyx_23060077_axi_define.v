@@ -1,5 +1,5 @@
 `define AXI_ADDR_WIDTH          32
-`define AXI_DATA_WIDTH          32
+`define AXI_DATA_WIDTH          64
 `define AXI_PORT_WIDTH          3
 
 `define AXI_RESP_WIDTH          2

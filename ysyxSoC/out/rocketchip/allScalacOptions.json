@@ -1,0 +1,10 @@
+{
+    "value": [
+        "-Xplugin:/home/jimple/.cache/coursier/v1/https/repo1.maven.org/maven2/org/chipsalliance/chisel-plugin_2.13.10/7.0.0-M1/chisel-plugin_2.13.10-7.0.0-M1.jar",
+        "-language:reflectiveCalls",
+        "-Ymacro-annotations",
+        "-Ytasty-reader"
+    ],
+    "valueHash": -1252058584,
+    "inputsHash": -1752910077
+}

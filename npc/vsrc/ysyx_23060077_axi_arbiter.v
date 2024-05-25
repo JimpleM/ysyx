@@ -8,7 +8,7 @@ module ysyx_23060077_axi_arbiter(
     input                               ifu_r_valid_i   ,
     input   [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_i    ,
     output                              ifu_r_ready_o   ,
-    output  [`AXI_DATA_WIDTH-1:0]       ifu_r_data_o    ,
+    output  [`DATA_WIDTH-1:0]           ifu_r_data_o    ,
     input   [`AXI_LEN_WIDTH-1:0]        ifu_r_len_i     ,
     output                              ifu_r_last_o    ,
     
@@ -16,13 +16,13 @@ module ysyx_23060077_axi_arbiter(
     input                               lsu_r_valid_i   ,
     input   [`AXI_ADDR_WIDTH-1:0]       lsu_r_addr_i    ,
     output                              lsu_r_ready_o   ,
-    output  [`AXI_DATA_WIDTH-1:0]       lsu_r_data_o    ,
+    output  [`DATA_WIDTH-1:0]           lsu_r_data_o    ,
     input   [`AXI_LEN_WIDTH-1:0]        lsu_r_len_i     ,
     output                              lsu_r_last_o    ,
     input                               lsu_w_valid_i   ,
     input   [`AXI_ADDR_WIDTH-1:0]       lsu_w_addr_i    ,
     output                              lsu_w_ready_o   ,
-    input   [`AXI_DATA_WIDTH-1:0]       lsu_w_data_i    ,
+    input   [`DATA_WIDTH-1:0]           lsu_w_data_i    ,
     input   [`AXI_SIZE_WIDTH-1:0]       lsu_w_size_i    ,
     input   [`AXI_LEN_WIDTH-1:0]        lsu_w_len_i     ,
     output                              lsu_w_last_o    ,
@@ -64,7 +64,7 @@ module ysyx_23060077_axi_arbiter(
 wire                                cpu_r_valid_o   ;
 wire    [`AXI_ADDR_WIDTH-1:0]       cpu_r_addr_o    ;
 wire                                cpu_r_ready_i   ;
-wire    [`AXI_DATA_WIDTH-1:0]       cpu_r_data_i    ;
+wire    [`DATA_WIDTH-1:0]           cpu_r_data_i    ;
 wire    [`AXI_SIZE_WIDTH-1:0]       cpu_r_size_o    ;
 wire    [`AXI_LEN_WIDTH-1:0]        cpu_r_len_o     ;
 wire                                cpu_r_last_i    ;
@@ -72,7 +72,7 @@ wire                                cpu_r_last_i    ;
 wire                                cpu_w_valid_o   ;
 wire    [`AXI_ADDR_WIDTH-1:0]       cpu_w_addr_o    ;
 wire                                cpu_w_ready_i   ;
-wire    [`AXI_DATA_WIDTH-1:0]       cpu_w_data_o    ;
+wire    [`DATA_WIDTH-1:0]           cpu_w_data_o    ;
 wire    [`AXI_SIZE_WIDTH-1:0]       cpu_w_size_o    ;
 wire    [`AXI_LEN_WIDTH-1:0]        cpu_w_len_o     ;
 wire                                cpu_w_last_i    ;
