@@ -15,7 +15,7 @@ SOCFLAGS += --img $(IMAGE).bin
 SOCFLAGS += --diff ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 
 image: $(IMAGE).elf
-	@$(OBJDUMP) -d $(IMAGE).elf > $(IMAGE).txt
+	@$(OBJDUMP) -h -t -d $(IMAGE).elf > $(IMAGE).txt
 	@echo + OBJCOPY "->" $(IMAGE_REL).bin
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
