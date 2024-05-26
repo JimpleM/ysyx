@@ -49,3 +49,9 @@ void device_write(uint32_t addr, uint32_t data){
         }
     // }
 }
+bool in_device(uint32_t addr){
+    if(SERIAL_PORT_START<= addr && addr <= SERIAL_PORT_END){
+        return true;
+    }
+    return false;
+}

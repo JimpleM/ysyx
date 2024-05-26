@@ -16,6 +16,8 @@ extern "C" {
 
 
     // DPI IMPORTS
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_lsu.v:137:30
+    extern void device_skip(svBit ren, int raddr, svBit wen, int waddr);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/flash/flash.v:84:30
     extern void flash_read(int addr, int* data);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_ifu.v:41:30
@@ -28,7 +30,7 @@ extern "C" {
     extern void set_csr_ptr(const svOpenArrayHandle csr_reg);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_regfile.v:45:30
     extern void set_gpr_ptr(const svOpenArrayHandle a);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077.v:333:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077.v:336:30
     extern void set_pc_ptr(int pc, int inst, svBit valid);
 
 #ifdef __cplusplus

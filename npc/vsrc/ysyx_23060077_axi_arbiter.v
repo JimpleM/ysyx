@@ -17,6 +17,7 @@ module ysyx_23060077_axi_arbiter(
     input   [`AXI_ADDR_WIDTH-1:0]       lsu_r_addr_i    ,
     output                              lsu_r_ready_o   ,
     output  [`DATA_WIDTH-1:0]           lsu_r_data_o    ,
+    input   [`AXI_SIZE_WIDTH-1:0]       lsu_r_size_i    ,
     input   [`AXI_LEN_WIDTH-1:0]        lsu_r_len_i     ,
     output                              lsu_r_last_o    ,
     input                               lsu_w_valid_i   ,
@@ -85,7 +86,7 @@ parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_LSU    = 'd2;
 
 assign cpu_r_valid_o    = (arbiter_state == ARB_IFU) ? ifu_r_valid_i : (arbiter_state == ARB_LSU) ? lsu_r_valid_i : 'd0;
 assign cpu_r_addr_o     = (arbiter_state == ARB_IFU) ? ifu_r_addr_i  : (arbiter_state == ARB_LSU) ? lsu_r_addr_i  : 'd0;
-assign cpu_r_size_o     = (arbiter_state == ARB_IFU) ? `AXI_SIZE_4   : (arbiter_state == ARB_LSU) ? `AXI_SIZE_4   : 'd0;
+assign cpu_r_size_o     = (arbiter_state == ARB_IFU) ? `AXI_SIZE_4   : (arbiter_state == ARB_LSU) ? lsu_r_size_i  : 'd0;
 assign cpu_r_len_o      = (arbiter_state == ARB_IFU) ? ifu_r_len_i   : (arbiter_state == ARB_LSU) ? lsu_r_len_i   : 'd0;
 assign ifu_r_ready_o    = (arbiter_state == ARB_IFU) ? cpu_r_ready_i : 'd0;
 assign ifu_r_data_o     = (arbiter_state == ARB_IFU) ? cpu_r_data_i  : 'd0;

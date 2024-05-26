@@ -118,6 +118,7 @@ wire                        lsu_r_valid_o   ;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    ;
 wire                        lsu_r_ready_i   ;
 wire [`DATA_WIDTH-1:0]      lsu_r_data_i    ;
+wire [`AXI_SIZE_WIDTH-1:0]  lsu_r_size_o    ;
 wire [`AXI_LEN_WIDTH-1:0]   lsu_r_len_o     ;
 wire                        lsu_r_last_i    ;
 wire                        lsu_w_valid_o   ;
@@ -223,6 +224,7 @@ ysyx_23060077_lsu lsu_u0(
     .lsu_r_addr_o   ( lsu_r_addr_o  ),
     .lsu_r_ready_i  ( lsu_r_ready_i ),
     .lsu_r_data_i   ( lsu_r_data_i  ),
+    .lsu_r_size_o   ( lsu_r_size_o  ),
     .lsu_r_len_o    ( lsu_r_len_o   ),
     .lsu_r_last_i   ( lsu_r_last_i  ),
     .lsu_w_valid_o  ( lsu_w_valid_o ),
@@ -289,6 +291,7 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .lsu_r_addr_i   ( lsu_r_addr_o      ),
     .lsu_r_ready_o  ( lsu_r_ready_i     ),
     .lsu_r_data_o   ( lsu_r_data_i      ),
+    .lsu_r_size_i   ( lsu_r_size_o      ),
     .lsu_r_len_i    ( lsu_r_len_o       ),
     .lsu_r_last_o   ( lsu_r_last_i      ),
     .lsu_w_valid_i  ( lsu_w_valid_o     ),

@@ -12,7 +12,7 @@ uint32_t device_read(uint32_t addr);
 
 void device_write(uint32_t addr, uint32_t data);
 
-
+bool in_device(uint32_t addr);
 //uart
 void uart_write(uint32_t data);
 #endif

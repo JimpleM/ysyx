@@ -27,7 +27,7 @@ extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 }
 extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0x20000000 && addr <= 0x20000fff){
-		uint32_t raddr = addr;
+		uint32_t raddr = addr&0xFFFFFFFC;
 		*data = pmem_read((uint32_t)raddr,4);
 		// if(*data == 0x0000006f){
 		// 	*data = 0x00100073;
@@ -36,7 +36,13 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 	}else{
 		panic("address =  0x%8x  is out of bound",addr);
 	}
-
+}
+extern "C" void device_skip(svBit ren,uint32_t raddr, svBit wen,uint32_t waddr) {
+	if(ren){
+		if(in_device(raddr)){
+			device_flag = 1;
+		}
+	}
 }
 
 extern "C" void set_axi_resp(int b_resp,int r_resp){

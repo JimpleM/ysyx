@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
-  assert(s != NULL);
+  // assert(s != NULL);
   unsigned long i = 0;
   while(s[i] != '\0'){
     i++;
@@ -14,8 +14,8 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
-  assert(dst != NULL);
-  assert(src != NULL);
+  // assert(dst != NULL);
+  // assert(src != NULL);
   char *dst_t = dst;
   while(*src != '\0'){
     *dst_t++ = *src++;
@@ -25,8 +25,8 @@ char *strcpy(char *dst, const char *src) {
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
-  assert(dst != NULL);
-  assert(src != NULL);
+  // assert(dst != NULL);
+  // assert(src != NULL);
   char *dst_t = dst;
   for(; n; n--){
     *dst_t++ = *src++;
@@ -64,7 +64,7 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
-  assert(s != NULL);
+  // assert(s != NULL);
   char *str = (char *)s;
   for(;n;n--){
     *str++ = c;
@@ -102,8 +102,7 @@ int memcmp(const void *s1, const void *s2, size_t n) {
     s2_t++;
     n--;
   }
-  int t = *s1_t - *s2_t;
-  return t;
+  return *s1_t - *s2_t;
 }
 
 #endif
