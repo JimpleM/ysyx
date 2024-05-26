@@ -22,8 +22,21 @@ uint32_t *cpu_csr = NULL;
 extern NPCState npc_state;
 extern VysyxSoCFull* top;
 
+#define PG_ALIGN __attribute((aligned(4096)))
+
+uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
+
 extern "C" void flash_read(uint32_t addr, uint32_t *data) {
-	assert(0); 
+	if(addr >= 0 && addr <= FLASH_SIZE){
+		uint32_t raddr = addr&0xFFFFFFFC;
+		*data = *(uint32_t *)(flash_mem+addr);
+		// if(*data == 0x0000006f){
+		// 	*data = 0x00100073;
+		// }
+		printf("%08x %08x\n",addr,*data);
+	}else{
+		panic("flash address =  0x%8x  is out of bound",addr);
+	}
 }
 extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0x20000000 && addr <= 0x20000fff){
@@ -34,7 +47,7 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 		// }
 		// printf("%08x %08x\n",addr,*data);
 	}else{
-		panic("address =  0x%8x  is out of bound",addr);
+		panic("mrom address =  0x%8x  is out of bound",addr);
 	}
 }
 extern "C" void device_skip(svBit ren,uint32_t raddr, svBit wen,uint32_t waddr) {

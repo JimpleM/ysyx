@@ -23,6 +23,7 @@ uint32_t cpu_lpc = 0x20000000;
 NPCState npc_state = { .state = NPC_STOP };
 
 CPU_state cpu = {};
+extern uint32_t *cpu_gpr;
 static bool g_print_step = false;
 
 #ifdef CONFIG_WAVE
@@ -141,13 +142,14 @@ static void execute(uint64_t n) {
       }
       
       cpu_lpc  = cpu_pc;
-      if (npc_state.state != NPC_RUNNING) break;
+      
       if (cpu_inst == 0x00100073){
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_END;
-          break;
+          npc_state.halt_ret = cpu_gpr[10];
       } 
 
+      if (npc_state.state != NPC_RUNNING) break;
       #ifdef CONFIG_FTRACE
         ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
       #endif

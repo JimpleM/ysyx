@@ -7,10 +7,16 @@
 #define PMEM_RIGHT 0x20000fff
 #define PMEM_SIZE   PMEM_RIGHT-PMEM_LEFT+1
 
+
+// flash address
+#define FLASH_LEFT  0x30000000
+#define FLASH_RIGHT 0x3fffffff
+#define FLASH_SIZE   FLASH_RIGHT-FLASH_LEFT+1
+
 // #define CONFIG_MTRACE_START_ADDR    0x80000000
 // #define CONFIG_MTRACE_END_ADDR      0x8fffffff
 
-#define CONFIG_DIFFTEST
+// #define CONFIG_DIFFTEST
 // #define CONFIG_ITRACE
 // #define CONFIG_FTRACE
 // #define CONFIG_WATCHPOINT

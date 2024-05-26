@@ -19,6 +19,8 @@ VerilatedVcdC* tfp = NULL;
 
 extern uint8_t pmem [PMEM_SIZE];
 
+extern uint8_t flash_mem [FLASH_SIZE];
+
 static long load_img() {
   Assert(img_file != NULL, "No img file!");
   
@@ -81,6 +83,19 @@ void init_sim(){
     tfp->open("wave.vcd");
 
 }
+void init_flash(){
+  for(int i=0; i<16; i++){
+    flash_mem[i] = i;
+  }
+  uint16_t *mem16 = (uint16_t *)flash_mem;
+  for(int i=8; i<16; i++){
+    mem16[i] = i;
+  }
+  uint32_t *mem32 = (uint32_t *)flash_mem;
+  for(int i=8; i<16; i++){
+    mem32[i] = i;
+  }
+}
 
 void finish_sim(){
   	delete top;
@@ -92,7 +107,7 @@ void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
 
     long img_size = load_img();
-
+    init_flash();
     init_difftest(diff_so_file, img_size, difftest_port);
 
 	  init_sdb();
