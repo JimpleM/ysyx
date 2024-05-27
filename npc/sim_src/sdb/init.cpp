@@ -84,17 +84,12 @@ void init_sim(){
 
 }
 void init_flash(){
-  for(int i=0; i<16; i++){
-    flash_mem[i] = i;
-  }
-  uint16_t *mem16 = (uint16_t *)flash_mem;
-  for(int i=8; i<16; i++){
-    mem16[i] = i;
-  }
   uint32_t *mem32 = (uint32_t *)flash_mem;
-  for(int i=8; i<16; i++){
-    mem32[i] = i;
-  }
+  mem32[0] = 0x100007b7;
+  mem32[1] = 0x04100713;
+  mem32[2] = 0x00e78023;
+  mem32[3] = 0x00000513;
+  mem32[4] = 0x00100073;
 }
 
 void finish_sim(){
