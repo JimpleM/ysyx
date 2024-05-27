@@ -50,9 +50,10 @@ uint32_t flash_read(uint32_t addr){
 
 int main(){
     flash_init();
-    for(uint32_t i=0; i<5; i+=1){
-        outl(0x0f000000+i*4,flash_read(i*4));
-    }
-    asm volatile("lui s1,0x0F000;");
-    asm volatile("jalr x0,0(s1);");
+    check(flash_read(0) == 0x00000413);
+    // for(uint32_t i=0; i<5; i+=1){
+    //     outl(0x0f000000+i*4,flash_read(i*4));
+    // }
+    // asm volatile("lui s1,0x0F000;");
+    // asm volatile("jalr x0,0(s1);");
 }

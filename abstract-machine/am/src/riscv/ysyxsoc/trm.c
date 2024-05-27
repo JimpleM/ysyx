@@ -18,6 +18,7 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 static const char mainargs[] = MAINARGS;
 
 extern char _data_lma_start,_data_vma_start,_bss_start;
+uint32_t number;
 
 void putch(char ch) {
   //这里要加东西
@@ -25,6 +26,12 @@ void putch(char ch) {
     
   }
   outb(SERIAL_PORT, ch);
+}
+void print_char(uint32_t){
+  putch((number&0xff000000) >> 24);
+  putch((number&0x00ff0000) >> 16);
+  putch((number&0x0000ff00) >> 8);
+  putch((number&0x000000ff) >> 0);
 }
 
 void halt(int code) {
@@ -45,6 +52,11 @@ void _trm_init() {
   memcpy(&_data_vma_start,&_data_lma_start,&_bss_start-&_data_vma_start);
   
   uart_init();
+  
+  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
+  print_char(number);
+  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
+  printf("%d\n",number);
 
   int ret = main(mainargs);
   halt(ret);

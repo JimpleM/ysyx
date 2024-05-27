@@ -40,6 +40,9 @@ wire [`DATA_WIDTH-1:0]        temp;
 assign temp = csr_reg[wr_addr];
 assign wr_data_r = (i_inst[13:12] == 2'b01) ? wr_data : (i_inst[13:12] == 2'b10) ? temp | wr_data : temp & (~wr_data);
 
+assign csr_reg[`CSR_MVENDORID]  = `MVENDORID;
+assign csr_reg[`CSR_MARCHID]    = `MARCHID;
+
 //rd_data
 always @(*) begin
     if(reset)begin  
