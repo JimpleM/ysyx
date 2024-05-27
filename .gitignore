@@ -2,7 +2,7 @@
 /*.png
 /wave.vcd
 /.git
-/am-kernals/*/build/
+am-kernals/*/build/
 /npc_chisel
 /build
 /obj_dir
