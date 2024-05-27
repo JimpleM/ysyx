@@ -2,7 +2,7 @@
 /*.png
 /wave.vcd
 /.git
-/cpu-tests/build
+/am-kernals/*/build/
 /npc_chisel
 /build
 /obj_dir
