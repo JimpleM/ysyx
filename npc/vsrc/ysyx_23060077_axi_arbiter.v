@@ -102,7 +102,8 @@ assign cpu_w_size_o     = lsu_w_size_i  ;
 assign cpu_w_len_o      = lsu_w_len_i   ;
 assign lsu_w_ready_o    = cpu_w_ready_i ;
 assign lsu_w_last_o     = cpu_w_last_i  ;
-
+// todo: 这里保证lsu 写操作之后再接ifu的读指令，否则会有问题，主要还是ifu更新指令那一块实现不太好，
+// mem_stall会影响到指令更新，需要重构一下ifu的思路或者等流水线就可以解决
 always @(posedge aclk ) begin
     if(areset_n)begin
         arbiter_state <= ARB_IDLE;
@@ -113,13 +114,13 @@ always @(posedge aclk ) begin
                 if(ifu_r_valid_i)begin
                     arbiter_state <= ARB_IFU;
                 end
-                if(lsu_r_valid_i)begin
+                if(lsu_r_valid_i | lsu_w_valid_i)begin
                     arbiter_state <= ARB_LSU;
                 end
             end
             ARB_IFU:begin
                 if(cpu_r_ready_i & cpu_r_last_i)begin
-                    if(lsu_r_valid_i)begin
+                    if(lsu_r_valid_i | lsu_w_valid_i)begin
                         arbiter_state <= ARB_LSU;
                     end
                     else begin
@@ -129,6 +130,9 @@ always @(posedge aclk ) begin
             end
             ARB_LSU:begin
                 if(cpu_r_ready_i & cpu_r_last_i)begin
+                    arbiter_state <= ARB_IDLE;
+                end
+                if(cpu_w_ready_i & cpu_w_last_i)begin
                     arbiter_state <= ARB_IDLE;
                 end
             end
