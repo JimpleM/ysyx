@@ -20,7 +20,7 @@ extern "C" {
     extern void device_skip(svBit ren, int raddr, svBit wen, int waddr);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/flash/flash.v:84:30
     extern void flash_read(int addr, int* data);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_ifu.v:41:30
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_ifu.v:44:30
     extern void get_riscv32_rst(svBit reset);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v:4744:30
     extern void mrom_read(int raddr, int* rdata);

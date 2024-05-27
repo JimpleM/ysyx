@@ -26,6 +26,9 @@ module ysyx_23060077_ifu(
 reg  	[`INST_WIDTH-1:0]       ifu_pc_o_r;
 reg  	[`INST_WIDTH-1:0]       ifu_inst_o_r;
 
+reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
+reg  	[`INST_WIDTH-1:0]       ifu_inst_o_t;
+
 assign ifu_pc_o = ifu_pc_o_r;
 assign ifu_inst_o = ifu_inst_o_r;
 
@@ -34,7 +37,7 @@ wire  [`INST_WIDTH-1:0]         inst;
 reg   [`INST_WIDTH-1:0]         inst_t;
 
 reg ifu_stall_r;
-wire flush_inst;
+reg flush_inst;
 
 assign ifu_stall = ifu_stall_r;
 
@@ -50,46 +53,50 @@ end
 always @(posedge clk) begin
     if(reset)begin
         pc <= 32'h2000_0000;
-        ifu_stall_r <= 'd1;
     end
     else if(flush_inst)begin
         pc <= pc;
-        ifu_stall_r <= 'd0;
     end
     else if(stall | wbu_stall)begin
         pc <= pc;
     end
     else if(jump_pc_valid)begin
         pc <= jump_pc;
-        ifu_stall_r <= 'd1;
     end
     else if(ifu_stall_r)begin
         pc <= pc;
     end
     else begin
         pc <= pc + 4;
-        ifu_stall_r <= 'd1;
+    end
+end
+always @(posedge clk ) begin
+    if(ifu_r_ready_i & ifu_r_last_i)begin
+        ifu_pc_o_t      <= pc;
+        ifu_inst_o_t    <= inst;
+        flush_inst      <= 1'b1;
+    end
+    else if((!stall) & (!wbu_stall))begin
+        flush_inst      <= 1'b0;
     end
 end
 
 always @(posedge clk) begin
-    if(stall)begin
-        ifu_pc_o_r <= ifu_pc_o_r;
-        ifu_inst_o_r <= ifu_inst_o_r;
-    end
-    else if(flush_inst)begin
-        ifu_pc_o_r <= pc;
-        ifu_inst_o_r <= inst;
+    if(flush_inst & (!stall) & (!wbu_stall))begin
+        ifu_pc_o_r <= ifu_pc_o_t;
+        ifu_inst_o_r <= ifu_inst_o_t;
+        ifu_stall_r <= 1'b0;
     end
     else begin
         ifu_pc_o_r <= ifu_pc_o_r;
         ifu_inst_o_r <= ifu_inst_o_r;
+        ifu_stall_r <= 1'b1;
     end
 end
 
-assign ifu_r_valid_o = ifu_stall_r;
+assign ifu_r_valid_o = ifu_stall_r & !flush_inst;
 assign ifu_r_addr_o  = pc;
-assign flush_inst    = ifu_r_ready_i & ifu_r_last_i;
+// assign flush_inst    = ifu_r_ready_i & ifu_r_last_i;
 assign inst          = ifu_r_data_i;
 assign ifu_r_len_o   = 8'd0;
 
