@@ -1,0 +1,141 @@
+
+/home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/tests/cpu-tests/build/to-lower-case-riscv32e-ysyxsoc.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000130  20000000  20000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .srodata.mainargs 00000001  20000130  20000130  00001130  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .data.ans     00000080  0f000000  20000131  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .comment      0000002b  00000000  00000000  00002080  2**0
+                  CONTENTS, READONLY
+  4 .riscv.attributes 0000001a  00000000  00000000  000020ab  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+20000000 l    d  .text	00000000 .text
+20000130 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+0f000000 l    d  .data.ans	00000000 .data.ans
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    df *ABS*	00000000 start.o
+00000000 l    df *ABS*	00000000 to-lower-case.c
+00000000 l    df *ABS*	00000000 trm.c
+20000130 l     O .srodata.mainargs	00000001 mainargs
+00000000 l    df *ABS*	00000000 string.c
+200000ac g     F .text	00000060 _trm_init
+20000131 g       .srodata.mainargs	00000000 _data_lma_end
+0f002000 g       .data.ans	00000000 _stack_pointer
+20000130 g       .text	00000000 _etext
+2000010c g     F .text	00000024 memcpy
+20000000 g       *ABS*	00000000 _pmem_start
+20000130 g       .srodata.mainargs	00000000 _rodata_end
+0f000080 g       .data.ans	00000000 _bss_start
+20000131 g       .srodata.mainargs	00000000 edata
+0f001800 g       *ABS*	00000000 _heap_end
+0f001000 g       *ABS*	00000000 _heap_start
+0f001800 g       *ABS*	00000000 _stack_top
+0f002000 g       .data.ans	00000000 end
+20000010 g     F .text	00000018 check
+20000130 g       .text	00000000 etext
+20000000 g     F .text	00000000 _start
+00000000 g       *ABS*	00000000 _entry_offset
+20000028 g     F .text	00000078 main
+0f000000 g       .srodata.mainargs	00000000 _data_vma_start
+0f000000 g     O .data.ans	00000080 ans
+0f002000 g       .data.ans	00000000 _end
+20000131 g       *ABS*	00000000 _data_lma_start
+200000a0 g     F .text	0000000c halt
+
+
+
+Disassembly of section .text:
+
+20000000 <_start>:
+20000000:	00000413          	li	s0,0
+20000004:	ef002117          	auipc	sp,0xef002
+20000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
+2000000c:	0a0000ef          	jal	ra,200000ac <_trm_init>
+
+20000010 <check>:
+20000010:	00050463          	beqz	a0,20000018 <check+0x8>
+20000014:	00008067          	ret
+20000018:	ff410113          	addi	sp,sp,-12
+2000001c:	00100513          	li	a0,1
+20000020:	00112423          	sw	ra,8(sp)
+20000024:	07c000ef          	jal	ra,200000a0 <halt>
+
+20000028 <main>:
+20000028:	ff410113          	addi	sp,sp,-12
+2000002c:	00812223          	sw	s0,4(sp)
+20000030:	00912023          	sw	s1,0(sp)
+20000034:	00112423          	sw	ra,8(sp)
+20000038:	00000413          	li	s0,0
+2000003c:	00000713          	li	a4,0
+20000040:	ef000497          	auipc	s1,0xef000
+20000044:	fc048493          	addi	s1,s1,-64 # f000000 <ans>
+20000048:	008486b3          	add	a3,s1,s0
+2000004c:	0006c503          	lbu	a0,0(a3)
+20000050:	00140413          	addi	s0,s0,1
+20000054:	40e50533          	sub	a0,a0,a4
+20000058:	00153513          	seqz	a0,a0
+2000005c:	fb5ff0ef          	jal	ra,20000010 <check>
+20000060:	0ff47713          	zext.b	a4,s0
+20000064:	fbf70693          	addi	a3,a4,-65
+20000068:	08000793          	li	a5,128
+2000006c:	0ff6f693          	zext.b	a3,a3
+20000070:	01900613          	li	a2,25
+20000074:	02070593          	addi	a1,a4,32
+20000078:	00f40863          	beq	s0,a5,20000088 <main+0x60>
+2000007c:	fcd666e3          	bltu	a2,a3,20000048 <main+0x20>
+20000080:	0ff5f713          	zext.b	a4,a1
+20000084:	fc5ff06f          	j	20000048 <main+0x20>
+20000088:	00812083          	lw	ra,8(sp)
+2000008c:	00412403          	lw	s0,4(sp)
+20000090:	00012483          	lw	s1,0(sp)
+20000094:	00000513          	li	a0,0
+20000098:	00c10113          	addi	sp,sp,12
+2000009c:	00008067          	ret
+
+200000a0 <halt>:
+200000a0:	00050513          	mv	a0,a0
+200000a4:	00100073          	ebreak
+200000a8:	0000006f          	j	200000a8 <halt+0x8>
+
+200000ac <_trm_init>:
+200000ac:	ef000517          	auipc	a0,0xef000
+200000b0:	f5450513          	addi	a0,a0,-172 # f000000 <ans>
+200000b4:	ef000617          	auipc	a2,0xef000
+200000b8:	fcc60613          	addi	a2,a2,-52 # f000080 <_bss_start>
+200000bc:	ff410113          	addi	sp,sp,-12
+200000c0:	40a60633          	sub	a2,a2,a0
+200000c4:	00000597          	auipc	a1,0x0
+200000c8:	06d58593          	addi	a1,a1,109 # 20000131 <_data_lma_end>
+200000cc:	00112423          	sw	ra,8(sp)
+200000d0:	03c000ef          	jal	ra,2000010c <memcpy>
+200000d4:	100007b7          	lui	a5,0x10000
+200000d8:	f8000713          	li	a4,-128
+200000dc:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
+200000e0:	00100713          	li	a4,1
+200000e4:	00e78023          	sb	a4,0(a5)
+200000e8:	000780a3          	sb	zero,1(a5)
+200000ec:	00300713          	li	a4,3
+200000f0:	00e781a3          	sb	a4,3(a5)
+200000f4:	00000517          	auipc	a0,0x0
+200000f8:	03c50513          	addi	a0,a0,60 # 20000130 <_etext>
+200000fc:	f2dff0ef          	jal	ra,20000028 <main>
+20000100:	00050513          	mv	a0,a0
+20000104:	00100073          	ebreak
+20000108:	0000006f          	j	20000108 <_trm_init+0x5c>
+
+2000010c <memcpy>:
+2000010c:	02060063          	beqz	a2,2000012c <memcpy+0x20>
+20000110:	00c50633          	add	a2,a0,a2
+20000114:	00050793          	mv	a5,a0
+20000118:	0005c703          	lbu	a4,0(a1)
+2000011c:	00178793          	addi	a5,a5,1
+20000120:	00158593          	addi	a1,a1,1
+20000124:	fee78fa3          	sb	a4,-1(a5)
+20000128:	fec798e3          	bne	a5,a2,20000118 <memcpy+0xc>
+2000012c:	00008067          	ret

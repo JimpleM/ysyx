@@ -1,0 +1,246 @@
+
+/home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/tests/cpu-tests/build/goldbach-riscv32e-ysyxsoc.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002a0  20000000  20000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .srodata.mainargs 00000001  200002a0  200002a0  000012a0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .comment      0000002b  00000000  00000000  000012a1  2**0
+                  CONTENTS, READONLY
+  3 .riscv.attributes 0000001a  00000000  00000000  000012cc  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+20000000 l    d  .text	00000000 .text
+200002a0 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    df *ABS*	00000000 start.o
+00000000 l    df *ABS*	00000000 goldbach.c
+00000000 l    df *ABS*	00000000 trm.c
+200002a0 l     O .srodata.mainargs	00000001 mainargs
+00000000 l    df *ABS*	00000000 div.o
+00000000 l    df *ABS*	00000000 string.c
+20000168 g     F .text	00000060 _trm_init
+20000028 g     F .text	000000e8 goldbach
+200002a1 g       .srodata.mainargs	00000000 _data_lma_end
+0f002000 g       .srodata.mainargs	00000000 _stack_pointer
+200002a0 g       .text	00000000 _etext
+2000027c g     F .text	00000024 memcpy
+20000000 g       *ABS*	00000000 _pmem_start
+200002a0 g       .srodata.mainargs	00000000 _rodata_end
+200001d0 g     F .text	00000048 .hidden __hidden___udivsi3
+200001d0 g     F .text	00000048 __udivsi3
+0f000000 g       .srodata.mainargs	00000000 _bss_start
+200002a1 g       .srodata.mainargs	00000000 edata
+0f001800 g       *ABS*	00000000 _heap_end
+0f001000 g       *ABS*	00000000 _heap_start
+0f001800 g       *ABS*	00000000 _stack_top
+20000218 g     F .text	00000010 __umodsi3
+0f002000 g       .srodata.mainargs	00000000 end
+20000010 g     F .text	00000018 check
+200002a0 g       .text	00000000 etext
+20000000 g     F .text	00000000 _start
+00000000 g       *ABS*	00000000 _entry_offset
+20000110 g     F .text	0000004c main
+200001c8 g     F .text	00000084 __divsi3
+0f000000 g       .srodata.mainargs	00000000 _data_vma_start
+0f002000 g       .srodata.mainargs	00000000 _end
+200002a1 g       *ABS*	00000000 _data_lma_start
+2000015c g     F .text	0000000c halt
+2000024c g     F .text	00000030 __modsi3
+
+
+
+Disassembly of section .text:
+
+20000000 <_start>:
+20000000:	00000413          	li	s0,0
+20000004:	ef002117          	auipc	sp,0xef002
+20000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
+2000000c:	15c000ef          	jal	ra,20000168 <_trm_init>
+
+20000010 <check>:
+20000010:	00050463          	beqz	a0,20000018 <check+0x8>
+20000014:	00008067          	ret
+20000018:	ff410113          	addi	sp,sp,-12
+2000001c:	00100513          	li	a0,1
+20000020:	00112423          	sw	ra,8(sp)
+20000024:	138000ef          	jal	ra,2000015c <halt>
+
+20000028 <goldbach>:
+20000028:	fe810113          	addi	sp,sp,-24
+2000002c:	00112a23          	sw	ra,20(sp)
+20000030:	00812823          	sw	s0,16(sp)
+20000034:	00912623          	sw	s1,12(sp)
+20000038:	00a12423          	sw	a0,8(sp)
+2000003c:	00200793          	li	a5,2
+20000040:	0aa7dc63          	bge	a5,a0,200000f8 <goldbach+0xd0>
+20000044:	ffe50793          	addi	a5,a0,-2
+20000048:	00f12223          	sw	a5,4(sp)
+2000004c:	00200493          	li	s1,2
+20000050:	00200793          	li	a5,2
+20000054:	02f48663          	beq	s1,a5,20000080 <goldbach+0x58>
+20000058:	0014f793          	andi	a5,s1,1
+2000005c:	08078263          	beqz	a5,200000e0 <goldbach+0xb8>
+20000060:	00200413          	li	s0,2
+20000064:	00c0006f          	j	20000070 <goldbach+0x48>
+20000068:	1e4000ef          	jal	ra,2000024c <__modsi3>
+2000006c:	06050a63          	beqz	a0,200000e0 <goldbach+0xb8>
+20000070:	00140413          	addi	s0,s0,1
+20000074:	00048513          	mv	a0,s1
+20000078:	00040593          	mv	a1,s0
+2000007c:	fe9416e3          	bne	s0,s1,20000068 <goldbach+0x40>
+20000080:	00412783          	lw	a5,4(sp)
+20000084:	00100713          	li	a4,1
+20000088:	04e78c63          	beq	a5,a4,200000e0 <goldbach+0xb8>
+2000008c:	00200713          	li	a4,2
+20000090:	02e78c63          	beq	a5,a4,200000c8 <goldbach+0xa0>
+20000094:	0017f793          	andi	a5,a5,1
+20000098:	04078463          	beqz	a5,200000e0 <goldbach+0xb8>
+2000009c:	00200793          	li	a5,2
+200000a0:	0140006f          	j	200000b4 <goldbach+0x8c>
+200000a4:	00f12023          	sw	a5,0(sp)
+200000a8:	1a4000ef          	jal	ra,2000024c <__modsi3>
+200000ac:	00012783          	lw	a5,0(sp)
+200000b0:	02050863          	beqz	a0,200000e0 <goldbach+0xb8>
+200000b4:	00412703          	lw	a4,4(sp)
+200000b8:	00178793          	addi	a5,a5,1
+200000bc:	00078593          	mv	a1,a5
+200000c0:	00070513          	mv	a0,a4
+200000c4:	fef710e3          	bne	a4,a5,200000a4 <goldbach+0x7c>
+200000c8:	01412083          	lw	ra,20(sp)
+200000cc:	01012403          	lw	s0,16(sp)
+200000d0:	00c12483          	lw	s1,12(sp)
+200000d4:	00100513          	li	a0,1
+200000d8:	01810113          	addi	sp,sp,24
+200000dc:	00008067          	ret
+200000e0:	00412783          	lw	a5,4(sp)
+200000e4:	00148493          	addi	s1,s1,1
+200000e8:	fff78793          	addi	a5,a5,-1
+200000ec:	00f12223          	sw	a5,4(sp)
+200000f0:	00812783          	lw	a5,8(sp)
+200000f4:	f4979ee3          	bne	a5,s1,20000050 <goldbach+0x28>
+200000f8:	01412083          	lw	ra,20(sp)
+200000fc:	01012403          	lw	s0,16(sp)
+20000100:	00c12483          	lw	s1,12(sp)
+20000104:	00000513          	li	a0,0
+20000108:	01810113          	addi	sp,sp,24
+2000010c:	00008067          	ret
+
+20000110 <main>:
+20000110:	ff410113          	addi	sp,sp,-12
+20000114:	00812223          	sw	s0,4(sp)
+20000118:	00912023          	sw	s1,0(sp)
+2000011c:	00112423          	sw	ra,8(sp)
+20000120:	00400413          	li	s0,4
+20000124:	02000493          	li	s1,32
+20000128:	00040513          	mv	a0,s0
+2000012c:	efdff0ef          	jal	ra,20000028 <goldbach>
+20000130:	fff50513          	addi	a0,a0,-1
+20000134:	00240413          	addi	s0,s0,2
+20000138:	00153513          	seqz	a0,a0
+2000013c:	ed5ff0ef          	jal	ra,20000010 <check>
+20000140:	fe9414e3          	bne	s0,s1,20000128 <main+0x18>
+20000144:	00812083          	lw	ra,8(sp)
+20000148:	00412403          	lw	s0,4(sp)
+2000014c:	00012483          	lw	s1,0(sp)
+20000150:	00000513          	li	a0,0
+20000154:	00c10113          	addi	sp,sp,12
+20000158:	00008067          	ret
+
+2000015c <halt>:
+2000015c:	00050513          	mv	a0,a0
+20000160:	00100073          	ebreak
+20000164:	0000006f          	j	20000164 <halt+0x8>
+
+20000168 <_trm_init>:
+20000168:	ef000517          	auipc	a0,0xef000
+2000016c:	e9850513          	addi	a0,a0,-360 # f000000 <_bss_start>
+20000170:	ef000617          	auipc	a2,0xef000
+20000174:	e9060613          	addi	a2,a2,-368 # f000000 <_bss_start>
+20000178:	ff410113          	addi	sp,sp,-12
+2000017c:	40a60633          	sub	a2,a2,a0
+20000180:	00000597          	auipc	a1,0x0
+20000184:	12158593          	addi	a1,a1,289 # 200002a1 <_data_lma_end>
+20000188:	00112423          	sw	ra,8(sp)
+2000018c:	0f0000ef          	jal	ra,2000027c <memcpy>
+20000190:	100007b7          	lui	a5,0x10000
+20000194:	f8000713          	li	a4,-128
+20000198:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
+2000019c:	00100713          	li	a4,1
+200001a0:	00e78023          	sb	a4,0(a5)
+200001a4:	000780a3          	sb	zero,1(a5)
+200001a8:	00300713          	li	a4,3
+200001ac:	00e781a3          	sb	a4,3(a5)
+200001b0:	00000517          	auipc	a0,0x0
+200001b4:	0f050513          	addi	a0,a0,240 # 200002a0 <_etext>
+200001b8:	f59ff0ef          	jal	ra,20000110 <main>
+200001bc:	00050513          	mv	a0,a0
+200001c0:	00100073          	ebreak
+200001c4:	0000006f          	j	200001c4 <_trm_init+0x5c>
+
+200001c8 <__divsi3>:
+200001c8:	06054063          	bltz	a0,20000228 <__umodsi3+0x10>
+200001cc:	0605c663          	bltz	a1,20000238 <__umodsi3+0x20>
+
+200001d0 <__hidden___udivsi3>:
+200001d0:	00058613          	mv	a2,a1
+200001d4:	00050593          	mv	a1,a0
+200001d8:	fff00513          	li	a0,-1
+200001dc:	02060c63          	beqz	a2,20000214 <__hidden___udivsi3+0x44>
+200001e0:	00100693          	li	a3,1
+200001e4:	00b67a63          	bgeu	a2,a1,200001f8 <__hidden___udivsi3+0x28>
+200001e8:	00c05863          	blez	a2,200001f8 <__hidden___udivsi3+0x28>
+200001ec:	00161613          	slli	a2,a2,0x1
+200001f0:	00169693          	slli	a3,a3,0x1
+200001f4:	feb66ae3          	bltu	a2,a1,200001e8 <__hidden___udivsi3+0x18>
+200001f8:	00000513          	li	a0,0
+200001fc:	00c5e663          	bltu	a1,a2,20000208 <__hidden___udivsi3+0x38>
+20000200:	40c585b3          	sub	a1,a1,a2
+20000204:	00d56533          	or	a0,a0,a3
+20000208:	0016d693          	srli	a3,a3,0x1
+2000020c:	00165613          	srli	a2,a2,0x1
+20000210:	fe0696e3          	bnez	a3,200001fc <__hidden___udivsi3+0x2c>
+20000214:	00008067          	ret
+
+20000218 <__umodsi3>:
+20000218:	00008293          	mv	t0,ra
+2000021c:	fb5ff0ef          	jal	ra,200001d0 <__hidden___udivsi3>
+20000220:	00058513          	mv	a0,a1
+20000224:	00028067          	jr	t0
+20000228:	40a00533          	neg	a0,a0
+2000022c:	00b04863          	bgtz	a1,2000023c <__umodsi3+0x24>
+20000230:	40b005b3          	neg	a1,a1
+20000234:	f9dff06f          	j	200001d0 <__hidden___udivsi3>
+20000238:	40b005b3          	neg	a1,a1
+2000023c:	00008293          	mv	t0,ra
+20000240:	f91ff0ef          	jal	ra,200001d0 <__hidden___udivsi3>
+20000244:	40a00533          	neg	a0,a0
+20000248:	00028067          	jr	t0
+
+2000024c <__modsi3>:
+2000024c:	00008293          	mv	t0,ra
+20000250:	0005ca63          	bltz	a1,20000264 <__modsi3+0x18>
+20000254:	00054c63          	bltz	a0,2000026c <__modsi3+0x20>
+20000258:	f79ff0ef          	jal	ra,200001d0 <__hidden___udivsi3>
+2000025c:	00058513          	mv	a0,a1
+20000260:	00028067          	jr	t0
+20000264:	40b005b3          	neg	a1,a1
+20000268:	fe0558e3          	bgez	a0,20000258 <__modsi3+0xc>
+2000026c:	40a00533          	neg	a0,a0
+20000270:	f61ff0ef          	jal	ra,200001d0 <__hidden___udivsi3>
+20000274:	40b00533          	neg	a0,a1
+20000278:	00028067          	jr	t0
+
+2000027c <memcpy>:
+2000027c:	02060063          	beqz	a2,2000029c <memcpy+0x20>
+20000280:	00c50633          	add	a2,a0,a2
+20000284:	00050793          	mv	a5,a0
+20000288:	0005c703          	lbu	a4,0(a1)
+2000028c:	00178793          	addi	a5,a5,1
+20000290:	00158593          	addi	a1,a1,1
+20000294:	fee78fa3          	sb	a4,-1(a5)
+20000298:	fec798e3          	bne	a5,a2,20000288 <memcpy+0xc>
+2000029c:	00008067          	ret
