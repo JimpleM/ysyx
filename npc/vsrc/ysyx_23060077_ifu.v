@@ -74,7 +74,12 @@ always @(posedge clk ) begin
     if(ifu_r_ready_i & ifu_r_last_i)begin
         ifu_pc_o_t      <= pc;
         ifu_inst_o_t    <= inst;
-        flush_inst      <= 1'b1;
+        if((!stall) & (!wbu_stall))begin
+            flush_inst      <= 1'b0;
+        end
+        else begin
+            flush_inst      <= 1'b1;
+        end
     end
     else if((!stall) & (!wbu_stall))begin
         flush_inst      <= 1'b0;
@@ -82,7 +87,12 @@ always @(posedge clk ) begin
 end
 
 always @(posedge clk) begin
-    if(flush_inst & (!stall) & (!wbu_stall))begin
+    if(ifu_r_last_i & (!stall) & (!wbu_stall))begin
+        ifu_pc_o_r <= pc;
+        ifu_inst_o_r <= inst;
+        ifu_stall_r <= 1'b0;
+    end
+    else if(flush_inst & (!stall) & (!wbu_stall))begin
         ifu_pc_o_r <= ifu_pc_o_t;
         ifu_inst_o_r <= ifu_inst_o_t;
         ifu_stall_r <= 1'b0;
