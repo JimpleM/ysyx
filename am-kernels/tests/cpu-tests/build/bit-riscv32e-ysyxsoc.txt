@@ -3,227 +3,227 @@
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000288  20000000  20000000  00001000  2**2
+  0 .text         00000288  30000000  30000000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .srodata.mainargs 00000001  20000288  20000288  00001288  2**2
+  1 .srodata.mainargs 00000001  30000288  30000288  00001288  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   2 .comment      0000002b  00000000  00000000  00001289  2**0
                   CONTENTS, READONLY
   3 .riscv.attributes 0000001a  00000000  00000000  000012b4  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
-20000000 l    d  .text	00000000 .text
-20000288 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+30000000 l    d  .text	00000000 .text
+30000288 l    d  .srodata.mainargs	00000000 .srodata.mainargs
 00000000 l    d  .comment	00000000 .comment
 00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
 00000000 l    df *ABS*	00000000 start.o
 00000000 l    df *ABS*	00000000 bit.c
 00000000 l    df *ABS*	00000000 trm.c
-20000288 l     O .srodata.mainargs	00000001 mainargs
+30000288 l     O .srodata.mainargs	00000001 mainargs
 00000000 l    df *ABS*	00000000 string.c
-20000204 g     F .text	00000060 _trm_init
-20000289 g       .srodata.mainargs	00000000 _data_lma_end
-2000004c g     F .text	0000005c setbit
+30000204 g     F .text	00000060 _trm_init
+30000289 g       .srodata.mainargs	00000000 _data_lma_end
+3000004c g     F .text	0000005c setbit
 0f002000 g       .srodata.mainargs	00000000 _stack_pointer
-20000288 g       .text	00000000 _etext
-20000264 g     F .text	00000024 memcpy
+30000288 g       .text	00000000 _etext
+30000264 g     F .text	00000024 memcpy
 20000000 g       *ABS*	00000000 _pmem_start
-20000288 g       .srodata.mainargs	00000000 _rodata_end
+30000288 g       .srodata.mainargs	00000000 _rodata_end
 0f000000 g       .srodata.mainargs	00000000 _bss_start
-20000289 g       .srodata.mainargs	00000000 edata
+30000289 g       .srodata.mainargs	00000000 edata
 0f001800 g       *ABS*	00000000 _heap_end
 0f001000 g       *ABS*	00000000 _heap_start
 0f001800 g       *ABS*	00000000 _stack_top
 0f002000 g       .srodata.mainargs	00000000 end
-20000010 g     F .text	00000018 check
-20000288 g       .text	00000000 etext
-20000000 g     F .text	00000000 _start
+30000010 g     F .text	00000018 check
+30000288 g       .text	00000000 etext
+30000000 g     F .text	00000000 _start
 00000000 g       *ABS*	00000000 _entry_offset
-200000a8 g     F .text	00000150 main
+300000a8 g     F .text	00000150 main
 0f000000 g       .srodata.mainargs	00000000 _data_vma_start
 0f002000 g       .srodata.mainargs	00000000 _end
-20000289 g       *ABS*	00000000 _data_lma_start
-200001f8 g     F .text	0000000c halt
-20000028 g     F .text	00000024 getbit
+30000289 g       *ABS*	00000000 _data_lma_start
+300001f8 g     F .text	0000000c halt
+30000028 g     F .text	00000024 getbit
 
 
 
 Disassembly of section .text:
 
-20000000 <_start>:
-20000000:	00000413          	li	s0,0
-20000004:	ef002117          	auipc	sp,0xef002
-20000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
-2000000c:	1f8000ef          	jal	ra,20000204 <_trm_init>
+30000000 <_start>:
+30000000:	00000413          	li	s0,0
+30000004:	df002117          	auipc	sp,0xdf002
+30000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
+3000000c:	1f8000ef          	jal	ra,30000204 <_trm_init>
 
-20000010 <check>:
-20000010:	00050463          	beqz	a0,20000018 <check+0x8>
-20000014:	00008067          	ret
-20000018:	ff410113          	addi	sp,sp,-12
-2000001c:	00100513          	li	a0,1
-20000020:	00112423          	sw	ra,8(sp)
-20000024:	1d4000ef          	jal	ra,200001f8 <halt>
+30000010 <check>:
+30000010:	00050463          	beqz	a0,30000018 <check+0x8>
+30000014:	00008067          	ret
+30000018:	ff410113          	addi	sp,sp,-12
+3000001c:	00100513          	li	a0,1
+30000020:	00112423          	sw	ra,8(sp)
+30000024:	1d4000ef          	jal	ra,300001f8 <halt>
 
-20000028 <getbit>:
-20000028:	4035d793          	srai	a5,a1,0x3
-2000002c:	00f50533          	add	a0,a0,a5
-20000030:	00054503          	lbu	a0,0(a0)
-20000034:	0075f593          	andi	a1,a1,7
-20000038:	00100793          	li	a5,1
-2000003c:	00b797b3          	sll	a5,a5,a1
-20000040:	00f57533          	and	a0,a0,a5
-20000044:	00a03533          	snez	a0,a0
-20000048:	00008067          	ret
+30000028 <getbit>:
+30000028:	4035d793          	srai	a5,a1,0x3
+3000002c:	00f50533          	add	a0,a0,a5
+30000030:	00054503          	lbu	a0,0(a0)
+30000034:	0075f593          	andi	a1,a1,7
+30000038:	00100793          	li	a5,1
+3000003c:	00b797b3          	sll	a5,a5,a1
+30000040:	00f57533          	and	a0,a0,a5
+30000044:	00a03533          	snez	a0,a0
+30000048:	00008067          	ret
 
-2000004c <setbit>:
-2000004c:	4035d793          	srai	a5,a1,0x3
-20000050:	ffc10113          	addi	sp,sp,-4
-20000054:	00f50533          	add	a0,a0,a5
-20000058:	00a12023          	sw	a0,0(sp)
-2000005c:	00012783          	lw	a5,0(sp)
-20000060:	0075f593          	andi	a1,a1,7
-20000064:	00100713          	li	a4,1
-20000068:	00b71733          	sll	a4,a4,a1
-2000006c:	02061063          	bnez	a2,2000008c <setbit+0x40>
-20000070:	0007c783          	lbu	a5,0(a5)
-20000074:	fff74713          	not	a4,a4
-20000078:	00e7f7b3          	and	a5,a5,a4
-2000007c:	00012703          	lw	a4,0(sp)
-20000080:	00f70023          	sb	a5,0(a4)
-20000084:	00410113          	addi	sp,sp,4
-20000088:	00008067          	ret
-2000008c:	0007c783          	lbu	a5,0(a5)
-20000090:	00e7e7b3          	or	a5,a5,a4
-20000094:	00012703          	lw	a4,0(sp)
-20000098:	0ff7f793          	zext.b	a5,a5
-2000009c:	00f70023          	sb	a5,0(a4)
-200000a0:	00410113          	addi	sp,sp,4
-200000a4:	00008067          	ret
+3000004c <setbit>:
+3000004c:	4035d793          	srai	a5,a1,0x3
+30000050:	ffc10113          	addi	sp,sp,-4
+30000054:	00f50533          	add	a0,a0,a5
+30000058:	00a12023          	sw	a0,0(sp)
+3000005c:	00012783          	lw	a5,0(sp)
+30000060:	0075f593          	andi	a1,a1,7
+30000064:	00100713          	li	a4,1
+30000068:	00b71733          	sll	a4,a4,a1
+3000006c:	02061063          	bnez	a2,3000008c <setbit+0x40>
+30000070:	0007c783          	lbu	a5,0(a5)
+30000074:	fff74713          	not	a4,a4
+30000078:	00e7f7b3          	and	a5,a5,a4
+3000007c:	00012703          	lw	a4,0(sp)
+30000080:	00f70023          	sb	a5,0(a4)
+30000084:	00410113          	addi	sp,sp,4
+30000088:	00008067          	ret
+3000008c:	0007c783          	lbu	a5,0(a5)
+30000090:	00e7e7b3          	or	a5,a5,a4
+30000094:	00012703          	lw	a4,0(sp)
+30000098:	0ff7f793          	zext.b	a5,a5
+3000009c:	00f70023          	sb	a5,0(a4)
+300000a0:	00410113          	addi	sp,sp,4
+300000a4:	00008067          	ret
 
-200000a8 <main>:
-200000a8:	ff010113          	addi	sp,sp,-16
-200000ac:	0aa00793          	li	a5,170
-200000b0:	00000593          	li	a1,0
-200000b4:	00010513          	mv	a0,sp
-200000b8:	00112623          	sw	ra,12(sp)
-200000bc:	00f11023          	sh	a5,0(sp)
-200000c0:	f69ff0ef          	jal	ra,20000028 <getbit>
-200000c4:	00154513          	xori	a0,a0,1
-200000c8:	0ff57513          	zext.b	a0,a0
-200000cc:	f45ff0ef          	jal	ra,20000010 <check>
-200000d0:	00100593          	li	a1,1
-200000d4:	00010513          	mv	a0,sp
-200000d8:	f51ff0ef          	jal	ra,20000028 <getbit>
-200000dc:	f35ff0ef          	jal	ra,20000010 <check>
-200000e0:	00200593          	li	a1,2
-200000e4:	00010513          	mv	a0,sp
-200000e8:	f41ff0ef          	jal	ra,20000028 <getbit>
-200000ec:	00154513          	xori	a0,a0,1
-200000f0:	0ff57513          	zext.b	a0,a0
-200000f4:	f1dff0ef          	jal	ra,20000010 <check>
-200000f8:	00300593          	li	a1,3
-200000fc:	00010513          	mv	a0,sp
-20000100:	f29ff0ef          	jal	ra,20000028 <getbit>
-20000104:	f0dff0ef          	jal	ra,20000010 <check>
-20000108:	00400593          	li	a1,4
-2000010c:	00010513          	mv	a0,sp
-20000110:	f19ff0ef          	jal	ra,20000028 <getbit>
-20000114:	00154513          	xori	a0,a0,1
-20000118:	0ff57513          	zext.b	a0,a0
-2000011c:	ef5ff0ef          	jal	ra,20000010 <check>
-20000120:	00500593          	li	a1,5
-20000124:	00010513          	mv	a0,sp
-20000128:	f01ff0ef          	jal	ra,20000028 <getbit>
-2000012c:	ee5ff0ef          	jal	ra,20000010 <check>
-20000130:	00600593          	li	a1,6
-20000134:	00010513          	mv	a0,sp
-20000138:	ef1ff0ef          	jal	ra,20000028 <getbit>
-2000013c:	00154513          	xori	a0,a0,1
-20000140:	0ff57513          	zext.b	a0,a0
-20000144:	ecdff0ef          	jal	ra,20000010 <check>
-20000148:	00700593          	li	a1,7
-2000014c:	00010513          	mv	a0,sp
-20000150:	ed9ff0ef          	jal	ra,20000028 <getbit>
-20000154:	ebdff0ef          	jal	ra,20000010 <check>
-20000158:	00010513          	mv	a0,sp
-2000015c:	00100613          	li	a2,1
-20000160:	00800593          	li	a1,8
-20000164:	ee9ff0ef          	jal	ra,2000004c <setbit>
-20000168:	00010513          	mv	a0,sp
-2000016c:	00000613          	li	a2,0
-20000170:	00900593          	li	a1,9
-20000174:	ed9ff0ef          	jal	ra,2000004c <setbit>
-20000178:	00010513          	mv	a0,sp
-2000017c:	00100613          	li	a2,1
-20000180:	00a00593          	li	a1,10
-20000184:	ec9ff0ef          	jal	ra,2000004c <setbit>
-20000188:	00010513          	mv	a0,sp
-2000018c:	00000613          	li	a2,0
-20000190:	00b00593          	li	a1,11
-20000194:	eb9ff0ef          	jal	ra,2000004c <setbit>
-20000198:	00010513          	mv	a0,sp
-2000019c:	00100613          	li	a2,1
-200001a0:	00c00593          	li	a1,12
-200001a4:	ea9ff0ef          	jal	ra,2000004c <setbit>
-200001a8:	00010513          	mv	a0,sp
-200001ac:	00000613          	li	a2,0
-200001b0:	00d00593          	li	a1,13
-200001b4:	e99ff0ef          	jal	ra,2000004c <setbit>
-200001b8:	00010513          	mv	a0,sp
-200001bc:	00100613          	li	a2,1
-200001c0:	00e00593          	li	a1,14
-200001c4:	e89ff0ef          	jal	ra,2000004c <setbit>
-200001c8:	00010513          	mv	a0,sp
-200001cc:	00000613          	li	a2,0
-200001d0:	00f00593          	li	a1,15
-200001d4:	e79ff0ef          	jal	ra,2000004c <setbit>
-200001d8:	00114503          	lbu	a0,1(sp)
-200001dc:	fab50513          	addi	a0,a0,-85
-200001e0:	00153513          	seqz	a0,a0
-200001e4:	e2dff0ef          	jal	ra,20000010 <check>
-200001e8:	00c12083          	lw	ra,12(sp)
-200001ec:	00000513          	li	a0,0
-200001f0:	01010113          	addi	sp,sp,16
-200001f4:	00008067          	ret
+300000a8 <main>:
+300000a8:	ff010113          	addi	sp,sp,-16
+300000ac:	0aa00793          	li	a5,170
+300000b0:	00000593          	li	a1,0
+300000b4:	00010513          	mv	a0,sp
+300000b8:	00112623          	sw	ra,12(sp)
+300000bc:	00f11023          	sh	a5,0(sp)
+300000c0:	f69ff0ef          	jal	ra,30000028 <getbit>
+300000c4:	00154513          	xori	a0,a0,1
+300000c8:	0ff57513          	zext.b	a0,a0
+300000cc:	f45ff0ef          	jal	ra,30000010 <check>
+300000d0:	00100593          	li	a1,1
+300000d4:	00010513          	mv	a0,sp
+300000d8:	f51ff0ef          	jal	ra,30000028 <getbit>
+300000dc:	f35ff0ef          	jal	ra,30000010 <check>
+300000e0:	00200593          	li	a1,2
+300000e4:	00010513          	mv	a0,sp
+300000e8:	f41ff0ef          	jal	ra,30000028 <getbit>
+300000ec:	00154513          	xori	a0,a0,1
+300000f0:	0ff57513          	zext.b	a0,a0
+300000f4:	f1dff0ef          	jal	ra,30000010 <check>
+300000f8:	00300593          	li	a1,3
+300000fc:	00010513          	mv	a0,sp
+30000100:	f29ff0ef          	jal	ra,30000028 <getbit>
+30000104:	f0dff0ef          	jal	ra,30000010 <check>
+30000108:	00400593          	li	a1,4
+3000010c:	00010513          	mv	a0,sp
+30000110:	f19ff0ef          	jal	ra,30000028 <getbit>
+30000114:	00154513          	xori	a0,a0,1
+30000118:	0ff57513          	zext.b	a0,a0
+3000011c:	ef5ff0ef          	jal	ra,30000010 <check>
+30000120:	00500593          	li	a1,5
+30000124:	00010513          	mv	a0,sp
+30000128:	f01ff0ef          	jal	ra,30000028 <getbit>
+3000012c:	ee5ff0ef          	jal	ra,30000010 <check>
+30000130:	00600593          	li	a1,6
+30000134:	00010513          	mv	a0,sp
+30000138:	ef1ff0ef          	jal	ra,30000028 <getbit>
+3000013c:	00154513          	xori	a0,a0,1
+30000140:	0ff57513          	zext.b	a0,a0
+30000144:	ecdff0ef          	jal	ra,30000010 <check>
+30000148:	00700593          	li	a1,7
+3000014c:	00010513          	mv	a0,sp
+30000150:	ed9ff0ef          	jal	ra,30000028 <getbit>
+30000154:	ebdff0ef          	jal	ra,30000010 <check>
+30000158:	00010513          	mv	a0,sp
+3000015c:	00100613          	li	a2,1
+30000160:	00800593          	li	a1,8
+30000164:	ee9ff0ef          	jal	ra,3000004c <setbit>
+30000168:	00010513          	mv	a0,sp
+3000016c:	00000613          	li	a2,0
+30000170:	00900593          	li	a1,9
+30000174:	ed9ff0ef          	jal	ra,3000004c <setbit>
+30000178:	00010513          	mv	a0,sp
+3000017c:	00100613          	li	a2,1
+30000180:	00a00593          	li	a1,10
+30000184:	ec9ff0ef          	jal	ra,3000004c <setbit>
+30000188:	00010513          	mv	a0,sp
+3000018c:	00000613          	li	a2,0
+30000190:	00b00593          	li	a1,11
+30000194:	eb9ff0ef          	jal	ra,3000004c <setbit>
+30000198:	00010513          	mv	a0,sp
+3000019c:	00100613          	li	a2,1
+300001a0:	00c00593          	li	a1,12
+300001a4:	ea9ff0ef          	jal	ra,3000004c <setbit>
+300001a8:	00010513          	mv	a0,sp
+300001ac:	00000613          	li	a2,0
+300001b0:	00d00593          	li	a1,13
+300001b4:	e99ff0ef          	jal	ra,3000004c <setbit>
+300001b8:	00010513          	mv	a0,sp
+300001bc:	00100613          	li	a2,1
+300001c0:	00e00593          	li	a1,14
+300001c4:	e89ff0ef          	jal	ra,3000004c <setbit>
+300001c8:	00010513          	mv	a0,sp
+300001cc:	00000613          	li	a2,0
+300001d0:	00f00593          	li	a1,15
+300001d4:	e79ff0ef          	jal	ra,3000004c <setbit>
+300001d8:	00114503          	lbu	a0,1(sp)
+300001dc:	fab50513          	addi	a0,a0,-85
+300001e0:	00153513          	seqz	a0,a0
+300001e4:	e2dff0ef          	jal	ra,30000010 <check>
+300001e8:	00c12083          	lw	ra,12(sp)
+300001ec:	00000513          	li	a0,0
+300001f0:	01010113          	addi	sp,sp,16
+300001f4:	00008067          	ret
 
-200001f8 <halt>:
-200001f8:	00050513          	mv	a0,a0
-200001fc:	00100073          	ebreak
-20000200:	0000006f          	j	20000200 <halt+0x8>
+300001f8 <halt>:
+300001f8:	00050513          	mv	a0,a0
+300001fc:	00100073          	ebreak
+30000200:	0000006f          	j	30000200 <halt+0x8>
 
-20000204 <_trm_init>:
-20000204:	ef000517          	auipc	a0,0xef000
-20000208:	dfc50513          	addi	a0,a0,-516 # f000000 <_bss_start>
-2000020c:	ef000617          	auipc	a2,0xef000
-20000210:	df460613          	addi	a2,a2,-524 # f000000 <_bss_start>
-20000214:	ff410113          	addi	sp,sp,-12
-20000218:	40a60633          	sub	a2,a2,a0
-2000021c:	00000597          	auipc	a1,0x0
-20000220:	06d58593          	addi	a1,a1,109 # 20000289 <_data_lma_end>
-20000224:	00112423          	sw	ra,8(sp)
-20000228:	03c000ef          	jal	ra,20000264 <memcpy>
-2000022c:	100007b7          	lui	a5,0x10000
-20000230:	f8000713          	li	a4,-128
-20000234:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
-20000238:	00100713          	li	a4,1
-2000023c:	00e78023          	sb	a4,0(a5)
-20000240:	000780a3          	sb	zero,1(a5)
-20000244:	00300713          	li	a4,3
-20000248:	00e781a3          	sb	a4,3(a5)
-2000024c:	00000517          	auipc	a0,0x0
-20000250:	03c50513          	addi	a0,a0,60 # 20000288 <_etext>
-20000254:	e55ff0ef          	jal	ra,200000a8 <main>
-20000258:	00050513          	mv	a0,a0
-2000025c:	00100073          	ebreak
-20000260:	0000006f          	j	20000260 <_trm_init+0x5c>
+30000204 <_trm_init>:
+30000204:	df000517          	auipc	a0,0xdf000
+30000208:	dfc50513          	addi	a0,a0,-516 # f000000 <_bss_start>
+3000020c:	df000617          	auipc	a2,0xdf000
+30000210:	df460613          	addi	a2,a2,-524 # f000000 <_bss_start>
+30000214:	ff410113          	addi	sp,sp,-12
+30000218:	40a60633          	sub	a2,a2,a0
+3000021c:	00000597          	auipc	a1,0x0
+30000220:	06d58593          	addi	a1,a1,109 # 30000289 <_data_lma_end>
+30000224:	00112423          	sw	ra,8(sp)
+30000228:	03c000ef          	jal	ra,30000264 <memcpy>
+3000022c:	100007b7          	lui	a5,0x10000
+30000230:	f8000713          	li	a4,-128
+30000234:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
+30000238:	00100713          	li	a4,1
+3000023c:	00e78023          	sb	a4,0(a5)
+30000240:	000780a3          	sb	zero,1(a5)
+30000244:	00300713          	li	a4,3
+30000248:	00e781a3          	sb	a4,3(a5)
+3000024c:	00000517          	auipc	a0,0x0
+30000250:	03c50513          	addi	a0,a0,60 # 30000288 <_etext>
+30000254:	e55ff0ef          	jal	ra,300000a8 <main>
+30000258:	00050513          	mv	a0,a0
+3000025c:	00100073          	ebreak
+30000260:	0000006f          	j	30000260 <_trm_init+0x5c>
 
-20000264 <memcpy>:
-20000264:	02060063          	beqz	a2,20000284 <memcpy+0x20>
-20000268:	00c50633          	add	a2,a0,a2
-2000026c:	00050793          	mv	a5,a0
-20000270:	0005c703          	lbu	a4,0(a1)
-20000274:	00178793          	addi	a5,a5,1
-20000278:	00158593          	addi	a1,a1,1
-2000027c:	fee78fa3          	sb	a4,-1(a5)
-20000280:	fec798e3          	bne	a5,a2,20000270 <memcpy+0xc>
-20000284:	00008067          	ret
+30000264 <memcpy>:
+30000264:	02060063          	beqz	a2,30000284 <memcpy+0x20>
+30000268:	00c50633          	add	a2,a0,a2
+3000026c:	00050793          	mv	a5,a0
+30000270:	0005c703          	lbu	a4,0(a1)
+30000274:	00178793          	addi	a5,a5,1
+30000278:	00158593          	addi	a1,a1,1
+3000027c:	fee78fa3          	sb	a4,-1(a5)
+30000280:	fec798e3          	bne	a5,a2,30000270 <memcpy+0xc>
+30000284:	00008067          	ret

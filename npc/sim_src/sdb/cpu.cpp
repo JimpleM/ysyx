@@ -18,7 +18,7 @@ extern VerilatedVcdC* tfp;
 extern int stop_flag;
 extern uint32_t cpu_pc;
 extern uint32_t cpu_inst;
-uint32_t cpu_lpc = 0x20000000;
+uint32_t cpu_lpc = 0x30000000;
 
 NPCState npc_state = { .state = NPC_STOP };
 

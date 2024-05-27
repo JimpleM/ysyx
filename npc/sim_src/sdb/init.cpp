@@ -41,6 +41,10 @@ static long load_img() {
   int ret = fread(pmem, size, 1, fp);
   assert(ret == 1);
 
+  fseek(fp, 0, SEEK_SET);
+  ret = fread(flash_mem, size, 1, fp);
+  assert(ret == 1);
+
   fclose(fp);
   return size;
 }
@@ -102,7 +106,7 @@ void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
 
     long img_size = load_img();
-    init_flash();
+    // init_flash();
     init_difftest(diff_so_file, img_size, difftest_port);
 
 	  init_sdb();

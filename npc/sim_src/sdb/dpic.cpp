@@ -30,6 +30,7 @@ extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0 && addr <= FLASH_SIZE){
 		uint32_t raddr = addr&0xFFFFFFFC;
 		*data = *(uint32_t *)(flash_mem+addr);
+		// *data = pmem_read((uint32_t)raddr,4);
 		// if(*data == 0x0000006f){
 		// 	*data = 0x00100073;
 		// }

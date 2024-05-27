@@ -3,27 +3,27 @@
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000268  20000000  20000000  00001000  2**2
+  0 .text         00000268  30000000  30000000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .srodata.mainargs 00000001  20000268  20000268  00001268  2**2
+  1 .srodata.mainargs 00000001  30000268  30000268  00001268  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .data.lh_ans  00000020  0f000000  20000269  00002000  2**2
+  2 .data.lh_ans  00000020  0f000000  30000269  00002000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .data.lhu_ans 00000020  0f000020  20000289  00002020  2**2
+  3 .data.lhu_ans 00000020  0f000020  30000289  00002020  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .data.lwlr_ans 00000010  0f000040  200002a9  00002040  2**2
+  4 .data.lwlr_ans 00000010  0f000040  300002a9  00002040  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data.mem     00000010  0f000050  200002b9  00002050  2**2
+  5 .data.mem     00000010  0f000050  300002b9  00002050  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .data.sh_ans  00000020  0f000060  200002c9  00002060  2**2
+  6 .data.sh_ans  00000020  0f000060  300002c9  00002060  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   7 .comment      0000002b  00000000  00000000  00002080  2**0
                   CONTENTS, READONLY
   8 .riscv.attributes 0000001a  00000000  00000000  000020ab  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
-20000000 l    d  .text	00000000 .text
-20000268 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+30000000 l    d  .text	00000000 .text
+30000268 l    d  .srodata.mainargs	00000000 .srodata.mainargs
 0f000000 l    d  .data.lh_ans	00000000 .data.lh_ans
 0f000020 l    d  .data.lhu_ans	00000000 .data.lhu_ans
 0f000040 l    d  .data.lwlr_ans	00000000 .data.lwlr_ans
@@ -34,202 +34,202 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 start.o
 00000000 l    df *ABS*	00000000 load-store.c
 00000000 l    df *ABS*	00000000 trm.c
-20000268 l     O .srodata.mainargs	00000001 mainargs
+30000268 l     O .srodata.mainargs	00000001 mainargs
 00000000 l    df *ABS*	00000000 string.c
 0f000040 g     O .data.lwlr_ans	00000010 lwlr_ans
-200001e4 g     F .text	00000060 _trm_init
-20000269 g       .srodata.mainargs	00000000 _data_lma_end
+300001e4 g     F .text	00000060 _trm_init
+30000269 g       .srodata.mainargs	00000000 _data_lma_end
 0f002000 g       .data.sh_ans	00000000 _stack_pointer
-20000268 g       .text	00000000 _etext
+30000268 g       .text	00000000 _etext
 0f000020 g     O .data.lhu_ans	00000020 lhu_ans
-20000244 g     F .text	00000024 memcpy
+30000244 g     F .text	00000024 memcpy
 20000000 g       *ABS*	00000000 _pmem_start
-20000268 g       .srodata.mainargs	00000000 _rodata_end
+30000268 g       .srodata.mainargs	00000000 _rodata_end
 0f000080 g       .data.sh_ans	00000000 _bss_start
-20000269 g       .srodata.mainargs	00000000 edata
+30000269 g       .srodata.mainargs	00000000 edata
 0f000000 g     O .data.lh_ans	00000020 lh_ans
 0f001800 g       *ABS*	00000000 _heap_end
 0f001000 g       *ABS*	00000000 _heap_start
 0f001800 g       *ABS*	00000000 _stack_top
 0f002000 g       .data.sh_ans	00000000 end
-20000010 g     F .text	00000018 check
-20000268 g       .text	00000000 etext
-20000000 g     F .text	00000000 _start
+30000010 g     F .text	00000018 check
+30000268 g       .text	00000000 etext
+30000000 g     F .text	00000000 _start
 00000000 g       *ABS*	00000000 _entry_offset
 0f000050 g     O .data.mem	00000010 mem
 0f000060 g     O .data.sh_ans	00000020 sh_ans
-20000028 g     F .text	000001b0 main
+30000028 g     F .text	000001b0 main
 0f000000 g       .srodata.mainargs	00000000 _data_vma_start
 0f002000 g       .data.sh_ans	00000000 _end
-20000269 g       *ABS*	00000000 _data_lma_start
-200001d8 g     F .text	0000000c halt
+30000269 g       *ABS*	00000000 _data_lma_start
+300001d8 g     F .text	0000000c halt
 
 
 
 Disassembly of section .text:
 
-20000000 <_start>:
-20000000:	00000413          	li	s0,0
-20000004:	ef002117          	auipc	sp,0xef002
-20000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
-2000000c:	1d8000ef          	jal	ra,200001e4 <_trm_init>
+30000000 <_start>:
+30000000:	00000413          	li	s0,0
+30000004:	df002117          	auipc	sp,0xdf002
+30000008:	ffc10113          	addi	sp,sp,-4 # f002000 <_end>
+3000000c:	1d8000ef          	jal	ra,300001e4 <_trm_init>
 
-20000010 <check>:
-20000010:	00050463          	beqz	a0,20000018 <check+0x8>
-20000014:	00008067          	ret
-20000018:	ff410113          	addi	sp,sp,-12
-2000001c:	00100513          	li	a0,1
-20000020:	00112423          	sw	ra,8(sp)
-20000024:	1b4000ef          	jal	ra,200001d8 <halt>
+30000010 <check>:
+30000010:	00050463          	beqz	a0,30000018 <check+0x8>
+30000014:	00008067          	ret
+30000018:	ff410113          	addi	sp,sp,-12
+3000001c:	00100513          	li	a0,1
+30000020:	00112423          	sw	ra,8(sp)
+30000024:	1b4000ef          	jal	ra,300001d8 <halt>
 
-20000028 <main>:
-20000028:	fec10113          	addi	sp,sp,-20
-2000002c:	00912423          	sw	s1,8(sp)
-20000030:	ef000497          	auipc	s1,0xef000
-20000034:	02048493          	addi	s1,s1,32 # f000050 <mem>
-20000038:	00812623          	sw	s0,12(sp)
-2000003c:	00112823          	sw	ra,16(sp)
-20000040:	ef000697          	auipc	a3,0xef000
-20000044:	fc068693          	addi	a3,a3,-64 # f000000 <lh_ans>
-20000048:	00048413          	mv	s0,s1
-2000004c:	00048713          	mv	a4,s1
-20000050:	00071503          	lh	a0,0(a4)
-20000054:	0006a603          	lw	a2,0(a3)
-20000058:	00270713          	addi	a4,a4,2
-2000005c:	00468693          	addi	a3,a3,4
-20000060:	40c50533          	sub	a0,a0,a2
-20000064:	00153513          	seqz	a0,a0
-20000068:	00e12223          	sw	a4,4(sp)
-2000006c:	00d12023          	sw	a3,0(sp)
-20000070:	fa1ff0ef          	jal	ra,20000010 <check>
-20000074:	00412703          	lw	a4,4(sp)
-20000078:	ef000797          	auipc	a5,0xef000
-2000007c:	fe878793          	addi	a5,a5,-24 # f000060 <sh_ans>
-20000080:	00012683          	lw	a3,0(sp)
-20000084:	fcf716e3          	bne	a4,a5,20000050 <main+0x28>
-20000088:	ef000717          	auipc	a4,0xef000
-2000008c:	f9870713          	addi	a4,a4,-104 # f000020 <lhu_ans>
-20000090:	00072683          	lw	a3,0(a4)
-20000094:	0004d503          	lhu	a0,0(s1)
-20000098:	00470713          	addi	a4,a4,4
-2000009c:	00e12023          	sw	a4,0(sp)
-200000a0:	40d50533          	sub	a0,a0,a3
-200000a4:	00153513          	seqz	a0,a0
-200000a8:	f69ff0ef          	jal	ra,20000010 <check>
-200000ac:	00248493          	addi	s1,s1,2
-200000b0:	ef000797          	auipc	a5,0xef000
-200000b4:	fb078793          	addi	a5,a5,-80 # f000060 <sh_ans>
-200000b8:	00012703          	lw	a4,0(sp)
-200000bc:	fcf49ae3          	bne	s1,a5,20000090 <main+0x68>
-200000c0:	00244683          	lbu	a3,2(s0)
-200000c4:	00144603          	lbu	a2,1(s0)
-200000c8:	00344703          	lbu	a4,3(s0)
-200000cc:	00444783          	lbu	a5,4(s0)
-200000d0:	ef000497          	auipc	s1,0xef000
-200000d4:	f7048493          	addi	s1,s1,-144 # f000040 <lwlr_ans>
-200000d8:	00869693          	slli	a3,a3,0x8
-200000dc:	00c6e6b3          	or	a3,a3,a2
-200000e0:	0004a503          	lw	a0,0(s1)
-200000e4:	01071713          	slli	a4,a4,0x10
-200000e8:	00d76733          	or	a4,a4,a3
-200000ec:	01879793          	slli	a5,a5,0x18
-200000f0:	00e7e7b3          	or	a5,a5,a4
-200000f4:	40f50533          	sub	a0,a0,a5
-200000f8:	00153513          	seqz	a0,a0
-200000fc:	f15ff0ef          	jal	ra,20000010 <check>
-20000100:	00644683          	lbu	a3,6(s0)
-20000104:	00544603          	lbu	a2,5(s0)
-20000108:	00744703          	lbu	a4,7(s0)
-2000010c:	00844783          	lbu	a5,8(s0)
-20000110:	00869693          	slli	a3,a3,0x8
-20000114:	00c6e6b3          	or	a3,a3,a2
-20000118:	0044a503          	lw	a0,4(s1)
-2000011c:	01071713          	slli	a4,a4,0x10
-20000120:	00d76733          	or	a4,a4,a3
-20000124:	01879793          	slli	a5,a5,0x18
-20000128:	00e7e7b3          	or	a5,a5,a4
-2000012c:	40f50533          	sub	a0,a0,a5
-20000130:	00153513          	seqz	a0,a0
-20000134:	eddff0ef          	jal	ra,20000010 <check>
-20000138:	00a44683          	lbu	a3,10(s0)
-2000013c:	00944603          	lbu	a2,9(s0)
-20000140:	00b44703          	lbu	a4,11(s0)
-20000144:	00c44783          	lbu	a5,12(s0)
-20000148:	00869693          	slli	a3,a3,0x8
-2000014c:	00c6e6b3          	or	a3,a3,a2
-20000150:	0084a503          	lw	a0,8(s1)
-20000154:	01071713          	slli	a4,a4,0x10
-20000158:	00d76733          	or	a4,a4,a3
-2000015c:	01879793          	slli	a5,a5,0x18
-20000160:	00e7e7b3          	or	a5,a5,a4
-20000164:	40f50533          	sub	a0,a0,a5
-20000168:	00153513          	seqz	a0,a0
-2000016c:	ea5ff0ef          	jal	ra,20000010 <check>
-20000170:	ef000697          	auipc	a3,0xef000
-20000174:	ef068693          	addi	a3,a3,-272 # f000060 <sh_ans>
-20000178:	00100493          	li	s1,1
-2000017c:	00100793          	li	a5,1
-20000180:	009797b3          	sll	a5,a5,s1
-20000184:	0006a503          	lw	a0,0(a3)
-20000188:	fff7c793          	not	a5,a5
-2000018c:	01079793          	slli	a5,a5,0x10
-20000190:	0107d793          	srli	a5,a5,0x10
-20000194:	40f50533          	sub	a0,a0,a5
-20000198:	00940633          	add	a2,s0,s1
-2000019c:	fef61fa3          	sh	a5,-1(a2)
-200001a0:	00153513          	seqz	a0,a0
-200001a4:	00d12023          	sw	a3,0(sp)
-200001a8:	e69ff0ef          	jal	ra,20000010 <check>
-200001ac:	00012683          	lw	a3,0(sp)
-200001b0:	00248493          	addi	s1,s1,2
-200001b4:	01100793          	li	a5,17
-200001b8:	00468693          	addi	a3,a3,4
-200001bc:	fcf490e3          	bne	s1,a5,2000017c <main+0x154>
-200001c0:	01012083          	lw	ra,16(sp)
-200001c4:	00c12403          	lw	s0,12(sp)
-200001c8:	00812483          	lw	s1,8(sp)
-200001cc:	00000513          	li	a0,0
-200001d0:	01410113          	addi	sp,sp,20
-200001d4:	00008067          	ret
+30000028 <main>:
+30000028:	fec10113          	addi	sp,sp,-20
+3000002c:	00912423          	sw	s1,8(sp)
+30000030:	df000497          	auipc	s1,0xdf000
+30000034:	02048493          	addi	s1,s1,32 # f000050 <mem>
+30000038:	00812623          	sw	s0,12(sp)
+3000003c:	00112823          	sw	ra,16(sp)
+30000040:	df000697          	auipc	a3,0xdf000
+30000044:	fc068693          	addi	a3,a3,-64 # f000000 <lh_ans>
+30000048:	00048413          	mv	s0,s1
+3000004c:	00048713          	mv	a4,s1
+30000050:	00071503          	lh	a0,0(a4)
+30000054:	0006a603          	lw	a2,0(a3)
+30000058:	00270713          	addi	a4,a4,2
+3000005c:	00468693          	addi	a3,a3,4
+30000060:	40c50533          	sub	a0,a0,a2
+30000064:	00153513          	seqz	a0,a0
+30000068:	00e12223          	sw	a4,4(sp)
+3000006c:	00d12023          	sw	a3,0(sp)
+30000070:	fa1ff0ef          	jal	ra,30000010 <check>
+30000074:	00412703          	lw	a4,4(sp)
+30000078:	df000797          	auipc	a5,0xdf000
+3000007c:	fe878793          	addi	a5,a5,-24 # f000060 <sh_ans>
+30000080:	00012683          	lw	a3,0(sp)
+30000084:	fcf716e3          	bne	a4,a5,30000050 <main+0x28>
+30000088:	df000717          	auipc	a4,0xdf000
+3000008c:	f9870713          	addi	a4,a4,-104 # f000020 <lhu_ans>
+30000090:	00072683          	lw	a3,0(a4)
+30000094:	0004d503          	lhu	a0,0(s1)
+30000098:	00470713          	addi	a4,a4,4
+3000009c:	00e12023          	sw	a4,0(sp)
+300000a0:	40d50533          	sub	a0,a0,a3
+300000a4:	00153513          	seqz	a0,a0
+300000a8:	f69ff0ef          	jal	ra,30000010 <check>
+300000ac:	00248493          	addi	s1,s1,2
+300000b0:	df000797          	auipc	a5,0xdf000
+300000b4:	fb078793          	addi	a5,a5,-80 # f000060 <sh_ans>
+300000b8:	00012703          	lw	a4,0(sp)
+300000bc:	fcf49ae3          	bne	s1,a5,30000090 <main+0x68>
+300000c0:	00244683          	lbu	a3,2(s0)
+300000c4:	00144603          	lbu	a2,1(s0)
+300000c8:	00344703          	lbu	a4,3(s0)
+300000cc:	00444783          	lbu	a5,4(s0)
+300000d0:	df000497          	auipc	s1,0xdf000
+300000d4:	f7048493          	addi	s1,s1,-144 # f000040 <lwlr_ans>
+300000d8:	00869693          	slli	a3,a3,0x8
+300000dc:	00c6e6b3          	or	a3,a3,a2
+300000e0:	0004a503          	lw	a0,0(s1)
+300000e4:	01071713          	slli	a4,a4,0x10
+300000e8:	00d76733          	or	a4,a4,a3
+300000ec:	01879793          	slli	a5,a5,0x18
+300000f0:	00e7e7b3          	or	a5,a5,a4
+300000f4:	40f50533          	sub	a0,a0,a5
+300000f8:	00153513          	seqz	a0,a0
+300000fc:	f15ff0ef          	jal	ra,30000010 <check>
+30000100:	00644683          	lbu	a3,6(s0)
+30000104:	00544603          	lbu	a2,5(s0)
+30000108:	00744703          	lbu	a4,7(s0)
+3000010c:	00844783          	lbu	a5,8(s0)
+30000110:	00869693          	slli	a3,a3,0x8
+30000114:	00c6e6b3          	or	a3,a3,a2
+30000118:	0044a503          	lw	a0,4(s1)
+3000011c:	01071713          	slli	a4,a4,0x10
+30000120:	00d76733          	or	a4,a4,a3
+30000124:	01879793          	slli	a5,a5,0x18
+30000128:	00e7e7b3          	or	a5,a5,a4
+3000012c:	40f50533          	sub	a0,a0,a5
+30000130:	00153513          	seqz	a0,a0
+30000134:	eddff0ef          	jal	ra,30000010 <check>
+30000138:	00a44683          	lbu	a3,10(s0)
+3000013c:	00944603          	lbu	a2,9(s0)
+30000140:	00b44703          	lbu	a4,11(s0)
+30000144:	00c44783          	lbu	a5,12(s0)
+30000148:	00869693          	slli	a3,a3,0x8
+3000014c:	00c6e6b3          	or	a3,a3,a2
+30000150:	0084a503          	lw	a0,8(s1)
+30000154:	01071713          	slli	a4,a4,0x10
+30000158:	00d76733          	or	a4,a4,a3
+3000015c:	01879793          	slli	a5,a5,0x18
+30000160:	00e7e7b3          	or	a5,a5,a4
+30000164:	40f50533          	sub	a0,a0,a5
+30000168:	00153513          	seqz	a0,a0
+3000016c:	ea5ff0ef          	jal	ra,30000010 <check>
+30000170:	df000697          	auipc	a3,0xdf000
+30000174:	ef068693          	addi	a3,a3,-272 # f000060 <sh_ans>
+30000178:	00100493          	li	s1,1
+3000017c:	00100793          	li	a5,1
+30000180:	009797b3          	sll	a5,a5,s1
+30000184:	0006a503          	lw	a0,0(a3)
+30000188:	fff7c793          	not	a5,a5
+3000018c:	01079793          	slli	a5,a5,0x10
+30000190:	0107d793          	srli	a5,a5,0x10
+30000194:	40f50533          	sub	a0,a0,a5
+30000198:	00940633          	add	a2,s0,s1
+3000019c:	fef61fa3          	sh	a5,-1(a2)
+300001a0:	00153513          	seqz	a0,a0
+300001a4:	00d12023          	sw	a3,0(sp)
+300001a8:	e69ff0ef          	jal	ra,30000010 <check>
+300001ac:	00012683          	lw	a3,0(sp)
+300001b0:	00248493          	addi	s1,s1,2
+300001b4:	01100793          	li	a5,17
+300001b8:	00468693          	addi	a3,a3,4
+300001bc:	fcf490e3          	bne	s1,a5,3000017c <main+0x154>
+300001c0:	01012083          	lw	ra,16(sp)
+300001c4:	00c12403          	lw	s0,12(sp)
+300001c8:	00812483          	lw	s1,8(sp)
+300001cc:	00000513          	li	a0,0
+300001d0:	01410113          	addi	sp,sp,20
+300001d4:	00008067          	ret
 
-200001d8 <halt>:
-200001d8:	00050513          	mv	a0,a0
-200001dc:	00100073          	ebreak
-200001e0:	0000006f          	j	200001e0 <halt+0x8>
+300001d8 <halt>:
+300001d8:	00050513          	mv	a0,a0
+300001dc:	00100073          	ebreak
+300001e0:	0000006f          	j	300001e0 <halt+0x8>
 
-200001e4 <_trm_init>:
-200001e4:	ef000517          	auipc	a0,0xef000
-200001e8:	e1c50513          	addi	a0,a0,-484 # f000000 <lh_ans>
-200001ec:	ef000617          	auipc	a2,0xef000
-200001f0:	e9460613          	addi	a2,a2,-364 # f000080 <_bss_start>
-200001f4:	ff410113          	addi	sp,sp,-12
-200001f8:	40a60633          	sub	a2,a2,a0
-200001fc:	00000597          	auipc	a1,0x0
-20000200:	06d58593          	addi	a1,a1,109 # 20000269 <_data_lma_end>
-20000204:	00112423          	sw	ra,8(sp)
-20000208:	03c000ef          	jal	ra,20000244 <memcpy>
-2000020c:	100007b7          	lui	a5,0x10000
-20000210:	f8000713          	li	a4,-128
-20000214:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
-20000218:	00100713          	li	a4,1
-2000021c:	00e78023          	sb	a4,0(a5)
-20000220:	000780a3          	sb	zero,1(a5)
-20000224:	00300713          	li	a4,3
-20000228:	00e781a3          	sb	a4,3(a5)
-2000022c:	00000517          	auipc	a0,0x0
-20000230:	03c50513          	addi	a0,a0,60 # 20000268 <_etext>
-20000234:	df5ff0ef          	jal	ra,20000028 <main>
-20000238:	00050513          	mv	a0,a0
-2000023c:	00100073          	ebreak
-20000240:	0000006f          	j	20000240 <_trm_init+0x5c>
+300001e4 <_trm_init>:
+300001e4:	df000517          	auipc	a0,0xdf000
+300001e8:	e1c50513          	addi	a0,a0,-484 # f000000 <lh_ans>
+300001ec:	df000617          	auipc	a2,0xdf000
+300001f0:	e9460613          	addi	a2,a2,-364 # f000080 <_bss_start>
+300001f4:	ff410113          	addi	sp,sp,-12
+300001f8:	40a60633          	sub	a2,a2,a0
+300001fc:	00000597          	auipc	a1,0x0
+30000200:	06d58593          	addi	a1,a1,109 # 30000269 <_data_lma_end>
+30000204:	00112423          	sw	ra,8(sp)
+30000208:	03c000ef          	jal	ra,30000244 <memcpy>
+3000020c:	100007b7          	lui	a5,0x10000
+30000210:	f8000713          	li	a4,-128
+30000214:	00e781a3          	sb	a4,3(a5) # 10000003 <_end+0xffe003>
+30000218:	00100713          	li	a4,1
+3000021c:	00e78023          	sb	a4,0(a5)
+30000220:	000780a3          	sb	zero,1(a5)
+30000224:	00300713          	li	a4,3
+30000228:	00e781a3          	sb	a4,3(a5)
+3000022c:	00000517          	auipc	a0,0x0
+30000230:	03c50513          	addi	a0,a0,60 # 30000268 <_etext>
+30000234:	df5ff0ef          	jal	ra,30000028 <main>
+30000238:	00050513          	mv	a0,a0
+3000023c:	00100073          	ebreak
+30000240:	0000006f          	j	30000240 <_trm_init+0x5c>
 
-20000244 <memcpy>:
-20000244:	02060063          	beqz	a2,20000264 <memcpy+0x20>
-20000248:	00c50633          	add	a2,a0,a2
-2000024c:	00050793          	mv	a5,a0
-20000250:	0005c703          	lbu	a4,0(a1)
-20000254:	00178793          	addi	a5,a5,1
-20000258:	00158593          	addi	a1,a1,1
-2000025c:	fee78fa3          	sb	a4,-1(a5)
-20000260:	fec798e3          	bne	a5,a2,20000250 <memcpy+0xc>
-20000264:	00008067          	ret
+30000244 <memcpy>:
+30000244:	02060063          	beqz	a2,30000264 <memcpy+0x20>
+30000248:	00c50633          	add	a2,a0,a2
+3000024c:	00050793          	mv	a5,a0
+30000250:	0005c703          	lbu	a4,0(a1)
+30000254:	00178793          	addi	a5,a5,1
+30000258:	00158593          	addi	a1,a1,1
+3000025c:	fee78fa3          	sb	a4,-1(a5)
+30000260:	fec798e3          	bne	a5,a2,30000250 <memcpy+0xc>
+30000264:	00008067          	ret
