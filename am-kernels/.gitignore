@@ -3,6 +3,6 @@
 !LICENSE
 build/
 !.gitignore
-!.[csh]
+!/**/.[csh]
 !Makefile
 
