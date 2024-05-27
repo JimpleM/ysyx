@@ -34,7 +34,7 @@ extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 		// if(*data == 0x0000006f){
 		// 	*data = 0x00100073;
 		// }
-		printf("flash read addr=%08x data=%08x\n",addr,*data);
+		// printf("flash read addr=%08x data=%08x\n",addr,*data);
 	}else{
 		panic("flash address =  0x%8x  is out of bound",addr);
 	}

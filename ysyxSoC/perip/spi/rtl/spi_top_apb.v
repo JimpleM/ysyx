@@ -117,7 +117,7 @@ always @(posedge clock) begin
 				wb_stb_i	<= 1'b1;
 				wb_cyc_i	<= 1'b1;
 				wb_adr_i	<= 32'h00000004;
-				wb_dat_i	<= {8'h03,in_paddr[23:0]};
+				wb_dat_i	<= {8'h03,in_paddr[23:2],2'b00};	// 地址4字节对齐
 				wb_sel_i	<= 4'hf;
 				if(wb_ack_o)begin
 					wb_we_i 	<= 1'b0;

@@ -26,10 +26,15 @@ static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 
 uint8_t* guest_to_host(paddr_t paddr){
 	if(SRAM_LEFT <= paddr && paddr <= SRAM_RIGHT){
-		return pmem + paddr - SRAM_MBASE;	
-	}else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
-		return pmem + paddr - MROM_MBASE;
-	}else{
+		return pmem + paddr + SRAM_MBASE;	
+	}
+  else if(FLASH_LEFT <= paddr && paddr <= FLASH_RIGHT){
+		return pmem + paddr - FLASH_MBASE;
+	}
+  // else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
+	// 	return pmem + paddr - MROM_MBASE;
+	// }
+  else{
 		panic("address = " FMT_PADDR " is out of bound", paddr);
 		return pmem + paddr - CONFIG_MBASE; 
 	}
@@ -71,7 +76,7 @@ void init_mem() {
   for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
     p[i] = rand();
   }
-  for(i = (int) ((SRAM_LEFT-SRAM_MBASE) / sizeof(p[0])); i< (int) ((SRAM_RIGHT-SRAM_MBASE)/ sizeof(p[0]));i++){
+  for(i = (int) ((SRAM_LEFT+SRAM_MBASE) / sizeof(p[0])); i< (int) ((SRAM_RIGHT+SRAM_MBASE)/ sizeof(p[0]));i++){
     p[i] = 0;
   }
 #endif
