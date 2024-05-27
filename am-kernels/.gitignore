@@ -1,11 +1,8 @@
 *
 !README.md
 !LICENSE
-/**/*.build/
+build/
 !.gitignore
-!tests
-!benchmarks
-!kernals
-!/**/
-!/*
-/**/build
+!.[csh]
+!Makefile
+
