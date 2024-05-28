@@ -24,9 +24,9 @@ extern "C" {
     extern void get_riscv32_rst(svBit reset);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v:4744:30
     extern void mrom_read(int raddr, int* rdata);
-    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/psram/psram.v:97:30
-    extern void psram_read(int addr, int* data);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/psram/psram.v:98:30
+    extern void psram_read(int addr, int* data);
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/psram/psram.v:99:30
     extern void psram_write(int addr, int data, int mask);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/npc/vsrc/ysyx_23060077_axi.v:175:30
     extern void set_axi_resp(int b_resp, int r_resp);

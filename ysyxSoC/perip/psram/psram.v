@@ -7,9 +7,9 @@ module psram(
 `define WCMD 8'h38
 
 // assign dio = 4'bz;
-reg [3:0] dout_en;
+wire [3:0] dout_en;
 wire [3:0] dout;
-wire[3:0] din;
+wire [3:0] din;
 assign din = dio;
 
 genvar i;
@@ -82,16 +82,7 @@ always@(posedge sck or posedge ce_n) begin
 end
 assign dout = {(state == data_t &&counter == 8'd0) ? data_bswap : data}[31:28];
 
-
-always @(posedge sck or posedge ce_n) begin
-  if(ce_n) dout_en <= 4'd0;
-  else if((state == data_t | state == delay_t)&& cmd == `RCMD)begin
-    dout_en <= 4'b1111;
-  end
-  else begin
-    dout_en <= 4'd0;
-  end
-end
+assign dout_en = (state == data_t | state == delay_t)&& cmd == `RCMD ? 4'b1111 : 4'd0;
 
 
 import "DPI-C" function void psram_read(input int addr, output int data);
