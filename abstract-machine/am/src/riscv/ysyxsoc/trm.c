@@ -4,14 +4,14 @@
 #include <assert.h>
 #include <string.h>
 
-extern char _heap_start;
+extern char _heap_start,_heap_end;
 int main(const char *args);
 
 extern char _pmem_start;
 #define PMEM_SIZE 0x0fffffff
 #define PMEM_END  ((uintptr_t)&_pmem_start + PMEM_SIZE)
 
-Area heap = RANGE(&_heap_start, PMEM_END);
+Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
 #define MAINARGS ""
 #endif
