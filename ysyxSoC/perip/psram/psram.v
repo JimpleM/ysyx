@@ -5,6 +5,8 @@ module psram(
 );
 `define RCMD 8'hEB
 `define WCMD 8'h38
+`define QPICMD 8'h35
+
 
 // assign dio = 4'bz;
 wire [3:0] dout_en;
@@ -19,6 +21,8 @@ generate
   end
 endgenerate
 
+reg QPI_MODE = 0;
+
 reg[7:0] cmd;
 reg[23:0] addr;
 reg[31:0] data;
@@ -26,6 +30,12 @@ wire[31:0] rdata;
 reg[7:0] counter;
 reg [3:0] state;
 typedef enum [3:0] { cmd_t, addr_t, data_t, delay_t, err_t } state_t;
+
+always @(posedge ce_n) begin
+  if(cmd == `QPICMD)begin
+    QPI_MODE = 1;
+  end
+end
 
 always @(posedge sck or posedge ce_n) begin
   if(ce_n)begin
@@ -35,8 +45,14 @@ always @(posedge sck or posedge ce_n) begin
   else begin
     case(state)
       cmd_t:begin
-        counter <= (counter < 8'd7 ) ? counter + 8'd1 : 8'd0;
-        state <= (counter == 8'd7 ) ? addr_t : state;
+        if(QPI_MODE)begin
+          counter <= (counter < 8'd1 ) ? counter + 8'd1 : 8'd0;
+          state <= (counter == 8'd1 ) ? addr_t : state;
+        end
+        else begin
+          counter <= (counter < 8'd7 ) ? counter + 8'd1 : 8'd0;
+          state <= (counter == 8'd7 ) ? addr_t : state;
+        end
       end
       addr_t:begin
         counter <= (counter < 8'd5) ? counter + 8'd1 : 8'd0;
@@ -61,7 +77,14 @@ end
 
 always@(posedge sck or posedge ce_n) begin
   if (ce_n)               cmd <= 8'd0;
-  else if (state == cmd_t) cmd <= { cmd[6:0], din[0] };
+  else if (state == cmd_t)begin
+    if(QPI_MODE)begin
+      cmd <= { cmd[3:0], din[3:0] };
+    end
+    else begin
+      cmd <= { cmd[6:0], din[0] };
+    end
+  end 
 end
 
 always@(posedge sck or posedge ce_n) begin
