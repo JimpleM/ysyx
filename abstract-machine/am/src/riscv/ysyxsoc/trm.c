@@ -53,10 +53,10 @@ void _trm_init() {
   
   uart_init();
   
-  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
-  print_char(number);
-  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
-  printf("%d\n",number);
+  // asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
+  // print_char(number);
+  // asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
+  // printf("%d\n",number);
 
   int ret = main(mainargs);
   halt(ret);

@@ -13,6 +13,11 @@
 #define FLASH_RIGHT 0x3fffffff
 #define FLASH_SIZE   FLASH_RIGHT-FLASH_LEFT+1
 
+// flash address
+#define PSRAM_LEFT  0x80000000
+#define PSRAM_RIGHT 0x8fffffff
+#define PSRAM_SIZE   PSRAM_RIGHT-PSRAM_LEFT+1
+
 // #define CONFIG_MTRACE_START_ADDR    0x80000000
 // #define CONFIG_MTRACE_END_ADDR      0x8fffffff
 
@@ -25,7 +30,7 @@
 
 // #define CONFIG_VGA
 
-// #define CONFIG_WAVE
+#define CONFIG_WAVE
 
 #ifdef CONFIG_WAVE
     #define CONFIG_WAVE_PC_BEGIN    0x30000000

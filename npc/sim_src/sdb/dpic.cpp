@@ -25,6 +25,27 @@ extern VysyxSoCFull* top;
 #define PG_ALIGN __attribute((aligned(4096)))
 
 uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
+uint8_t psram_mem[PSRAM_SIZE] PG_ALIGN = {};
+
+
+extern "C" void psram_read(uint32_t addr, uint32_t *data) {
+	if(addr >= 0 && addr <= PSRAM_SIZE){
+		*data = host_read(psram_mem+addr,4);
+		// printf("psram read addr=%08x data=%08x\n",addr,*data);
+	}else{
+		panic("psram address =  0x%8x  is out of bound",addr);
+	}
+}
+extern "C" void psram_write(uint32_t addr, uint32_t data,uint32_t mask) {
+	if(addr >= 0 && addr <= PSRAM_SIZE){
+		uint32_t wdata = data >> ((8-mask)*4);
+		host_write(psram_mem+addr,mask/2,wdata);
+		// *(uint32_t *)(psram_mem+addr) = data;
+		// printf("psram write addr=%08x data=%08x %08x mask=%d\n",addr,wdata,data,mask/2);
+	}else{
+		panic("psram address =  0x%8x  is out of bound",addr);
+	}
+}
 
 extern "C" void flash_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0 && addr <= FLASH_SIZE){
