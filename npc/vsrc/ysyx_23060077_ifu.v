@@ -46,13 +46,14 @@ always @(*)begin
     get_riscv32_rst(reset);
 end
 
-initial begin
-    pc = 32'h3000_0000;
-    ifu_pc_o_r = 32'h3000_0000;
-end
+// initial begin
+//     pc = 32'h3000_0000;
+//     ifu_pc_o_r = 32'h3000_0000;
+// end
 always @(posedge clk) begin
     if(reset)begin
         pc <= 32'h3000_0000;
+        // pc <= 32'h0f000000;
     end
     else if(flush_inst)begin
         pc <= pc;

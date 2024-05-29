@@ -9,13 +9,18 @@ MEMORY {
 SECTIONS {
   /* _pmem_start and _entry_offset are defined in LDFLAGS */
  /* . = _pmem_start + _entry_offset; */
+  _sram_origin = ORIGIN(sram);
+  _flash_origin = ORIGIN(flash);
   . = ORIGIN(flash);
+  _text_start = .;
   .text : {
     *(entry)
+    _main_start = .;
     *(.text*)
   } > flash AT> flash
   etext = .;
   _etext = .;
+  _main_address = _main_start -_flash_origin+_sram_origin;
   .rodata : {
     *(.rodata*)
     _rodata_end = .;

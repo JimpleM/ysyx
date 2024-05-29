@@ -41,7 +41,7 @@ extern "C" void psram_write(uint32_t addr, uint32_t data,uint32_t mask) {
 		uint32_t wdata = data >> ((8-mask)*4);
 		host_write(psram_mem+addr,mask/2,wdata);
 		// *(uint32_t *)(psram_mem+addr) = data;
-		// printf("psram write addr=%08x data=%08x %08x mask=%d\n",addr,wdata,data,mask/2);
+		printf("psram write addr=%08x data=%08x %08x mask=%d\n",addr,wdata,data,mask/2);
 	}else{
 		panic("psram address =  0x%8x  is out of bound",addr);
 	}

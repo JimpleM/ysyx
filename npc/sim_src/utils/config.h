@@ -30,7 +30,7 @@
 
 // #define CONFIG_VGA
 
-// #define CONFIG_WAVE
+#define CONFIG_WAVE
 
 #ifdef CONFIG_WAVE
     #define CONFIG_WAVE_PC_BEGIN    0x30000000
