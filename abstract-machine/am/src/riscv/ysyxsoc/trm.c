@@ -15,7 +15,7 @@ Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
 #define MAINARGS ""
 #endif
-static const char mainargs[] = MAINARGS;
+// static const char mainargs[] = MAINARGS;
 
 extern char _data_lma_start,_data_vma_start,_bss_start,_bss_end,_sram_origin,_flash_origin,_text_start,_rodata_end;
 extern char _main_start;
@@ -80,7 +80,6 @@ void _trm_init() {
   // ((void *)main(mainargs));
   // uint32_t main_address = (uint32_t)&_main_start-(uint32_t)&_flash_origin+(uint32_t)&_sram_origin;
   // asm volatile ("addi %0, zero, 4" : "=r"());
- 
 }
 
 void _run_main(){
@@ -88,7 +87,7 @@ void _run_main(){
   asm volatile ("addi	a0,a0,88");
   uint32_t main_addr = (uint32_t)&main - (uint32_t)&_flash_origin+(uint32_t)&_sram_origin;
   asm volatile ("jr %0" : :"r"(main_addr));
-
-  int ret = main(mainargs);
-  halt(ret);
+  // no reach here
+  // int ret = main(mainargs);
+  // halt(ret);
 }
