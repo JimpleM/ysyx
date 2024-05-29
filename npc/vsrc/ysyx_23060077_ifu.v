@@ -46,10 +46,10 @@ always @(*)begin
     get_riscv32_rst(reset);
 end
 
-// initial begin
-//     pc = 32'h3000_0000;
-//     ifu_pc_o_r = 32'h3000_0000;
-// end
+initial begin
+    pc = 32'h3000_0000;
+    ifu_pc_o_r = 32'h3000_0000;
+end
 always @(posedge clk) begin
     if(reset)begin
         pc <= 32'h3000_0000;
@@ -61,7 +61,7 @@ always @(posedge clk) begin
     else if(stall | wbu_stall)begin
         pc <= pc;
     end
-    else if(jump_pc_valid)begin
+    else if(jump_pc_valid &!ifu_stall)begin
         pc <= jump_pc;
     end
     else if(ifu_stall_r)begin

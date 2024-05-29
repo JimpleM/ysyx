@@ -3,127 +3,151 @@
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000110  30000000  30000000  00001000  2**2
+  0 .fsbl         000000c0  30000000  30000000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .rodata       0000001c  30000110  30000110  00001110  2**2
+  1 .ssbl         00000000  80000000  80000000  00002089  2**0
+                  CONTENTS
+  2 .text         00000068  80000000  300000c0  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .rodata       00000020  80000068  30000128  00002068  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .comment      0000002b  00000000  00000000  0000112c  2**0
+  4 .srodata.mainargs 00000001  80000088  30000148  00002088  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .data         00000007  80000089  30000149  00002089  2**0
+                  ALLOC
+  6 .sdata.haep   00000000  80000090  80000090  00002089  2**0
+                  CONTENTS
+  7 .bss          00000000  80000090  30000150  00000000  2**0
+                  ALLOC
+  8 .comment      0000002b  00000000  00000000  00002089  2**0
                   CONTENTS, READONLY
-  3 .riscv.attributes 0000001a  00000000  00000000  00001157  2**0
+  9 .riscv.attributes 0000001e  00000000  00000000  000020b4  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
-30000000 l    d  .text	00000000 .text
-30000110 l    d  .rodata	00000000 .rodata
+30000000 l    d  .fsbl	00000000 .fsbl
+80000000 l    d  .ssbl	00000000 .ssbl
+80000000 l    d  .text	00000000 .text
+80000068 l    d  .rodata	00000000 .rodata
+80000088 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+80000089 l    d  .data	00000000 .data
+80000090 l    d  .sdata.haep	00000000 .sdata.haep
+80000090 l    d  .bss	00000000 .bss
 00000000 l    d  .comment	00000000 .comment
 00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
 00000000 l    df *ABS*	00000000 start.o
-00000000 l    df *ABS*	00000000 hello.c
 00000000 l    df *ABS*	00000000 trm.c
-30000000 g       .text	00000000 _flash_origin
-30000080 g     F .text	00000060 _trm_init
-3000012c g       .rodata	00000000 _data_lma_end
-0f001e00 g       .rodata	00000000 _stack_pointer
-0f000000 g       .text	00000000 _sram_origin
-30000110 g       .text	00000000 _etext
+80000088 l     O .srodata.mainargs	00000001 mainargs
+00000000 l    df *ABS*	00000000 hello.c
+80000000 g       .ssbl	00000000 _ssbl_ram_end
+30000010 g     F .fsbl	000000ac _trm_init
+80018000 g       .data	00000000 _stack_pointer
+80000068 g       .text	00000000 _etext
 0f000000 g       *ABS*	00000000 _pmem_start
-3000012c g       .rodata	00000000 _rodata_end
-3000012c g       .rodata	00000000 _bss_start
-3000012c g       .rodata	00000000 edata
-30000000 g       .text	00000000 _text_start
-300000e0 g     F .text	00000030 _run_main
-0f002000 g       .rodata	00000000 _heap_end
-30000068 g     F .text	00000018 putch
-3000012c g       .rodata	00000000 _bss_end
-0f001e00 g       .rodata	00000000 _heap_start
-0f001000 g       .rodata	00000000 _stack_top
-0f001e00 g       .rodata	00000000 end
-30000110 g       .text	00000000 etext
-30000000 g     F .text	00000000 _start
+80000090 g       .bss	00000000 _bss_start
+80000090 g       .data	00000000 edata
+80028000 g       *ABS*	00000000 _heap_end
+80000090 g       .data	00000000 _data_ram_end
+80000050 g     F .text	00000018 putch
+300000c0 g       *ABS*	00000000 _test_origin
+80000090 g       .bss	00000000 _bss_end
+80020000 g       .data	00000000 _heap_start
+80010000 g       .data	00000000 _stack_top
+300000c0 g       .fsbl	00000000 _ssbl_origin
+80018000 g       .data	00000000 end
+80000068 g       .text	00000000 etext
+30000000 g     F .fsbl	00000000 _start
 00000000 g       *ABS*	00000000 _entry_offset
-30000018 g     F .text	00000050 main
-80000000 g       .rodata	00000000 _data_vma_start
-30000018 g       .text	00000000 _main_start
-0f001e00 g       .rodata	00000000 _end
-3000012c g       *ABS*	00000000 _data_lma_start
+80000000 g     F .text	00000050 main
+80000000 g       .text	00000000 _text_ram_start
+80000090 g       .data	00000000 _data
+80018000 g       .data	00000000 _end
+80000000 g       .ssbl	00000000 _ssbl_ram_start
 
 
 
-Disassembly of section .text:
+Disassembly of section .fsbl:
 
 30000000 <_start>:
 30000000:	00000413          	li	s0,0
-30000004:	df002117          	auipc	sp,0xdf002
-30000008:	dfc10113          	addi	sp,sp,-516 # f001e00 <_end>
-3000000c:	074000ef          	jal	ra,30000080 <_trm_init>
-30000010:	0d0000ef          	jal	ra,300000e0 <_run_main>
-30000014:	00100073          	ebreak
+30000004:	50018117          	auipc	sp,0x50018
+30000008:	ffc10113          	addi	sp,sp,-4 # 80018000 <_end>
+3000000c:	004000ef          	jal	ra,30000010 <_trm_init>
 
-30000018 <main>:
-30000018:	ff410113          	addi	sp,sp,-12
-3000001c:	00812223          	sw	s0,4(sp)
-30000020:	00112423          	sw	ra,8(sp)
-30000024:	00912023          	sw	s1,0(sp)
-30000028:	00a00413          	li	s0,10
-3000002c:	00000497          	auipc	s1,0x0
-30000030:	0e448493          	addi	s1,s1,228 # 30000110 <_etext>
-30000034:	04800513          	li	a0,72
-30000038:	00148493          	addi	s1,s1,1
-3000003c:	02c000ef          	jal	ra,30000068 <putch>
-30000040:	0004c503          	lbu	a0,0(s1)
-30000044:	fe051ae3          	bnez	a0,30000038 <main+0x20>
-30000048:	fff40413          	addi	s0,s0,-1
-3000004c:	fe0410e3          	bnez	s0,3000002c <main+0x14>
-30000050:	00812083          	lw	ra,8(sp)
-30000054:	00412403          	lw	s0,4(sp)
-30000058:	00012483          	lw	s1,0(sp)
-3000005c:	00000513          	li	a0,0
-30000060:	00c10113          	addi	sp,sp,12
-30000064:	00008067          	ret
-
-30000068 <putch>:
-30000068:	10000737          	lui	a4,0x10000
-3000006c:	00574783          	lbu	a5,5(a4) # 10000005 <_heap_end+0xffe005>
-30000070:	0207f793          	andi	a5,a5,32
-30000074:	fe078ce3          	beqz	a5,3000006c <putch+0x4>
-30000078:	00a70023          	sb	a0,0(a4)
-3000007c:	00008067          	ret
-
-30000080 <_trm_init>:
+30000010 <_trm_init>:
+30000010:	ff410113          	addi	sp,sp,-12
+30000014:	00112423          	sw	ra,8(sp)
+30000018:	50000597          	auipc	a1,0x50000
+3000001c:	fe858593          	addi	a1,a1,-24 # 80000000 <main>
+30000020:	50000797          	auipc	a5,0x50000
+30000024:	fe078793          	addi	a5,a5,-32 # 80000000 <main>
+30000028:	02b7f263          	bgeu	a5,a1,3000004c <_trm_init+0x3c>
+3000002c:	00000717          	auipc	a4,0x0
+30000030:	09470713          	addi	a4,a4,148 # 300000c0 <_ssbl_origin>
+30000034:	00072603          	lw	a2,0(a4)
+30000038:	00078693          	mv	a3,a5
+3000003c:	00478793          	addi	a5,a5,4
+30000040:	00c6a023          	sw	a2,0(a3)
+30000044:	00470713          	addi	a4,a4,4
+30000048:	feb7e6e3          	bltu	a5,a1,30000034 <_trm_init+0x24>
+3000004c:	50000597          	auipc	a1,0x50000
+30000050:	04458593          	addi	a1,a1,68 # 80000090 <_bss_end>
+30000054:	50000797          	auipc	a5,0x50000
+30000058:	fac78793          	addi	a5,a5,-84 # 80000000 <main>
+3000005c:	02b7f263          	bgeu	a5,a1,30000080 <_trm_init+0x70>
+30000060:	00000717          	auipc	a4,0x0
+30000064:	06070713          	addi	a4,a4,96 # 300000c0 <_ssbl_origin>
+30000068:	00072603          	lw	a2,0(a4)
+3000006c:	00078693          	mv	a3,a5
+30000070:	00478793          	addi	a5,a5,4
+30000074:	00c6a023          	sw	a2,0(a3)
+30000078:	00470713          	addi	a4,a4,4
+3000007c:	feb7e6e3          	bltu	a5,a1,30000068 <_trm_init+0x58>
 30000080:	100007b7          	lui	a5,0x10000
 30000084:	f8000713          	li	a4,-128
-30000088:	00e781a3          	sb	a4,3(a5) # 10000003 <_heap_end+0xffe003>
+30000088:	00e781a3          	sb	a4,3(a5) # 10000003 <_pmem_start+0x1000003>
 3000008c:	00100713          	li	a4,1
 30000090:	00e78023          	sb	a4,0(a5)
 30000094:	000780a3          	sb	zero,1(a5)
 30000098:	00300713          	li	a4,3
 3000009c:	00e781a3          	sb	a4,3(a5)
-300000a0:	00000597          	auipc	a1,0x0
-300000a4:	08c58593          	addi	a1,a1,140 # 3000012c <_bss_end>
-300000a8:	00000797          	auipc	a5,0x0
-300000ac:	f5878793          	addi	a5,a5,-168 # 30000000 <_start>
-300000b0:	00000697          	auipc	a3,0x0
-300000b4:	f5068693          	addi	a3,a3,-176 # 30000000 <_start>
-300000b8:	df000717          	auipc	a4,0xdf000
-300000bc:	f4870713          	addi	a4,a4,-184 # f000000 <_sram_origin>
-300000c0:	00b7fe63          	bgeu	a5,a1,300000dc <_trm_init+0x5c>
-300000c4:	0006a603          	lw	a2,0(a3)
-300000c8:	00478793          	addi	a5,a5,4
-300000cc:	00470713          	addi	a4,a4,4
-300000d0:	fec72e23          	sw	a2,-4(a4)
-300000d4:	00468693          	addi	a3,a3,4
-300000d8:	feb7e6e3          	bltu	a5,a1,300000c4 <_trm_init+0x44>
-300000dc:	00008067          	ret
+300000a0:	50000517          	auipc	a0,0x50000
+300000a4:	fe850513          	addi	a0,a0,-24 # 80000088 <mainargs>
+300000a8:	50000097          	auipc	ra,0x50000
+300000ac:	f58080e7          	jalr	-168(ra) # 80000000 <main>
+300000b0:	00050513          	mv	a0,a0
+300000b4:	00100073          	ebreak
+300000b8:	0000006f          	j	300000b8 <_trm_init+0xa8>
+300000bc:	0000                	.2byte	0x0
+	...
 
-300000e0 <_run_main>:
-300000e0:	00000517          	auipc	a0,0x0
-300000e4:	05850513          	addi	a0,a0,88 # 30000138 <_bss_end+0xc>
-300000e8:	df000717          	auipc	a4,0xdf000
-300000ec:	f1870713          	addi	a4,a4,-232 # f000000 <_sram_origin>
-300000f0:	00000797          	auipc	a5,0x0
-300000f4:	f2878793          	addi	a5,a5,-216 # 30000018 <main>
-300000f8:	00e787b3          	add	a5,a5,a4
-300000fc:	00000717          	auipc	a4,0x0
-30000100:	f0470713          	addi	a4,a4,-252 # 30000000 <_start>
-30000104:	40e787b3          	sub	a5,a5,a4
-30000108:	00078067          	jr	a5
-3000010c:	00008067          	ret
+Disassembly of section .text:
+
+80000000 <main>:
+80000000:	ff410113          	addi	sp,sp,-12
+80000004:	00812223          	sw	s0,4(sp)
+80000008:	00112423          	sw	ra,8(sp)
+8000000c:	00912023          	sw	s1,0(sp)
+80000010:	00a00413          	li	s0,10
+80000014:	00000497          	auipc	s1,0x0
+80000018:	05448493          	addi	s1,s1,84 # 80000068 <_etext>
+8000001c:	04800513          	li	a0,72
+80000020:	00148493          	addi	s1,s1,1
+80000024:	02c000ef          	jal	ra,80000050 <putch>
+80000028:	0004c503          	lbu	a0,0(s1)
+8000002c:	fe051ae3          	bnez	a0,80000020 <main+0x20>
+80000030:	fff40413          	addi	s0,s0,-1
+80000034:	fe0410e3          	bnez	s0,80000014 <main+0x14>
+80000038:	00812083          	lw	ra,8(sp)
+8000003c:	00412403          	lw	s0,4(sp)
+80000040:	00012483          	lw	s1,0(sp)
+80000044:	00000513          	li	a0,0
+80000048:	00c10113          	addi	sp,sp,12
+8000004c:	00008067          	ret
+
+80000050 <putch>:
+80000050:	10000737          	lui	a4,0x10000
+80000054:	00574783          	lbu	a5,5(a4) # 10000005 <_pmem_start+0x1000005>
+80000058:	0207f793          	andi	a5,a5,32
+8000005c:	fe078ce3          	beqz	a5,80000054 <putch+0x4>
+80000060:	00a70023          	sb	a0,0(a4)
+80000064:	00008067          	ret

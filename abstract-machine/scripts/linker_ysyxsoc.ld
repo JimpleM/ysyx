@@ -7,48 +7,66 @@ MEMORY {
 }
 
 SECTIONS {
-  /* _pmem_start and _entry_offset are defined in LDFLAGS */
- /* . = _pmem_start + _entry_offset; */
-  _sram_origin = ORIGIN(sram);
-  _flash_origin = ORIGIN(flash);
   . = ORIGIN(flash);
 
-  _text_start = .;
-  .text : {
+  .fsbl :{
     *(entry)
-    _main_start = .;
+    *(.text._trm_init)
+    *(.text.fsbl)
+    . = ALIGN(0x10);
+  } > flash
+
+  _ssbl_origin = .;
+  .ssbl : {
+    _ssbl_ram_start = .;
+    *(.text.ssbl)
+    . = ALIGN(0x10);
+    _ssbl_ram_end = .;
+  } > psram AT> flash
+
+  _test_origin = LOADADDR(.text);
+  .text : {
+    _text_ram_start = .;
     *(.text*)
-  } > flash AT> flash
+    . = ALIGN(0x10);
+  } > psram AT> flash
   etext = .;
   _etext = .;
 
   .rodata : {
     *(.rodata*)
-    _rodata_end = .;
-  } > flash AT> flash
+    *(.srodata.mainargs)
+    . = ALIGN(0x10);
+  } > psram AT> flash
 
   .data : {
+    . = ALIGN(0x10);
     *(.data)
-  } > flash AT> flash
-  _data_lma_start = LOADADDR(.data);
-  _data_lma_end   = .;
-  _data_vma_start = ORIGIN(psram);
+    _data_ram_end = .;
+  } > psram AT> flash
+
+  .sdata.haep : {
+    . = ALIGN(0x0F);
+    *(.sdata.heap)
+  } > psram AT> flash
   edata = .;
+  _data = .;
 
   .bss : {
-	_bss_start = .;
+	  _bss_start = .;
     *(.bss*)
     *(.sbss*)
     *(.scommon)
-  } > flash AT> flash
-  _bss_end = .;
+    . = ALIGN(8);
+    _bss_end = .;
+  } > psram AT> flash
 
-  _stack_top = ORIGIN(sram)+0x00001000;
-  . = _stack_top + 0x00000E00;
+
+  _stack_top = ALIGN(0x10000);
+  . = _stack_top + 0x8000;
   _stack_pointer = .;
   end = .;
   _end = .;
-
-  _heap_start = ORIGIN(sram)+0x00001E00;
-  _heap_end   = ORIGIN(sram)+0x00002000;
+  _heap_start = ALIGN(0x20000);
+  _heap_end = _heap_start  + 0x8000;
 }

@@ -15,10 +15,11 @@ Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
 #define MAINARGS ""
 #endif
-// static const char mainargs[] = MAINARGS;
+static const char mainargs[] = MAINARGS;
 
-extern char _data_lma_start,_data_vma_start,_bss_start,_bss_end,_sram_origin,_flash_origin,_text_start,_rodata_end;
-extern char _main_start;
+
+extern char _ssbl_origin,_ssbl_ram_start,_ssbl_ram_end;
+extern char _test_origin,_text_ram_start,_data_ram_end;
 extern char _bss_end;
 uint32_t number;
 
@@ -49,44 +50,60 @@ void uart_init(){
   outb(SERIAL_PORT+1,0x00);
   outb(SERIAL_PORT+3,0x03); // 重新设置LCR
 }
-// 进行32位地址拷贝
-void bootloader(){
-  uint32_t src = (uint32_t)&_flash_origin;
-  uint32_t dst = (uint32_t)&_sram_origin;
-  uint32_t start = (uint32_t)&_text_start;
-  uint32_t end = (uint32_t)&_bss_end;
-  while(start < end){
-    *(volatile uint32_t *)dst = *(volatile uint32_t *)src;
-    dst += 4;
-    src += 4;
-    start += 4;
+
+void read_csr(){
+  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
+  // print_char(number);
+  asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
+  // printf("%d\n",number);
+}
+
+void boot_memcpy(uint32_t rom_start, uint32_t ram_start, uint32_t ram_end){
+  volatile uint32_t *src = (volatile uint32_t *)&rom_start;
+  volatile uint32_t *dst = (volatile uint32_t *)&ram_start;
+  while((uint32_t) dst < (uint32_t) ram_end){
+    *dst++ = *src++;
+  }
+}
+// #pragma GCC push_options
+// #pragma GCC optimize("O0")
+void fsbl(){
+  // boot_memcpy((uint32_t)&_ssbl_origin,(uint32_t)&_ssbl_ram_start,(uint32_t)&_ssbl_ram_end);
+  volatile uint32_t *src = (volatile uint32_t *)&_ssbl_origin;
+  volatile uint32_t *dst = (volatile uint32_t *)&_ssbl_ram_start;
+  while((uint32_t) dst < (uint32_t) &_ssbl_ram_end){
+    *dst++ = *src++;
+  }
+  
+}
+void ssbl(){
+  // boot_memcpy((uint32_t)&_test_origin,(uint32_t)&_text_ram_start,(uint32_t)&_data_ram_end);
+  volatile uint32_t *src = (volatile uint32_t *)&_test_origin;
+  volatile uint32_t *dst = (volatile uint32_t *)&_text_ram_start;
+  while((uint32_t) dst < (uint32_t) &_bss_end){
+    *dst++ = *src++;
   }
 }
 
 void _trm_init() {
-  // memcpy(&_data_vma_start,&_data_lma_start,&_bss_start-&_data_vma_start);
-  // printf("%x %x %x\n",&_text_start,&_bss_end-&_text_start,&_bss_end);
-
-  uart_init();
-  bootloader();
+  fsbl();
+  ssbl();
   
-  // asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
-  // print_char(number);
-  // asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
-  // printf("%d\n",number);
-  // uint32_t number;
-  // asm volatile("auipc %0,%1" :"=r"(number) :"i"(0xDF000));
-  // asm volatile("jalr x0,0(%0)" :"=r"(number));
-  // ((void *)main(mainargs));
-  // uint32_t main_address = (uint32_t)&_main_start-(uint32_t)&_flash_origin+(uint32_t)&_sram_origin;
-  // asm volatile ("addi %0, zero, 4" : "=r"());
+  uart_init();
+  // putch('f');
+  // putch('\n');
+  // read_csr();
+  int ret = main(mainargs);
+  halt(ret);
 }
 
 void _run_main(){
   asm volatile ("auipc	a0,0x0");
   asm volatile ("addi	a0,a0,88");
-  uint32_t main_addr = (uint32_t)&main - (uint32_t)&_flash_origin+(uint32_t)&_sram_origin;
-  asm volatile ("jr %0" : :"r"(main_addr));
+  // uint32_t main_addr = (uint32_t)&main - (uint32_t)&_flash_origin+(uint32_t)&_psram_origin;
+  uint32_t main_addr = (uint32_t)&main;
+
+  asm volatile ("jalr x0,0(%0)" : :"r"(main_addr));
   // no reach here
   // int ret = main(mainargs);
   // halt(ret);

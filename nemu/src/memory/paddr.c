@@ -22,6 +22,8 @@
 static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
+static uint8_t psram[PSRAM_SIZE] PG_ALIGN = {};
+static uint8_t sram[SRAM_SIZE] PG_ALIGN = {};
 #endif
 
 uint8_t* guest_to_host(paddr_t paddr){
@@ -30,6 +32,9 @@ uint8_t* guest_to_host(paddr_t paddr){
 	}
   else if(FLASH_LEFT <= paddr && paddr <= FLASH_RIGHT){
 		return pmem + paddr - FLASH_MBASE;
+	}
+  else if(PSRAM_LEFT <= paddr && paddr <= PSRAM_RIGHT){
+		return psram + paddr - PSRAM_MBASE;
 	}
   // else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
 	// 	return pmem + paddr - MROM_MBASE;
@@ -73,11 +78,19 @@ void init_mem() {
 #ifdef CONFIG_MEM_RANDOM
   uint32_t *p = (uint32_t *)pmem;
   int i;
+  // for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
+  //   p[i] = rand();
+  // }
   for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
-    p[i] = rand();
-  }
-  for(i = (int) ((SRAM_LEFT+SRAM_MBASE) / sizeof(p[0])); i< (int) ((SRAM_RIGHT+SRAM_MBASE)/ sizeof(p[0]));i++){
     p[i] = 0;
+  }
+  uint32_t *s = (uint32_t *)psram;
+  for (i = 0; i < (int) (PSRAM_SIZE / sizeof(s[0])); i ++) {
+    s[i] = 0;
+  }
+  uint32_t *q = (uint32_t *)sram;
+  for (i = 0; i < (int) (SRAM_SIZE / sizeof(q[0])); i ++) {
+    q[i] = 0;
   }
 #endif
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
