@@ -61,7 +61,7 @@ always @(posedge clk) begin
     else if(stall | wbu_stall)begin
         pc <= pc;
     end
-    else if(jump_pc_valid &!ifu_stall)begin
+    else if(jump_pc_valid &!ifu_stall)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
         pc <= jump_pc;
     end
     else if(ifu_stall_r)begin
