@@ -1874,13 +1874,13 @@ module mem_1024x64(	// rocket-chip/src/main/scala/util/DescribedSRAM.scala:17:26
     _R0_addr_d0 <= R0_addr;	// rocket-chip/src/main/scala/util/DescribedSRAM.scala:17:26
   end // always @(posedge)
   // use for watching Mem
-  reg W0_en_t = 0;
-  always @(posedge W0_clk) begin
-    W0_en_t <= W0_en;
-    if(W0_en_t)begin
-      $display("addr = %x wdata = %x data = %x mask = %x",W0_addr,W0_data,Memory[W0_addr],W0_mask);
-    end
-  end
+  // reg W0_en_t = 0;
+  // always @(posedge W0_clk) begin
+  //   W0_en_t <= W0_en;
+  //   if(W0_en_t)begin
+  //     $display("addr = %x wdata = %x data = %x mask = %x",W0_addr,W0_data,Memory[W0_addr],W0_mask);
+  //   end
+  // end
 
   always @(posedge W0_clk) begin	// rocket-chip/src/main/scala/util/DescribedSRAM.scala:17:26
     if (W0_en & W0_mask[0])	// rocket-chip/src/main/scala/util/DescribedSRAM.scala:17:26

@@ -12,6 +12,7 @@ SECTIONS {
   _sram_origin = ORIGIN(sram);
   _flash_origin = ORIGIN(flash);
   . = ORIGIN(flash);
+
   _text_start = .;
   .text : {
     *(entry)
@@ -20,29 +21,34 @@ SECTIONS {
   } > flash AT> flash
   etext = .;
   _etext = .;
-  _main_address = _main_start -_flash_origin+_sram_origin;
+
   .rodata : {
     *(.rodata*)
     _rodata_end = .;
   } > flash AT> flash
+
   .data : {
     *(.data)
-  } > psram AT> flash
+  } > flash AT> flash
   _data_lma_start = LOADADDR(.data);
   _data_lma_end   = .;
   _data_vma_start = ORIGIN(psram);
   edata = .;
+
   .bss : {
 	_bss_start = .;
     *(.bss*)
     *(.sbss*)
     *(.scommon)
-  } > psram AT> flash
-  _stack_top = ORIGIN(psram)+0x00010000;
-  . = _stack_top + 0x000E0000;
+  } > flash AT> flash
+  _bss_end = .;
+
+  _stack_top = ORIGIN(sram)+0x00001000;
+  . = _stack_top + 0x00000E00;
   _stack_pointer = .;
   end = .;
   _end = .;
-  _heap_start = ORIGIN(psram)+0x00100000;
-  _heap_end   = ORIGIN(psram)+0x00400000;
+
+  _heap_start = ORIGIN(sram)+0x00001E00;
+  _heap_end   = ORIGIN(sram)+0x00002000;
 }

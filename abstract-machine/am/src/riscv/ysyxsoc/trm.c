@@ -18,8 +18,8 @@ Area heap = RANGE(&_heap_start, &_heap_end);
 static const char mainargs[] = MAINARGS;
 
 extern char _data_lma_start,_data_vma_start,_bss_start,_bss_end,_sram_origin,_flash_origin,_text_start,_rodata_end;
-extern char _main_start,
-extern char _main_address;
+extern char _main_start;
+extern char _bss_end;
 uint32_t number;
 
 void putch(char ch) {
@@ -54,7 +54,7 @@ void bootloader(){
   uint32_t src = (uint32_t)&_flash_origin;
   uint32_t dst = (uint32_t)&_sram_origin;
   uint32_t start = (uint32_t)&_text_start;
-  uint32_t end = (uint32_t)&_rodata_end;
+  uint32_t end = (uint32_t)&_bss_end;
   while(start < end){
     *(volatile uint32_t *)dst = *(volatile uint32_t *)src;
     dst += 4;
@@ -86,7 +86,8 @@ void _trm_init() {
 void _run_main(){
   asm volatile ("auipc	a0,0x0");
   asm volatile ("addi	a0,a0,88");
-  asm volatile ("jr %0" : :"r"(&_main_address));
+  uint32_t main_addr = (uint32_t)&main - (uint32_t)&_flash_origin+(uint32_t)&_sram_origin;
+  asm volatile ("jr %0" : :"r"(main_addr));
 
   int ret = main(mainargs);
   halt(ret);

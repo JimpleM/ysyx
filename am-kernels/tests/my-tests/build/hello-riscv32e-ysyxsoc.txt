@@ -3,52 +3,51 @@
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000114  30000000  30000000  00001000  2**2
+  0 .text         0000012c  30000000  30000000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .rodata       0000001c  30000114  30000114  00001114  2**2
+  1 .rodata       0000001c  3000012c  3000012c  0000112c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .srodata.mainargs 00000001  30000130  30000130  00001130  2**2
+  2 .srodata.mainargs 00000001  30000148  30000148  00001148  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .comment      0000002b  00000000  00000000  00001131  2**0
+  3 .comment      0000002b  00000000  00000000  00001149  2**0
                   CONTENTS, READONLY
-  4 .riscv.attributes 0000001a  00000000  00000000  0000115c  2**0
+  4 .riscv.attributes 0000001a  00000000  00000000  00001174  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 30000000 l    d  .text	00000000 .text
-30000114 l    d  .rodata	00000000 .rodata
-30000130 l    d  .srodata.mainargs	00000000 .srodata.mainargs
+3000012c l    d  .rodata	00000000 .rodata
+30000148 l    d  .srodata.mainargs	00000000 .srodata.mainargs
 00000000 l    d  .comment	00000000 .comment
 00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
 00000000 l    df *ABS*	00000000 start.o
 00000000 l    df *ABS*	00000000 hello.c
 00000000 l    df *ABS*	00000000 trm.c
-30000130 l     O .srodata.mainargs	00000001 mainargs
+30000148 l     O .srodata.mainargs	00000001 mainargs
 30000000 g       .text	00000000 _flash_origin
 30000080 g     F .text	00000060 _trm_init
-30000131 g       .srodata.mainargs	00000000 _data_lma_end
-800f0000 g       .srodata.mainargs	00000000 _stack_pointer
+30000149 g       .srodata.mainargs	00000000 _data_lma_end
+0f001e00 g       .srodata.mainargs	00000000 _stack_pointer
 0f000000 g       .text	00000000 _sram_origin
-30000114 g       .text	00000000 _etext
+3000012c g       .text	00000000 _etext
 0f000000 g       *ABS*	00000000 _pmem_start
-30000130 g       .rodata	00000000 _rodata_end
-80000000 g       .srodata.mainargs	00000000 _bss_start
-30000131 g       .srodata.mainargs	00000000 edata
+30000148 g       .rodata	00000000 _rodata_end
+0f000000 g       .srodata.mainargs	00000000 _bss_start
+30000149 g       .srodata.mainargs	00000000 edata
 30000000 g       .text	00000000 _text_start
-300000e0 g     F .text	00000034 _run_main
-80400000 g       .srodata.mainargs	00000000 _heap_end
+300000e0 g     F .text	0000004c _run_main
+0f002000 g       .srodata.mainargs	00000000 _heap_end
 30000068 g     F .text	00000018 putch
-80100000 g       .srodata.mainargs	00000000 _heap_start
-80010000 g       .srodata.mainargs	00000000 _stack_top
-800f0000 g       .srodata.mainargs	00000000 end
-30000114 g       .text	00000000 etext
+0f001e00 g       .srodata.mainargs	00000000 _heap_start
+0f001000 g       .srodata.mainargs	00000000 _stack_top
+0f001e00 g       .srodata.mainargs	00000000 end
+3000012c g       .text	00000000 etext
 30000000 g     F .text	00000000 _start
 00000000 g       *ABS*	00000000 _entry_offset
 30000018 g     F .text	00000050 main
 80000000 g       .srodata.mainargs	00000000 _data_vma_start
 30000018 g       .text	00000000 _main_start
-0f000018 g       *ABS*	00000000 _main_address
-800f0000 g       .srodata.mainargs	00000000 _end
-30000131 g       *ABS*	00000000 _data_lma_start
+0f001e00 g       .srodata.mainargs	00000000 _end
+30000149 g       *ABS*	00000000 _data_lma_start
 
 
 
@@ -56,8 +55,8 @@ Disassembly of section .text:
 
 30000000 <_start>:
 30000000:	00000413          	li	s0,0
-30000004:	500f0117          	auipc	sp,0x500f0
-30000008:	ffc10113          	addi	sp,sp,-4 # 800f0000 <_end>
+30000004:	df002117          	auipc	sp,0xdf002
+30000008:	dfc10113          	addi	sp,sp,-516 # f001e00 <_end>
 3000000c:	074000ef          	jal	ra,30000080 <_trm_init>
 30000010:	0d0000ef          	jal	ra,300000e0 <_run_main>
 30000014:	00100073          	ebreak
@@ -69,7 +68,7 @@ Disassembly of section .text:
 30000024:	00912023          	sw	s1,0(sp)
 30000028:	00a00413          	li	s0,10
 3000002c:	00000497          	auipc	s1,0x0
-30000030:	0e848493          	addi	s1,s1,232 # 30000114 <_etext>
+30000030:	10048493          	addi	s1,s1,256 # 3000012c <_etext>
 30000034:	04800513          	li	a0,72
 30000038:	00148493          	addi	s1,s1,1
 3000003c:	02c000ef          	jal	ra,30000068 <putch>
@@ -86,7 +85,7 @@ Disassembly of section .text:
 
 30000068 <putch>:
 30000068:	10000737          	lui	a4,0x10000
-3000006c:	00574783          	lbu	a5,5(a4) # 10000005 <_main_address+0xffffed>
+3000006c:	00574783          	lbu	a5,5(a4) # 10000005 <_heap_end+0xffe005>
 30000070:	0207f793          	andi	a5,a5,32
 30000074:	fe078ce3          	beqz	a5,3000006c <putch+0x4>
 30000078:	00a70023          	sb	a0,0(a4)
@@ -95,14 +94,14 @@ Disassembly of section .text:
 30000080 <_trm_init>:
 30000080:	100007b7          	lui	a5,0x10000
 30000084:	f8000713          	li	a4,-128
-30000088:	00e781a3          	sb	a4,3(a5) # 10000003 <_main_address+0xffffeb>
+30000088:	00e781a3          	sb	a4,3(a5) # 10000003 <_heap_end+0xffe003>
 3000008c:	00100713          	li	a4,1
 30000090:	00e78023          	sb	a4,0(a5)
 30000094:	000780a3          	sb	zero,1(a5)
 30000098:	00300713          	li	a4,3
 3000009c:	00e781a3          	sb	a4,3(a5)
 300000a0:	00000597          	auipc	a1,0x0
-300000a4:	09058593          	addi	a1,a1,144 # 30000130 <mainargs>
+300000a4:	0a858593          	addi	a1,a1,168 # 30000148 <mainargs>
 300000a8:	00000797          	auipc	a5,0x0
 300000ac:	f5878793          	addi	a5,a5,-168 # 30000000 <_start>
 300000b0:	00000697          	auipc	a3,0x0
@@ -122,13 +121,19 @@ Disassembly of section .text:
 300000e0:	ff410113          	addi	sp,sp,-12
 300000e4:	00112423          	sw	ra,8(sp)
 300000e8:	00000517          	auipc	a0,0x0
-300000ec:	05850513          	addi	a0,a0,88 # 30000140 <_data_lma_end+0xf>
-300000f0:	df000797          	auipc	a5,0xdf000
-300000f4:	f2878793          	addi	a5,a5,-216 # f000018 <_main_address>
-300000f8:	00078067          	jr	a5
-300000fc:	00000517          	auipc	a0,0x0
-30000100:	03450513          	addi	a0,a0,52 # 30000130 <mainargs>
-30000104:	f15ff0ef          	jal	ra,30000018 <main>
-30000108:	00050513          	mv	a0,a0
-3000010c:	00100073          	ebreak
-30000110:	0000006f          	j	30000110 <_run_main+0x30>
+300000ec:	05850513          	addi	a0,a0,88 # 30000140 <_etext+0x14>
+300000f0:	df000717          	auipc	a4,0xdf000
+300000f4:	f1070713          	addi	a4,a4,-240 # f000000 <_sram_origin>
+300000f8:	00000797          	auipc	a5,0x0
+300000fc:	f2078793          	addi	a5,a5,-224 # 30000018 <main>
+30000100:	00e787b3          	add	a5,a5,a4
+30000104:	00000717          	auipc	a4,0x0
+30000108:	efc70713          	addi	a4,a4,-260 # 30000000 <_start>
+3000010c:	40e787b3          	sub	a5,a5,a4
+30000110:	00078067          	jr	a5
+30000114:	00000517          	auipc	a0,0x0
+30000118:	03450513          	addi	a0,a0,52 # 30000148 <mainargs>
+3000011c:	efdff0ef          	jal	ra,30000018 <main>
+30000120:	00050513          	mv	a0,a0
+30000124:	00100073          	ebreak
+30000128:	0000006f          	j	30000128 <_run_main+0x48>

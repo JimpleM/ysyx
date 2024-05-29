@@ -8,7 +8,7 @@ static inline void outb(uintptr_t addr, uint8_t  data) { *(volatile uint8_t  *)a
 static inline void outw(uintptr_t addr, uint16_t data) { *(volatile uint16_t *)addr = data; }
 static inline void outl(uintptr_t addr, uint32_t data) { *(volatile uint32_t *)addr = data; }
 
-#define SIZE 4096
+#define SIZE 4*1024*1024
 int main(){
 
     // uint8_t temp = inb(0x80001115);
