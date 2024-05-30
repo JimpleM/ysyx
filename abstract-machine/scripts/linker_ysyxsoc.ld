@@ -13,14 +13,14 @@ SECTIONS {
     *(entry)
     *(.text._trm_init)
     *(.text.fsbl)
-    . = ALIGN(0x10);
+    . = ALIGN(8);
   } > flash
 
   _ssbl_origin = .;
   .ssbl : {
     _ssbl_ram_start = .;
     *(.text.ssbl)
-    . = ALIGN(0x10);
+    . = ALIGN(8);
     _ssbl_ram_end = .;
   } > psram AT> flash
 
@@ -28,7 +28,7 @@ SECTIONS {
   .text : {
     _text_ram_start = .;
     *(.text*)
-    . = ALIGN(0x10);
+    . = ALIGN(8);
   } > psram AT> flash
   etext = .;
   _etext = .;
@@ -36,21 +36,31 @@ SECTIONS {
   .rodata : {
     *(.rodata*)
     *(.srodata.mainargs)
-    . = ALIGN(0x10);
+    *(.srodata.CSWTCH.13)
+    . = ALIGN(8);
   } > psram AT> flash
 
   .data : {
-    . = ALIGN(0x10);
     *(.data)
+    *(.data._object_container)
+    *(.data.working_directory)
+    . = ALIGN(8);
     _data_ram_end = .;
   } > psram AT> flash
 
-  .sdata.haep : {
-    . = ALIGN(0x0F);
-    *(.sdata.heap)
-  } > psram AT> flash
   edata = .;
   _data = .;
+
+  .sdata : {
+    *(.sdata)
+    *(.sdata.p.0)
+    *(.sdata.heap)
+    *(.sdata._current_timezone)
+    *(.sdata._rt_thread_defunct)
+    *(.sdata._soft_timer_status)
+    . = ALIGN(8);
+    _sdata_ram_end = .;
+  } > psram AT> flash
 
   .bss : {
 	  _bss_start = .;
@@ -62,11 +72,11 @@ SECTIONS {
   } > psram AT> flash
 
 
-  _stack_top = ALIGN(0x10000);
-  . = _stack_top + 0x8000;
+  _stack_top = ALIGN(0x30000);
+  . = _stack_top + 0xF000;
   _stack_pointer = .;
   end = .;
   _end = .;
-  _heap_start = ALIGN(0x20000);
-  _heap_end = _heap_start  + 0x8000;
+  _heap_start = ALIGN(0x40000);
+  _heap_end = _heap_start  + 0xF000;
 }

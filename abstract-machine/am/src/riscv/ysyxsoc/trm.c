@@ -19,8 +19,8 @@ static const char mainargs[] = MAINARGS;
 
 
 extern char _ssbl_origin,_ssbl_ram_start,_ssbl_ram_end;
-extern char _test_origin,_text_ram_start,_data_ram_end;
-extern char _bss_end;
+extern char _test_origin,_text_ram_start,_sdata_ram_end;
+extern char _bss_start,_bss_end;
 uint32_t number;
 
 void putch(char ch) {
@@ -58,15 +58,6 @@ void read_csr(){
   // printf("%d\n",number);
 }
 
-void boot_memcpy(uint32_t rom_start, uint32_t ram_start, uint32_t ram_end){
-  volatile uint32_t *src = (volatile uint32_t *)&rom_start;
-  volatile uint32_t *dst = (volatile uint32_t *)&ram_start;
-  while((uint32_t) dst < (uint32_t) ram_end){
-    *dst++ = *src++;
-  }
-}
-// #pragma GCC push_options
-// #pragma GCC optimize("O0")
 void fsbl(){
   // boot_memcpy((uint32_t)&_ssbl_origin,(uint32_t)&_ssbl_ram_start,(uint32_t)&_ssbl_ram_end);
   volatile uint32_t *src = (volatile uint32_t *)&_ssbl_origin;
@@ -80,31 +71,24 @@ void ssbl(){
   // boot_memcpy((uint32_t)&_test_origin,(uint32_t)&_text_ram_start,(uint32_t)&_data_ram_end);
   volatile uint32_t *src = (volatile uint32_t *)&_test_origin;
   volatile uint32_t *dst = (volatile uint32_t *)&_text_ram_start;
-  while((uint32_t) dst < (uint32_t) &_bss_end){
+  while((uint32_t) dst < (uint32_t) &_sdata_ram_end){
     *dst++ = *src++;
+  }
+}
+void bss_init(){
+  volatile uint32_t *src = (volatile uint32_t *)&_bss_start;
+  while((uint32_t) src < (uint32_t) &_bss_end){
+    *src++ = 0;
   }
 }
 
 void _trm_init() {
   fsbl();
   ssbl();
+  bss_init();
   
   uart_init();
-  // putch('f');
-  // putch('\n');
   // read_csr();
   int ret = main(mainargs);
   halt(ret);
-}
-
-void _run_main(){
-  asm volatile ("auipc	a0,0x0");
-  asm volatile ("addi	a0,a0,88");
-  // uint32_t main_addr = (uint32_t)&main - (uint32_t)&_flash_origin+(uint32_t)&_psram_origin;
-  uint32_t main_addr = (uint32_t)&main;
-
-  asm volatile ("jalr x0,0(%0)" : :"r"(main_addr));
-  // no reach here
-  // int ret = main(mainargs);
-  // halt(ret);
 }
