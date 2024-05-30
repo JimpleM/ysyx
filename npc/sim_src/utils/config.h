@@ -4,19 +4,21 @@
 
 // MROM address
 #define PMEM_LEFT  0x30000000
-#define PMEM_RIGHT 0x3fffffff
-#define PMEM_SIZE   PMEM_RIGHT-PMEM_LEFT+1
+#define PMEM_SIZE  0x10000000
+#define PMEM_RIGHT PMEM_LEFT + PMEM_SIZE -1
+
 
 
 // flash address
 #define FLASH_LEFT  0x30000000
-#define FLASH_RIGHT 0x3fffffff
-#define FLASH_SIZE   FLASH_RIGHT-FLASH_LEFT+1
+#define FLASH_SIZE  0x10000000
+#define FLASH_RIGHT FLASH_LEFT+FLASH_SIZE-1
 
 // flash address
 #define PSRAM_LEFT  0x80000000
-#define PSRAM_RIGHT 0x8fffffff
-#define PSRAM_SIZE   PSRAM_RIGHT-PSRAM_LEFT+1
+#define PSRAM_SIZE  0x10000000
+#define PSRAM_RIGHT PSRAM_LEFT+PSRAM_SIZE-1
+
 
 // #define CONFIG_MTRACE_START_ADDR    0x80000000
 // #define CONFIG_MTRACE_END_ADDR      0x8fffffff
@@ -33,8 +35,8 @@
 // #define CONFIG_WAVE
 
 #ifdef CONFIG_WAVE
-    #define CONFIG_WAVE_PC_BEGIN    0x80013664
-    #define CONFIG_WAVE_PC_END      0x80016188
+    #define CONFIG_WAVE_PC_BEGIN    0x80013624
+    #define CONFIG_WAVE_PC_END      0x8FFFFFFF
 #endif
 
 #endif

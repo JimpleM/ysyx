@@ -19,7 +19,7 @@ static const char mainargs[] = MAINARGS;
 
 
 extern char _ssbl_origin,_ssbl_ram_start,_ssbl_ram_end;
-extern char _test_origin,_text_ram_start,_sdata_ram_end;
+extern char _test_origin,_text_ram_start,_data_ram_end;
 extern char _bss_start,_bss_end;
 uint32_t number;
 
@@ -50,7 +50,8 @@ void uart_init(){
   outb(SERIAL_PORT+1,0x00);
   outb(SERIAL_PORT+3,0x03); // 重新设置LCR
 }
-
+#pragma GCC push_options
+#pragma GCC optimize("O0")
 void read_csr(){
   asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF11));
   // print_char(number);
@@ -71,7 +72,7 @@ void ssbl(){
   // boot_memcpy((uint32_t)&_test_origin,(uint32_t)&_text_ram_start,(uint32_t)&_data_ram_end);
   volatile uint32_t *src = (volatile uint32_t *)&_test_origin;
   volatile uint32_t *dst = (volatile uint32_t *)&_text_ram_start;
-  while((uint32_t) dst < (uint32_t) &_sdata_ram_end){
+  while((uint32_t) dst < (uint32_t) &_data_ram_end){
     *dst++ = *src++;
   }
 }
@@ -86,8 +87,10 @@ void _trm_init() {
   fsbl();
   ssbl();
   bss_init();
-  
+
   uart_init();
+  putch('f');
+  putch('\n');
   // read_csr();
   int ret = main(mainargs);
   halt(ret);

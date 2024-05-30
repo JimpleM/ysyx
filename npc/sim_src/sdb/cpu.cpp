@@ -25,7 +25,7 @@ NPCState npc_state = { .state = NPC_STOP };
 CPU_state cpu = {};
 extern uint32_t *cpu_gpr;
 static bool g_print_step = false;
-
+uint32_t pc_cnt=0;
 #ifdef CONFIG_WAVE
 static bool wave_flag = false;
 #endif
@@ -138,7 +138,18 @@ static void execute(uint64_t n) {
       exec_once();
       if(cpu_lpc != cpu_pc){
         trace_and_difftest();
+        #ifdef CONFIG_FTRACE
+          ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
+        #endif
         // printf("%8x\n",cpu_pc);
+        pc_cnt = 0;
+      }else{
+        pc_cnt = pc_cnt + 1;
+        if(pc_cnt >20000){
+          printf("%8x repeats %d times,stop!\n",cpu_pc,pc_cnt);
+          npc_state.halt_pc = cpu_pc;
+          npc_state.state = NPC_ABORT;
+        }
       }
       
       cpu_lpc  = cpu_pc;
@@ -150,9 +161,7 @@ static void execute(uint64_t n) {
       } 
 
       if (npc_state.state != NPC_RUNNING) break;
-      #ifdef CONFIG_FTRACE
-        ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
-      #endif
+
 
     
   }

@@ -20,6 +20,7 @@ VerilatedVcdC* tfp = NULL;
 extern uint8_t pmem [PMEM_SIZE];
 
 extern uint8_t flash_mem [FLASH_SIZE];
+extern uint8_t psram_mem [PSRAM_SIZE];
 
 static long load_img() {
   Assert(img_file != NULL, "No img file!");
@@ -101,12 +102,25 @@ void finish_sim(){
 	  tfp->close();
 	  delete contextp;
 }
+void init_mem() {
+
+  int i;
+  uint32_t *s = (uint32_t *)psram_mem;
+  for (i = 0; i < (int) (PSRAM_SIZE / sizeof(s[0])); i ++) {
+    s[i] = 0;
+  }
+  uint32_t *q = (uint32_t *)flash_mem;
+  for (i = 0; i < (int) (FLASH_SIZE / sizeof(q[0])); i ++) {
+    q[i] = 0;
+  }
+}
 
 void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
+    // init_mem();
 
     long img_size = load_img();
-    // init_flash();
+
     init_difftest(diff_so_file, img_size, difftest_port);
 
 	  init_sdb();

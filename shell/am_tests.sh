@@ -1,2 +1,2 @@
 cd ../am-kernels/tests/am-tests/
-make ARCH="riscv32e-ysyxsoc"  mainargs="$1" run 
+make ARCH="$1"  mainargs="$2" run 
