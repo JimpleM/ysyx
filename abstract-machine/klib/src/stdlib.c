@@ -36,12 +36,14 @@ void *malloc(size_t size) {
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
   
+#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   if(memory_flag){
     memory_heep = heap.start;
     memory_flag = 0;
-  }
+  }else{
     memory_heep += size;
     return memory_heep-size;
+  }
   // if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
   //   assert(0);
   //   return NULL;
@@ -49,7 +51,7 @@ void *malloc(size_t size) {
   // void *ptr = (void *)memory_heep;
   // memory_heep += size;
   // return ptr;
-#if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
+
 #endif
   return NULL;
 }
