@@ -18,7 +18,7 @@ LDFLAGS   += --gc-sections -e _start
 # SOCFLAGS += --batch
 SOCFLAGS += --elf $(IMAGE).elf
 SOCFLAGS += --img $(IMAGE).bin
-SOCFLAGS += --diff ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
+SOCFLAGS += --diff ${NEMU_HOME},,/nemu_soc/build/riscv32-nemu-interpreter-so
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -h -t -d $(IMAGE).elf > $(IMAGE).txt

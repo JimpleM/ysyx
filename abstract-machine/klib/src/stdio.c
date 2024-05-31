@@ -8,6 +8,7 @@
 #define ul unsigned long long
 #define uint unsigned int
 #define strcat_out(a,b) *a = '\0';strcat(a,b);a += strlen(b);
+static char str_temp[1024];
 
 ul my_pow(int a,int b){
   ul ans = a;
@@ -131,7 +132,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char *out_t;
   out_t = out;
 
-  char str_temp[1024];
+  // char str_temp[1024];
   // unsigned long num_temp;
 
   char* ArgStr = NULL;      // 接收字符型

@@ -1,24 +1,15 @@
 VERILATOR = verilator
 # project source
-VSRCS += $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
-VSRCS += $(shell find $(abspath $(YSYXSOC_HOME)/perip) -name "*.v" )
-VSRCS += $(YSYXSOC_HOME)/build/ysyxSoCFull.v
-
+VSRCS = $(shell find $(abspath $(NPC_HOME)/vsrc) -name "*.v" )
 SIM_SRCS := $(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
 # INC_PATH :=$(shell find $(abspath $(NPC_HOME)/sim_src) -name "*.h")
-VERILATOR_INC_PATH += -I$(NPC_HOME)/vsrc
-VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/uart16550/rtl
-VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/spi/rtl
+VERILATOR_INC_PATH = -I$(NPC_HOME)/vsrc
 
-TOPNAME = ysyxSoCFull
+TOPNAME = ysyx_23060077_top
 
 VERILATOR_FLAGS += --trace --cc --exe --build 
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
-VERILATOR_FLAGS += --no-timing
-VERILATOR_FLAGS += --timescale "1ns/1ns"
-VERILATOR_FLAGS += --autoflush
-# VERILATOR_FLAGS += --threads 10
 
 LDFLAGS += -lSDL2
 LDFLAGS += -ldl 
@@ -40,9 +31,9 @@ CFLAGS += $(LLVM_FLAGS)
 
 DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
-IMGS ?= ../test/char-test.bin
+IMGS ?= ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
 IMG = --img=${IMGS}
-ELFFILE = ../test/char-test.elf
+ELFFILE = ../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf
 ELF = --elf=${ELFFILE}
 
 override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch
@@ -50,16 +41,12 @@ override ARGS ?= ${DIFF} ${IMG} ${ELF} $(IMG) #--batch
 all:defualt
 #	@echo "Write this Makefile by your self."
 
-run:
+sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	$(VERILATOR) ${VERILATOR_FLAGS} $(VSRCS) $(SIM_SRCS)  \
 	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
-	./obj_dir/V${TOPNAME} ${ARGS} --batch
 
-gdb:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	$(VERILATOR) ${VERILATOR_FLAGS} --gdb $(VSRCS) $(SIM_SRCS)  \
-	$(addprefix -CFLAGS , $(CFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS))
+run:sim
 	./obj_dir/V${TOPNAME} ${ARGS} --batch
 
 wave:

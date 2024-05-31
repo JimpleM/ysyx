@@ -22,36 +22,17 @@
 static uint8_t *pmem = NULL;
 #else // CONFIG_PMEM_GARRAY
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
-static uint8_t psram[PSRAM_SIZE] PG_ALIGN = {};
-static uint8_t sram[SRAM_SIZE] PG_ALIGN = {};
 #endif
 
-uint8_t* guest_to_host(paddr_t paddr){
-	if(SRAM_LEFT <= paddr && paddr <= SRAM_RIGHT){
-		return pmem + paddr + SRAM_MBASE;	
-	}
-  else if(FLASH_LEFT <= paddr && paddr <= FLASH_RIGHT){
-		return pmem + paddr - FLASH_MBASE;
-	}
-  else if(PSRAM_LEFT <= paddr && paddr <= PSRAM_RIGHT){
-		return psram + paddr - PSRAM_MBASE;
-	}
-  // else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
-	// 	return pmem + paddr - MROM_MBASE;
-	// }
-  else{
-		panic("address = " FMT_PADDR " is out of bound", paddr);
-		return pmem + paddr - CONFIG_MBASE; 
-	}
-}
+uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
   #ifdef CONFIG_MTRACE
-  // if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
-  //   printf("read address:%08x data:%08x\n",addr,ret);
-  // } 
+  if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
+    printf("read address:%08x data:%08x\n",addr,ret);
+  } 
 #endif
   return ret;
 }
@@ -78,19 +59,8 @@ void init_mem() {
 #ifdef CONFIG_MEM_RANDOM
   uint32_t *p = (uint32_t *)pmem;
   int i;
-  // for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
-  //   p[i] = rand();
-  // }
   for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
-    p[i] = 0;
-  }
-  uint32_t *s = (uint32_t *)psram;
-  for (i = 0; i < (int) (PSRAM_SIZE / sizeof(s[0])); i ++) {
-    s[i] = 0;
-  }
-  uint32_t *q = (uint32_t *)sram;
-  for (i = 0; i < (int) (SRAM_SIZE / sizeof(q[0])); i ++) {
-    q[i] = 0;
+    p[i] = rand();
   }
 #endif
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);

@@ -5,6 +5,7 @@
 #include "trace.h"
 
 #include "device_lib.h"
+#include "pmem.h"
 
 #include <getopt.h>
 
@@ -14,13 +15,10 @@ static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 VerilatedContext* contextp = NULL;
-VysyxSoCFull* top = NULL;
+Vysyx_23060077_top* top = NULL;
 VerilatedVcdC* tfp = NULL;
 
 extern uint8_t pmem [PMEM_SIZE];
-
-extern uint8_t flash_mem [FLASH_SIZE];
-extern uint8_t psram_mem [PSRAM_SIZE];
 
 static long load_img() {
   Assert(img_file != NULL, "No img file!");
@@ -40,10 +38,6 @@ static long load_img() {
 
   fseek(fp, 0, SEEK_SET);
   int ret = fread(pmem, size, 1, fp);
-  assert(ret == 1);
-
-  fseek(fp, 0, SEEK_SET);
-  ret = fread(flash_mem, size, 1, fp);
   assert(ret == 1);
 
   fclose(fp);
@@ -80,7 +74,7 @@ static int parse_args(int argc, char *argv[]) {
 void init_sim(){
     contextp = new VerilatedContext;
     // contextp->commandArgs(argc, argv);
-    top = new VysyxSoCFull(contextp);
+    top = new Vysyx_23060077_top(contextp);
 
     tfp = new VerilatedVcdC;
     contextp->traceEverOn(true);
@@ -88,36 +82,19 @@ void init_sim(){
     tfp->open("wave.vcd");
 
 }
-void init_flash(){
-  uint32_t *mem32 = (uint32_t *)flash_mem;
-  mem32[0] = 0x100007b7;
-  mem32[1] = 0x04100713;
-  mem32[2] = 0x00e78023;
-  mem32[3] = 0x00000513;
-  mem32[4] = 0x00100073;
-}
 
 void finish_sim(){
   	delete top;
 	  tfp->close();
 	  delete contextp;
 }
-void init_mem() {
 
-  int i;
-  uint32_t *s = (uint32_t *)psram_mem;
-  for (i = 0; i < (int) (PSRAM_SIZE / sizeof(s[0])); i ++) {
-    s[i] = 0;
-  }
-  uint32_t *q = (uint32_t *)flash_mem;
-  for (i = 0; i < (int) (FLASH_SIZE / sizeof(q[0])); i ++) {
-    q[i] = 0;
-  }
-}
+
 
 void init_npc(int argc, char *argv[]) {
     parse_args(argc, argv);
-    // init_mem();
+
+    init_mem();
 
     long img_size = load_img();
 

@@ -136,14 +136,7 @@ void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst){
 		if(npc == func_trace[i].symbol.st_value){
 			print_space(pc,output_cnt);
 			printf("call [%s@0x%8x]\n",func_trace[i].str,npc);
-			if(inst == 0x00008067){
-				print_space(pc,output_cnt);
-				printf("ret  [%s]\n",func_trace[i].str);
-			}else if((inst &0x00000F80) == 0){
-				return ;
-			}else{
-				output_cnt++;
-			}
+			output_cnt++;
 			return ;
 		}
 	}
