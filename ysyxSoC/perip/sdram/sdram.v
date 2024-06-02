@@ -47,6 +47,20 @@ reg  [8:0]  Row_Address;
 reg  [1:0] dqm_buf1,dqm_buf2,dqm_buf3;
 
 
+reg [3:0] r_counter;
+reg [3:0] w_counter;
+reg read_flag;
+reg [8:0] R_Address;
+reg [8:0] W_Address;
+reg [15:0] W_data;
+wire [23:0] r_sdram_address = {L_Bank,Line_Address,R_Address};
+wire [23:0] w_sdram_address = {L_Bank,Line_Address,W_Address};
+wire [3:0] Length = (Brust_Length == 3'b011) ? 4'd8 :
+                    (Brust_Length == 3'b010) ? 4'd4 :
+                    (Brust_Length == 3'b001) ? 4'd2 :4'd1;
+
+assign dout_en =  read_flag ? 16'hffff : 16'd0;
+
 always @(posedge clk or posedge cke) begin
   if(!cke)begin
     Line_Address  <= 'd0;
@@ -96,19 +110,6 @@ always @(posedge clk or posedge cke) begin
 end
 
 
-reg [3:0] r_counter;
-reg [3:0] w_counter;
-reg read_flag;
-reg [8:0] R_Address;
-reg [8:0] W_Address;
-reg [15:0] W_data;
-wire [23:0] r_sdram_address = {L_Bank,Line_Address,R_Address};
-wire [23:0] w_sdram_address = {L_Bank,Line_Address,W_Address};
-wire [3:0] Length = (Brust_Length == 3'b011) ? 4'd8 :
-                    (Brust_Length == 3'b010) ? 4'd4 :
-                    (Brust_Length == 3'b001) ? 4'd2 :4'd1;
-
-assign dout_en =  read_flag ? 16'hffff : 16'd0;
 always @(posedge clk or posedge cke) begin
   if(!cke)begin
     r_counter <= 'd0;

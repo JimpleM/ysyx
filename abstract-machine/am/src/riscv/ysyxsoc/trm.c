@@ -13,7 +13,7 @@ extern char _pmem_start;
 
 Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
-#define MAINARGS "test"
+#define MAINARGS ""
 #endif
 static const char mainargs[] = MAINARGS;
 
@@ -58,7 +58,8 @@ void read_csr(){
   asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
   // printf("%d\n",number);
 }
-
+void ssbl();
+void device_init();
 void fsbl(){
   // boot_memcpy((uint32_t)&_ssbl_origin,(uint32_t)&_ssbl_ram_start,(uint32_t)&_ssbl_ram_end);
   volatile uint32_t *src = (volatile uint32_t *)&_ssbl_origin;
@@ -66,32 +67,31 @@ void fsbl(){
   while((uint32_t) dst < (uint32_t) &_ssbl_ram_end){
     *dst++ = *src++;
   }
-  
+  ssbl();
 }
 void ssbl(){
-  // boot_memcpy((uint32_t)&_test_origin,(uint32_t)&_text_ram_start,(uint32_t)&_data_ram_end);
+  // copy text rodata data 
   volatile uint32_t *src = (volatile uint32_t *)&_test_origin;
   volatile uint32_t *dst = (volatile uint32_t *)&_text_ram_start;
   while((uint32_t) dst < (uint32_t) &_data_ram_end){
     *dst++ = *src++;
   }
-}
-void bss_init(){
-  volatile uint32_t *src = (volatile uint32_t *)&_bss_start;
+  // init_bss
+  src = (volatile uint32_t *)&_bss_start;
   while((uint32_t) src < (uint32_t) &_bss_end){
     *src++ = 0;
   }
+  device_init();
 }
 
-void _trm_init() {
-  fsbl();
-  ssbl();
-  bss_init();
-
+void device_init(){
   uart_init();
   putch('f');
   putch('\n');
   // read_csr();
   int ret = main(mainargs);
   halt(ret);
+}
+void _trm_init() {
+  fsbl();
 }

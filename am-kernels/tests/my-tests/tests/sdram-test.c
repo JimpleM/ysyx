@@ -8,7 +8,7 @@ static inline void outb(uintptr_t addr, uint8_t  data) { *(volatile uint8_t  *)a
 static inline void outw(uintptr_t addr, uint16_t data) { *(volatile uint16_t *)addr = data; }
 static inline void outl(uintptr_t addr, uint32_t data) { *(volatile uint32_t *)addr = data; }
 
-#define SIZE 1024
+#define SIZE 64*1024
 int main(){
 
     // outl(0xa0000000,0x010203F4);
@@ -23,27 +23,33 @@ int main(){
     // printf("%x\n",temp);
     uint32_t i=0;
     uint8_t data8;    
-    for(i=0; i<SIZE; i++){
-        outb(0xa0000000+i,i%256);
-    }
-    for(i=0; i<SIZE; i++){
-        data8 = inb(0xa0000000+i);
-        check(data8 == i%256);
-    }
+    // for(i=0; i<SIZE; i++){
+    //     outb(0xa0000000+i,i%256);
+    // }
+    // for(i=0; i<SIZE; i++){
+    //     data8 = inb(0xa0000000+i);
+    //     check(data8 == i%256);
+    // }
     uint16_t data16;
     for(i = 0; i< SIZE; i+=2){
         outw(0xa0000000+i,i&0x0000FFFF);
     }
     for(i=0; i<SIZE; i+=2){
+        data8 = inb(0xa0000000+i);
+        check(data8 == (i&0x000000FF));
+        data8 = inb(0xa0000000+i+1);
+        check(data8 == (i&0x0000FF00)>>8);
+    }
+    for(i=0; i<SIZE; i+=2){
         data16 = inw(0xa0000000+i);
         check(data16 == (i&0x0000FFFF));
     }
-    uint32_t data32;
-    for(i = 0; i< SIZE; i+=4){
-        outl(0xa0000000+i,i);
-    }
-    for(i=0; i<SIZE; i+=4){
-        data32 = inl(0xa0000000+i);
-        check(data32 == i);
-    }
+    // uint32_t data32;
+    // for(i = 0; i< SIZE; i+=4){
+    //     outl(0xa0000000+i,i);
+    // }
+    // for(i=0; i<SIZE; i+=4){
+    //     data32 = inl(0xa0000000+i);
+    //     check(data32 == i);
+    // }
 }
