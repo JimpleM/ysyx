@@ -24,7 +24,7 @@ uint32_t device_read(uint32_t addr){
     }else if(addr == KBD_ADDR){    
         return keyboard_read();
     }else if(addr == VGACTL_ADDR){
-        return mmio_read(addr,4);
+        // return mmio_read(addr,4);
     }else{
         // Assert(0,"no device addr %8x",addr);
         printf("read addr %8x\n",addr);
@@ -39,7 +39,7 @@ void device_write(uint32_t addr, uint32_t data){
         }else if(addr == SYNC_ADDR){
             vga_update_screen(data);
         }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR){
-            mmio_write(addr,4,data);
+            // mmio_write(addr,4,data);
             // printf("mmio addr %x data %x\n",addr,data);
         }
         else if(addr != 0){
