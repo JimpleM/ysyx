@@ -8,6 +8,7 @@
 #define MMIO_BASE 0xE0000000
 
 #define SERIAL_PORT         0x10000000
+#define CLINT_PORT          0x02000000
 
 #define KBD_ADDR        (DEVICE_BASE + 0x0000060)
 #define RTC_ADDR        (DEVICE_BASE + 0x0000048)
