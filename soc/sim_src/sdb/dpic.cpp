@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "pmem.h"
 #include "device_lib.h"
-
+#include "difftest.h"
 // #include "VysyxSoCFull__Dpi.h"
 #include "verilated_dpi.h"
 
@@ -26,7 +26,18 @@ extern VysyxSoCFull* top;
 
 uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
 uint8_t psram_mem[PSRAM_SIZE] PG_ALIGN = {};
-
+// 只检测读的数据，写的数据比较麻烦
+extern "C" void sdram_check(uint32_t addr, uint32_t data,uint32_t len) {
+	#ifdef CONFIG_DIFFTEST
+	if(addr >= 0xa0000000 && addr <= 0xb0000000){
+		// printf("addr=%08x,paddr=%08x\n",addr,data);
+		uint32_t size = (len == 0) ? 1 : (len == 1) ? 2:4;
+		difftest_memcpy_dut(addr, &data,size);
+	}
+	#endif
+	npc_state.state = NPC_ABORT;
+	npc_state.halt_pc = cpu_pc;
+}
 
 extern "C" void psram_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0 && addr <= PSRAM_SIZE){

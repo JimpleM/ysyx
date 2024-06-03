@@ -83,6 +83,9 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   package_cpu(PMEM_LEFT);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
+void difftest_memcpy_dut(paddr_t addr, void *buf, size_t n) {
+  ref_difftest_memcpy(addr, buf, n, DIFFTEST_TO_DUT);
+}
 
 bool checkregs() {
     CPU_state ref;

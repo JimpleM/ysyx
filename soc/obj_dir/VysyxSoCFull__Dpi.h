@@ -28,6 +28,8 @@ extern "C" {
     extern void psram_read(int addr, int* data);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/ysyxSoC/perip/psram/psram.v:112:30
     extern void psram_write(int addr, int data, int mask);
+    // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/soc/vsrc/ysyx_23060077_lsu.v:141:30
+    extern void sdram_check(int addr, int data, int len);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/soc/vsrc/ysyx_23060077_axi.v:175:30
     extern void set_axi_resp(int b_resp, int r_resp);
     // DPI import at /home/jimple/Documents/ysyx/ysyx-workbench/soc/vsrc/ysyx_23060077_csr.v:31:30

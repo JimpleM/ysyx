@@ -9,6 +9,7 @@
 #define uint unsigned int
 #define strcat_out(a,b) *a = '\0';strcat(a,b);a += strlen(b);
 static char str_temp[1024];
+static char str_printf[1024];
 
 ul my_pow(int a,int b){
   ul ans = a;
@@ -111,26 +112,24 @@ int debug_printf(const char *fmt, ...) {
   return 0;
 }
 
-int printf(const char *fmt, ...) {
-  assert(fmt != NULL);
-  char str[1024];
+int printf(const char *format, ...) {
+  assert(format != NULL);
   va_list args;
-  va_start(args,fmt);
+  va_start(args,format);
 
-  int count = vsprintf(str,fmt,args);
+  int count = vsprintf(str_printf,format,args);
   for(int i=0; i<count; i++){
-    putch(str[i]);
+    putch(str_printf[i]);
   }
   va_end(args);
   
   return count;
 }
 
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  assert(fmt != NULL);
+int vsprintf(char *str, const char *format, va_list ap) {
+  assert(format != NULL);
 
-  char *out_t;
-  out_t = out;
+  char *str_t = str;
 
   // char str_temp[1024];
   // unsigned long num_temp;
@@ -147,39 +146,39 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   int num_before_dig = 0;
   int num_after_dig = 0;
 
-  while(*fmt != '\0'){
-    if(*fmt == '%'){
-      fmt++;
-      if(*fmt == '%'){
-        *out_t++ = '%';
-        fmt++;
+  while(*format != '\0'){
+    if(*format == '%'){
+      format++;
+      if(*format == '%'){
+        *str_t++ = '%';
+        format++;
         continue;
       }
 
-      if(*fmt == '-' || *fmt == '+' || *fmt == ' '){
-        Sign = *fmt;
-        fmt++;
+      if(*format == '-' || *format == '+' || *format == ' '){
+        Sign = *format;
+        format++;
       }
 
       fill_char = ' ';
-      if(*fmt == '0'){
-        fill_char = *fmt;
-        fmt++;
+      if(*format == '0'){
+        fill_char = *format;
+        format++;
       }
 
-      fmt = parse_number(fmt,&num_before_dig);
-      if(*fmt == '.'){
-        fmt++;
-        fmt = parse_number(fmt,&num_after_dig);
+      format = parse_number(format,&num_before_dig);
+      if(*format == '.'){
+        format++;
+        format = parse_number(format,&num_after_dig);
       }
 
-      if(*fmt == 's'){
+      if(*format == 's'){
         ArgStr = va_arg(ap, char*);
-        strcat_out(out_t,ArgStr);
-      }else if(*fmt == 'c'){
+        strcat_out(str_t,ArgStr);
+      }else if(*format == 'c'){
         ArgInt = va_arg(ap, int);
-        *out_t++ = ArgInt;
-      }else if(*fmt == 'd'){
+        *str_t++ = ArgInt;
+      }else if(*format == 'd'){
         ArgInt = va_arg(ap, int);
         ArgStr = str_temp;
 
@@ -195,27 +194,27 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           Sign = '\0';
         }
         number_to_str(ArgStr,ArgUInt,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
+        str_t = insert_space(str_t,num_before_dig-strlen(str_temp),fill_char);
        
-        strcat_out(out_t,str_temp);
+        strcat_out(str_t,str_temp);
       }
-      else if(*fmt == 'u'){
+      else if(*format == 'u'){
         ArgUInt = va_arg(ap, unsigned int);
         number_to_str(str_temp,(ul)ArgUInt,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
-        strcat_out(out_t,str_temp);
-      }else if(*fmt == 'x'){
+        str_t = insert_space(str_t,num_before_dig-strlen(str_temp),fill_char);
+        strcat_out(str_t,str_temp);
+      }else if(*format == 'x'){
         ArgHex = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgHex,16);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
-        strcat_out(out_t,str_temp);
-      }else if(*fmt == 'l' && *(fmt+1) == 'd'){
-        fmt++;
+        str_t = insert_space(str_t,num_before_dig-strlen(str_temp),fill_char);
+        strcat_out(str_t,str_temp);
+      }else if(*format == 'l' && *(format+1) == 'd'){
+        format++;
         ArgLong = va_arg(ap, unsigned long);
         number_to_str(str_temp,(ul)ArgLong,10);
-        out_t = insert_space(out_t,num_before_dig-strlen(str_temp),fill_char);
-        strcat_out(out_t,str_temp);
-      }else if(*fmt == 'f'){
+        str_t = insert_space(str_t,num_before_dig-strlen(str_temp),fill_char);
+        strcat_out(str_t,str_temp);
+      }else if(*format == 'f'){
         // ArgFloat = va_arg(ap, double);
         // ArgStr = str_temp;
         
@@ -235,40 +234,39 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         // num_temp = num_after_dig == 0 ? (ArgFloat + 1e-6)* 1000000 : ArgFloat*(my_pow(10,num_after_dig))+0.5;
         // ArgStr = number_to_str(ArgStr,(ul)num_temp,10);
 
-        // out_t = insert_space(out_t,num_before_dig-strlen(str_temp));
-        // strcat_out(out_t,str_temp);
+        // str_t = insert_space(str_t,num_before_dig-strlen(str_temp));
+        // strcat_out(str_t,str_temp);
       }
 
       num_before_dig = 0;
       num_after_dig = 0;
     }else{
-      *out_t++ = *fmt;
+      *str_t++ = *format;
     }
-    fmt++;
+    format++;
   }
   
-  *out_t++ = '\0';
-  return out_t-out;
+  *str_t++ = '\0';
+  return str_t-str;
 }
 
-
-int sprintf(char *out, const char *fmt, ...) {
-  assert(fmt != NULL);
+int sprintf(char *str, const char *format, ...){
+  assert(format != NULL);
 
   va_list args;
-  va_start(args,fmt);
+  va_start(args,format);
 
-  int count = vsprintf(out,fmt,args);
+  int count = vsprintf(str,format,args);
 
   va_end(args);
   return count;
 }
 
-int snprintf(char *out, size_t n, const char *fmt, ...) {
+int snprintf(char *str, size_t size, const char *format, ...) {
   panic("Not implemented");
 }
 
-int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
+int vsnprintf(char *str, size_t size, const char *format, va_list ap) {
   panic("Not implemented");
 }
 

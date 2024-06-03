@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #define DEVICE_BASE 0x10000000
-#define MMIO_BASE 0xa0000000
+#define MMIO_BASE 0xE0000000
 
 #define SERIAL_PORT         0x10000000
 

@@ -1,2 +1,2 @@
 cd ../am-kernels/benchmarks/coremark/
-make ARCH="riscv32e-ysyxsoc" run
+make ARCH="$1" run

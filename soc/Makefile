@@ -38,7 +38,7 @@ LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflag
 CFLAGS += $(LLVM_FLAGS) 
 
 
-DIFFTEST = ${NEMU_HOME}/build/riscv32-nemu-interpreter-so
+DIFFTEST = ${NEMU_SOC_HOME}/nemu_soc/build/riscv32-nemu-interpreter-so
 DIFF := --diff=${DIFFTEST}
 IMGS ?= ../test/char-test.bin
 IMG = --img=${IMGS}

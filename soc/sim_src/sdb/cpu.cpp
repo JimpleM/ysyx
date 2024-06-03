@@ -24,7 +24,8 @@ NPCState npc_state = { .state = NPC_STOP };
 
 CPU_state cpu = {};
 extern uint32_t *cpu_gpr;
-static bool g_print_step = false;
+// static bool g_print_step = false;
+static bool itrace_print = false;
 uint32_t pc_cnt=0;
 #ifdef CONFIG_WAVE
 static bool wave_flag = false;
@@ -90,10 +91,10 @@ void assert_fail_msg() {
 }
 extern uint32_t device_flag;
 static void trace_and_difftest() {
-#ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
-#endif
-  if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(cpu_pc)); }
+// #ifdef CONFIG_ITRACE_COND
+//   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+// #endif
+//   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(cpu_pc)); }
 #ifdef CONFIG_DIFFTEST
   if(device_flag){
     difftest_skip_ref();
@@ -130,10 +131,9 @@ static void execute(uint64_t n) {
 
         //反汇编结果
       #ifdef CONFIG_ITRACE
-        disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
-        printf("%08x   %08x %s\n",cpu_pc,cpu_inst,p);
-      #else
-        p[0] = '\0'; // the upstream llvm does not support loongarch32r
+        if(cpu_pc == CONFIG_ITRACE_PC_BEGIN){
+          itrace_print = true;
+        }
       #endif
       exec_once();
       if(cpu_lpc != cpu_pc){
@@ -141,12 +141,24 @@ static void execute(uint64_t n) {
         #ifdef CONFIG_FTRACE
           ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
         #endif
+        #ifdef CONFIG_ITRACE
+          if(itrace_print){
+            disassemble(p, sizeof(p),cpu_pc, (uint8_t *)&cpu_inst, 4);
+            printf("%08x   %08x %s\n",cpu_pc,cpu_inst,p);
+          }
+        #else
+          p[0] = '\0';
+        #endif
         // printf("%8x\n",cpu_pc);
         pc_cnt = 0;
       }else{
         pc_cnt = pc_cnt + 1;
         if(pc_cnt >20000){
           printf("%8x repeats %d times,stop!\n",cpu_pc,pc_cnt);
+          npc_state.halt_pc = cpu_pc;
+          npc_state.state = NPC_ABORT;
+        }
+        if(cpu_pc == 0xa0016B74){
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_ABORT;
         }
@@ -169,7 +181,7 @@ static void execute(uint64_t n) {
 
 
 void cpu_exec(uint64_t n) {
-  g_print_step = (n < MAX_INST_TO_PRINT);
+  // g_print_step = (n < MAX_INST_TO_PRINT);
   switch (npc_state.state) {
     case NPC_END: case NPC_ABORT:
       printf("Program execution has ended. To restart the program, exit NPC and run again.\n");

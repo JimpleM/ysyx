@@ -24,6 +24,7 @@ static uint8_t *pmem = NULL;
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 static uint8_t psram[PSRAM_SIZE] PG_ALIGN = {};
 static uint8_t sram[SRAM_SIZE] PG_ALIGN = {};
+static uint8_t sdram[SDRAM_SIZE] PG_ALIGN = {};
 #endif
 
 uint8_t* guest_to_host(paddr_t paddr){
@@ -35,6 +36,9 @@ uint8_t* guest_to_host(paddr_t paddr){
 	}
   else if(PSRAM_LEFT <= paddr && paddr <= PSRAM_RIGHT){
 		return psram + paddr - PSRAM_MBASE;
+	}
+  else if(SDRAM_LEFT <= paddr && paddr <= SDRAM_RIGHT){
+		return sdram + paddr - SDRAM_MBASE;
 	}
   // else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
 	// 	return pmem + paddr - MROM_MBASE;
@@ -48,6 +52,7 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
+  // printf("read address:%08x data:%08x\n",addr,ret);
   #ifdef CONFIG_MTRACE
   // if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
   //   printf("read address:%08x data:%08x\n",addr,ret);
@@ -58,6 +63,7 @@ static word_t pmem_read(paddr_t addr, int len) {
 
 static void pmem_write(paddr_t addr, int len, word_t data) {
   host_write(guest_to_host(addr), len, data);
+  // printf("write address:%08x data:%08x\n",addr,data);
   // #ifdef CONFIG_MTRACE
 //   if(addr >= CONFIG_MTRACE_START_ADDR && addr <= CONFIG_MTRACE_END_ADDR){
 //     printf("write address:%08x data:%08x\n",addr,data);
@@ -82,14 +88,18 @@ void init_mem() {
   //   p[i] = rand();
   // }
   for (i = 0; i < (int) (CONFIG_MSIZE / sizeof(p[0])); i ++) {
-    p[i] = 0;
+    p[i] = rand();
   }
   uint32_t *s = (uint32_t *)psram;
   for (i = 0; i < (int) (PSRAM_SIZE / sizeof(s[0])); i ++) {
-    s[i] = 0;
+    s[i] = rand();
   }
   uint32_t *q = (uint32_t *)sram;
   for (i = 0; i < (int) (SRAM_SIZE / sizeof(q[0])); i ++) {
+    q[i] = rand();
+  }
+  q = (uint32_t *)sdram;
+  for (i = 0; i < (int) (SDRAM_SIZE / sizeof(q[0])); i ++) {
     q[i] = 0;
   }
 #endif

@@ -12,5 +12,5 @@ bool checkregs();
 void difftest_step(vaddr_t pc, vaddr_t npc);
 
 
-
+void difftest_memcpy_dut(paddr_t addr, void *buf, size_t n);
 #endif

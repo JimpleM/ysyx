@@ -138,5 +138,18 @@ import "DPI-C" function void device_skip(input bit ren,input int raddr, input bi
 always @(*)begin
   device_skip(ren,raddr,wen,waddr);
 end
+import "DPI-C" function void sdram_check(input int addr, input int data, input int len);
+// always @(posedge clk)begin
+//   if(lsu_r_last_i)begin
+//     sdram_check(raddr,rdata,rsize);
+//   end
+//   // if(wen&(waddr>=32'ha0000000 && waddr <= 32'hb0000000)&lsu_w_last_i)begin
+//   //   sdram_check(waddr,wdata);
+//   // end
+//   if(waddr>= 32'ha001e144 && waddr<= 32'ha001e14F && lsu_w_last_i)begin
+//     $display("write addr = %x data = %x\n",waddr,wdata);
+//   end
+// end
+
 
 endmodule

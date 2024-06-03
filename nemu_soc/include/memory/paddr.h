@@ -36,7 +36,10 @@
 #define PSRAM_SIZE		(paddr_t)0x000F0000
 #define PSRAM_RIGHT 	((paddr_t)PSRAM_LEFT + PSRAM_SIZE - 1)
 #define PSRAM_MBASE		(paddr_t)0x80000000
-
+#define SDRAM_LEFT		(paddr_t)0xa0000000
+#define SDRAM_SIZE		(paddr_t)0x10000000
+#define SDRAM_RIGHT 	((paddr_t)SDRAM_LEFT + SDRAM_SIZE - 1)
+#define SDRAM_MBASE		(paddr_t)0xa0000000
 // SRAM 0x0F000000~0x0FFFFFFF  ---->  pmem 0x07000000~0x07FFFFFF
 // MROM 0x20000000~0x20000FFF  ---->  pmem 0x01000000~0x01000FFF
 
@@ -50,6 +53,9 @@ static inline bool in_pmem(paddr_t addr) {
 		return 1;	
 	}
   if(PSRAM_LEFT <= addr && addr <= PSRAM_RIGHT){
+		return 1;	
+	}
+  if(SDRAM_LEFT <= addr && addr <= SDRAM_RIGHT){
 		return 1;	
 	}
   if(addr - CONFIG_MBASE < CONFIG_MSIZE){
