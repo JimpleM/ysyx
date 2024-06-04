@@ -29,5 +29,8 @@ image: $(IMAGE).elf
 run: image
 	$(MAKE) -C $(SOC_HOME) ISA=$(ISA) run ARGS="$(SOCFLAGS)" 
 
+wave:
+	$(MAKE) -C $(SOC_HOME) ISA=$(ISA) wave ARGS="$(SOCFLAGS)" 
+
 gdb: image
 	$(MAKE) -C $(SOC_HOME) ISA=$(ISA) gdb ARGS="$(SOCFLAGS)"

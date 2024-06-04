@@ -69,6 +69,22 @@ VL_ATTR_COLD void VysyxSoCFull___024root___eval_initial(VysyxSoCFull___024root* 
     vlSelf->__Vm_traceActivity[0U] = 1U;
     vlSelf->__Vtrigrprev__TOP__clock = vlSelf->clock;
     vlSelf->__Vtrigrprev__TOP__reset = vlSelf->reset;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b;
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT____Vcellinp__flash__ss 
         = vlSelf->ysyxSoCFull__DOT____Vcellinp__flash__ss;
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck 
@@ -89,6 +105,134 @@ VL_ATTR_COLD void VysyxSoCFull___024root___eval_initial__TOP(VysyxSoCFull___024r
     // Body
     vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__csr_u0__DOT__csr_reg[0xf11U] = 0x79737978U;
     vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__csr_u0__DOT__csr_reg[0xf12U] = 0x15fde6dU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0U] = 0xfcU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[1U] = 0x60U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[2U] = 0xdaU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[3U] = 0xf2U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[4U] = 0x66U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[5U] = 0xb6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[6U] = 0xbeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[7U] = 0xe0U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[8U] = 0xfeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[9U] = 0xf6U;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xaU] = 0xeeU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xbU] = 0x3eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xcU] = 0x9cU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xdU] = 0x7aU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xeU] = 0x9eU;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[0xfU] = 0x8eU;
     vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__ifu_u0__DOT__pc = 0x30000000U;
     vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__ifu_u0__DOT__ifu_pc_o_r = 0x30000000U;
     vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__regfile_u0__DOT__gpr[0U] = 0U;
@@ -204,10 +348,44 @@ VL_ATTR_COLD void VysyxSoCFull___024root___stl_sequent__TOP__0(VysyxSoCFull___02
     VL_DEBUG_IF(VL_DBG_MSGF("+    VysyxSoCFull___024root___stl_sequent__TOP__0\n"); );
     // Body
     VysyxSoCFull___024root____Vdpiimwrap_ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__set_pc_ptr_TOP(vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__ifu_u0__DOT__ifu_pc_o_r, vlSelf->ysyxSoCFull__DOT__asic__DOT__cpu__DOT__cpu__DOT__ifu_u0__DOT__ifu_inst_o_r, 1U);
+    vlSelf->externalPins_gpio_out = (0xffffU & vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                                     [0U]);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b 
+        = (0xfU & vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+           [2U]);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 4U));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 8U));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 0xcU));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 0x10U));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 0x14U));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b 
+        = (0xfU & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                   [2U] >> 0x18U));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b 
+        = (vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+           [2U] >> 0x1cU);
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lpsram__DOT__mpsram__DOT__u0__DOT__init_done 
         = (8U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lpsram__DOT__mpsram__DOT__u0__DOT__INIT__DOT__counter));
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lpsram__DOT__mpsram__DOT__u0__DOT__mr_done 
         = (0x16U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__counter));
+    vlSelf->externalPins_gpio_seg_0 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__0__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_1 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__1__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_2 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__2__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_3 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__3__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_4 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__4__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_5 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__5__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_6 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__6__KET____DOT__bcd7seg_u__h;
+    vlSelf->externalPins_gpio_seg_7 = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__7__KET____DOT__bcd7seg_u__h;
     vlSelf->ysyxSoCFull__DOT__flash__DOT__data_bswap 
         = ((vlSelf->ysyxSoCFull__DOT__flash__DOT__rdata 
             << 0x18U) | ((0xff0000U & (vlSelf->ysyxSoCFull__DOT__flash__DOT__rdata 
@@ -384,6 +562,22 @@ VL_ATTR_COLD void VysyxSoCFull___024root___stl_sequent__TOP__0(VysyxSoCFull___02
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__u0_spi_top__DOT____VdfgTmp_h6152756d__0 
         = ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__wb_cyc_i) 
            & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__wb_stb_i));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[0U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__0__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[1U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__1__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[2U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__2__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[3U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__3__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[4U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__4__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[5U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__5__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[6U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__6__KET____DOT__bcd7seg_u__h;
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[7U] 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__7__KET____DOT__bcd7seg_u__h;
     vlSelf->__Vtableidx6 = vlSelf->ysyxSoCFull__DOT__asic__DOT__luart__DOT__muart__DOT__Uregs__DOT__fcr;
     vlSelf->ysyxSoCFull__DOT__asic__DOT__luart__DOT__muart__DOT__Uregs__DOT__trigger_level 
         = VysyxSoCFull__ConstPool__TABLE_h05f4911a_0
@@ -2699,13 +2893,14 @@ VL_ATTR_COLD void VysyxSoCFull___024root___stl_sequent__TOP__0(VysyxSoCFull___02
     vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_0_psel 
         = ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_0) 
            & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___axi42apb_auto_out_psel));
+    vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_3_penable 
+        = ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_3) 
+           & (1U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__axi42apb__DOT__state)));
     vlSelf->ysyxSoCFull__DOT__asic__DOT___apbdelay_delayer_in_pslverr 
-        = (((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_3) 
-            & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_pslverr)) 
-           | (((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_4) 
-               & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_pslverr)) 
-              | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_5) 
-                 & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lvga_auto_in_pslverr))));
+        = (((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_4) 
+            & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_pslverr)) 
+           | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_5) 
+              & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lvga_auto_in_pslverr)));
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lsdram_apb__DOT__msdram__DOT____VdfgTmp_hfb738304__0 
         = (((~ ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_6) 
                 & (1U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__axi42apb__DOT__state)))) 
@@ -2801,7 +2996,16 @@ VL_ATTR_COLD void VysyxSoCFull___024root___stl_sequent__TOP__0(VysyxSoCFull___02
                                                    [0U])))
                                           : 0U) | (
                                                    ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_3)
-                                                     ? vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_prdata
+                                                     ? 
+                                                    ((1U 
+                                                      == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_apb_state))
+                                                      ? 
+                                                     vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg
+                                                     [
+                                                     (3U 
+                                                      & (vlSelf->ysyxSoCFull__DOT__asic__DOT__lsdram_apb__DOT__msdram__DOT__u_sdram_ctrl__DOT__ram_addr_w 
+                                                         >> 2U))]
+                                                      : 0U)
                                                      : 0U) 
                                                    | (((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_4)
                                                         ? vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_prdata
@@ -2990,7 +3194,8 @@ VL_ATTR_COLD void VysyxSoCFull___024root___stl_sequent__TOP__0(VysyxSoCFull___02
                                  : (0x16U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lpsram__DOT__mpsram__DOT__u0__DOT__MR__DOT__counter))) 
                                & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_2_psel))) 
                            & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_2)) 
-                          | (((~ (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_pready)) 
+                          | (((~ ((1U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_apb_state)) 
+                                  | (2U == (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_apb_state)))) 
                               & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_3)) 
                              | (((~ (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_pready)) 
                                  & (IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__apbxbar__DOT__sel_4)) 
@@ -3792,25 +3997,49 @@ VL_ATTR_COLD void VysyxSoCFull___024root___dump_triggers__act(VysyxSoCFull___024
         VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge clock or posedge reset)\n");
     }
     if (vlSelf->__VactTriggered.at(2U)) {
-        VL_DBG_MSGF("         'act' region trigger index 2 is active: @(posedge ysyxSoCFull.__Vcellinp__flash__ss or posedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'act' region trigger index 2 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[0].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(3U)) {
-        VL_DBG_MSGF("         'act' region trigger index 3 is active: @(posedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'act' region trigger index 3 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[1].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(4U)) {
-        VL_DBG_MSGF("         'act' region trigger index 4 is active: @(negedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'act' region trigger index 4 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[2].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(5U)) {
-        VL_DBG_MSGF("         'act' region trigger index 5 is active: @(posedge ysyxSoCFull._asic_psram_ce_n)\n");
+        VL_DBG_MSGF("         'act' region trigger index 5 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[3].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(6U)) {
-        VL_DBG_MSGF("         'act' region trigger index 6 is active: @(posedge ysyxSoCFull._asic_psram_ce_n or posedge ysyxSoCFull._asic_psram_sck)\n");
+        VL_DBG_MSGF("         'act' region trigger index 6 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[4].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(7U)) {
-        VL_DBG_MSGF("         'act' region trigger index 7 is active: @(posedge ysyxSoCFull._asic_psram_sck)\n");
+        VL_DBG_MSGF("         'act' region trigger index 7 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[5].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VactTriggered.at(8U)) {
-        VL_DBG_MSGF("         'act' region trigger index 8 is active: @(negedge clock)\n");
+        VL_DBG_MSGF("         'act' region trigger index 8 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[6].bcd7seg_u__b)\n");
+    }
+    if (vlSelf->__VactTriggered.at(9U)) {
+        VL_DBG_MSGF("         'act' region trigger index 9 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[7].bcd7seg_u__b)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xaU)) {
+        VL_DBG_MSGF("         'act' region trigger index 10 is active: @(posedge ysyxSoCFull.__Vcellinp__flash__ss or posedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xbU)) {
+        VL_DBG_MSGF("         'act' region trigger index 11 is active: @(posedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xcU)) {
+        VL_DBG_MSGF("         'act' region trigger index 12 is active: @(negedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xdU)) {
+        VL_DBG_MSGF("         'act' region trigger index 13 is active: @(posedge ysyxSoCFull._asic_psram_ce_n)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xeU)) {
+        VL_DBG_MSGF("         'act' region trigger index 14 is active: @(posedge ysyxSoCFull._asic_psram_ce_n or posedge ysyxSoCFull._asic_psram_sck)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0xfU)) {
+        VL_DBG_MSGF("         'act' region trigger index 15 is active: @(posedge ysyxSoCFull._asic_psram_sck)\n");
+    }
+    if (vlSelf->__VactTriggered.at(0x10U)) {
+        VL_DBG_MSGF("         'act' region trigger index 16 is active: @(negedge clock)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -3831,25 +4060,49 @@ VL_ATTR_COLD void VysyxSoCFull___024root___dump_triggers__nba(VysyxSoCFull___024
         VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge clock or posedge reset)\n");
     }
     if (vlSelf->__VnbaTriggered.at(2U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 2 is active: @(posedge ysyxSoCFull.__Vcellinp__flash__ss or posedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 2 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[0].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(3U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 3 is active: @(posedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 3 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[1].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(4U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 4 is active: @(negedge ysyxSoCFull._asic_spi_sck)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 4 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[2].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(5U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 5 is active: @(posedge ysyxSoCFull._asic_psram_ce_n)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 5 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[3].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(6U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 6 is active: @(posedge ysyxSoCFull._asic_psram_ce_n or posedge ysyxSoCFull._asic_psram_sck)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 6 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[4].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(7U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 7 is active: @(posedge ysyxSoCFull._asic_psram_sck)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 7 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[5].bcd7seg_u__b)\n");
     }
     if (vlSelf->__VnbaTriggered.at(8U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 8 is active: @(negedge clock)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 8 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[6].bcd7seg_u__b)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(9U)) {
+        VL_DBG_MSGF("         'nba' region trigger index 9 is active: @([changed] reset or [changed] ysyxSoCFull.asic.lgpio.mgpio.__Vcellinp__genblk1[7].bcd7seg_u__b)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xaU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 10 is active: @(posedge ysyxSoCFull.__Vcellinp__flash__ss or posedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xbU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 11 is active: @(posedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xcU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 12 is active: @(negedge ysyxSoCFull._asic_spi_sck)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xdU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 13 is active: @(posedge ysyxSoCFull._asic_psram_ce_n)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xeU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 14 is active: @(posedge ysyxSoCFull._asic_psram_ce_n or posedge ysyxSoCFull._asic_psram_sck)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0xfU)) {
+        VL_DBG_MSGF("         'nba' region trigger index 15 is active: @(posedge ysyxSoCFull._asic_psram_sck)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(0x10U)) {
+        VL_DBG_MSGF("         'nba' region trigger index 16 is active: @(negedge clock)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -3913,9 +4166,6 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_pready = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_pslverr = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___lkeyboard_auto_in_prdata = VL_RAND_RESET_I(32);
-    vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_pready = VL_RAND_RESET_I(1);
-    vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_pslverr = VL_RAND_RESET_I(1);
-    vlSelf->ysyxSoCFull__DOT__asic__DOT___lgpio_auto_in_prdata = VL_RAND_RESET_I(32);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_awvalid = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_awaddr = VL_RAND_RESET_I(32);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_awsize = VL_RAND_RESET_I(3);
@@ -3928,6 +4178,7 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_araddr = VL_RAND_RESET_I(32);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_arsize = VL_RAND_RESET_I(3);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___cpu_auto_master_out_rready = VL_RAND_RESET_I(1);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_3_penable = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_2_psel = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_1_psel = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT___apbxbar_auto_out_1_penable = VL_RAND_RESET_I(1);
@@ -4288,6 +4539,62 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
         vlSelf->ysyxSoCFull__DOT__asic__DOT__luart__DOT__muart__DOT__Uregs__DOT__receiver__DOT__fifo_rx__DOT__rfifo__DOT__ram[__Vi0] = VL_RAND_RESET_I(8);
     }
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_reg[__Vi0] = VL_RAND_RESET_I(32);
+    }
+    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_seg[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__i = VL_RAND_RESET_I(32);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__gpio_apb_state = VL_RAND_RESET_I(2);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__0__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__1__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__2__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__3__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__4__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__5__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__6__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellout__genblk1__BRA__7__KET____DOT__bcd7seg_u__h = VL_RAND_RESET_I(8);
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__0__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__1__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__2__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__3__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__4__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__5__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__6__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
+    for (int __Vi0 = 0; __Vi0 < 16; ++__Vi0) {
+        vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__segs[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT__genblk1__BRA__7__KET____DOT__bcd7seg_u__DOT__i = VL_RAND_RESET_I(32);
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__spi_irq_out = VL_RAND_RESET_I(1);
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__wb_adr_i = VL_RAND_RESET_I(32);
     vlSelf->ysyxSoCFull__DOT__asic__DOT__lspi__DOT__mspi__DOT__wb_dat_i = VL_RAND_RESET_I(32);
@@ -4842,10 +5149,19 @@ VL_ATTR_COLD void VysyxSoCFull___024root___ctor_var_reset(VysyxSoCFull___024root
     vlSelf->__Vdly__ysyxSoCFull__DOT__psram__DOT__addr = VL_RAND_RESET_I(24);
     vlSelf->__Vtrigrprev__TOP__clock = VL_RAND_RESET_I(1);
     vlSelf->__Vtrigrprev__TOP__reset = VL_RAND_RESET_I(1);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b = VL_RAND_RESET_I(4);
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT____Vcellinp__flash__ss = VL_RAND_RESET_I(1);
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck = VL_RAND_RESET_I(1);
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_ce_n = VL_RAND_RESET_I(1);
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck = VL_RAND_RESET_I(1);
+    vlSelf->__VactDidInit = 0;
     for (int __Vi0 = 0; __Vi0 < 14; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }

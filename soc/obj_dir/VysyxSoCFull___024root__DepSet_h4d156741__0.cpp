@@ -166,26 +166,74 @@ void VysyxSoCFull___024root___eval_triggers__act(VysyxSoCFull___024root* vlSelf)
                                        & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clock))) 
                                       | ((IData)(vlSelf->reset) 
                                          & (~ (IData)(vlSelf->__Vtrigrprev__TOP__reset))));
-    vlSelf->__VactTriggered.at(2U) = (((IData)(vlSelf->ysyxSoCFull__DOT____Vcellinp__flash__ss) 
-                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT____Vcellinp__flash__ss))) 
-                                      | ((IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck) 
-                                         & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck))));
-    vlSelf->__VactTriggered.at(3U) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck) 
-                                      & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck)));
-    vlSelf->__VactTriggered.at(4U) = ((~ (IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck)) 
-                                      & (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck));
-    vlSelf->__VactTriggered.at(5U) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_ce_n) 
-                                      & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_ce_n)));
-    vlSelf->__VactTriggered.at(6U) = (((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_ce_n) 
-                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_ce_n))) 
-                                      | ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_sck) 
-                                         & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck))));
-    vlSelf->__VactTriggered.at(7U) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_sck) 
-                                      & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck)));
-    vlSelf->__VactTriggered.at(8U) = ((~ (IData)(vlSelf->clock)) 
-                                      & (IData)(vlSelf->__Vtrigrprev__TOP__clock));
+    vlSelf->__VactTriggered.at(2U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(3U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(4U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(5U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(6U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(7U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(8U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(9U) = (((IData)(vlSelf->reset) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__reset)) 
+                                      | ((IData)(vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b)));
+    vlSelf->__VactTriggered.at(0xaU) = (((IData)(vlSelf->ysyxSoCFull__DOT____Vcellinp__flash__ss) 
+                                         & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT____Vcellinp__flash__ss))) 
+                                        | ((IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck) 
+                                           & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck))));
+    vlSelf->__VactTriggered.at(0xbU) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck) 
+                                        & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck)));
+    vlSelf->__VactTriggered.at(0xcU) = ((~ (IData)(vlSelf->ysyxSoCFull__DOT___asic_spi_sck)) 
+                                        & (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck));
+    vlSelf->__VactTriggered.at(0xdU) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_ce_n) 
+                                        & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_ce_n)));
+    vlSelf->__VactTriggered.at(0xeU) = (((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_ce_n) 
+                                         & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_ce_n))) 
+                                        | ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_sck) 
+                                           & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck))));
+    vlSelf->__VactTriggered.at(0xfU) = ((IData)(vlSelf->ysyxSoCFull__DOT___asic_psram_sck) 
+                                        & (~ (IData)(vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck)));
+    vlSelf->__VactTriggered.at(0x10U) = ((~ (IData)(vlSelf->clock)) 
+                                         & (IData)(vlSelf->__Vtrigrprev__TOP__clock));
     vlSelf->__Vtrigrprev__TOP__clock = vlSelf->clock;
     vlSelf->__Vtrigrprev__TOP__reset = vlSelf->reset;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__0__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__1__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__2__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__3__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__4__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__5__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__6__KET____DOT__bcd7seg_u__b;
+    vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b 
+        = vlSelf->ysyxSoCFull__DOT__asic__DOT__lgpio__DOT__mgpio__DOT____Vcellinp__genblk1__BRA__7__KET____DOT__bcd7seg_u__b;
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT____Vcellinp__flash__ss 
         = vlSelf->ysyxSoCFull__DOT____Vcellinp__flash__ss;
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_spi_sck 
@@ -194,6 +242,17 @@ void VysyxSoCFull___024root___eval_triggers__act(VysyxSoCFull___024root* vlSelf)
         = vlSelf->ysyxSoCFull__DOT___asic_psram_ce_n;
     vlSelf->__Vtrigrprev__TOP__ysyxSoCFull__DOT___asic_psram_sck 
         = vlSelf->ysyxSoCFull__DOT___asic_psram_sck;
+    if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
+        vlSelf->__VactDidInit = 1U;
+        vlSelf->__VactTriggered.at(2U) = 1U;
+        vlSelf->__VactTriggered.at(3U) = 1U;
+        vlSelf->__VactTriggered.at(4U) = 1U;
+        vlSelf->__VactTriggered.at(5U) = 1U;
+        vlSelf->__VactTriggered.at(6U) = 1U;
+        vlSelf->__VactTriggered.at(7U) = 1U;
+        vlSelf->__VactTriggered.at(8U) = 1U;
+        vlSelf->__VactTriggered.at(9U) = 1U;
+    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         VysyxSoCFull___024root___dump_triggers__act(vlSelf);

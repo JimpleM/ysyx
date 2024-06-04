@@ -5,14 +5,14 @@
 #include "pmem.h"
 #include "trace.h"
 #include "sdb.h"
-
+#include <nvboard.h>
 #include "device_lib.h"
 
 #define MAX_INST_TO_PRINT 1000
 
 
 extern VerilatedContext* contextp;
-extern VysyxSoCFull* top;
+extern TOP_NAME* top;
 extern VerilatedVcdC* tfp;
 
 extern int stop_flag;
@@ -56,6 +56,7 @@ static void dump_wave(){
 }
 
 static void exec_once() {
+
     top->clock = 1;
     top->eval();
 
@@ -135,6 +136,9 @@ static void execute(uint64_t n) {
           itrace_print = true;
         }
       #endif
+      #ifdef CONFIG_NVBOARD
+        nvboard_update();
+      #endif
       exec_once();
       if(cpu_lpc != cpu_pc){
         trace_and_difftest();
@@ -200,6 +204,7 @@ void cpu_exec(uint64_t n) {
     case NPC_RUNNING: npc_state.state = NPC_STOP; break;
 
     case NPC_END: case NPC_ABORT:
+      nvboard_quit();
       Log("NPC: %s at pc = " FMT_WORD,
           (npc_state.state == NPC_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED):
            (npc_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :

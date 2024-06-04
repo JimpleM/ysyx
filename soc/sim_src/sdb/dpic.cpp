@@ -20,7 +20,7 @@ uint32_t *cpu_gpr = NULL;
 uint32_t *cpu_csr = NULL;
 
 extern NPCState npc_state;
-extern VysyxSoCFull* top;
+extern TOP_NAME* top;
 
 #define PG_ALIGN __attribute((aligned(4096)))
 

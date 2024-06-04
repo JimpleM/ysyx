@@ -5,8 +5,9 @@
 #include "trace.h"
 
 #include "device_lib.h"
-
+#include <nvboard.h>
 #include <getopt.h>
+#include <stdio.h>
 
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
@@ -14,13 +15,15 @@ static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 VerilatedContext* contextp = NULL;
-VysyxSoCFull* top = NULL;
+TOP_NAME* top = NULL;
 VerilatedVcdC* tfp = NULL;
 
 extern uint8_t pmem [PMEM_SIZE];
 
 extern uint8_t flash_mem [FLASH_SIZE];
 extern uint8_t psram_mem [PSRAM_SIZE];
+
+void nvboard_bind_all_pins(TOP_NAME* top);
 
 static long load_img() {
   Assert(img_file != NULL, "No img file!");
@@ -80,7 +83,7 @@ static int parse_args(int argc, char *argv[]) {
 void init_sim(){
     contextp = new VerilatedContext;
     // contextp->commandArgs(argc, argv);
-    top = new VysyxSoCFull(contextp);
+    top = new TOP_NAME(contextp);
 
     tfp = new VerilatedVcdC;
     contextp->traceEverOn(true);
@@ -124,7 +127,12 @@ void init_npc(int argc, char *argv[]) {
     init_difftest(diff_so_file, img_size, difftest_port);
 
 	  init_sdb();
-
+    
+#ifdef CONFIG_NVBOARD
+    nvboard_bind_all_pins(top);
+    nvboard_init();
+#endif
+  
 #ifdef CONFIG_ITRACE
     init_disasm("riscv32");
 #endif
