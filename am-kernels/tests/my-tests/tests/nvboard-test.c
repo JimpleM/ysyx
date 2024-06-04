@@ -26,6 +26,7 @@ void seg_show_id(){
     uint32_t number;
     asm volatile("csrr %0, %1" : "=r"(number) : "i"(0xF12));
     outl(0x10002008,number);
+    printf("%08x\n",number);
 }
 
 
