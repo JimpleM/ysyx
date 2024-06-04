@@ -1,3 +1,0 @@
-NAME = sdram-test
-SRCS = tests/sdram-test.c
-include /home/jimple/Documents/ysyx/ysyx-workbench/abstract-machine/Makefile
