@@ -2089,8 +2089,8 @@ module APBSDRAM(	// src/device/SDRAM.scala:92:9
                 sdram_bundle_we,	// src/device/SDRAM.scala:94:26
   output [12:0] sdram_bundle_a,	// src/device/SDRAM.scala:94:26
   output [1:0]  sdram_bundle_ba,	// src/device/SDRAM.scala:94:26
-  output [3:0]  sdram_bundle_dqm,	// src/device/SDRAM.scala:94:26
-  inout  [31:0] sdram_bundle_dq	// src/device/SDRAM.scala:94:26
+                sdram_bundle_dqm,	// src/device/SDRAM.scala:94:26
+  inout  [15:0] sdram_bundle_dq	// src/device/SDRAM.scala:94:26
 );
 
   sdram_top_apb msdram (	// src/device/SDRAM.scala:96:24
@@ -3677,8 +3677,8 @@ module ysyxSoCASIC(	// src/SoC.scala:59:9
                 sdram_we,	// src/SoC.scala:89:19
   output [12:0] sdram_a,	// src/SoC.scala:89:19
   output [1:0]  sdram_ba,	// src/SoC.scala:89:19
-  output [3:0]  sdram_dqm,	// src/SoC.scala:89:19
-  inout  [31:0] sdram_dq,	// src/SoC.scala:89:19
+                sdram_dqm,	// src/SoC.scala:89:19
+  inout  [15:0] sdram_dq,	// src/SoC.scala:89:19
   output [15:0] gpio_out,	// src/SoC.scala:90:18
   input  [15:0] gpio_in,	// src/SoC.scala:90:18
   output [7:0]  gpio_seg_0,	// src/SoC.scala:90:18
@@ -4627,9 +4627,9 @@ module ysyxSoCFull(	// src/SoC.scala:111:9
   wire        _asic_sdram_we;	// src/SoC.scala:107:24
   wire [12:0] _asic_sdram_a;	// src/SoC.scala:107:24
   wire [1:0]  _asic_sdram_ba;	// src/SoC.scala:107:24
-  wire [3:0]  _asic_sdram_dqm;	// src/SoC.scala:107:24
+  wire [1:0]  _asic_sdram_dqm;	// src/SoC.scala:107:24
   wire [3:0]  _dio_wire;	// src/SoC.scala:143:23
-  wire [31:0] _dq_wire;	// src/SoC.scala:145:23
+  wire [15:0] _dq_wire;	// src/SoC.scala:145:23
   ysyxSoCASIC asic (	// src/SoC.scala:107:24
     .clock      (clock),
     .reset      (reset),
