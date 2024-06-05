@@ -1,7 +1,7 @@
 #include <nvboard.h>
 #include <keyboard.h>
 #include "at_scancode.h"
-
+// #include <uart.h>
 typedef struct {
   SDL_Texture *t_up, *t_down;
   SDL_Rect rect;
@@ -17,7 +17,7 @@ KEYBOARD::KEYBOARD(SDL_Renderer *rend, int cnt, int init_val, int ct):
   Component(rend, cnt, init_val, ct),
   data_idx(0), left_clk(0), cur_key(NOT_A_KEY) { }
 
-
+// void uart_rx_getchar(uint8_t ch);
 void KEYBOARD::push_key(uint8_t sdl_key, bool is_keydown){
   Key *e = &keys[sdl_key];
   uint8_t at_key = e->map0;
@@ -28,7 +28,16 @@ void KEYBOARD::push_key(uint8_t sdl_key, bool is_keydown){
   if(!is_keydown) all_keys.push(0xf0);
   all_keys.push(at_key);
   is_kb_idle = false;
-
+  // test rtt rx 
+    // if(at_key == AT_SCANCODE_P && !is_keydown){
+    //   uart_rx_getchar('p');
+    // }
+    // if(at_key == AT_SCANCODE_S && !is_keydown){
+    //   uart_rx_getchar('s');
+    // }
+    // if(at_key == AT_SCANCODE_KP_ENTER && !is_keydown){
+    //   uart_rx_getchar('\n');
+    // }
   if (e->pressing != is_keydown) {
     e->pressing = is_keydown;
     SDL_RenderCopy(get_renderer(), (is_keydown ? e->t_down : e->t_up), NULL, &e->rect);

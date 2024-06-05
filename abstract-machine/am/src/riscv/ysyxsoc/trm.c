@@ -13,7 +13,7 @@ extern char _pmem_start;
 
 Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
-#define MAINARGS "test"
+#define MAINARGS "k"
 #endif
 static const char mainargs[] = MAINARGS;
 
@@ -49,6 +49,8 @@ void uart_init(){
   outb(SERIAL_PORT  ,0x01);
   outb(SERIAL_PORT+1,0x00);
   outb(SERIAL_PORT+3,0x03); // 重新设置LCR
+  outb(SERIAL_PORT+2,0x01); // FCR寄存器，
+  outb(SERIAL_PORT+1,0x01); // 使能接收中断
 }
 #pragma GCC push_options
 #pragma GCC optimize("O0")

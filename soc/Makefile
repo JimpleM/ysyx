@@ -67,7 +67,7 @@ CXXFLAGS += $(LLVM_FLAGS)
 
 $(BIN): $(VSRCS) $(SIM_SRCS) $(NVBOARD_ARCHIVE)
 	@rm -rf $(OBJ_DIR)
-	$(VERILATOR) $(VERILATOR_FLAGS) $^ \
+	@$(VERILATOR) $(VERILATOR_FLAGS) $^ \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 			--Mdir $(OBJ_DIR)
 

@@ -53,6 +53,8 @@ void UART::tx_receive() {
     if (tx) { // stop bit
       tx_state = 0;
       term->feed_ch(tx_data);
+      // uart回环测试
+      // rx_getchar(tx_data);
       need_update_gui = true;
     }
   }

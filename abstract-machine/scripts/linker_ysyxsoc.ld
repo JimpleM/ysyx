@@ -4,7 +4,7 @@ MEMORY {
   flash : ORIGIN = 0x30000000, LENGTH = 256M
   psram : ORIGIN = 0x80000000, LENGTH = 4M
   sram :  ORIGIN = 0x0f000000, LENGTH = 8K
-  sdram : ORIGIN = 0xa0000000, LENGTH = 256M
+  sdram : ORIGIN = 0xa0000000, LENGTH = 32M
 }
 
 SECTIONS {
@@ -21,6 +21,7 @@ SECTIONS {
   .ssbl : {
     _ssbl_ram_start = .;
     *(.text.ssbl)
+    *(.text.device_init)
     . = ALIGN(8);
     _ssbl_ram_end = .;
   } > psram AT> flash
@@ -30,7 +31,7 @@ SECTIONS {
     _text_ram_start = .;
     *(.text*)
     . = ALIGN(8);
-  } > psram AT> flash
+  } > sdram AT> flash
   etext = .;
   _etext = .;
 
@@ -39,7 +40,7 @@ SECTIONS {
     *(.srodata)
     *(.srodata.*)
     . = ALIGN(8);
-  } > psram AT> flash
+  } > sdram AT> flash
 
   .data : {
     *(.data)
@@ -48,7 +49,7 @@ SECTIONS {
     *(.sdata.*)
     . = ALIGN(8);
     _data_ram_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
 
   edata = .;
   _data = .;
@@ -60,7 +61,7 @@ SECTIONS {
     *(.scommon)
     . = ALIGN(8);
     _bss_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
 
   _stack_top = ALIGN(0x30000);
   . = _stack_top + 0x20000;
