@@ -21,7 +21,8 @@
     },
     "files.watcherExclude": {
         "**/target": true,
-				"**/*.backup": true
+				"**/*.backup": true,
+				"ysyx-workbench.backup": true
 >>>>>>> 77ce75f
     }
 }

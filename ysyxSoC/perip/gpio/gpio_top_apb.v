@@ -64,7 +64,7 @@ always @(posedge clock or posedge reset) begin
     gpio_apb_state  <= GPIO_APB_IDLE;
   end
   else begin
-    case(GPIO_APB_IDLE)
+    case(gpio_apb_state)
       GPIO_APB_IDLE:begin
         if(in_psel)begin
           case(in_pwrite)
