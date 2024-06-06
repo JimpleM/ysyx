@@ -10,14 +10,14 @@ static uint32_t Height = 300;
 void __am_gpu_init() {
   // int i;
 
-  uint32_t config = inl(VGACTL_ADDR);
-  Width = (config >> 16) & 0x0000ffff;
-  Height = config & 0x0000ffff;
+  // uint32_t config = inl(VGACTL_ADDR);
+  // Width = (config >> 16) & 0x0000ffff;
+  // Height = config & 0x0000ffff;
   // printf("%d %d\n",Width,Height);
-  // uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  // for (i = 0; i < Width * Height; i ++){
-  //   fb[i] = i;
-  // } 
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  for (int i = 0; i < Width * Height; i ++){
+    fb[i] = i;
+  } 
   outl(SYNC_ADDR, 1);
 }
 

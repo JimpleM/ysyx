@@ -39,7 +39,7 @@ bool ioe_init() {
       lut[i] = fail;
     } 
   __am_timer_init();
-  // __am_gpu_init();
+  __am_gpu_init();
   return true;
 }
 

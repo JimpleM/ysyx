@@ -23,7 +23,7 @@ int main(const char *args) {
     // CASE('m', mp_print, MPE);
     // CASE('t', rtc_test, IOE);
     CASE('k', keyboard_test, IOE);
-    // CASE('v', video_test, IOE);
+    CASE('v', video_test, IOE);
     // CASE('a', audio_test, IOE);
     // CASE('p', vm_test, CTE(vm_handler), VME(simple_pgalloc, simple_pgfree));
     case 'H':

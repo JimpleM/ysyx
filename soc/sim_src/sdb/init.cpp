@@ -88,8 +88,9 @@ void init_sim(){
     tfp = new VerilatedVcdC;
     contextp->traceEverOn(true);
     top->trace(tfp,0);
+#ifdef CONFIG_WAVE
     tfp->open("wave.vcd");
-
+#endif
 }
 void init_flash(){
   uint32_t *mem32 = (uint32_t *)flash_mem;
