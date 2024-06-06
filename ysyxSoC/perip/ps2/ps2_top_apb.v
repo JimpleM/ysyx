@@ -17,7 +17,7 @@ module ps2_top_apb(
 );
 
 // ps2_clk为低电平的时候禁止通信
-// 检测低电平到高电平转换
+// 检测低电平到高电平转换，打两拍，跨时钟域避免亚稳态问题
 reg [2:0] ps2_clk_sync;
 always @(posedge clock) begin
   ps2_clk_sync <=  {ps2_clk_sync[1:0],ps2_clk};
