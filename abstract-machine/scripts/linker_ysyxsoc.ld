@@ -24,7 +24,7 @@ SECTIONS {
     *(.text.device_init)
     . = ALIGN(8);
     _ssbl_ram_end = .;
-  } > psram AT> flash
+  } > sdram AT> flash
 
   _test_origin = LOADADDR(.text);
   .text : {

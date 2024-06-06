@@ -6,38 +6,43 @@
 #include "trace.h"
 #include "sdb.h"
 #include <nvboard.h>
-#include "device_lib.h"
+#include "utils.h"
 
 #define MAX_INST_TO_PRINT 1000
-
 
 extern VerilatedContext* contextp;
 extern TOP_NAME* top;
 extern VerilatedVcdC* tfp;
 
-extern int stop_flag;
+// from dpic
 extern uint32_t cpu_pc;
 extern uint32_t cpu_inst;
+extern uint32_t *cpu_gpr;
 uint32_t cpu_lpc = 0x30000000;
 
 NPCState npc_state = { .state = NPC_STOP };
-
 CPU_state cpu = {};
-extern uint32_t *cpu_gpr;
+
+uint32_t stall_pc_cnt=0;
+
+uint32_t total_clock_cnt = 0;
+uint32_t total_inst_cnt = 0;
+
+
 // static bool g_print_step = false;
-static bool itrace_print = false;
-uint32_t pc_cnt=0;
-#ifdef CONFIG_WAVE
-static bool wave_flag = false;
+#ifdef CONFIG_ITRACE
+  static bool itrace_print = false;
 #endif
+#ifdef CONFIG_WAVE
+  static bool wave_flag = false;
+#endif
+
 
 
 int is_exit_status_bad() {
   int good = (npc_state.state == NPC_END && npc_state.halt_ret == 0) ||
     (npc_state.state == NPC_QUIT);
-  // Log("%d",!good);
   return !good;
-  // return 100;
 }
 
 static void dump_wave(){
@@ -56,17 +61,15 @@ static void dump_wave(){
 }
 
 static void exec_once() {
-
     top->clock = 1;
     top->eval();
-
     dump_wave();
 
     top->clock = 0;
     top->eval();
-    
     dump_wave();
 
+    total_clock_cnt++;
 }
 
 void reset(){
@@ -77,10 +80,10 @@ void reset(){
   top->reset = 0;
 }
 
-
-
 static void statistic() {
- 
+  printf(ANSI_FMT("Total clock amount = %u\n",ANSI_FG_BLUE), total_clock_cnt);
+  printf(ANSI_FMT("Total instructions amout= %u\n",ANSI_FG_BLUE), total_inst_cnt);
+  printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_RED), (float)total_clock_cnt/total_inst_cnt);
 }
 
 void assert_fail_msg() {
@@ -141,6 +144,7 @@ static void execute(uint64_t n) {
       #endif
       exec_once();
       if(cpu_lpc != cpu_pc){
+        total_inst_cnt++;
         trace_and_difftest();
         #ifdef CONFIG_FTRACE
           ftrace_print(cpu_lpc,cpu_pc,cpu_inst);
@@ -154,15 +158,11 @@ static void execute(uint64_t n) {
           p[0] = '\0';
         #endif
         // printf("%8x\n",cpu_pc);
-        pc_cnt = 0;
+        stall_pc_cnt = 0;
       }else{
-        pc_cnt = pc_cnt + 1;
-        if(pc_cnt >20000){
-          printf("%8x repeats %d times,stop!\n",cpu_pc,pc_cnt);
-          npc_state.halt_pc = cpu_pc;
-          npc_state.state = NPC_ABORT;
-        }
-        if(cpu_pc == 0xa0016B74){
+        stall_pc_cnt = stall_pc_cnt + 1;
+        if(stall_pc_cnt >20000){    // 长时间同一pc，判断为被阻塞了，停止npc
+          printf("%8x repeats %d times,stop!\n",cpu_pc,stall_pc_cnt);
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_ABORT;
         }
@@ -193,12 +193,9 @@ void cpu_exec(uint64_t n) {
     default: npc_state.state = NPC_RUNNING;
   }
 
-  // uint64_t timer_start = get_time();
 
   execute(n);
 
-  // uint64_t timer_end = get_time();
-  // g_timer += timer_end - timer_start;
 
   switch (npc_state.state) {
     case NPC_RUNNING: npc_state.state = NPC_STOP; break;

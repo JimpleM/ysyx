@@ -7,7 +7,8 @@ VERILATOR_INC_PATH += -I$(SOC_HOME)/vsrc
 VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/uart16550/rtl
 VERILATOR_INC_PATH += -I$(YSYXSOC_HOME)/perip/spi/rtl
 
-VERILATOR_FLAGS += --trace --cc --exe --build
+VERILATOR_FLAGS += --trace --cc --exe --build -O3
+VERILATOR_FLAGS += --x-assign fast --x-initial fast
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
 VERILATOR_FLAGS += --no-timing
