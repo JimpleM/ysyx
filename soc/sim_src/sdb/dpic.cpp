@@ -22,6 +22,9 @@ uint32_t *cpu_csr = NULL;
 extern NPCState npc_state;
 extern TOP_NAME* top;
 
+uint32_t lst_inst = 0;
+uint32_t inst_type_counter[32][2]; // 0 store inst number, 1 store clock
+
 #define PG_ALIGN __attribute((aligned(4096)))
 
 uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
@@ -125,6 +128,21 @@ extern "C" void get_riscv32_rst(svBit reset) {
 	riscv32_rst = false;
   }
 }
+
+extern "C"  void inst_type_count(int inst){
+	uint32_t opcode = (inst & 0x0000007C) >> 2;
+	if(opcode < 32){
+		if(lst_inst != inst){
+			inst_type_counter[opcode][0]++;
+			lst_inst = inst;
+		}
+		inst_type_counter[opcode][1]++;
+	}else{
+		printf("error opcode\n");
+	}
+}
+
+//后面的函数已弃用
 
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){

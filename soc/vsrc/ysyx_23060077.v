@@ -337,6 +337,14 @@ import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit 
 always @(*)begin
     set_pc_ptr(ifu_pc,ifu_inst,1'b1);
 end
+  
+
+import "DPI-C" function void inst_type_count(input int inst);
+always @(posedge clock)begin
+  if(!reset)begin
+    inst_type_count(ifu_inst);
+  end
+end
 
 endmodule
 

@@ -7,6 +7,7 @@
 #include "sdb.h"
 #include <nvboard.h>
 #include "utils.h"
+#include "riscv_lib.h"
 
 #define MAX_INST_TO_PRINT 1000
 
@@ -27,6 +28,7 @@ uint32_t stall_pc_cnt=0;
 
 uint32_t total_clock_cnt = 0;
 uint32_t total_inst_cnt = 0;
+extern uint32_t inst_type_counter[32][2];
 
 
 // static bool g_print_step = false;
@@ -69,7 +71,6 @@ static void exec_once() {
     top->eval();
     dump_wave();
 
-    total_clock_cnt++;
 }
 
 void reset(){
@@ -83,7 +84,14 @@ void reset(){
 static void statistic() {
   printf(ANSI_FMT("Total clock amount = %u\n",ANSI_FG_BLUE), total_clock_cnt);
   printf(ANSI_FMT("Total instructions amout= %u\n",ANSI_FG_BLUE), total_inst_cnt);
-  printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_RED), (float)total_clock_cnt/total_inst_cnt);
+  printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_GREEN), (float)total_clock_cnt/total_inst_cnt);
+  for(int i=0; i<11; i++){
+    uint32_t idx = opcodeArray[i].opcode;
+    printf(ANSI_FMT("Inst %s ",ANSI_FG_YELLOW),opcodeArray[i].name);
+    printf(ANSI_FMT("amount = %7u cycles = %8u Average cycles of each inst = %2.3f\n",ANSI_FG_BLUE),
+    inst_type_counter[idx][0],inst_type_counter[idx][1],
+    inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
+  }
 }
 
 void assert_fail_msg() {
@@ -132,7 +140,7 @@ static void execute(uint64_t n) {
       //   printf("pc is not in pmem!\n");
       // }
       // cpu_inst = paddr_read((uint32_t)cpu_pc,4);
-
+      total_clock_cnt++;
         //反汇编结果
       #ifdef CONFIG_ITRACE
         if(cpu_pc == CONFIG_ITRACE_PC_BEGIN){
@@ -174,6 +182,7 @@ static void execute(uint64_t n) {
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_END;
           npc_state.halt_ret = cpu_gpr[10];
+          break;
       } 
 
       if (npc_state.state != NPC_RUNNING) break;
