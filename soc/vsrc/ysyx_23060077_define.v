@@ -48,17 +48,17 @@
 
 
 // csr reg addr
-`define CSR_M_CYCLE     `CSR_WIDTH'hb00    
-`define CSR_MSTATUS     `CSR_WIDTH'h300
-`define CSR_MIE         `CSR_WIDTH'h304
-`define CSR_MTVEC       `CSR_WIDTH'h305    
-`define CSR_MEPC        `CSR_WIDTH'h341
-`define CSR_MCAUSE      `CSR_WIDTH'h342
-`define CSR_MTVAL       `CSR_WIDTH'h343
-`define CSR_MINSTRET    `CSR_WIDTH'hb02
-`define CSR_MSCRATCH    `CSR_WIDTH'h340
-`define CSR_MVENDORID   `CSR_WIDTH'hF11
-`define CSR_MARCHID     `CSR_WIDTH'hF12
+// `define CSR_M_CYCLE     `CSR_WIDTH'hb00    
+// `define CSR_MSTATUS     `CSR_WIDTH'h300
+// `define CSR_MIE         `CSR_WIDTH'h304
+// `define CSR_MTVEC       `CSR_WIDTH'h305    
+// `define CSR_MEPC        `CSR_WIDTH'h341
+// `define CSR_MCAUSE      `CSR_WIDTH'h342
+// `define CSR_MTVAL       `CSR_WIDTH'h343
+// `define CSR_MINSTRET    `CSR_WIDTH'hb02
+// `define CSR_MSCRATCH    `CSR_WIDTH'h340
+// `define CSR_MVENDORID   `CSR_WIDTH'hF11
+// `define CSR_MARCHID     `CSR_WIDTH'hF12
 
 `define MVENDORID       `DATA_WIDTH'h79737978
 `define MARCHID         `DATA_WIDTH'h015FDE6D
