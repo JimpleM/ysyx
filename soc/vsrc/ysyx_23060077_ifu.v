@@ -108,5 +108,13 @@ assign ifu_r_addr_o  = pc;
 assign inst          = ifu_r_data_i;
 assign ifu_r_len_o   = 8'd0;
 
+`ifdef USING_DPI_C
+import "DPI-C" function void ifu_inst_arrived();
+always @(posedge clk)begin
+  if(ifu_r_last_i)begin
+    ifu_inst_arrived();
+  end
+end
+`endif
 
 endmodule

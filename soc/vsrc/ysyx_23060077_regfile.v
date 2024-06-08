@@ -27,10 +27,15 @@ assign rs1_data = gpr[rs1_addr];
 // read rs2
 assign rs2_data = gpr[rs2_addr];
 
-
+// rd_addr == 5'd0不能删掉，会有一些指令把无用数据写到0寄存器
 always @(posedge clk) begin
     if (rd_en)begin
-        gpr[rd_addr] <= rd_data;
+        if(rd_addr == 5'd0)begin
+            gpr[rd_addr] <= 32'd0;
+        end
+        else begin
+            gpr[rd_addr] <= rd_data;
+        end
     end 
 end
 

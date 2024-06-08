@@ -6,7 +6,7 @@
 `define REG_COUNT           (1<<`REG_WIDTH)
 
 
-// `define USING_DPI_C     // use for make sta
+`define USING_DPI_C     // use for make sta
 
 
 // opcode

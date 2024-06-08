@@ -23,24 +23,17 @@ extern NPCState npc_state;
 extern TOP_NAME* top;
 
 uint32_t lst_inst = 0;
-uint32_t inst_type_counter[32][2]; // 0 store inst number, 1 store clock
+uint32_t inst_type_counter[64][2]; // 0 store inst number, 1 store clock
+
+uint32_t ifu_inst_counter = 0;
+uint32_t lsu_read_clock = 0;
+uint32_t lsu_write_clock = 0;
+uint32_t exu_data_counter = 0;
 
 #define PG_ALIGN __attribute((aligned(4096)))
 
 uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
 uint8_t psram_mem[PSRAM_SIZE] PG_ALIGN = {};
-// 只检测读的数据，写的数据比较麻烦
-extern "C" void sdram_check(uint32_t addr, uint32_t data,uint32_t len) {
-	#ifdef CONFIG_DIFFTEST
-	if(addr >= 0xa0000000 && addr <= 0xb0000000){
-		// printf("addr=%08x,paddr=%08x\n",addr,data);
-		uint32_t size = (len == 0) ? 1 : (len == 1) ? 2:4;
-		difftest_memcpy_dut(addr, &data,size);
-	}
-	#endif
-	npc_state.state = NPC_ABORT;
-	npc_state.halt_pc = cpu_pc;
-}
 
 extern "C" void psram_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0 && addr <= PSRAM_SIZE){
@@ -130,18 +123,31 @@ extern "C" void get_riscv32_rst(svBit reset) {
 }
 
 extern "C"  void inst_type_count(int inst){
-	uint32_t opcode = (inst & 0x0000007C) >> 2;
-	if(opcode < 32){
+	uint32_t opcode = (inst & 0x0000007F) >> 1;
+	if(opcode < 64){
 		if(lst_inst != inst){
 			inst_type_counter[opcode][0]++;
 			lst_inst = inst;
 		}
 		inst_type_counter[opcode][1]++;
-	}else{
-		printf("error opcode\n");
 	}
 }
 
+
+extern "C"  void ifu_inst_arrived(){
+	ifu_inst_counter++;
+}
+
+extern "C"  void lsu_read_data(){
+	lsu_read_clock++;
+}
+extern "C"  void lsu_write_data(){
+	lsu_write_clock++;
+}
+
+extern "C"  void exu_data_finished(){
+	exu_data_counter++;
+}
 //后面的函数已弃用
 
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){

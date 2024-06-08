@@ -358,6 +358,15 @@ always @(*)begin
     set_axi_resp({30'd0,io_master_bresp},{30'd0,io_master_rresp});
 end
 
+
+
+import "DPI-C" function void exu_data_finished();
+always @(posedge clock)begin
+  if((!ifu_stall) && (idu_alu_opt != `ALU_NONE))begin
+    exu_data_finished();
+  end
+end
+
 `endif
 
 endmodule

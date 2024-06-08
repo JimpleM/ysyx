@@ -28,8 +28,11 @@ uint32_t stall_pc_cnt=0;
 
 uint32_t total_clock_cnt = 0;
 uint32_t total_inst_cnt = 0;
-extern uint32_t inst_type_counter[32][2];
-
+extern uint32_t inst_type_counter[64][2];
+extern uint32_t ifu_inst_counter;
+extern uint32_t lsu_read_clock;
+extern uint32_t lsu_write_clock;
+extern uint32_t exu_data_counter;
 
 // static bool g_print_step = false;
 #ifdef CONFIG_ITRACE
@@ -85,13 +88,27 @@ static void statistic() {
   printf(ANSI_FMT("Total clock amount = %u\n",ANSI_FG_BLUE), total_clock_cnt);
   printf(ANSI_FMT("Total instructions amout= %u\n",ANSI_FG_BLUE), total_inst_cnt);
   printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_GREEN), (float)total_clock_cnt/total_inst_cnt);
+  uint32_t sum_clock = 0,sum_inst=0;
+  uint32_t idx;
   for(int i=0; i<11; i++){
-    uint32_t idx = opcodeArray[i].opcode;
+    idx = opcodeArray[i].opcode;
     printf(ANSI_FMT("Inst %s ",ANSI_FG_YELLOW),opcodeArray[i].name);
     printf(ANSI_FMT("amount = %7u cycles = %8u Average cycles of each inst = %2.3f\n",ANSI_FG_BLUE),
     inst_type_counter[idx][0],inst_type_counter[idx][1],
     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
-  }
+    sum_inst  += inst_type_counter[idx][0];
+    sum_clock += inst_type_counter[idx][1];
+  };
+  printf("\n");
+  printf(ANSI_FMT("SUM clock        = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_clock);
+  printf(ANSI_FMT("SUM inst         = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_inst);
+  printf("\n");
+  printf(ANSI_FMT("IFU inst counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),ifu_inst_counter);
+  printf(ANSI_FMT("LSU read  clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_read_clock);
+  printf(ANSI_FMT("LSU r_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+  printf(ANSI_FMT("LSU write clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_write_clock);
+  printf(ANSI_FMT("LSU w_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
+  printf(ANSI_FMT("EXU data counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),exu_data_counter);
 }
 
 void assert_fail_msg() {
@@ -187,8 +204,6 @@ static void execute(uint64_t n) {
 
       if (npc_state.state != NPC_RUNNING) break;
 
-
-    
   }
 }
 
