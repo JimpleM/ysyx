@@ -25,8 +25,12 @@ wire over_flag = add_out[`DATA_WIDTH] ^ add_out[`DATA_WIDTH-1];
 wire carry_flag = ((top_A|top_B|top_C) & (top_A|!top_B|!top_C) & (!top_A|top_B|!top_C) & (!top_A|!top_B|top_C)) ^ sub_flag;
 // wire carry_flag = ((top_A&top_B&top_C) | (!top_A&!top_B&top_C) | (top_A&!top_B&!top_C) | (!top_A&top_B&!top_C)) ^ sub_flag;
 
-wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]}[`DATA_WIDTH-1:0] ;
+`ifdef USING_DPI_C
+  wire [`DATA_WIDTH-1:0] sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]}[`DATA_WIDTH-1:0] ;
+`else
+  wire [`DATA_WIDTH-1:0]sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]};
 // wire [`DATA_WIDTH-1:0]sra_result = {{{(`DATA_WIDTH){alu_a_data[`DATA_WIDTH-1]}},alu_a_data} >> alu_b_data[5:0]} ;
+`endif
 
 reg [`DATA_WIDTH-1:0]       alu_out_data_r;
 assign alu_out_data = alu_out_data_r;

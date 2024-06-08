@@ -333,6 +333,8 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .axi_r_id_i     ( io_master_rid     )
 );
 
+`ifdef USING_DPI_C
+
 import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit valid);
 always @(*)begin
     set_pc_ptr(ifu_pc,ifu_inst,1'b1);
@@ -345,6 +347,18 @@ always @(posedge clock)begin
     inst_type_count(ifu_inst);
   end
 end
+
+import "DPI-C" function void get_riscv32_rst(input bit reset);
+always @(*)begin
+    get_riscv32_rst(reset);
+end
+
+import "DPI-C" function void set_axi_resp(input int b_resp,input int r_resp);
+always @(*)begin
+    set_axi_resp({30'd0,io_master_bresp},{30'd0,io_master_rresp});
+end
+
+`endif
 
 endmodule
 

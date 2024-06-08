@@ -6,6 +6,9 @@
 `define REG_COUNT           (1<<`REG_WIDTH)
 
 
+// `define USING_DPI_C     // use for make sta
+
+
 // opcode
 `define LUI     7'b01101_11     //lui
 `define AUIPC   7'b00101_11     //auipc

@@ -41,10 +41,7 @@ reg flush_inst;
 
 assign ifu_stall = ifu_stall_r;
 
-import "DPI-C" function void get_riscv32_rst(input bit reset);
-always @(*)begin
-    get_riscv32_rst(reset);
-end
+
 
 initial begin
     pc = 32'h3000_0000;

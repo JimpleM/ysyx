@@ -140,8 +140,12 @@ assign axi_ar_burst_o   = `AXI_BURST_INCR;
 assign axi_r_ready_o    = (axi_r_state == AXI_R_DATA) ? 'b1 : 'b0;
 
 assign cpu_r_ready_o    = axi_r_valid_i;
-assign cpu_r_data_o     = {axi_r_data_i >> {cpu_r_addr_i[2:0],3'd0}}[`DATA_WIDTH-1:0];
 assign cpu_r_last_o     = axi_r_last_i;
+`ifdef USING_DPI_C
+assign cpu_r_data_o     = {axi_r_data_i >> {cpu_r_addr_i[2:0],3'd0}}[`DATA_WIDTH-1:0];
+`else
+assign cpu_r_data_o     = {axi_r_data_i >> {cpu_r_addr_i[2:0],3'd0}};
+`endif
      
 reg [`AXI_LEN_WIDTH-1:0]    axi_r_cnt;
 always @(posedge aclk ) begin
@@ -172,9 +176,4 @@ always @(posedge aclk ) begin
     end
 end
 
-import "DPI-C" function void set_axi_resp(input int b_resp,input int r_resp);
-
-always @(*)begin
-    set_axi_resp({30'd0,axi_b_resp_i},{30'd0,axi_r_resp_i});
-end
 endmodule

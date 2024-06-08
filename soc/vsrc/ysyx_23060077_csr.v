@@ -55,9 +55,10 @@ reg [`DATA_WIDTH-1:0]       rd_data_r;
 assign rd_data = rd_data_r;
 
 reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
+`ifdef
 import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg []);
 initial set_csr_ptr(csr_reg);
-
+`endif
 wire wr_en,rd_en;
 assign wr_en = (i_inst[6:0] == `SYS && i_inst[14:12] != 3'b000);
 assign rd_en = (i_inst[6:0] == `SYS && i_inst[14:12] != 3'b000);

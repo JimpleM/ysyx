@@ -133,7 +133,7 @@ assign lsu_w_len_o	  = 8'd0;
 //     $display("read addr = %x data = %x\n",raddr,rdata);
 //   end
 // end
-
+`ifdef USING_DPI_C
 import "DPI-C" function void device_skip(input bit ren,input int raddr, input bit wen,input int waddr);
 always @(*)begin
   device_skip(ren,raddr,wen,waddr);
@@ -150,6 +150,6 @@ import "DPI-C" function void sdram_check(input int addr, input int data, input i
 //     $display("write addr = %x data = %x\n",waddr,wdata);
 //   end
 // end
-
+`endif
 
 endmodule

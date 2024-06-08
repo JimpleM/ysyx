@@ -30,19 +30,14 @@ assign rs2_data = gpr[rs2_addr];
 
 always @(posedge clk) begin
     if (rd_en)begin
-        if(rd_addr == 5'd0)begin
-            gpr[rd_addr] <= 32'd0;
-        end
-        else begin
-            gpr[rd_addr] <= rd_data;
-        end
-        
+        gpr[rd_addr] <= rd_data;
     end 
 end
 
-
+`ifdef USING_DPI_C
 // for sim
 import "DPI-C" function void set_gpr_ptr(input logic [63:0] a []);
 initial set_gpr_ptr(gpr);  // rf为通用寄存器的二维数组变量
+`endif
 
 endmodule
