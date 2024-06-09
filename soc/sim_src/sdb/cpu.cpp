@@ -84,31 +84,64 @@ void reset(){
   top->reset = 0;
 }
 
+// static void statistic() {
+//   printf(ANSI_FMT("Total clock amount = %u\n",ANSI_FG_BLUE), total_clock_cnt);
+//   printf(ANSI_FMT("Total instructions amout= %u\n",ANSI_FG_BLUE), total_inst_cnt);
+//   printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_GREEN), (float)total_clock_cnt/total_inst_cnt);
+//   uint32_t sum_clock = 0,sum_inst=0;
+//   uint32_t idx;
+//   for(int i=0; i<11; i++){
+//     idx = opcodeArray[i].opcode;
+//     printf(ANSI_FMT("Inst %s ",ANSI_FG_YELLOW),opcodeArray[i].name);
+//     printf(ANSI_FMT("amount = %7u cycles = %8u Average cycles of each inst = %2.3f\n",ANSI_FG_BLUE),
+//     inst_type_counter[idx][0],inst_type_counter[idx][1],
+//     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
+//     sum_inst  += inst_type_counter[idx][0];
+//     sum_clock += inst_type_counter[idx][1];
+//   };
+//   printf("\n");
+//   printf(ANSI_FMT("SUM clock        = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_clock);
+//   printf(ANSI_FMT("SUM inst         = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_inst);
+//   printf("\n");
+//   printf(ANSI_FMT("IFU inst counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),ifu_inst_counter);
+//   printf(ANSI_FMT("LSU read  clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_read_clock);
+//   printf(ANSI_FMT("LSU r_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+//   printf(ANSI_FMT("LSU write clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_write_clock);
+//   printf(ANSI_FMT("LSU w_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
+//   printf(ANSI_FMT("EXU data counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),exu_data_counter);
+// }
+
 static void statistic() {
-  printf(ANSI_FMT("Total clock amount = %u\n",ANSI_FG_BLUE), total_clock_cnt);
-  printf(ANSI_FMT("Total instructions amout= %u\n",ANSI_FG_BLUE), total_inst_cnt);
-  printf(ANSI_FMT("Average cycles of each instruction= %f\n",ANSI_FG_GREEN), (float)total_clock_cnt/total_inst_cnt);
+  printf("---------------------------------------------------------\n");
+  printf("| Total clock amount                  |  %13u  |\n", total_clock_cnt);
+  printf("| Total instructions amout            |  %13u  |\n", total_inst_cnt);
+  printf("| Average cycles of each instruction  |%15.3f  |\n", (float)total_clock_cnt/total_inst_cnt);
+  printf("---------------------------------------------------------\n");
   uint32_t sum_clock = 0,sum_inst=0;
   uint32_t idx;
+  printf("---------------------------------------------------------\n");
+  printf("|  Inst  |    Amount    |    cycles    | Average cycles |\n");
+  printf("---------------------------------------------------------\n");
   for(int i=0; i<11; i++){
     idx = opcodeArray[i].opcode;
-    printf(ANSI_FMT("Inst %s ",ANSI_FG_YELLOW),opcodeArray[i].name);
-    printf(ANSI_FMT("amount = %7u cycles = %8u Average cycles of each inst = %2.3f\n",ANSI_FG_BLUE),
-    inst_type_counter[idx][0],inst_type_counter[idx][1],
+    printf("|%8s|%14u|%14u|%16.3f|\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
     sum_inst  += inst_type_counter[idx][0];
     sum_clock += inst_type_counter[idx][1];
   };
-  printf("\n");
-  printf(ANSI_FMT("SUM clock        = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_clock);
-  printf(ANSI_FMT("SUM inst         = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),sum_inst);
-  printf("\n");
-  printf(ANSI_FMT("IFU inst counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),ifu_inst_counter);
-  printf(ANSI_FMT("LSU read  clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_read_clock);
-  printf(ANSI_FMT("LSU r_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
-  printf(ANSI_FMT("LSU write clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),lsu_write_clock);
-  printf(ANSI_FMT("LSU w_avr clock  = ",ANSI_FG_YELLOW)ANSI_FMT("%2.3f\n",ANSI_FG_GREEN),(float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
-  printf(ANSI_FMT("EXU data counter = ",ANSI_FG_YELLOW)ANSI_FMT("%u\n",ANSI_FG_GREEN),exu_data_counter);
+  printf("---------------------------------------------------------\n");
+  printf("|                        Summary                        |\n");
+  printf("---------------------------------------------------------\n");
+  printf("|   SUM clock           |      %14u           |\n", sum_clock);
+  printf("|   SUM inst            |      %14u           |\n", sum_inst);
+  printf("---------------------------------------------------------\n");
+  printf("|   IFU inst counter    |     %14u            |\n", ifu_inst_counter);
+  printf("|   LSU read  clock     |     %14u            |\n", lsu_read_clock);
+  printf("|   LSU r_avr clock     |   %16.3f            |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+  printf("|   LSU write clock     |     %14u            |\n", lsu_write_clock);
+  printf("|   LSU w_avr clock     |   %16.3f            |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
+  printf("|   EXU data counter    |     %14u            |\n", exu_data_counter);
+  printf("---------------------------------------------------------\n");
 }
 
 void assert_fail_msg() {
