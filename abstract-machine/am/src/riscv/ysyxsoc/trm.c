@@ -13,7 +13,7 @@ extern char _pmem_start;
 
 Area heap = RANGE(&_heap_start, &_heap_end);
 #ifndef MAINARGS
-#define MAINARGS "test"
+#define MAINARGS ""
 #endif
 static const char mainargs[] = MAINARGS;
 

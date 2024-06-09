@@ -21,6 +21,9 @@ LDFLAGS   += --gc-sections -e _start
 SOCFLAGS += --elf $(IMAGE).elf
 SOCFLAGS += --img $(IMAGE).bin
 SOCFLAGS += --diff ${NEMU_SOC_HOME}/build/riscv32-nemu-interpreter-so
+# 定义一个MAINARGS宏定义给trm.c
+CFLAGS += -DMAINARGS=\"$(mainargs)\"
+.PHONY: $(AM_HOME)/am/src/riscv/ysyxsoc/trm.c
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -h -t -d $(IMAGE).elf > $(IMAGE).txt
