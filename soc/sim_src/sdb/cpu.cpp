@@ -132,15 +132,15 @@ static void statistic() {
   printf("---------------------------------------------------------\n");
   printf("|                        Summary                        |\n");
   printf("---------------------------------------------------------\n");
-  printf("|   SUM clock           |      %14u           |\n", sum_clock);
-  printf("|   SUM inst            |      %14u           |\n", sum_inst);
+  printf("|   SUM clock             |          %14u     |\n", sum_clock);
+  printf("|   SUM inst              |          %14u     |\n", sum_inst);
   printf("---------------------------------------------------------\n");
-  printf("|   IFU inst counter    |     %14u            |\n", ifu_inst_counter);
-  printf("|   LSU read  clock     |     %14u            |\n", lsu_read_clock);
-  printf("|   LSU r_avr clock     |   %16.3f            |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
-  printf("|   LSU write clock     |     %14u            |\n", lsu_write_clock);
-  printf("|   LSU w_avr clock     |   %16.3f            |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
-  printf("|   EXU data counter    |     %14u            |\n", exu_data_counter);
+  printf("|   IFU inst counter      |          %14u     |\n", ifu_inst_counter);
+  printf("|   LSU read  clock       |          %14u     |\n", lsu_read_clock);
+  printf("|   LSU r_avr clock       |        %16.3f     |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+  printf("|   LSU write clock       |          %14u     |\n", lsu_write_clock);
+  printf("|   LSU w_avr clock       |        %16.3f     |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
+  printf("|   EXU data counter      |          %14u     |\n", exu_data_counter);
   printf("---------------------------------------------------------\n");
 }
 
