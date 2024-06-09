@@ -42,15 +42,22 @@ reg flush_inst;
 assign ifu_stall = ifu_stall_r;
 
 
-
 initial begin
-    pc = 32'h3000_0000;
-    ifu_pc_o_r = 32'h3000_0000;
+    `ifdef NPC_SIM
+        pc = 32'h8000_0000;
+        ifu_pc_o_r = 32'h8000_0000;
+    `else
+        pc = 32'h3000_0000;
+        ifu_pc_o_r = 32'h3000_0000;
+    `endif
 end
 always @(posedge clk) begin
     if(reset)begin
-        pc <= 32'h3000_0000;
-        // pc <= 32'h0f000000;
+        `ifdef NPC_SIM
+            pc <= 32'h8000_0000;
+        `else
+            pc <= 32'h3000_0000;
+        `endif
     end
     else if(flush_inst)begin
         pc <= pc;

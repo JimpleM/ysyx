@@ -1,6 +1,5 @@
 #include "device.h"
 
-#include <SDL2/SDL.h>
 
 // Note that this is not the standard
 #define KEYDOWN_MASK 0x8000

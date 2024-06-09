@@ -4,9 +4,6 @@
 #include "difftest.h"
 #include "init.h"
 
-
-#include "VysyxSoCFull.h"
-#include "VysyxSoCFull__Dpi.h"
 using namespace std;
 struct OpcodeInfo{
     int opcode;

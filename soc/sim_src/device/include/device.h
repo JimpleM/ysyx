@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "map.h"
+#include <SDL2/SDL.h>
 
 #define DEVICE_BASE 0xa0000000
 #define MMIO_BASE 0xa0000000

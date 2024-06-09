@@ -1,6 +1,6 @@
 #include "include/device_lib.h"
 #include "include/device.h"
-#include <SDL2/SDL.h>
+
 
 #include "include/map.h"
 #include "config.h"

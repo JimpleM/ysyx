@@ -1,5 +1,15 @@
 TOPNAME = ysyxSoCFull
-NXDC_FILES = constr/top.nxdc
+# TOPNAME = ysyx_23060077
+
+ifeq ($(TOPNAME),ysyx_23060077)
+	CXXFLAGS += -DNPC_SIM="\"V$(TOPNAME)\""
+	NXDC_FILES = constr/ysyx_23060077.nxdc
+# 利用+define+NPC_SIM给verilog加define
+	VERILATOR_FLAGS += +define+NPC_SIM
+else
+	NXDC_FILES = constr/ysyxSoCFull.nxdc
+endif
+
 INC_PATH ?=
 
 VERILATOR = verilator
@@ -41,6 +51,7 @@ $(shell mkdir -p $(BUILD_DIR))
 # constraint file
 SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
 $(SRC_AUTO_BIND): $(NXDC_FILES)
+	rm $@
 	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
 
 # project source
@@ -61,6 +72,7 @@ INC_PATH += $(SOC_HOME)/sim_src/device/include
 # INC_PATH += $(SOC_HOME)/sim_src/device/io
 INCFLAGS += $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" -w
+CXXFLAGS += $(INCFLAGS) -DTOP_INC="\"V$(TOPNAME).h\"" -w
 
 # llvm, 用figure—out消除 warning: "__STDC_FORMAT_MACROS" redefined报错
 LLVM_FLAGS += $(filter-out -D__STDC_FORMAT_MACROS, $(shell llvm-config --cxxflags))  -fPIE

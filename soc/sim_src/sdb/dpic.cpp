@@ -5,8 +5,6 @@
 #include "pmem.h"
 #include "device_lib.h"
 #include "difftest.h"
-// #include "VysyxSoCFull__Dpi.h"
-#include "verilated_dpi.h"
 
 
 bool riscv32_rst = false;

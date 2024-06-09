@@ -17,10 +17,14 @@
 #define __STDC_FORMAT_MACROS
 #endif
 
-
+#ifdef NPC_SIM
+#include "Vysyx_23060077.h"
+#else
 #include "VysyxSoCFull.h"
+#endif
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include "verilated_dpi.h"
 
 
 #ifdef ISA64
