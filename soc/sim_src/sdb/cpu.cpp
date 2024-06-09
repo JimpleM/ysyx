@@ -124,7 +124,7 @@ static void statistic() {
   printf("---------------------------------------------------------\n");
   for(int i=0; i<11; i++){
     idx = opcodeArray[i].opcode;
-    printf("|%8s|%14u|%14u|%16.3f|\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
+    printf("|%7s |%13u |%13u |%15.3f |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
     sum_inst  += inst_type_counter[idx][0];
     sum_clock += inst_type_counter[idx][1];
