@@ -2,7 +2,7 @@ function_map=("perf1" perf "perf2" perf2)
 
 function perf1(){
     echo "perf1"
-    git checkout 984c91fa63fcc1a1bfc467fe19155b1de68d2ad1
+    make $1
     cd ../am-kernels/benchmarks/microbench/
     make ARCH="riscv32e-ysyxsoc" run mainargs=$2 -s
 }
