@@ -1,0 +1,254 @@
+module axi4_delayer(
+  input         clock,
+  input         reset,
+
+  output        in_arready,
+  input         in_arvalid,
+  input  [3:0]  in_arid,
+  input  [31:0] in_araddr,
+  input  [7:0]  in_arlen,
+  input  [2:0]  in_arsize,
+  input  [1:0]  in_arburst,
+  input         in_rready,
+  output        in_rvalid,
+  output [3:0]  in_rid,
+  output [63:0] in_rdata,
+  output [1:0]  in_rresp,
+  output        in_rlast,
+  output        in_awready,
+  input         in_awvalid,
+  input  [3:0]  in_awid,
+  input  [31:0] in_awaddr,
+  input  [7:0]  in_awlen,
+  input  [2:0]  in_awsize,
+  input  [1:0]  in_awburst,
+  output        in_wready,
+  input         in_wvalid,
+  input  [63:0] in_wdata,
+  input  [7:0]  in_wstrb,
+  input         in_wlast,
+                in_bready,
+  output        in_bvalid,
+  output [3:0]  in_bid,
+  output [1:0]  in_bresp,
+
+  input         out_arready,
+  output        out_arvalid,
+  output [3:0]  out_arid,
+  output [31:0] out_araddr,
+  output [7:0]  out_arlen,
+  output [2:0]  out_arsize,
+  output [1:0]  out_arburst,
+  output        out_rready,
+  input         out_rvalid,
+  input  [3:0]  out_rid,
+  input  [63:0] out_rdata,
+  input  [1:0]  out_rresp,
+  input         out_rlast,
+  input         out_awready,
+  output        out_awvalid,
+  output [3:0]  out_awid,
+  output [31:0] out_awaddr,
+  output [7:0]  out_awlen,
+  output [2:0]  out_awsize,
+  output [1:0]  out_awburst,
+  input         out_wready,
+  output        out_wvalid,
+  output [63:0] out_wdata,
+  output [7:0]  out_wstrb,
+  output        out_wlast,
+                out_bready,
+  input         out_bvalid,
+  input  [3:0]  out_bid,
+  input  [1:0]  out_bresp
+);
+
+  assign in_arready = out_arready;
+  assign out_arvalid = in_arvalid;
+  assign out_arid = in_arid;
+  assign out_araddr = in_araddr;
+  assign out_arlen = in_arlen;
+  assign out_arsize = in_arsize;
+  assign out_arburst = in_arburst;
+  assign out_rready = in_rready;
+  // assign in_rvalid = out_rvalid;
+  assign in_rid = out_rid;
+  // assign in_rdata = out_rdata;
+  // assign in_rresp = out_rresp;
+  // assign in_rlast = out_rlast;
+  assign in_awready = out_awready;
+  assign out_awvalid = in_awvalid;
+  assign out_awid = in_awid;
+  assign out_awaddr = in_awaddr;
+  assign out_awlen = in_awlen;
+  assign out_awsize = in_awsize;
+  assign out_awburst = in_awburst;
+  assign in_wready = out_wready;
+  assign out_wvalid = in_wvalid;
+  assign out_wdata = in_wdata;
+  assign out_wstrb = in_wstrb;
+  assign out_wlast = in_wlast;
+  assign out_bready = in_bready;
+  // assign in_bvalid = out_bvalid;
+  assign in_bid = out_bid;
+  // assign in_bresp = out_bresp;
+wire [15:0] r;            // r = 3.625, s = 2^4 = 16
+assign r[15:4] = 'd2;     // 设置成2，意味着传输每一个周期要多2个delay
+assign r[3:0]  = 4'b1010; // 定点数0.5+0.125 = 0.625
+
+localparam DELAY_STATE_WIDTH = 2;
+
+// 写逻辑
+reg [DELAY_STATE_WIDTH-1:0] delay_w_state;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_W_IDLE   = 'd0;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_W_TRANS  = 'd1;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_W_WAIT   = 'd2;
+
+reg  [15:0] w_counter;
+reg 				w_bvalid;
+reg  [1:0]  w_bresp;
+
+assign  in_bvalid = w_bvalid;
+assign 	in_bresp = w_bresp;
+
+always @(posedge aclk ) begin
+	if(areset_n)begin
+			delay_w_state <= DELAY_W_IDLE;
+			w_counter     <= 'd0;
+			w_bvalid			<= 'd0;
+			w_bresp				<= 'd0;
+	end
+	else begin
+		case(delay_w_state)
+			DELAY_W_IDLE:begin
+				w_bvalid			<= 'd0;
+				w_bresp				<= 'd0;
+				if(in_awvalid)begin
+						delay_w_state     <= DELAY_W_TRANS;
+						w_counter					<= w_counter + r;
+				end
+			end
+			DELAY_W_TRANS:begin
+				w_counter						<= w_counter + r;
+				if(in_bvalid)begin
+					delay_w_state     <= DELAY_W_WAIT;
+					w_b_valid					<= out_bvalid;
+					w_bresp						<= out_bresp;
+				end
+			end
+			DELAY_W_WAIT:begin
+				if(w_counter[15:4] == 'd0)begin
+					delay_w_state <= DELAY_W_IDLE;
+				end
+				else begin
+					w_counter[15:4] <= w_counter[15:4] - 12'd1;
+				end
+			end
+			default:begin
+				delay_w_state <= DELAY_W_IDLE;
+			end
+		endcase
+	end
+end
+
+
+// 读逻辑
+reg [DELAY_STATE_WIDTH-1:0] delay_r_state;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_R_IDLE   = 'd0;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_R_TRANS  = 'd1;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_R_WAIT   = 'd2;
+localparam [DELAY_STATE_WIDTH-1:0] DELAY_R_LAST   = 'd3;
+
+reg  [15:0] r_counter;
+reg 				r_rvalid;
+reg  [63:0] r_rdata;
+reg  [1:0]  r_rresp;
+reg 				r_rlast;
+
+reg 				out_rvalid_t;
+reg  [63:0] out_rdata_t	;
+reg  [1:0]  out_rresp_t	;
+reg 				out_rlast_t	;
+
+assign  in_bvalid = r_bvalid;
+assign 	in_bresp = r_bresp;
+
+assign in_rvalid 	= out_rvalid_t;
+assign in_rdata 	= out_rdata_t;
+assign in_rresp 	= out_rresp_t;
+assign in_rlast 	= out_rlast_t;
+
+always @(posedge aclk ) begin
+	if(areset_n)begin
+			delay_r_state <= DELAY_R_IDLE;
+			r_counter     <= 'd0;
+			r_rvalid			<= 'd0;
+			r_rdata				<= 'd0;
+			r_rresp				<= 'd0;
+			r_rlast				<= 'd0;
+
+			out_rvalid_t	<= 'd0;
+			out_rdata_t		<= 'd0;
+			out_rresp_t		<= 'd0;
+			out_rlast_t		<= 'd0;
+	end
+	else begin
+		case(delay_r_state)
+			DELAY_R_IDLE:begin
+				if(in_arvalid)begin
+						delay_r_state     <= DELAY_R_TRANS;
+						r_counter					<= r_counter + r;
+				end
+			end
+			DELAY_R_TRANS:begin
+				r_counter						<= r_counter + r;
+
+				out_rvalid_t				<= out_rvalid;
+				out_rdata_t					<= out_rdata;
+				out_rresp_t					<= out_rresp;
+				out_rlast_t					<= out_rlast;
+				if(out_rlast)begin
+					delay_r_state     <= DELAY_R_WAIT;
+					r_rvalid					<= out_rvalid;
+					r_rdata						<= out_rdata;
+					r_rresp						<= out_rresp;
+					r_rlast						<= out_rlast;
+
+					out_rvalid_t			<= 'd0;
+					out_rdata_t				<= 'd0;
+					out_rresp_t				<= 'd0;
+					out_rlast_t				<= 'd0;
+				end
+			end
+			DELAY_R_WAIT:begin
+				if(r_counter[15:4] == 'd0)begin
+					delay_r_state 		<= DELAY_R_LAST;
+
+					out_rvalid_t			<= r_rvalid	;
+					out_rdata_t				<= r_rdata	;
+					out_rresp_t				<= r_rresp	;
+					out_rlast_t				<= r_rlast	;
+				end
+				else begin
+					r_counter[15:4] 	<= r_counter[15:4] - 12'd1;
+				end
+			end
+			DELAY_R_LAST:begin
+				delay_r_state 			<= DELAY_R_IDLE;
+				r_rvalid						<= 'd0;
+				r_rdata							<= 'd0;
+				r_rresp							<= 'd0;
+				r_rlast							<= 'd0;
+
+				out_rvalid_t				<= out_rvalid	;
+				out_rdata_t					<= out_rdata	;
+				out_rresp_t					<= out_rresp	;
+				out_rlast_t					<= out_rlast	;
+			end
+			default:begin
+				delay_r_state <= DELAY_R_IDLE;
+			end
+		endcase
+	end
+end
+endmodule

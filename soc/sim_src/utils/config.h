@@ -39,7 +39,7 @@
 #ifdef CONFIG_WAVE
     #define CONFIG_WAVE_PC_BEGIN    0x30000000
     // #define CONFIG_WAVE_PC_BEGIN    0x80000000
-    #define CONFIG_WAVE_PC_END      0x30000004
+    #define CONFIG_WAVE_PC_END      0x80000000
 #endif
 
 #ifdef CONFIG_ITRACE
