@@ -1,2 +1,2 @@
 cd ../am-kernels/benchmarks/microbench/
-make ARCH="riscv32e-ysyxsoc" run mainargs=$1 -s
+make ARCH="riscv32e-ysyxsoc" run mainargs=$1
