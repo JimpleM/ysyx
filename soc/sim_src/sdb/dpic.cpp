@@ -151,19 +151,20 @@ extern "C"  void exu_data_finished(){
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		if(in_pmem(raddr)){
-			// printf("%8x\n",raddr);
 			*rdata = pmem_read((uint32_t)raddr,4);
+			// printf("%8x %8x\n",raddr,*rdata);
 			if(*rdata == 0x00100073){
 				stop_flag = 1;
 			}
 			// if(raddr == 0x80001200){ //gpr 13
 			// 	stop_flag = 1;
 			// }
-		}else{
-			device_flag = 1;
-			// printf("%8x\n",raddr);
-			*rdata = device_read((uint32_t) raddr);
 		}
+		// else{
+		// 	device_flag = 1;
+		// 	// printf("%8x\n",raddr);
+		// 	*rdata = device_read((uint32_t) raddr);
+		// }
 
 #ifdef CONFIG_MTRACE
 	if(top->clock == 0){
@@ -179,9 +180,8 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 	if(wen){
-		// printf("%8x\n",waddr);
 		if(in_pmem(waddr)){
-			pmem_write((uint32_t)waddr,(uint32_t)wdata,wmask);
+			pmem_write((uint32_t)waddr,(uint32_t)wdata,(1 << wmask));
 		}else{
 			device_write((uint32_t) waddr, (uint32_t) wdata);
 		}

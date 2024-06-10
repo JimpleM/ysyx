@@ -34,16 +34,16 @@ void device_write(uint32_t addr, uint32_t data){
     // printf("%8x addr",addr);
     // if(top->clock == 0){
         // printf("%8x addr",addr);
-        if(addr == SYNC_ADDR){
-            vga_update_screen(data);
-        }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR){
-            mmio_write(addr,4,data);
-            // printf("mmio addr %x data %x\n",addr,data);
-        }
-        // else if(addr == SERIAL_PORT){
-        //     uart_write(data);
-        //     //  printf("%8x add\n");
+        // if(addr == SYNC_ADDR){
+        //     vga_update_screen(data);
+        // }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR){
+        //     mmio_write(addr,4,data);
+        //     // printf("mmio addr %x data %x\n",addr,data);
         // }
+        if(addr == SERIAL_PORT_START){
+            uart_write(data);
+            //  printf("%8x add\n");
+        }
         else if(addr != 0){
             // Assert(0,"no device addr %8x",addr);
         }

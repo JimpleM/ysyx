@@ -93,7 +93,7 @@ always @(posedge aclk ) begin
             end
             CLINT_R_DATA:begin
                 if(axi_clint_r_ready_i & axi_clint_r_last_o)begin
-                    clint_r_state     <= CLINT_R_ADDR;
+                    clint_r_state     <= CLINT_R_IDLE;
                 end
             end
             default:begin

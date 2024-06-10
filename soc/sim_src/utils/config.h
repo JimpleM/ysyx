@@ -3,7 +3,7 @@
 
 
 // MROM address
-#define PMEM_LEFT  0x30000000
+#define PMEM_LEFT  0x80000000
 #define PMEM_SIZE  0x10000000
 #define PMEM_RIGHT PMEM_LEFT + PMEM_SIZE -1
 
@@ -29,17 +29,17 @@
 // #define CONFIG_WATCHPOINT
 // #define CONFIG_MTRACE
 // #define CONFIG_DTRACE
-
+#ifndef NPC_SIM
 #define CONFIG_NVBOARD
-
+#endif
 // #define CONFIG_VGA
 
 // #define CONFIG_WAVE
 
 #ifdef CONFIG_WAVE
-    #define CONFIG_WAVE_PC_BEGIN    0x30000000
+    #define CONFIG_WAVE_PC_BEGIN    0x80000000
     // #define CONFIG_WAVE_PC_BEGIN    0x80000000
-    #define CONFIG_WAVE_PC_END      0x80000000
+    #define CONFIG_WAVE_PC_END      0x8FFFFFFF
 #endif
 
 #ifdef CONFIG_ITRACE

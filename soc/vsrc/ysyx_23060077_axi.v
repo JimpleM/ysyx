@@ -80,7 +80,8 @@ assign axi_w_last_o     = axi_w_valid_o & axi_w_ready_i & (axi_w_cnt == cpu_w_le
 assign axi_b_ready_o    = (axi_w_state == AXI_W_RESP | axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
 
 assign cpu_w_ready_o    = axi_w_ready_i;
-assign cpu_w_last_o     = axi_b_valid_i; //考虑用axi_b_valid_i还是axi_w_last_o
+assign cpu_w_last_o     = axi_w_last_o; //考虑用axi_b_valid_i还是axi_w_last_o，
+// 因为lsu要ready和last同步，所以这里用axi_w_last_o
 
 
 reg [`AXI_LEN_WIDTH-1:0]    axi_w_cnt;

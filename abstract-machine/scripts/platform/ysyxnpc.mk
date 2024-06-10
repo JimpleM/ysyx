@@ -1,19 +1,18 @@
-AM_SRCS := riscv/ysyxsoc/start.S \
-           riscv/ysyxsoc/trm.c \
-           riscv/ysyxsoc/ioe.c \
-           riscv/ysyxsoc/timer.c \
-           riscv/ysyxsoc/input.c \
-           riscv/ysyxsoc/serial.c \
-           riscv/ysyxsoc/gpu.c \
-           riscv/ysyxsoc/cte.c \
-           riscv/ysyxsoc/trap.S \
+AM_SRCS := riscv/ysyxnpc/start.S \
+           riscv/ysyxnpc/trm.c \
+           riscv/ysyxnpc/ioe.c \
+           riscv/ysyxnpc/timer.c \
+           riscv/ysyxnpc/input.c \
+           riscv/ysyxnpc/gpu.c \
+           riscv/ysyxnpc/cte.c \
+           riscv/ysyxnpc/trap.S \
            platform/dummy/vme.c \
            platform/dummy/mpe.c
 
 CFLAGS    += -fdata-sections -ffunction-sections
 
-LDFLAGS   += -T $(AM_HOME)/scripts/linker_ysyxsoc.ld \
-			--defsym=_pmem_start=0x0f000000  \
+LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld 
+LDFLAGS   += --defsym=_pmem_start=0x80000000  \
 			--defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
@@ -23,7 +22,7 @@ SOCFLAGS += --img $(IMAGE).bin
 SOCFLAGS += --diff ${NEMU_SOC_HOME}/build/riscv32-nemu-interpreter-so
 # 定义一个MAINARGS宏定义给trm.c
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
-.PHONY: $(AM_HOME)/am/src/riscv/ysyxsoc/trm.c
+.PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -h -t -d $(IMAGE).elf > $(IMAGE).txt
