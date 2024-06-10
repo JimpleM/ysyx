@@ -6,6 +6,25 @@ module ysyx_23060077_id_imm(
 reg [`DATA_WIDTH-1:0]   imm_r;
 assign imm = imm_r;
 
+
+// always @(*) begin
+//     case(inst[6:0])
+//         `LUI   : imm_r = {inst[31:12],12'd0}    ;
+//         `AUIPC : imm_r = {inst[31:12],12'd0}    ;
+//         `JAL   : imm_r = {{11{inst[31]}},inst[31],inst[19:12],inst[20],inst[30:21],1'b0}    ;
+//         `JALR  : imm_r = {{20{inst[31]}},inst[31:20]}    ;
+//         `BRANCH: imm_r = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0}    ;
+//         `LOAD  : imm_r = {{20{inst[31]}},inst[31:20]}    ;
+//         `STORE : imm_r = {{20{inst[31]}},inst[31:25],inst[11:7]}    ;
+//         `OP_IMM: imm_r = {{20{inst[31]}},inst[31:20]}    ;
+//         `OP    : imm_r = 32'd0    ;
+//         `FENCE : imm_r = 32'd0;
+//         `SYS   : imm_r = {{20{inst[31]}},inst[31:20]}    ;
+//         default: imm_r = 32'd0; 
+//     endcase
+// end
+
+
 wire [`DATA_WIDTH-1:0]  imm_typeI;
 wire [`DATA_WIDTH-1:0]  imm_typeU;
 wire [`DATA_WIDTH-1:0]  imm_typeS;
