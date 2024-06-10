@@ -27,7 +27,7 @@ VERILATOR_FLAGS += --autoflush
 # VERILATOR_FLAGS += --threads 10
 
 BUILD_DIR  = ./build
-OBJ_DIR    = $(BUILD_DIR)/obj_dir
+OBJ_DIR    = $(BUILD_DIR)/$(PLATFORM)
 BIN = $(BUILD_DIR)/$(TOPNAME)
 
 LDFLAGS += -lSDL2 -lSDL2_image
