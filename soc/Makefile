@@ -1,14 +1,3 @@
-# TOPNAME = ysyxSoCFull
-# TOPNAME = ysyx_23060077
-
-# ifeq ($(TOPNAME),ysyx_23060077)
-# 	CXXFLAGS += -DNPC_SIM="\"V$(TOPNAME)\""
-# 	NXDC_FILES = constr/ysyx_23060077.nxdc
-# # 利用+define+NPC_SIM给verilog加define
-# 	VERILATOR_FLAGS += +define+NPC_SIM
-# else
-# 	NXDC_FILES = constr/ysyxSoCFull.nxdc
-# endif
 
 ifeq ($(PLATFORM),ysyxsoc)
 	TOPNAME = ysyxSoCFull
