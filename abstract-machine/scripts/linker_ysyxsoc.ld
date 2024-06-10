@@ -4,7 +4,7 @@ MEMORY {
   flash : ORIGIN = 0x30000000, LENGTH = 256M
   psram : ORIGIN = 0x80000000, LENGTH = 4M
   sram :  ORIGIN = 0x0f000000, LENGTH = 8K
-  sdram : ORIGIN = 0xa0000000, LENGTH = 32M
+  sdram : ORIGIN = 0xa0000000, LENGTH = 64M
 }
 
 SECTIONS {
@@ -69,5 +69,5 @@ SECTIONS {
   end = .;
   _end = .;
   _heap_start = ALIGN(0x60000);
-  _heap_end = _heap_start  + 0x30000;
+  _heap_end = _heap_start  + 0x3000000;
 }

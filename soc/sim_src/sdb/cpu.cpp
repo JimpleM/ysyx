@@ -113,9 +113,9 @@ void reset(){
 
 static void statistic() {
   printf("---------------------------------------------------------\n");
-  printf("| Total clock amount                  |  %13u  |\n", total_clock_cnt);
-  printf("| Total instructions amout            |  %13u  |\n", total_inst_cnt);
-  printf("| Average cycles of each instruction  |%15.3f  |\n", (float)total_clock_cnt/total_inst_cnt);
+  printf("| Total clock amount                  |  %14u |\n", total_clock_cnt);
+  printf("| Total instructions amout            |  %14u |\n", total_inst_cnt);
+  printf("| Average cycles of each instruction  |%16.3f |\n", (float)total_clock_cnt/total_inst_cnt);
   printf("---------------------------------------------------------\n");
   uint32_t sum_clock = 0,sum_inst=0;
   uint32_t idx;

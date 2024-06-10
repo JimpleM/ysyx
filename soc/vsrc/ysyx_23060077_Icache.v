@@ -3,7 +3,7 @@
 
 module ysyx_23060077_Icache(
     input                       clock               ,
-	input                       reset               ,
+	input                       reset               
 );
 
 localparam b = 4;
