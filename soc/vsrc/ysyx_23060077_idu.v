@@ -12,7 +12,7 @@ module ysyx_23060077_idu(
     output  reg [`REG_WIDTH-1:0]        rs2,
 
 
-    output      [`DATA_WIDTH-1:0]       imm,
+    output  reg [`DATA_WIDTH-1:0]       imm,
 
     output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
     output      [`SRC_SEL_WIDTH-1:0]    src_sel,
@@ -54,10 +54,26 @@ always @(*) begin
   endcase
 end
 
-ysyx_23060077_id_imm id_imm_idu(
-    .inst      (inst),
-    .imm       (imm)
-);
+// ysyx_23060077_id_imm id_imm_idu(
+//     .inst      (inst),
+//     .imm       (imm)
+// );
+always @(*) begin
+    case(inst[6:0])
+        `LUI   : imm = {inst[31:12],12'd0}    ;
+        `AUIPC : imm = {inst[31:12],12'd0}    ;
+        `JAL   : imm = {{11{inst[31]}},inst[31],inst[19:12],inst[20],inst[30:21],1'b0}    ;
+        `JALR  : imm = {{20{inst[31]}},inst[31:20]}    ;
+        `BRANCH: imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0}    ;
+        `LOAD  : imm = {{20{inst[31]}},inst[31:20]}    ;
+        `STORE : imm = {{20{inst[31]}},inst[31:25],inst[11:7]}    ;
+        `OP_IMM: imm = {{20{inst[31]}},inst[31:20]}    ;
+        `OP    : imm = 32'd0    ;
+        `FENCE : imm = 32'd0;
+        `SYS   : imm = {{20{inst[31]}},inst[31:20]}    ;
+        default: imm = 32'd0; 
+    endcase
+end
 
 ysyx_23060077_id_opt id_opt_idu(
     .opcode     (opcode),

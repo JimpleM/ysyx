@@ -6,7 +6,7 @@ module ysyx_23060077_riscv_ifu(
     output  	[`INST_WIDTH-1:0]       inst
 );
 
-
+`ifdef USING_DPI_C
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata,input int len,input ren);
 import "DPI-C" function void set_pc_ptr(input int pc);
 import "DPI-C" function void get_riscv32_rst(input bit rst_n);
@@ -15,6 +15,6 @@ always @(*)begin
     set_pc_ptr(pc);
     get_riscv32_rst(rst_n);
 end
-
+`endif
 
 endmodule

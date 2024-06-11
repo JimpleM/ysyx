@@ -1,5 +1,5 @@
 module ysyx_23060077_top(
-	input clk,
+	input clock,
 	input rst_n
 );
 
@@ -71,7 +71,7 @@ wire [`INST_WIDTH-1:0]      csr_mpec        ;
 initial begin
     ifu_pc = 32'h8000_0000;
 end
-always @(posedge clk) begin
+always @(posedge clock) begin
     if(!rst_n)begin
         ifu_pc <= 32'h8000_0000;
     end
@@ -117,7 +117,7 @@ ysyx_23060077_riscv_idu riscv_idu_u0(
 );
 
 ysyx_23060077_riscv_regfile riscv_regfile_u0(
-    .clk			(clk		),
+    .clk			(clock		),
     .rst_n          (rst_n      ),
     .rs1_addr		(idu_rs1	),
     .rs1_data		(src1		),
@@ -143,7 +143,7 @@ ysyx_23060077_riscv_exu riscv_exu_u0(
 );
 
 ysyx_23060077_riscv_lsu riscv_lsu_u0(
-    .clk			(clk		),
+    .clk			(clock		),
     .rst_n          (rst_n      ),
     .exu_result		(exu_result),
     .src2			(src2),
@@ -157,7 +157,7 @@ assign csr_ecall = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000 && ifu_in
 assign csr_mret  = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000 && ifu_inst[31:20] == 12'b0011_0000_0010);
 
 ysyx_23060077_riscv_csr  riscv_csr_u0 (
-    .clk                     ( clk                          ),
+    .clk                     ( clock                          ),
     .rst_n                   ( rst_n                        ),
     .wr_addr                 ( idu_imm[`CSR_WIDTH-1:0]      ),
     .wr_data                 ( wr_csr_data                  ),

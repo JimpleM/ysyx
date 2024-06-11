@@ -26,13 +26,13 @@ CPU_state cpu = {};
 
 uint32_t stall_pc_cnt=0;
 
-uint32_t total_clock_cnt = 0;
-uint32_t total_inst_cnt = 0;
-extern uint32_t inst_type_counter[64][2];
-extern uint32_t ifu_inst_counter;
-extern uint32_t lsu_read_clock;
-extern uint32_t lsu_write_clock;
-extern uint32_t exu_data_counter;
+uint64_t total_clock_cnt = 0;
+uint64_t total_inst_cnt = 0;
+extern uint64_t inst_type_counter[64][2];
+extern uint64_t ifu_inst_counter;
+extern uint64_t lsu_read_clock;
+extern uint64_t lsu_write_clock;
+extern uint64_t exu_data_counter;
 
 // static bool g_print_step = false;
 #ifdef CONFIG_ITRACE
@@ -112,36 +112,36 @@ void reset(){
 // }
 
 static void statistic() {
-  printf("---------------------------------------------------------\n");
-  printf("| Total clock amount                  |  %14u |\n", total_clock_cnt);
-  printf("| Total instructions amout            |  %14u |\n", total_inst_cnt);
-  printf("| Average cycles of each instruction  |%16.3f |\n", (float)total_clock_cnt/total_inst_cnt);
-  printf("---------------------------------------------------------\n");
-  uint32_t sum_clock = 0,sum_inst=0;
+  printf("----------------------------------------------------------\n");
+  printf("| Total clock amount                   |%16lld |\n", total_clock_cnt);
+  printf("| Total instructions amout             |%16lld |\n", total_inst_cnt);
+  printf("| Average cycles of each instruction   |%16.3f |\n", (float)total_clock_cnt/total_inst_cnt);
+  printf("----------------------------------------------------------\n");
+  uint64_t sum_clock = 0,sum_inst=0;
   uint32_t idx;
-  printf("---------------------------------------------------------\n");
-  printf("|  Inst  |    Amount    |    cycles    | Average cycles |\n");
-  printf("---------------------------------------------------------\n");
+  printf("----------------------------------------------------------\n");
+  printf("|  Inst  |    Amount    |    cycles    |  Average cycles |\n");
+  printf("----------------------------------------------------------\n");
   for(int i=0; i<11; i++){
     idx = opcodeArray[i].opcode;
-    printf("|%7s |%13u |%13u |%15.3f |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
+    printf("|%7s |%13u |%13u |%16.3f |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
     sum_inst  += inst_type_counter[idx][0];
     sum_clock += inst_type_counter[idx][1];
   };
-  printf("---------------------------------------------------------\n");
-  printf("|                        Summary                        |\n");
-  printf("---------------------------------------------------------\n");
-  printf("|   SUM clock             |          %14u     |\n", sum_clock);
-  printf("|   SUM inst              |          %14u     |\n", sum_inst);
-  printf("---------------------------------------------------------\n");
-  printf("|   IFU inst counter      |          %14u     |\n", ifu_inst_counter);
-  printf("|   LSU read  clock       |          %14u     |\n", lsu_read_clock);
-  printf("|   LSU r_avr clock       |        %16.3f     |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
-  printf("|   LSU write clock       |          %14u     |\n", lsu_write_clock);
-  printf("|   LSU w_avr clock       |        %16.3f     |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
-  printf("|   EXU data counter      |          %14u     |\n", exu_data_counter);
-  printf("---------------------------------------------------------\n");
+  printf("----------------------------------------------------------\n");
+  printf("|                         Summary                        |\n");
+  printf("----------------------------------------------------------\n");
+  printf("|   SUM clock              |        %16lld     |\n", sum_clock);
+  printf("|   SUM inst               |        %16lld     |\n", sum_inst);
+  printf("----------------------------------------------------------\n");
+  printf("|   IFU inst counter       |        %16lld     |\n", ifu_inst_counter);
+  printf("|   LSU read  clock        |        %16lld     |\n", lsu_read_clock);
+  printf("|   LSU r_avr clock        |        %16.3f     |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+  printf("|   LSU write clock        |        %16lld     |\n", lsu_write_clock);
+  printf("|   LSU w_avr clock        |        %16.3f     |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
+  printf("|   EXU data counter       |        %16lld     |\n", exu_data_counter);
+  printf("----------------------------------------------------------\n");
 }
 
 void assert_fail_msg() {

@@ -72,6 +72,7 @@ ysyx_23060077_riscv_mux#(
 
 
 // sim
+`ifdef USING_DPI_C
 import "DPI-C" function void riscv_pmem_read(input int raddr, output int rdata, input int len, input ren);
 import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata,  input int wmask, input wen);
 
@@ -79,5 +80,5 @@ always @(*)begin
     riscv_pmem_read(raddr,rdata,rlen,ren);
     riscv_pmem_write(waddr,wdata,wmask,wen);
 end
-
+`endif
 endmodule

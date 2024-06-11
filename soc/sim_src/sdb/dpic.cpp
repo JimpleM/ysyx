@@ -21,12 +21,12 @@ extern NPCState npc_state;
 extern TOP_NAME* top;
 
 uint32_t lst_inst = 0;
-uint32_t inst_type_counter[64][2]; // 0 store inst number, 1 store clock
+uint64_t inst_type_counter[64][2]; // 0 store inst number, 1 store clock
 
-uint32_t ifu_inst_counter = 0;
-uint32_t lsu_read_clock = 0;
-uint32_t lsu_write_clock = 0;
-uint32_t exu_data_counter = 0;
+uint64_t ifu_inst_counter = 0;
+uint64_t lsu_read_clock = 0;
+uint64_t lsu_write_clock = 0;
+uint64_t exu_data_counter = 0;
 
 #define PG_ALIGN __attribute((aligned(4096)))
 
