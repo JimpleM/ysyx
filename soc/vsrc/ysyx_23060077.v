@@ -148,7 +148,7 @@ assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu
 assign stall = mem_stall;
 
 ysyx_23060077_ifu ifu_u0(
-    .clk            ( clock         ),
+    .clock          ( clock         ),
     .reset          ( reset         ),
     .jump_pc        ( jump_pc       ),
     .jump_pc_valid  ( jump_pc_valid ),

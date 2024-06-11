@@ -1,0 +1,8 @@
+# running in Sub_basic/src/
+read -formal Sub.sv
+prep -top Sub
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

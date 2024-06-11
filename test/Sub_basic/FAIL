@@ -1,0 +1,5 @@
+Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+engine_0 (smtbmc) returned FAIL
+counterexample trace: engine_0/trace.vcd
+  failed assertion Sub.c_assert at Sub.sv:14.5-14.33 in step 0

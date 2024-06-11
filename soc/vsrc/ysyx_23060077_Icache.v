@@ -38,7 +38,7 @@ wire 	[M-1:0]        	cache_offset	= ifu_r_addr_i[M-1:0];
 reg 	[BLOCK_SIZE-1:0]	cache_data    [0:BLOCK_NUM-1];
 
 reg 	[32-1-M-N:0]      tag_ram       [0:BLOCK_NUM-1];
-reg                   	tag_valid_ram	[0:BLOCK_NUM-1];
+reg          [0:0]    	tag_valid_ram	[0:BLOCK_NUM-1];
 
 localparam ICACHE_STATE_WITDH = 3;
 reg [ICACHE_STATE_WITDH-1:0] 			icache_state;
@@ -46,7 +46,7 @@ localparam [ICACHE_STATE_WITDH-1:0] ICACHE_IDLE   		= 'd0;
 localparam [ICACHE_STATE_WITDH-1:0] ICACHE_RD_CACHE   = 'd1;
 localparam [ICACHE_STATE_WITDH-1:0] ICACHE_RD_AXI 	  = 'd2;
 
-wire tag_hit = ifu_r_valid_i&(tag_ram[cache_index] == cache_tag)&(tag_valid_ram[cache_index] == 1'b1) ? 1'b1 : 1'b0;
+wire tag_hit = (tag_ram[cache_index] == cache_tag)&(tag_valid_ram[cache_index] == 1'b1) ? 1'b1 : 1'b0;
 reg  [`DATA_WIDTH-1:0] 	cache_read_data;
 
 
@@ -114,11 +114,13 @@ always @(posedge clock) begin
 	else begin
 		case(icache_state)
 		ICACHE_IDLE:begin
-			if(tag_hit != 'd0)begin
-				icache_state	<= ICACHE_RD_CACHE;
-			end
-			else begin
-				icache_state	<= ICACHE_RD_AXI;
+			if(ifu_r_valid_i == 1'b1)begin
+				if(tag_hit != 'd0)begin
+					icache_state	<= ICACHE_RD_CACHE;
+				end
+				else begin
+					icache_state	<= ICACHE_RD_AXI;
+				end
 			end
 		end
 		ICACHE_RD_CACHE:begin

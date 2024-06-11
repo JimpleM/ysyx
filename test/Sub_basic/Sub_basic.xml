@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite timestamp="2024-06-11T15:59:26" hostname="jimple-ubuntu" package="Sub" id="0" name="basic" tests="1" errors="0" failures="2" time="0" skipped="0">
+<properties>
+<property name="os" value="Linux"/>
+<property name="expect" value="PASS"/>
+<property name="status" value="FAIL"/>
+</properties>
+<testcase classname="basic" name="build execution" time="0">
+<failure type="FAIL" message="Task returned status FAIL." />
+</testcase>
+<testcase classname="basic" name="Property ASSERT in Sub at Sub.sv:14.5-14.33" time="0" type="ASSERT" location="Sub.sv:14.5-14.33" id="c_assert" tracefile="engine_0/trace.vcd">
+<failure type="ASSERT" message="Property ASSERT in Sub at Sub.sv:14.5-14.33 failed. Trace file: engine_0/trace.vcd" />
+</testcase>
+<system-out>SBY 15:59:26 [Sub_basic] Removing directory '/home/jimple/Documents/ysyx/ysyx-workbench/test/Sub_basic'.
+SBY 15:59:26 [Sub_basic] Copy '/home/jimple/Documents/ysyx/ysyx-workbench/test/Sub.sv' to '/home/jimple/Documents/ysyx/ysyx-workbench/test/Sub_basic/src/Sub.sv'.
+SBY 15:59:26 [Sub_basic] engine_0: smtbmc
+SBY 15:59:26 [Sub_basic] base: starting process &quot;cd Sub_basic/src; yosys -ql ../model/design.log ../model/design.ys&quot;
+SBY 15:59:26 [Sub_basic] base: finished (returncode=0)
+SBY 15:59:26 [Sub_basic] prep: starting process &quot;cd Sub_basic/model; yosys -ql design_prep.log design_prep.ys&quot;
+SBY 15:59:26 [Sub_basic] prep: finished (returncode=0)
+SBY 15:59:26 [Sub_basic] smt2: starting process &quot;cd Sub_basic/model; yosys -ql design_smt2.log design_smt2.ys&quot;
+SBY 15:59:26 [Sub_basic] smt2: finished (returncode=0)
+SBY 15:59:26 [Sub_basic] engine_0: starting process &quot;cd Sub_basic; yosys-smtbmc --presat --unroll --noprogress -t 1  --append 0 --dump-vcd engine_0/trace.vcd --dump-yw engine_0/trace.yw --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&quot;
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Solver: yices
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Checking assumptions in step 0..
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Checking assertions in step 0..
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  BMC failed!
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Assert failed in Sub: c_assert
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Writing trace to VCD file: engine_0/trace.vcd
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Writing trace to Verilog testbench: engine_0/trace_tb.v
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Writing trace to constraints file: engine_0/trace.smtc
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Writing trace to Yosys witness file: engine_0/trace.yw
+SBY 15:59:26 [Sub_basic] engine_0: ##   0:00:00  Status: failed
+SBY 15:59:26 [Sub_basic] engine_0: finished (returncode=1)
+SBY 15:59:26 [Sub_basic] engine_0: Status returned by engine: FAIL
+SBY 15:59:26 [Sub_basic] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 15:59:26 [Sub_basic] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 15:59:26 [Sub_basic] summary: engine_0 (smtbmc) returned FAIL
+SBY 15:59:26 [Sub_basic] summary: counterexample trace: Sub_basic/engine_0/trace.vcd
+SBY 15:59:26 [Sub_basic] summary:   failed assertion Sub.c_assert at Sub.sv:14.5-14.33 in step 0
+SBY 15:59:26 [Sub_basic] DONE (FAIL, rc=2)
+</system-out>
+<system-err>
+</system-err>
+</testsuite>
+</testsuites>

@@ -177,13 +177,18 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 		*rdata = 0;
 	}
 }
-
+uint32_t device_count = 0;
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 	if(wen){
 		if(in_pmem(waddr)){
 			pmem_write((uint32_t)waddr,(uint32_t)wdata,(1 << wmask));
 		}else{
-			device_write((uint32_t) waddr, (uint32_t) wdata);
+			// device_count++;
+			// if(device_count == 3){
+				device_write((uint32_t) waddr, (uint32_t) wdata);
+			// 	device_count = 0;
+			// }
+			
 		}
 	}
 #ifdef CONFIG_MTRACE

@@ -2,7 +2,7 @@
 `include"ysyx_23060077_axi_define.v"
 
 module ysyx_23060077_ifu(
-    input                               clk             ,
+    input                               clock           ,
     input                               reset           ,
 
     input       [`DATA_WIDTH-1:0]       jump_pc         ,
@@ -41,6 +41,10 @@ reg flush_inst;
 
 assign ifu_stall = ifu_stall_r;
 
+wire                        ifu_valid_o ;
+wire    [`INST_WIDTH-1:0]   ifu_addr_o  ;
+wire                        ifu_ready_i ;
+wire 	[`DATA_WIDTH-1:0]   ifu_data_i  ;
 
 initial begin
     `ifdef NPC_SIM
@@ -51,7 +55,7 @@ initial begin
         ifu_pc_o_r = 32'h3000_0000;
     `endif
 end
-always @(posedge clk) begin
+always @(posedge clock) begin
     if(reset)begin
         `ifdef NPC_SIM
             pc <= 32'h8000_0000;
@@ -75,8 +79,8 @@ always @(posedge clk) begin
         pc <= pc + 4;
     end
 end
-always @(posedge clk ) begin
-    if(ifu_r_ready_i & ifu_r_last_i)begin
+always @(posedge clock) begin
+    if(ifu_ready_i)begin
         ifu_pc_o_t      <= pc;
         ifu_inst_o_t    <= inst;
         if((!stall) & (!wbu_stall))begin
@@ -91,8 +95,8 @@ always @(posedge clk ) begin
     end
 end
 
-always @(posedge clk) begin
-    if(ifu_r_last_i & (!stall) & (!wbu_stall))begin
+always @(posedge clock) begin
+    if(ifu_ready_i & (!stall) & (!wbu_stall))begin
         ifu_pc_o_r <= pc;
         ifu_inst_o_r <= inst;
         ifu_stall_r <= 1'b0;
@@ -109,15 +113,30 @@ always @(posedge clk) begin
     end
 end
 
-assign ifu_r_valid_o = ifu_stall_r & !flush_inst;
-assign ifu_r_addr_o  = pc;
+assign ifu_valid_o   = ifu_stall_r & !flush_inst;
+assign ifu_addr_o    = pc;
 // assign flush_inst    = ifu_r_ready_i & ifu_r_last_i;
-assign inst          = ifu_r_data_i;
-assign ifu_r_len_o   = 8'd0;
+assign inst          = ifu_data_i;
+
+
+ysyx_23060077_Icache Icache_u0(
+    .clock              (clock          ),
+    .reset              (reset          ),
+    .ifu_r_valid_i      (ifu_valid_o    ),
+    .ifu_r_addr_i       (ifu_addr_o     ),
+    .ifu_r_ready_o      (ifu_ready_i    ),
+    .ifu_r_data_o       (ifu_data_i     ),
+    .Icache_r_valid_o   (ifu_r_valid_o  ),
+    .Icache_r_addr_o    (ifu_r_addr_o   ),
+    .Icache_r_ready_i   (ifu_r_ready_i  ),
+    .Icache_r_data_i    (ifu_r_data_i   ),
+    .Icache_r_len_o     (ifu_r_len_o    ),
+    .Icache_r_last_i    (ifu_r_last_i   )
+);
 
 `ifdef USING_DPI_C
 import "DPI-C" function void ifu_inst_arrived();
-always @(posedge clk)begin
+always @(posedge clock)begin
   if(ifu_r_last_i)begin
     ifu_inst_arrived();
   end

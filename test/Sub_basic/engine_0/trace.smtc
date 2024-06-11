@@ -1,0 +1,5 @@
+initial
+
+state 0
+assume (= [a] #b0010)
+assume (= [b] #b0000)
