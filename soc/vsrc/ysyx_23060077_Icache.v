@@ -129,7 +129,7 @@ always @(posedge clock) begin
 			end
 		end
 		ICACHE_RD_AXI:begin
-			if(Icache_r_ready_i & Icache_r_last_i)begin
+			if(ifu_r_ready_o & Icache_r_last_i)begin
 				icache_state	<= ICACHE_IDLE;
 			end
 		end
@@ -139,5 +139,19 @@ always @(posedge clock) begin
 		endcase
 	end
 end
+
+`ifdef USING_DPI_C
+import "DPI-C" function void Icache_access(input bit valid);
+import "DPI-C" function void Icache_miss(input bit valid);
+always @(posedge clock)begin
+  if(icache_state == ICACHE_RD_CACHE)begin
+    Icache_access(ifu_r_ready_o);
+  end
+	if(icache_state == ICACHE_RD_AXI)begin
+    Icache_miss(ifu_r_ready_o);
+  end
+end
+`endif
+
 
 endmodule

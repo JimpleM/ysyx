@@ -33,6 +33,8 @@ extern uint64_t ifu_inst_counter;
 extern uint64_t lsu_read_clock;
 extern uint64_t lsu_write_clock;
 extern uint64_t exu_data_counter;
+extern uint64_t Icache_access_counter[2];	// 0 store times, 1 clock
+extern uint64_t Icache_miss_counter[2];
 
 // static bool g_print_step = false;
 #ifdef CONFIG_ITRACE
@@ -114,7 +116,7 @@ void reset(){
 static void statistic() {
   printf("----------------------------------------------------------\n");
   printf("| Total clock amount                   |%16lld |\n", total_clock_cnt);
-  printf("| Total instructions amout             |%16lld |\n", total_inst_cnt);
+  printf("| Total instructions amount            |%16lld |\n", total_inst_cnt);
   printf("| Average cycles of each instruction   |%16.3f |\n", (float)total_clock_cnt/total_inst_cnt);
   printf("----------------------------------------------------------\n");
   uint64_t sum_clock = 0,sum_inst=0;
@@ -142,6 +144,19 @@ static void statistic() {
   printf("|   LSU w_avr clock        |        %16.3f     |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
   printf("|   EXU data counter       |        %16lld     |\n", exu_data_counter);
   printf("----------------------------------------------------------\n");
+  printf("|   Icache access times    |        %16lld     |\n", Icache_access_counter[0]);
+  printf("|   Icache access clock    |        %16lld     |\n", Icache_access_counter[1]);
+  printf("|   Icache miss times      |        %16lld     |\n", Icache_miss_counter[0]);
+  printf("|   Icache miss clock      |        %16lld     |\n", Icache_miss_counter[1]);
+  printf("|   Icache hit percent     |        %16.3f     |\n", (float)Icache_access_counter[0]/(Icache_access_counter[0]+Icache_miss_counter[0]));
+  printf("----------------------------------------------------------\n");
+  // check
+  if(sum_inst+1 != total_inst_cnt){
+    printf(ANSI_FMT("total_inst_cnt is not equal to sum_inst\n",ANSI_FG_RED));
+  }
+  if(Icache_access_counter[0] + Icache_miss_counter[0] != total_inst_cnt){
+    printf(ANSI_FMT("total_inst_cnt is not equal to Icache axi read times\n",ANSI_FG_RED));
+  }
 }
 
 void assert_fail_msg() {
@@ -229,6 +244,7 @@ static void execute(uint64_t n) {
       cpu_lpc  = cpu_pc;
       
       if (cpu_inst == 0x00100073){
+          total_inst_cnt++;
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_END;
           npc_state.halt_ret = cpu_gpr[10];

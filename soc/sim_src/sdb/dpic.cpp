@@ -28,6 +28,9 @@ uint64_t lsu_read_clock = 0;
 uint64_t lsu_write_clock = 0;
 uint64_t exu_data_counter = 0;
 
+uint64_t Icache_access_counter[2];	// 0 store times, 1 clock
+uint64_t Icache_miss_counter[2];
+
 #define PG_ALIGN __attribute((aligned(4096)))
 
 uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
@@ -146,6 +149,21 @@ extern "C"  void lsu_write_data(){
 extern "C"  void exu_data_finished(){
 	exu_data_counter++;
 }
+
+extern "C"  void Icache_access(svBit valid){
+	if(valid){
+		Icache_access_counter[0]++;
+	}
+	Icache_access_counter[1]++;
+}
+
+extern "C"  void Icache_miss(svBit valid){
+	if(valid){
+		Icache_miss_counter[0]++;
+	}
+	Icache_miss_counter[1]++;
+}
+
 //后面的函数已弃用
 
 extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
