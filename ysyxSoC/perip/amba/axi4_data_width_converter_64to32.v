@@ -74,7 +74,7 @@ assign out_rready = in_rready;
 assign in_rvalid = out_rvalid;
 assign in_rid = out_rid;
 
-assign in_rdata = {32'd0,out_rdata} << {in_araddr[2:0],3'd0};
+assign in_rdata = in_araddr[2] ? {out_rdata,32'd0}:{32'd0,out_rdata};
 
 assign in_rresp = out_rresp;
 assign in_rlast = out_rlast;
@@ -88,9 +88,9 @@ assign out_awburst = in_awburst;
 assign in_wready = out_wready;
 assign out_wvalid = in_wvalid;
 
-assign out_wdata = {in_wdata >> {in_awaddr[2:0],3'd0}}[31:0];
+assign out_wdata = in_awaddr[2] ? in_wdata[63:32] : in_wdata[31:0];
 
-assign out_wstrb = {in_wstrb >> in_awaddr[2:0]}[3:0];
+assign out_wstrb = in_awaddr[2] ? in_wstrb [7:4] : in_wstrb [3:0];
 
 assign out_wlast = in_wlast;
 assign out_bready = in_bready;

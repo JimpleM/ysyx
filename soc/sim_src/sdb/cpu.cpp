@@ -51,7 +51,7 @@ int is_exit_status_bad() {
     (npc_state.state == NPC_QUIT);
   return !good;
 }
-
+uint32_t wave_pc_count = 0;
 static void dump_wave(){
 #ifdef CONFIG_WAVE
   if(cpu_pc == CONFIG_WAVE_PC_BEGIN){
@@ -60,7 +60,11 @@ static void dump_wave(){
   if(cpu_pc == CONFIG_WAVE_PC_END){
     wave_flag = false;
   }
+  if(wave_pc_count> CONFIG_WAVE_PC_COUNT){
+    wave_flag = false;
+  }
   if(wave_flag){
+    wave_pc_count ++ ;
     tfp->dump(contextp->time());  
     contextp->timeInc(1);
   }

@@ -170,7 +170,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		if(in_pmem(raddr)){
 			*rdata = pmem_read((uint32_t)raddr,4);
-			printf("read: %8x %8x\n",raddr,*rdata);
+			// printf("read: %8x %8x\n",raddr,*rdata);
 			if(*rdata == 0x00100073){
 				stop_flag = 1;
 			}
