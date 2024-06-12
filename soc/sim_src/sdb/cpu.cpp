@@ -234,7 +234,7 @@ static void execute(uint64_t n) {
         stall_pc_cnt = 0;
       }else{
         stall_pc_cnt = stall_pc_cnt + 1;
-        if(stall_pc_cnt >20000){    // 长时间同一pc，判断为被阻塞了，停止npc
+        if(stall_pc_cnt >60000){    // 长时间同一pc，判断为被阻塞了，停止npc
           printf("%8x repeats %d times,stop!\n",cpu_pc,stall_pc_cnt);
           npc_state.halt_pc = cpu_pc;
           npc_state.state = NPC_ABORT;

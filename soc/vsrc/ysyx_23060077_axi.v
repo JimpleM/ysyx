@@ -67,8 +67,8 @@ assign axi_aw_id_o      = 'd0;
 assign axi_aw_len_o     = cpu_w_len_i;
 assign axi_aw_size_o    = cpu_w_size_i;
 assign axi_aw_burst_o   = `AXI_BURST_INCR;
-
-assign axi_w_valid_o    = (axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
+// sdram控制器需要aw_valid和w_walid都给到才能工作
+assign axi_w_valid_o    = (axi_w_state == AXI_W_ADDR |axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
 // 先这么弄
 wire[`AXI_DATA_WIDTH-1:0]  axi_w_data_t = {32'd0,cpu_w_data_i};
 assign axi_w_data_o     = axi_w_data_t << {cpu_w_addr_i[2:0],3'd0};
@@ -80,7 +80,7 @@ assign axi_w_last_o     = axi_w_valid_o & axi_w_ready_i & (axi_w_cnt == cpu_w_le
 assign axi_b_ready_o    = (axi_w_state == AXI_W_RESP | axi_w_state == AXI_W_DATA) ? 'b1 : 'b0;
 
 assign cpu_w_ready_o    = axi_w_ready_i;
-assign cpu_w_last_o     = axi_w_last_o; //考虑用axi_b_valid_i还是axi_w_last_o，
+assign cpu_w_last_o     = axi_b_valid_i; //考虑用axi_b_valid_i还是axi_w_last_o，
 // 因为lsu要ready和last同步，所以这里用axi_w_last_o
 
 
@@ -100,7 +100,12 @@ always @(posedge aclk ) begin
             end
             AXI_W_ADDR:begin
                 if(axi_aw_ready_i)begin
-                    axi_w_state     <= AXI_W_DATA;
+                    if(axi_w_ready_i)begin
+                        axi_w_state     <= AXI_W_RESP;
+                    end
+                    else begin
+                        axi_w_state     <= AXI_W_DATA;
+                    end
                 end
             end
             AXI_W_DATA:begin

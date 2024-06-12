@@ -1409,7 +1409,7 @@ module APBFanout(	// rocket-chip/src/main/scala/amba/apb/Xbar.scala:24:9
   assign auto_out_0_pstrb = auto_in_pstrb;	// rocket-chip/src/main/scala/amba/apb/Xbar.scala:24:9
 endmodule
 
-// external module ysyx_00000000
+// external module ysyx_23060077
 
 module CPU(	// src/CPU.scala:33:9
   input         clock,	// src/CPU.scala:33:9
@@ -1445,7 +1445,7 @@ module CPU(	// src/CPU.scala:33:9
   input         auto_master_out_rlast	// rocket-chip/src/main/scala/diplomacy/LazyModule.scala:374:18
 );
 
-ysyx_23060077 cpu (	// src/CPU.scala:38:21
+  ysyx_23060077 cpu (	// src/CPU.scala:38:21
     .clock                   (clock),
     .reset                   (reset),
     .io_interrupt            (1'h0),	// src/CPU.scala:35:23, :36:19, :38:21

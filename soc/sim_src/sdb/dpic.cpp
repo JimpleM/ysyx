@@ -170,7 +170,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 	if(ren){
 		if(in_pmem(raddr)){
 			*rdata = pmem_read((uint32_t)raddr,4);
-			// printf("%8x %8x\n",raddr,*rdata);
+			printf("read: %8x %8x\n",raddr,*rdata);
 			if(*rdata == 0x00100073){
 				stop_flag = 1;
 			}
@@ -199,6 +199,7 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 	if(wen){
 		if(in_pmem(waddr)){
+			// printf("write : %8x %8x\n",waddr,wdata);
 			pmem_write((uint32_t)waddr,(uint32_t)wdata,(1 << wmask));
 		}else{
 			// device_count++;

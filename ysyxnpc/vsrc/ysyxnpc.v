@@ -42,14 +42,14 @@ localparam [2:0] NPC_W_DATA   = 'd2;
 localparam [2:0] NPC_W_RESP   = 'd3;
 
 assign auto_master_out_awready  = (npc_w_state == NPC_W_ADDR)&auto_master_out_awvalid ? 1'b1 : 1'b0;
-assign auto_master_out_wready	= (npc_w_state == NPC_W_DATA)						  ? 1'b1 : 1'b0;
+assign auto_master_out_wready	= (npc_w_state == NPC_W_DATA)&auto_master_out_wvalid ? 1'b1 : 1'b0;
 
 assign auto_master_out_bvalid	= (npc_w_state == NPC_W_RESP)&auto_master_out_bready  ? 1'b1 : 1'b0;
 assign auto_master_out_bid      = 'd0;
 assign auto_master_out_bresp    = 'd0;
 
 reg  [31:0] npc_write_addr;
-wire [31:0] npc_write_data = {{32'd0,auto_master_out_wdata} >> {npc_write_addr[2:0],3'd0}}[31:0];
+wire [31:0] npc_write_data = {auto_master_out_wdata >> {npc_write_addr[2:0],3'd0}}[31:0];
 
 
 always @(posedge clock ) begin
@@ -57,7 +57,7 @@ always @(posedge clock ) begin
         npc_write_addr   <= 'd0;
     end
     else begin
-		if(auto_master_out_awready)begin
+		if(auto_master_out_awvalid)begin
 			npc_write_addr   <= auto_master_out_awaddr;
 		end
 	end
@@ -80,7 +80,7 @@ always @(posedge clock ) begin
                 end
             end
             NPC_W_DATA:begin
-				if(auto_master_out_wvalid & auto_master_out_wlast)begin
+				if(auto_master_out_wvalid & auto_master_out_wready)begin
 					npc_w_state <= NPC_W_RESP;
 				end
             end
@@ -163,7 +163,7 @@ import "DPI-C" function void riscv_pmem_write(input int waddr, input int wdata, 
 
 always @(*)begin
     riscv_pmem_read(npc_read_addr,npc_read_data,auto_master_out_rvalid);
-    riscv_pmem_write(npc_write_addr,npc_write_data,{29'd0,auto_master_out_awsize},auto_master_out_wvalid);
+    riscv_pmem_write(npc_write_addr,npc_write_data,{29'd0,auto_master_out_awsize},auto_master_out_wready);
 end
 
 

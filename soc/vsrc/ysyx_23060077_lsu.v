@@ -123,7 +123,7 @@ assign lsu_r_len_o	  = 8'd0;
 
 assign lsu_w_valid_o  = wen;
 assign lsu_w_addr_o   = waddr;
-assign lsu_rd_wen_w   = lsu_w_ready_i & lsu_w_last_i;
+assign lsu_rd_wen_w   = lsu_w_last_i;
 assign lsu_w_data_o   = wdata;
 assign lsu_w_size_o   = wmask[2:0];
 assign lsu_w_len_o	  = 8'd0;
