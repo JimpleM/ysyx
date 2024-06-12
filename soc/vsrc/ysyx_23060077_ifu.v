@@ -11,12 +11,12 @@ module ysyx_23060077_ifu(
     input                               wbu_stall       ,
 
     // IFU Interface
-    output                              ifu_r_valid_o   ,
-    output  [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_o    ,
-    input                               ifu_r_ready_i   ,
-    input   [`DATA_WIDTH-1:0]           ifu_r_data_i    ,
-    output  [`AXI_LEN_WIDTH-1:0]        ifu_r_len_o     ,
-    input                               ifu_r_last_i    ,
+    output                              Icache_r_valid_o   ,
+    output  [`AXI_ADDR_WIDTH-1:0]       Icache_r_addr_o    ,
+    input                               Icache_r_ready_i   ,
+    input   [`DATA_WIDTH-1:0]           Icache_r_data_i    ,
+    output  [`AXI_LEN_WIDTH-1:0]        Icache_r_len_o     ,
+    input                               Icache_r_last_i    ,
 
     output                              ifu_stall       ,            
     output  	[`INST_WIDTH-1:0]       ifu_pc_o        ,
@@ -115,29 +115,28 @@ end
 
 assign ifu_valid_o   = ifu_stall_r & !flush_inst;
 assign ifu_addr_o    = pc;
-// assign flush_inst    = ifu_r_ready_i & ifu_r_last_i;
 assign inst          = ifu_data_i;
 
 
 ysyx_23060077_Icache Icache_u0(
     .clock              (clock          ),
     .reset              (reset          ),
-    .ifu_r_valid_i      (ifu_valid_o    ),
-    .ifu_r_addr_i       (ifu_addr_o     ),
-    .ifu_r_ready_o      (ifu_ready_i    ),
-    .ifu_r_data_o       (ifu_data_i     ),
-    .Icache_r_valid_o   (ifu_r_valid_o  ),
-    .Icache_r_addr_o    (ifu_r_addr_o   ),
-    .Icache_r_ready_i   (ifu_r_ready_i  ),
-    .Icache_r_data_i    (ifu_r_data_i   ),
-    .Icache_r_len_o     (ifu_r_len_o    ),
-    .Icache_r_last_i    (ifu_r_last_i   )
+    .ifu_valid_i        (ifu_valid_o    ),
+    .ifu_addr_i         (ifu_addr_o     ),
+    .ifu_ready_o        (ifu_ready_i    ),
+    .ifu_data_o         (ifu_data_i     ),
+    .Icache_r_valid_o   (Icache_r_valid_o  ),
+    .Icache_r_addr_o    (Icache_r_addr_o   ),
+    .Icache_r_ready_i   (Icache_r_ready_i  ),
+    .Icache_r_data_i    (Icache_r_data_i   ),
+    .Icache_r_len_o     (Icache_r_len_o    ),
+    .Icache_r_last_i    (Icache_r_last_i   )
 );
 
 `ifdef USING_DPI_C
 import "DPI-C" function void ifu_inst_arrived();
 always @(posedge clock)begin
-  if(ifu_r_last_i)begin
+  if(Icache_r_last_i)begin
     ifu_inst_arrived();
   end
 end

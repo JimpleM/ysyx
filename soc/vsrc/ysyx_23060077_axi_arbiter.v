@@ -5,12 +5,12 @@ module ysyx_23060077_axi_arbiter(
     input                               areset_n        ,
 
     // IFU Interface
-    input                               ifu_r_valid_i   ,
-    input   [`AXI_ADDR_WIDTH-1:0]       ifu_r_addr_i    ,
-    output                              ifu_r_ready_o   ,
-    output  [`DATA_WIDTH-1:0]           ifu_r_data_o    ,
-    input   [`AXI_LEN_WIDTH-1:0]        ifu_r_len_i     ,
-    output                              ifu_r_last_o    ,
+    input                               Icache_r_valid_i   ,
+    input   [`AXI_ADDR_WIDTH-1:0]       Icache_r_addr_i    ,
+    output                              Icache_r_ready_o   ,
+    output  [`DATA_WIDTH-1:0]           Icache_r_data_o    ,
+    input   [`AXI_LEN_WIDTH-1:0]        Icache_r_len_i     ,
+    output                              Icache_r_last_o    ,
     
     // LSU Interface
     input                               lsu_r_valid_i   ,
@@ -84,16 +84,16 @@ parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_IDLE   = 'd0;
 parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_IFU    = 'd1;
 parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_LSU    = 'd2;
 
-assign cpu_r_valid_o    = (arbiter_state == ARB_IFU) ? ifu_r_valid_i : (arbiter_state == ARB_LSU) ? lsu_r_valid_i : 'd0;
-assign cpu_r_addr_o     = (arbiter_state == ARB_IFU) ? ifu_r_addr_i  : (arbiter_state == ARB_LSU) ? lsu_r_addr_i  : 'd0;
-assign cpu_r_size_o     = (arbiter_state == ARB_IFU) ? `AXI_SIZE_4   : (arbiter_state == ARB_LSU) ? lsu_r_size_i  : 'd0;
-assign cpu_r_len_o      = (arbiter_state == ARB_IFU) ? ifu_r_len_i   : (arbiter_state == ARB_LSU) ? lsu_r_len_i   : 'd0;
-assign ifu_r_ready_o    = (arbiter_state == ARB_IFU) ? cpu_r_ready_i : 'd0;
-assign ifu_r_data_o     = (arbiter_state == ARB_IFU) ? cpu_r_data_i  : 'd0;
-assign ifu_r_last_o     = (arbiter_state == ARB_IFU) ? cpu_r_last_i  : 'd0;
-assign lsu_r_ready_o    = (arbiter_state == ARB_LSU) ? cpu_r_ready_i : 'd0;
-assign lsu_r_data_o     = (arbiter_state == ARB_LSU) ? cpu_r_data_i  : 'd0;
-assign lsu_r_last_o     = (arbiter_state == ARB_LSU) ? cpu_r_last_i  : 'd0;
+assign cpu_r_valid_o    = (arbiter_state == ARB_IFU) ? Icache_r_valid_i : (arbiter_state == ARB_LSU) ? lsu_r_valid_i : 'd0;
+assign cpu_r_addr_o     = (arbiter_state == ARB_IFU) ? Icache_r_addr_i  : (arbiter_state == ARB_LSU) ? lsu_r_addr_i  : 'd0;
+assign cpu_r_size_o     = (arbiter_state == ARB_IFU) ? `AXI_SIZE_4      : (arbiter_state == ARB_LSU) ? lsu_r_size_i  : 'd0;
+assign cpu_r_len_o      = (arbiter_state == ARB_IFU) ? Icache_r_len_i   : (arbiter_state == ARB_LSU) ? lsu_r_len_i   : 'd0;
+assign Icache_r_ready_o = (arbiter_state == ARB_IFU) ? cpu_r_ready_i    : 'd0;
+assign Icache_r_data_o  = (arbiter_state == ARB_IFU) ? cpu_r_data_i     : 'd0;
+assign Icache_r_last_o  = (arbiter_state == ARB_IFU) ? cpu_r_last_i     : 'd0;
+assign lsu_r_ready_o    = (arbiter_state == ARB_LSU) ? cpu_r_ready_i    : 'd0;
+assign lsu_r_data_o     = (arbiter_state == ARB_LSU) ? cpu_r_data_i     : 'd0;
+assign lsu_r_last_o     = (arbiter_state == ARB_LSU) ? cpu_r_last_i     : 'd0;
 
 assign cpu_w_valid_o    = lsu_w_valid_i ;
 assign cpu_w_addr_o     = lsu_w_addr_i  ;
@@ -110,7 +110,7 @@ always @(posedge aclk ) begin
     else begin
         case(arbiter_state)
             ARB_IDLE:begin
-                if(ifu_r_valid_i)begin
+                if(Icache_r_valid_i)begin
                     arbiter_state <= ARB_IFU;
                 end
                 if(lsu_r_valid_i)begin

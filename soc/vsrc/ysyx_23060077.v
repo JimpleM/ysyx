@@ -78,12 +78,12 @@ wire [`DATA_WIDTH-1:0]      jump_pc         ;
 wire                        jump_pc_valid   ;
 wire                        stall           ; 
 
-wire                        ifu_r_valid_o   ;
-wire [`AXI_ADDR_WIDTH-1:0]  ifu_r_addr_o    ;
-wire                        ifu_r_ready_i   ;
-wire [`DATA_WIDTH-1:0]      ifu_r_data_i    ;
-wire [`AXI_LEN_WIDTH-1:0]   ifu_r_len_o     ;
-wire                        ifu_r_last_i    ;
+wire                        Icache_r_valid_o   ;
+wire [`AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o    ;
+wire                        Icache_r_ready_i   ;
+wire [`DATA_WIDTH-1:0]      Icache_r_data_i    ;
+wire [`AXI_LEN_WIDTH-1:0]   Icache_r_len_o     ;
+wire                        Icache_r_last_i    ;
 
 // idu
 wire                       	idu_branch		;
@@ -155,12 +155,12 @@ ysyx_23060077_ifu ifu_u0(
     .stall          ( stall         ),
     .wbu_stall      ( lsu_rd_wen    ),
 
-    .ifu_r_valid_o  ( ifu_r_valid_o ),
-    .ifu_r_addr_o   ( ifu_r_addr_o  ),
-    .ifu_r_ready_i  ( ifu_r_ready_i ),
-    .ifu_r_data_i   ( ifu_r_data_i  ),
-    .ifu_r_len_o    ( ifu_r_len_o   ),
-    .ifu_r_last_i   ( ifu_r_last_i  ),
+    .Icache_r_valid_o  ( Icache_r_valid_o ),
+    .Icache_r_addr_o   ( Icache_r_addr_o  ),
+    .Icache_r_ready_i  ( Icache_r_ready_i ),
+    .Icache_r_data_i   ( Icache_r_data_i  ),
+    .Icache_r_len_o    ( Icache_r_len_o   ),
+    .Icache_r_last_i   ( Icache_r_last_i  ),
 
     .ifu_stall      ( ifu_stall     ),
     .ifu_pc_o       ( ifu_pc        ),
@@ -280,12 +280,12 @@ ysyx_23060077_wbu wbu_u0(
 ysyx_23060077_axi_arbiter axi_arbiter_u0(
     .aclk           ( clock             ),
     .areset_n       ( reset             ),
-    .ifu_r_valid_i  ( ifu_r_valid_o     ),
-    .ifu_r_addr_i   ( ifu_r_addr_o      ),
-    .ifu_r_ready_o  ( ifu_r_ready_i     ),
-    .ifu_r_data_o   ( ifu_r_data_i      ),
-    .ifu_r_len_i    ( ifu_r_len_o       ),
-    .ifu_r_last_o   ( ifu_r_last_i      ),
+    .Icache_r_valid_i  ( Icache_r_valid_o     ),
+    .Icache_r_addr_i   ( Icache_r_addr_o      ),
+    .Icache_r_ready_o  ( Icache_r_ready_i     ),
+    .Icache_r_data_o   ( Icache_r_data_i      ),
+    .Icache_r_len_i    ( Icache_r_len_o       ),
+    .Icache_r_last_o   ( Icache_r_last_i      ),
 
     .lsu_r_valid_i  ( lsu_r_valid_o     ),
     .lsu_r_addr_i   ( lsu_r_addr_o      ),

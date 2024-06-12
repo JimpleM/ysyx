@@ -5,10 +5,10 @@ module ysyx_23060077_Icache(
     input                           clock               ,
 		input                           reset               ,
 
-    input                           ifu_r_valid_i       ,
-    input  		[`INST_WIDTH-1:0]   	ifu_r_addr_i        ,
-    output reg                      ifu_r_ready_o       ,      
-    output reg 	[`DATA_WIDTH-1:0]   ifu_r_data_o        ,  
+    input                           ifu_valid_i       ,
+    input  		[`INST_WIDTH-1:0]   	ifu_addr_i        ,
+    output reg                      ifu_ready_o       ,      
+    output reg 	[`DATA_WIDTH-1:0]   ifu_data_o        ,  
 
 
     // ICache Interface
@@ -32,9 +32,9 @@ integer i,j;
 // |   tag   |  index  | offset |
 // +---------+---------+--------+
 
-wire 	[32-1-M-N:0]   	cache_tag			= ifu_r_addr_i[31:M+N];
-wire 	[N-1:0]        	cache_index		= ifu_r_addr_i[M+N-1:M];
-wire 	[M-1:0]        	cache_offset	= ifu_r_addr_i[M-1:0];
+wire 	[32-1-M-N:0]   	cache_tag			= ifu_addr_i[31:M+N];
+wire 	[N-1:0]        	cache_index		= ifu_addr_i[M+N-1:M];
+wire 	[M-1:0]        	cache_offset	= ifu_addr_i[M-1:0];
 
 reg 	[BLOCK_SIZE-1:0]	cache_data   	[0:BLOCK_NUM-1];
 
@@ -64,35 +64,35 @@ assign Icache_r_len_o 	= 8'd0;
 
 always @(*) begin
 	if(reset)begin
-		ifu_r_ready_o				= 'd0;
-		ifu_r_data_o				= 'd0;
+		ifu_ready_o				= 'd0;
+		ifu_data_o				= 'd0;
 		Icache_r_valid_o		= 'd0;
 		Icache_r_addr_o			= 'd0;
 	end
 	else begin
 		case(icache_state)
 		ICACHE_IDLE:begin
-			ifu_r_ready_o			= 'd0;
-			ifu_r_data_o			= 'd0;
+			ifu_ready_o			= 'd0;
+			ifu_data_o			= 'd0;
 			Icache_r_valid_o	= 'd0;
 			Icache_r_addr_o		= 'd0;
 		end
 		ICACHE_RD_CACHE:begin
-			ifu_r_ready_o			= 'd1;
-			ifu_r_data_o			= cache_read_data;
+			ifu_ready_o			= 'd1;
+			ifu_data_o			= cache_read_data;
 		end
 		ICACHE_RD_AXI:begin
 			Icache_r_valid_o	= 'd1;
-			Icache_r_addr_o		= ifu_r_addr_i;
+			Icache_r_addr_o		= ifu_addr_i;
 
 			if(Icache_r_last_i)begin
-				ifu_r_ready_o		= 'd1;
-				ifu_r_data_o		= Icache_r_data_i;
+				ifu_ready_o		= 'd1;
+				ifu_data_o		= Icache_r_data_i;
 			end
 		end
 		default:begin
-			ifu_r_ready_o			= 'd0;
-			ifu_r_data_o			= 'd0;
+			ifu_ready_o			= 'd0;
+			ifu_data_o			= 'd0;
 			Icache_r_valid_o	= 'd0;
 			Icache_r_addr_o		= 'd0;
 		end
@@ -131,7 +131,7 @@ always @(posedge clock) begin
 	else begin
 		case(icache_state)
 		ICACHE_IDLE:begin
-			if(ifu_r_valid_i == 1'b1)begin
+			if(ifu_valid_i == 1'b1)begin
 				if(tag_hit != 'd0)begin
 					icache_state	<= ICACHE_RD_CACHE;
 				end
@@ -141,12 +141,12 @@ always @(posedge clock) begin
 			end
 		end
 		ICACHE_RD_CACHE:begin
-			if(ifu_r_ready_o)begin
+			if(ifu_ready_o)begin
 				icache_state	<= ICACHE_IDLE;
 			end
 		end
 		ICACHE_RD_AXI:begin
-			if(ifu_r_ready_o & Icache_r_last_i)begin
+			if(ifu_ready_o & Icache_r_last_i)begin
 				icache_state	<= ICACHE_IDLE;
 			end
 		end
@@ -162,10 +162,10 @@ import "DPI-C" function void Icache_access(input bit valid);
 import "DPI-C" function void Icache_miss(input bit valid);
 always @(posedge clock)begin
   if(icache_state == ICACHE_RD_CACHE)begin
-    Icache_access(ifu_r_ready_o);
+    Icache_access(ifu_ready_o);
   end
 	if(icache_state == ICACHE_RD_AXI)begin
-    Icache_miss(ifu_r_ready_o);
+    Icache_miss(ifu_ready_o);
   end
 end
 `endif
