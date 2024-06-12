@@ -25,6 +25,7 @@ static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 static uint8_t psram[PSRAM_SIZE] PG_ALIGN = {};
 static uint8_t sram[SRAM_SIZE] PG_ALIGN = {};
 static uint8_t sdram[SDRAM_SIZE] PG_ALIGN = {};
+static uint8_t uart[0x100] PG_ALIGN = {0xff};
 #endif
 
 uint8_t* guest_to_host(paddr_t paddr){
@@ -43,6 +44,9 @@ uint8_t* guest_to_host(paddr_t paddr){
   // else if(MROM_LEFT <= paddr && paddr <= MROM_RIGHT){
 	// 	return pmem + paddr - MROM_MBASE;
 	// }
+  else if(0x10000000 <= paddr && paddr <= 0x10000100){
+    return uart + paddr - 0x10000000;
+  }
   else{
 		panic("address = " FMT_PADDR " is out of bound", paddr);
 		return pmem + paddr - CONFIG_MBASE; 
@@ -101,6 +105,10 @@ void init_mem() {
   q = (uint32_t *)sdram;
   for (i = 0; i < (int) (SDRAM_SIZE / sizeof(q[0])); i ++) {
     q[i] = 0;
+  }
+  q = (uint32_t *)uart;
+  for (i = 0; i < (int) (0x100 / sizeof(q[0])); i ++) {
+    q[i] = 0xFFFFFFFF;
   }
 #endif
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);

@@ -58,6 +58,9 @@ static inline bool in_pmem(paddr_t addr) {
   if(SDRAM_LEFT <= addr && addr <= SDRAM_RIGHT){
 		return 1;	
 	}
+  if(0x10000000 <= addr && addr <= 0x10000100){
+		return 1;	
+	}
   if(addr - CONFIG_MBASE < CONFIG_MSIZE){
     return 1;
   }
