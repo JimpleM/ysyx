@@ -32,6 +32,7 @@ static bool g_print_step = false;
 
 void device_update();
 void assert_fail_msg();
+extern FILE *itrace_fp;
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -42,7 +43,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   //   puts(_this->logbuf);
   // }
   // log_write("l 0x%8x\n",_this->pc);
-  printf("l 0x%8x\n",_this->pc);
+  fprintf(itrace_fp,"l 0x%8x\n",_this->pc);
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){
