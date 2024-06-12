@@ -25,7 +25,7 @@ VERILATOR_FLAGS += --no-timing
 VERILATOR_FLAGS += --timescale "1ns/1ns"
 VERILATOR_FLAGS += --autoflush
 VERILATOR_FLAGS += +define+USING_DPI_C	#仿真环境要使用DPIC，方便sta去掉dpic
-# VERILATOR_FLAGS += --threads 10
+# VERILATOR_FLAGS += --quiet
 
 BUILD_DIR  = ./build
 OBJ_DIR    = $(BUILD_DIR)/$(PLATFORM)

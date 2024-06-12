@@ -111,7 +111,7 @@ assign auto_master_out_rid      = 'd0;
 assign auto_master_out_rdata    = {{32'd0,npc_read_data} << {npc_read_addr[2:0],3'd0}}[63:0];
 
 reg  [31:0] npc_read_addr;
-wire [31:0] npc_read_data;
+reg [31:0] npc_read_data;
 reg [7:0]  npc_r_cnt;
 
 always @(posedge clock ) begin

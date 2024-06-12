@@ -26,7 +26,7 @@ reg QPI_MODE = 0;
 reg[7:0] cmd;
 reg[23:0] addr;
 reg[31:0] data;
-wire[31:0] rdata;
+reg[31:0] rdata;
 reg[7:0] counter;
 reg [3:0] state;
 typedef enum [3:0] { cmd_t, addr_t, data_t, delay_t, err_t } state_t;
