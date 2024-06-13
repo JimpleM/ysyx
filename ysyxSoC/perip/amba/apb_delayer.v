@@ -23,6 +23,17 @@ module apb_delayer(
   input  [31:0] out_prdata,
   input         out_pslverr
 );
+  // assign out_paddr   = in_paddr;
+  // assign out_psel    = in_psel;
+  // assign out_penable = in_penable;
+  // assign out_pprot   = in_pprot;
+  // assign out_pwrite  = in_pwrite;
+  // assign out_pwdata  = in_pwdata;
+  // assign out_pstrb   = in_pstrb;
+  // assign in_pready   = out_pready;
+  // assign in_prdata   = out_prdata;
+  // assign in_pslverr  = out_pslverr;
+
 
   assign out_paddr   = in_paddr;
   assign out_psel    = psel_flag ? 1'b1 : 'd0;
@@ -84,7 +95,7 @@ module apb_delayer(
           psel_flag		        <= 'd1;
           delay_cnt						<= delay_cnt + r;
           if(in_penable)begin
-            delay_state       <= DELAY_EANBLE;    // 串口会用in_psel & ~in_penable产生写入信号
+            delay_state       <= DELAY_EANBLE;    // 串口会用in_psel & ~in_penable产生写入信号，如何不快速给penbale会导致串口重复写
           end
         end
         DELAY_EANBLE:begin
