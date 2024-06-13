@@ -130,7 +130,7 @@ static void statistic() {
   printf("----------------------------------------------------------\n");
   for(int i=0; i<11; i++){
     idx = opcodeArray[i].opcode;
-    printf("|%7s |%13u |%13u |%6.3f |%7.2f% |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
+    printf("|%7s |%13u |%13u |%6.2f |%7.2f% |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
     inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0],(float)inst_type_counter[idx][0]*100/total_inst_cnt);
     sum_inst  += inst_type_counter[idx][0];
     sum_clock += inst_type_counter[idx][1];
@@ -152,7 +152,7 @@ static void statistic() {
   printf("|   Icache access clock    |        %16lld     |\n", Icache_access_counter[1]);
   printf("|   Icache miss times      |        %16lld     |\n", Icache_miss_counter[0]);
   printf("|   Icache miss clock      |        %16lld     |\n", Icache_miss_counter[1]);
-  printf("|   Icache hit percent     |        %16.3f     |\n", (float)Icache_access_counter[0]/(Icache_access_counter[0]+Icache_miss_counter[0]));
+  printf("|   Icache hit percent     |      %17.3f%%     |\n", (float)Icache_access_counter[0]*100/(Icache_access_counter[0]+Icache_miss_counter[0]));
   printf("----------------------------------------------------------\n");
   // check
   if(sum_inst+1 != total_inst_cnt){

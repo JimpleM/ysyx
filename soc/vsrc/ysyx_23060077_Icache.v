@@ -59,8 +59,9 @@ wire  [32-1:0] 	cache_read_data = (cache_offset == 'h0) ? cache_data[cache_index
 																	(cache_offset == 'hc) ? cache_data[cache_index][96+:32] : 32'd0;
 // 
 wire [1:0] pos = cache_offset[M-1:2];
+reg  [1:0] data_cnt;
 
-assign Icache_r_len_o 	= 8'd0;
+assign Icache_r_len_o 	= 8'd3;
 
 always @(*) begin
 	if(reset)begin
@@ -83,11 +84,18 @@ always @(*) begin
 		end
 		ICACHE_RD_AXI:begin
 			Icache_r_valid_o	= 'd1;
-			Icache_r_addr_o		= ifu_addr_i;
+			Icache_r_addr_o		= {ifu_addr_i[31:4],4'd0};
 
 			if(Icache_r_last_i)begin
 				ifu_ready_o		= 'd1;
-				ifu_data_o		= Icache_r_data_i;
+				// ifu_data_o			= cache_read_data;
+				case(cache_offset[M-1:2])
+					2'd0:ifu_data_o = cache_data[cache_index][0+:32] ;
+					2'd1:ifu_data_o = cache_data[cache_index][32+:32];
+					2'd2:ifu_data_o = cache_data[cache_index][64+:32];
+					2'd3:ifu_data_o = Icache_r_data_i;
+				endcase
+				// ifu_data_o		= Icache_r_data_i;
 			end
 		end
 		default:begin
@@ -108,16 +116,19 @@ always @(posedge clock) begin
 			end
 			cache_data[i]								<= 'd0;
 		end
+		data_cnt		<= 'd0;
 	end
 	else begin
 		if(Icache_r_ready_i)begin
-			tag_ram[cache_index][pos]				<= cache_tag;
-			tag_valid_ram[cache_index][pos]	<= 'd1;
-			case(cache_offset)
-				4'h0:cache_data[cache_index][0+:32]  <= Icache_r_data_i;
-				4'h4:cache_data[cache_index][32+:32] <= Icache_r_data_i;
-				4'h8:cache_data[cache_index][64+:32] <= Icache_r_data_i;
-				4'hc:cache_data[cache_index][96+:32] <= Icache_r_data_i;
+			data_cnt															<= data_cnt + 1;
+
+			tag_ram[cache_index][data_cnt]				<= cache_tag;
+			tag_valid_ram[cache_index][data_cnt]	<= 'd1;
+			case(data_cnt)
+				2'd0:cache_data[cache_index][0+:32]  <= Icache_r_data_i;
+				2'd1:cache_data[cache_index][32+:32] <= Icache_r_data_i;
+				2'd2:cache_data[cache_index][64+:32] <= Icache_r_data_i;
+				2'd3:cache_data[cache_index][96+:32] <= Icache_r_data_i;
 				default : cache_data[cache_index]			<= cache_data[cache_index];
 			endcase
 		end
@@ -146,7 +157,7 @@ always @(posedge clock) begin
 			end
 		end
 		ICACHE_RD_AXI:begin
-			if(ifu_ready_o & Icache_r_last_i)begin
+			if(Icache_r_last_i)begin
 				icache_state	<= ICACHE_IDLE;
 			end
 		end
