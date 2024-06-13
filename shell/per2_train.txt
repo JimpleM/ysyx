@@ -1,0 +1,75 @@
+# Building microbench-run [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
++ CC src/riscv/ysyxsoc/trm.c
++ AR -> build/am-riscv32e-ysyxsoc.a
+# Building klib-archive [riscv32e-ysyxsoc]
++ LD -> build/microbench-riscv32e-ysyxsoc.elf
+# Creating image [riscv32e-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024root__DepSet_h0188974b__1.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin, size = 33944[0m
+f
+======= Running MicroBench [input *train*] =======
+[qsort] Quick sort: * Passed.
+  min time: 24171.0297 ms [0]
+[queen] Queen placement: * Passed.
+  min time: 32713.0363 ms [0]
+[bf] Brainf**k interpreter: * Passed.
+  min time: 53695.0966 ms [0]
+[fib] Fibonacci number: * Passed.
+  min time: 425540.0456 ms [0]
+[sieve] Eratosthenes sieve: * Passed.
+  min time: 31892.06666 ms [0]
+[15pz] A* 15-puzzle search: * Passed.
+  min time: 51226.07206 ms [0]
+[dinic] Dinic's maxflow algorithm: * Passed.
+  min time: 28224.03016 ms [0]
+[lzip] Lzip compression: * Passed.
+  min time: 38403.01796 ms [0]
+[ssort] Suffix sort: * Passed.
+  min time: 47585.09196 ms [0]
+[md5] MD5 digest: * Passed.
+  min time: 42177.05376 ms [0]
+==================================================
+MicroBench PASS
+Scored time: 775631.0404 ms
+Total  time: 898652.0962 ms
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:282 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa00056ac[0m
+----------------------------------------------------------
+| Total clock amount                   |       903775647 |
+| Total instructions amount            |       195271103 |
+| Average cycles of each instruction   |           4.628 |
+----------------------------------------------------------
+----------------------------------------------------------
+|  Inst  |    Amount    |    cycles    |  Average cycles |
+----------------------------------------------------------
+| LUI    |       734433 |      5806256 |           7.906 |
+| AUIPC  |       851863 |      4996245 |           5.865 |
+| JAL    |      1929408 |      9026391 |           4.678 |
+| JALR   |      2033420 |      9886627 |           4.862 |
+| BRANCH |     52609763 |    181915834 |           3.458 |
+| LOAD   |     15626551 |    227998501 |          14.590 |
+| STORE  |      7173362 |     67473599 |           9.406 |
+| OP_IMM |     88326912 |    300460843 |           3.402 |
+| OP     |     25985390 |     96210787 |           3.702 |
+| FENCE  |            0 |            0 |           0.000 |
+| SYS    |            0 |            0 |           0.000 |
+----------------------------------------------------------
+|                         Summary                        |
+----------------------------------------------------------
+|   SUM clock              |               903775083     |
+|   SUM inst               |               195271102     |
+----------------------------------------------------------
+|   IFU inst counter       |                14013336     |
+|   LSU read  clock        |               175770339     |
+|   LSU r_avr clock        |                  11.248     |
+|   LSU write clock        |                46963748     |
+|   LSU w_avr clock        |                   6.547     |
+|   EXU data counter       |               172471189     |
+----------------------------------------------------------
+|   Icache access times    |               181257767     |
+|   Icache access clock    |               181257767     |
+|   Icache miss times      |                14013336     |
+|   Icache miss clock      |               163470279     |
+|   Icache hit percent     |                   0.928     |
+----------------------------------------------------------

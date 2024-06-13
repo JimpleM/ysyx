@@ -126,12 +126,12 @@ static void statistic() {
   uint64_t sum_clock = 0,sum_inst=0;
   uint32_t idx;
   printf("----------------------------------------------------------\n");
-  printf("|  Inst  |    Amount    |    cycles    |  Average cycles |\n");
+  printf("|  Inst  |    Amount    |    cycles    |  AVG  | percent |\n");
   printf("----------------------------------------------------------\n");
   for(int i=0; i<11; i++){
     idx = opcodeArray[i].opcode;
-    printf("|%7s |%13u |%13u |%16.3f |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
-    inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0]);
+    printf("|%7s |%13u |%13u |%6.3f |%7.2f% |\n", opcodeArray[i].name,inst_type_counter[idx][0],inst_type_counter[idx][1],
+    inst_type_counter[idx][0] == 0 ? 0 : (float)inst_type_counter[idx][1]/inst_type_counter[idx][0],(float)inst_type_counter[idx][0]*100/total_inst_cnt);
     sum_inst  += inst_type_counter[idx][0];
     sum_clock += inst_type_counter[idx][1];
   };
