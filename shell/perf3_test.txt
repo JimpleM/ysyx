@@ -1,0 +1,65 @@
+# Building microbench-run [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
++ CC src/riscv/ysyxsoc/trm.c
++ AR -> build/am-riscv32e-ysyxsoc.a
+# Building klib-archive [riscv32e-ysyxsoc]
++ LD -> build/microbench-riscv32e-ysyxsoc.elf
+# Creating image [riscv32e-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024root__DepSet_h0188974b__1.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin, size = 33944[0m
+f
+======= Running MicroBench [input *test*] =======
+[qsort] Quick sort: * Passed.
+[queen] Queen placement: * Passed.
+[bf] Brainf**k interpreter: * Passed.
+[fib] Fibonacci number: * Passed.
+[sieve] Eratosthenes sieve: * Passed.
+[15pz] A* 15-puzzle search: * Passed.
+[dinic] Dinic's maxflow algorithm: * Passed.
+[lzip] Lzip compression: * Passed.
+[ssort] Suffix sort: * Passed.
+[md5] MD5 digest: * Passed.
+==================================================
+MicroBench PASS
+Scored time: 3211.0340 ms
+Total  time: 4405.0518 ms
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:282 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa00056ac[0m
+----------------------------------------------------------
+| Total clock amount                   |        10043687 |
+| Total instructions amount            |          631978 |
+| Average cycles of each instruction   |          15.892 |
+----------------------------------------------------------
+----------------------------------------------------------
+|  Inst  |    Amount    |    cycles    |  AVG  | percent |
+----------------------------------------------------------
+| LUI    |         5424 |        16443 |  3.03 |   0.86% |
+| AUIPC  |        12437 |        42102 |  3.39 |   1.97% |
+| JAL    |         9931 |       138706 | 13.97 |   1.57% |
+| JALR   |        12888 |       152400 | 11.82 |   2.04% |
+| BRANCH |       113483 |       443094 |  3.90 |  17.96% |
+| LOAD   |        98455 |      6564735 | 66.68 |  15.58% |
+| STORE  |        76396 |      1468168 | 19.22 |  12.09% |
+| OP_IMM |       218355 |       843560 |  3.86 |  34.55% |
+| OP     |        84608 |       372253 |  4.40 |  13.39% |
+| FENCE  |            0 |            0 |  0.00 |   0.00% |
+| SYS    |            0 |            0 |  0.00 |   0.00% |
+----------------------------------------------------------
+|                         Summary                        |
+----------------------------------------------------------
+|   SUM clock              |                10041461     |
+|   SUM inst               |                  631977     |
+----------------------------------------------------------
+|   IFU inst counter       |                   24835     |
+|   LSU read  clock        |                 6235488     |
+|   LSU r_avr clock        |                  63.333     |
+|   LSU write clock        |                 1272918     |
+|   LSU w_avr clock        |                  16.662     |
+|   EXU data counter       |                  457126     |
+----------------------------------------------------------
+|   Icache access times    |                  607143     |
+|   Icache access clock    |                  607143     |
+|   Icache miss times      |                   24835     |
+|   Icache miss clock      |                  939881     |
+|   Icache hit percent     |                 96.070%     |
+----------------------------------------------------------

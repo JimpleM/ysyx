@@ -17,7 +17,7 @@
 
 extern uint64_t g_nr_guest_inst;
 FILE *log_fp = NULL;
-FILE *itrace_fp = NULL;
+
 
 void init_log(const char *log_file) {
 	log_fp = stdout;
@@ -28,9 +28,6 @@ void init_log(const char *log_file) {
 	}
 	Log("Log is written to %s", log_file ? log_file : "stdout");
 
-	FILE *fpt = fopen("/home/jimple/Documents/ysyx/ysyx-workbench/nemu_soc/a.bin", "wb");
-	Assert(fpt, "Can not open log /home/jimple/Documents/ysyx/ysyx-workbench/nemu_soc/a.bin");
-	itrace_fp = fpt;
 }
 
 bool log_enable() {

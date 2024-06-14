@@ -33,6 +33,10 @@ static bool g_print_step = false;
 void device_update();
 void assert_fail_msg();
 extern FILE *itrace_fp;
+char test[30]; 
+uint32_t last_pc_start = 0;
+uint32_t last_pc = 0;
+uint32_t pc_count = 0;
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -43,7 +47,18 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   //   puts(_this->logbuf);
   // }
   // log_write("l 0x%8x\n",_this->pc);
-  fprintf(itrace_fp,"l 0x%8x\n",_this->pc);
+  if(last_pc+4 != _this->pc){
+    if(pc_count != 0){
+      fprintf(itrace_fp,"n %10d\n",pc_count);
+      pc_count = 0;
+    }
+    fprintf(itrace_fp,"l 0x%8x\n",_this->pc);
+    last_pc_start = _this->pc;
+  }else{
+    pc_count++;
+  }
+  
+  last_pc = _this->pc;
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){
@@ -149,6 +164,11 @@ void cpu_exec(uint64_t n) {
   uint64_t timer_start = get_time();
 
   execute(n);
+
+  if(pc_count != 0){
+    fprintf(itrace_fp,"n %10d\n",pc_count);
+    pc_count = 0;
+  }
 
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;

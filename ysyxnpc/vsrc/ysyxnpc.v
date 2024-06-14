@@ -108,7 +108,7 @@ assign auto_master_out_rvalid   = (npc_r_state == NPC_R_DATA)&auto_master_out_rr
 assign auto_master_out_rlast    = auto_master_out_rvalid&(npc_r_cnt == auto_master_out_arlen)  ? 1'b1 : 1'b0;
 assign auto_master_out_rresp    = 'd0;
 assign auto_master_out_rid      = 'd0;
-assign auto_master_out_rdata    = {{32'd0,npc_read_data} << {npc_read_addr[2:0],3'd0}}[63:0];
+assign auto_master_out_rdata    = auto_master_out_arlen == 'd0 ? {{32'd0,npc_read_data} << {npc_read_addr[2:0],3'd0}}[63:0] : {32'd0,npc_read_data};
 
 reg  [31:0] npc_read_addr;
 reg [31:0] npc_read_data;
@@ -119,8 +119,12 @@ always @(posedge clock ) begin
         npc_read_addr   <= 'd0;
     end
     else begin
-		if(auto_master_out_arready)
-			npc_read_addr   <= auto_master_out_araddr;
+		if(auto_master_out_arready)begin
+            npc_read_addr   <= auto_master_out_araddr;
+        end
+		if(auto_master_out_rvalid)begin
+            npc_read_addr   <=  npc_read_addr  + 4;
+        end
 	end
 end
 

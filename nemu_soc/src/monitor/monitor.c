@@ -44,8 +44,11 @@ void sdb_set_batch_mode();
 static char *log_file = "/home/jimple/Documents/ysyx/ysyx-workbench/nemu_soc/build/nemu-log.txt";
 static char *diff_so_file = NULL;
 static char *img_file = "/home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin";
+// static char *img_file = "/home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxnpc.bin";
 static char *elf_file = NULL;
 static int difftest_port = 1234;
+
+FILE *itrace_fp = NULL;
 
 static long load_img() {
   if (img_file == NULL) {
@@ -117,6 +120,10 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Open the log file. */
   init_log(log_file);
+
+  FILE *fpt = fopen("/home/jimple/Documents/ysyx/ysyx-workbench/nemu_soc/a.bin", "wb");
+	Assert(fpt, "Can not open log /home/jimple/Documents/ysyx/ysyx-workbench/nemu_soc/a.bin");
+	itrace_fp = fpt;
 
   /* Initialize memory. */
   init_mem();
