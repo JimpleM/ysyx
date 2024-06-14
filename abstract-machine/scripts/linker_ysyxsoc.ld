@@ -41,7 +41,7 @@ SECTIONS {
     *(.rodata*)
     *(.srodata)
     *(.srodata.*)
-    . = ALIGN(4);
+    . = ALIGN(8);
   } > sdram AT> flash
 
   .data : {

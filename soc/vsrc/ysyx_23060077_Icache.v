@@ -2,14 +2,15 @@
 `include"ysyx_23060077_axi_define.v"
 
 module ysyx_23060077_Icache(
-    input                           clock               ,
-		input                           reset               ,
+    input                           clock             ,
+		input                           reset             ,
 
     input                           ifu_valid_i       ,
     input  		[`INST_WIDTH-1:0]   	ifu_addr_i        ,
     output reg                      ifu_ready_o       ,      
     output reg 	[`DATA_WIDTH-1:0]   ifu_data_o        ,  
 
+		input														ifu_fence_i				,
 
     // ICache Interface
     output reg                      Icache_r_valid_o    ,
@@ -46,6 +47,7 @@ reg [ICACHE_STATE_WITDH-1:0] 			icache_state;
 localparam [ICACHE_STATE_WITDH-1:0] ICACHE_IDLE   		= 'd0;
 localparam [ICACHE_STATE_WITDH-1:0] ICACHE_RD_CACHE   = 'd1;
 localparam [ICACHE_STATE_WITDH-1:0] ICACHE_RD_AXI 	  = 'd2;
+localparam [ICACHE_STATE_WITDH-1:0] ICACHE_FENCE  		= 'd3;
 
 // wire [TAG_SIZE-1:0] tag_hit = 
 // {	(tag_ram[cache_index][2'd0] == cache_tag & tag_valid_ram[cache_index][2'd0] == 1'b1),
@@ -108,11 +110,25 @@ always @(*) begin
 	end
 end
 always @(posedge clock) begin
+	if(reset | ifu_fence_i)begin
+		for(i=0; i<BLOCK_NUM; i++)begin
+			for(j=0; j<4;j++)begin
+				tag_valid_ram[i][j]				<= 'd0;
+			end
+		end
+	end
+	else begin
+		if(Icache_r_ready_i)begin
+			tag_valid_ram[cache_index][data_cnt]	<= 'd1;
+		end
+	end
+end
+
+always @(posedge clock) begin
 	if(reset)begin
 		for(i=0; i<BLOCK_NUM; i++)begin
 			for(j=0; j<4;j++)begin
 				tag_ram[i][j]							<= 'd0;
-				tag_valid_ram[i][j]				<= 'd0;
 			end
 			cache_data[i]								<= 'd0;
 		end
@@ -123,7 +139,6 @@ always @(posedge clock) begin
 			data_cnt															<= data_cnt + 1;
 
 			tag_ram[cache_index][data_cnt]				<= cache_tag;
-			tag_valid_ram[cache_index][data_cnt]	<= 'd1;
 			case(data_cnt)
 				2'd0:cache_data[cache_index][0+:32]  <= Icache_r_data_i;
 				2'd1:cache_data[cache_index][32+:32] <= Icache_r_data_i;
@@ -150,6 +165,9 @@ always @(posedge clock) begin
 					icache_state	<= ICACHE_RD_AXI;
 				end
 			end
+			else if(ifu_fence_i)begin				// fence会比valid早一个周期，后续如果修改电路要考虑这里的问题
+				icache_state	<= ICACHE_FENCE;
+			end
 		end
 		ICACHE_RD_CACHE:begin
 			if(ifu_ready_o)begin
@@ -160,6 +178,9 @@ always @(posedge clock) begin
 			if(Icache_r_last_i)begin
 				icache_state	<= ICACHE_IDLE;
 			end
+		end
+		ICACHE_FENCE:begin
+			icache_state	<= ICACHE_IDLE;
 		end
 		default:begin
 			icache_state	<= ICACHE_IDLE;

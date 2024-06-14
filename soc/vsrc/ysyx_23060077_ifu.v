@@ -41,6 +41,8 @@ reg flush_inst;
 
 assign ifu_stall = ifu_stall_r;
 
+wire    ifu_fence_i =  (ifu_inst_o[6:0] == `FENCE) ? ifu_inst_o[12] : 1'b0;
+
 wire                        ifu_valid_o ;
 wire    [`INST_WIDTH-1:0]   ifu_addr_o  ;
 wire                        ifu_ready_i ;
@@ -125,6 +127,7 @@ ysyx_23060077_Icache Icache_u0(
     .ifu_addr_i         (ifu_addr_o     ),
     .ifu_ready_o        (ifu_ready_i    ),
     .ifu_data_o         (ifu_data_i     ),
+    .ifu_fence_i        (ifu_fence_i    ),
     .Icache_r_valid_o   (Icache_r_valid_o  ),
     .Icache_r_addr_o    (Icache_r_addr_o   ),
     .Icache_r_ready_i   (Icache_r_ready_i  ),
