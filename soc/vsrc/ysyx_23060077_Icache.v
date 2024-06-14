@@ -10,7 +10,7 @@ module ysyx_23060077_Icache(
     output reg                      ifu_ready_o       ,      
     output reg 	[`DATA_WIDTH-1:0]   ifu_data_o        ,  
 
-		input														ifu_fence_i				,
+    input														ifu_fence_i				,
 
     // ICache Interface
     output reg                      Icache_r_valid_o    ,
@@ -33,7 +33,7 @@ integer i,j;
 // |   tag   |  index  | offset |
 // +---------+---------+--------+
 
-wire 	[32-1-M-N:0]   	cache_tag			= ifu_addr_i[31:M+N];
+wire 	[32-1-M-N:0]   	cache_tag		= ifu_addr_i[31:M+N];
 wire 	[N-1:0]        	cache_index		= ifu_addr_i[M+N-1:M];
 wire 	[M-1:0]        	cache_offset	= ifu_addr_i[M-1:0];
 

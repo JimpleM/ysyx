@@ -28,31 +28,28 @@
 `define CSR_MARCHID         `CSR_REG_WIDTH'd10
 
 module ysyx_23060077_csr(
-    input 	                            clk,
-    input 	                            reset,
+    input 	                            clk         ,
+    input 	                            reset       ,
 
     // input                               wr_en,
-    input       [`CSR_ADDR_WIDTH-1:0]   wr_addr,
-    input       [`DATA_WIDTH-1:0]       wr_data,
+    input       [`CSR_ADDR_WIDTH-1:0]   wr_addr     ,
+    input       [`DATA_WIDTH-1:0]       wr_data     ,
 
     // input                               rd_en,
-    input       [`CSR_ADDR_WIDTH-1:0]   rd_addr,
-    output      [`DATA_WIDTH-1:0]       rd_data,
+    input       [`CSR_ADDR_WIDTH-1:0]   rd_addr     ,
+    output reg  [`DATA_WIDTH-1:0]       rd_data     ,
 
-    input                               i_csr_ecall,
-    input                               i_csr_mret,
+    input                               i_csr_ecall ,
+    input                               i_csr_mret  ,
 
-    input       [`INST_WIDTH-1:0]       i_inst, 
-    input       [`DATA_WIDTH-1:0]       i_pc,
+    input       [`INST_WIDTH-1:0]       i_inst      , 
+    input       [`DATA_WIDTH-1:0]       i_pc        ,
 
-    output      [`DATA_WIDTH-1:0]       o_mstatus,
-    output      [`DATA_WIDTH-1:0]       o_mtvec,
+    output      [`DATA_WIDTH-1:0]       o_mstatus   ,
+    output      [`DATA_WIDTH-1:0]       o_mtvec     ,
     output      [`INST_WIDTH-1:0]       o_mpec   
 );
 
-
-reg [`DATA_WIDTH-1:0]       rd_data_r;
-assign rd_data = rd_data_r;
 
 reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
 `ifdef
@@ -74,45 +71,43 @@ assign csr_reg[`CSR_MARCHID]    = `MARCHID;
 //rd_data
 always @(*) begin
     if(reset)begin  
-        rd_data_r = 'd0; 
+        rd_data = 'd0; 
     end
     else if(rd_en)begin
         case(rd_addr)
-            `CSR_M_CYCLE_ADDR  :begin rd_data_r = csr_reg[`CSR_M_CYCLE];    end
-            `CSR_MSTATUS_ADDR  :begin rd_data_r = csr_reg[`CSR_MSTATUS];    end
-            `CSR_MIE_ADDR      :begin rd_data_r = csr_reg[`CSR_MIE];        end
-            `CSR_MTVEC_ADDR    :begin rd_data_r = csr_reg[`CSR_MTVEC];      end
-            `CSR_MEPC_ADDR     :begin rd_data_r = csr_reg[`CSR_MEPC];       end
-            `CSR_MCAUSE_ADDR   :begin rd_data_r = csr_reg[`CSR_MCAUSE];     end
-            `CSR_MTVAL_ADDR    :begin rd_data_r = csr_reg[`CSR_MTVAL];      end
-            `CSR_MINSTRET_ADDR :begin rd_data_r = csr_reg[`CSR_MINSTRET];   end
-            `CSR_MSCRATCH_ADDR :begin rd_data_r = csr_reg[`CSR_MSCRATCH];   end
-            `CSR_MVENDORID_ADDR:begin rd_data_r = csr_reg[`CSR_MVENDORID];  end
-            `CSR_MARCHID_ADDR  :begin rd_data_r = csr_reg[`CSR_MARCHID];    end
+            `CSR_M_CYCLE_ADDR  :begin rd_data = csr_reg[`CSR_M_CYCLE];    end
+            `CSR_MSTATUS_ADDR  :begin rd_data = csr_reg[`CSR_MSTATUS];    end
+            `CSR_MIE_ADDR      :begin rd_data = csr_reg[`CSR_MIE];        end
+            `CSR_MTVEC_ADDR    :begin rd_data = csr_reg[`CSR_MTVEC];      end
+            `CSR_MEPC_ADDR     :begin rd_data = csr_reg[`CSR_MEPC];       end
+            `CSR_MCAUSE_ADDR   :begin rd_data = csr_reg[`CSR_MCAUSE];     end
+            `CSR_MTVAL_ADDR    :begin rd_data = csr_reg[`CSR_MTVAL];      end
+            `CSR_MINSTRET_ADDR :begin rd_data = csr_reg[`CSR_MINSTRET];   end
+            `CSR_MSCRATCH_ADDR :begin rd_data = csr_reg[`CSR_MSCRATCH];   end
+            `CSR_MVENDORID_ADDR:begin rd_data = csr_reg[`CSR_MVENDORID];  end
+            `CSR_MARCHID_ADDR  :begin rd_data = csr_reg[`CSR_MARCHID];    end
             default:begin
-                rd_data_r = 'd0;
+                rd_data = 'd0;
             end
         endcase
     end
     else begin
-        rd_data_r = 'd0;
+        rd_data = 'd0;
     end
 end
 
 // mstatus
-wire [`DATA_WIDTH-1:0]       o_mstatus_r;
-assign o_mstatus_r = csr_reg[`CSR_MSTATUS];
-assign o_mstatus = o_mstatus_r;
+assign o_mstatus = csr_reg[`CSR_MSTATUS];
 
 always @(posedge clk) begin
     if(reset)begin
         csr_reg[`CSR_MSTATUS]   <= 'd0;
     end
     else if(i_csr_ecall)begin
-        csr_reg[`CSR_MSTATUS]   <= o_mstatus_r | 32'h0000_1800;
+        csr_reg[`CSR_MSTATUS]   <= o_mstatus | 32'h0000_1800;
     end
     else if(i_csr_mret)begin
-        csr_reg[`CSR_MSTATUS]   <= o_mstatus_r & ~(32'h0000_1800);
+        csr_reg[`CSR_MSTATUS]   <= o_mstatus & ~(32'h0000_1800);
     end
     else if(wr_en && wr_addr == `CSR_MSTATUS_ADDR)begin
         case(i_inst[13:12])
@@ -149,17 +144,17 @@ always @(posedge clk) begin
 end
 
 //mepc
-reg [`INST_WIDTH-1:0] mepc_inst_r;
+// reg [`INST_WIDTH-1:0] mepc_inst_r;
 assign o_mpec = csr_reg[`CSR_MEPC];
 
 always @(posedge clk) begin
     if(reset)begin
         csr_reg[`CSR_MEPC]  <= 'd0;
-        mepc_inst_r         <= 'd0;
+        // mepc_inst_r         <= 'd0;
     end
     else if(i_csr_ecall)begin
         csr_reg[`CSR_MEPC]   <= i_pc;
-        mepc_inst_r          <= i_inst;
+        // mepc_inst_r          <= i_inst;
     end
     else if(wr_en && wr_addr == `CSR_MEPC_ADDR)begin
         case(i_inst[13:12])
@@ -169,11 +164,11 @@ always @(posedge clk) begin
             default: csr_reg[`CSR_MEPC]   <= csr_reg[`CSR_MEPC];
         endcase
         // csr_reg[`CSR_MEPC]   <= wr_data;
-        mepc_inst_r          <= mepc_inst_r;
+        // mepc_inst_r          <= mepc_inst_r;
     end
     else begin
         csr_reg[`CSR_MEPC]   <= csr_reg[`CSR_MEPC];
-        mepc_inst_r          <= mepc_inst_r;
+        // mepc_inst_r          <= mepc_inst_r;
     end
 end
 
