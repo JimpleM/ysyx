@@ -14,7 +14,7 @@ SECTIONS {
     *(entry)
     *(.text._trm_init)
     *(.text.fsbl)
-    . = ALIGN(8);
+    . = ALIGN(4);
   } > flash
 
   _ssbl_origin = .;
@@ -22,7 +22,9 @@ SECTIONS {
     _ssbl_ram_start = .;
     *(.text.ssbl)
     *(.text.device_init)
-    . = ALIGN(8);
+    . = ALIGN(4);
+    *(.text.putch)
+    . = ALIGN(4);
     _ssbl_ram_end = .;
   } > sdram AT> flash
 
@@ -30,7 +32,7 @@ SECTIONS {
   .text : {
     _text_ram_start = .;
     *(.text*)
-    . = ALIGN(8);
+    . = ALIGN(4);
   } > sdram AT> flash
   etext = .;
   _etext = .;
@@ -39,7 +41,7 @@ SECTIONS {
     *(.rodata*)
     *(.srodata)
     *(.srodata.*)
-    . = ALIGN(8);
+    . = ALIGN(4);
   } > sdram AT> flash
 
   .data : {
@@ -47,7 +49,7 @@ SECTIONS {
     *(.data.*)
     *(.sdata)
     *(.sdata.*)
-    . = ALIGN(8);
+    . = ALIGN(4);
     _data_ram_end = .;
   } > sdram AT> flash
 
@@ -59,7 +61,7 @@ SECTIONS {
     *(.bss*)
     *(.sbss*)
     *(.scommon)
-    . = ALIGN(8);
+    . = ALIGN(4);
     _bss_end = .;
   } > sdram AT> flash
 
