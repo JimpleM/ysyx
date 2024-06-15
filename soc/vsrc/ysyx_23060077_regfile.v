@@ -27,14 +27,14 @@ assign rs2_data = gpr[rs2_addr];
 // reg_rd_addr == 5'd0，不能删掉，会有一些指令把无用数据写到0寄存器
 // 用(|reg_rd_addr)代表不为0，节省逻辑电路
 always @(posedge clock) begin
-    if(reset)begin
-        for(i=0; i<`REG_COUNT; i=i+1)   gpr[i] = 0;
-    end
-    else begin
-        if (reg_rd_en & (|reg_rd_addr) )begin
-            gpr[reg_rd_addr] <= reg_rd_data;
-        end 
-    end
+	if(reset)begin
+		for(i=0; i<`REG_COUNT; i=i+1)   gpr[i] = 0;
+	end
+	else begin
+		if (reg_rd_en & (|reg_rd_addr) )begin
+			gpr[reg_rd_addr] <= reg_rd_data;
+		end 
+	end
 end
 
 `ifdef USING_DPI_C

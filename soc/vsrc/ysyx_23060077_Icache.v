@@ -117,21 +117,14 @@ always @(posedge clock) begin
 end
 
 always @(posedge clock) begin
-	if(reset)begin
-		for(i=0; i<BLOCK_NUM; i++)begin
-			for(j=0; j<4;j++)begin
-				tag_ram[i][j]							<= 'd0;
-			end
-			cache_data[i]								<= 'd0;
-		end
+	if(reset)begin	
 		data_cnt		<= 'd0;
 	end
 	else begin
 		if(Icache_r_ready_i)begin
 			data_cnt															<= data_cnt + 1;
-
 			tag_ram[cache_index][data_cnt]				<= cache_tag;
-			case(data_cnt)
+			case(data_cnt) // tag_ram 和 cache_data不需要复位，可以优化3000面积，和data_cnt放一起能节省140面积？？
 				2'd0:cache_data[cache_index][0+:32]  <= Icache_r_data_i;
 				2'd1:cache_data[cache_index][32+:32] <= Icache_r_data_i;
 				2'd2:cache_data[cache_index][64+:32] <= Icache_r_data_i;
@@ -141,6 +134,7 @@ always @(posedge clock) begin
 		end
 	end
 end
+
 
 always @(posedge clock) begin
 	if(reset)begin

@@ -19,8 +19,8 @@ module ysyx_23060077_ifu(
 	input   		                        Icache_r_last_i 		,
 
 	// output                              ifu_stall    		   ,
-	output 	reg                         if_to_id_ready_o		,
-	input 															if_to_id_valid_i		,
+	input 															if_to_id_ready_i		,
+	output 	reg                         if_to_id_valid_o		,
 	output 	reg	[`INST_WIDTH-1:0]       ifu_pc_o						,
 	output 	reg	[`INST_WIDTH-1:0]       ifu_inst_o
 );
@@ -144,17 +144,17 @@ end
 // 	case(ifu_pipe_state)
 // 		IFU_PIPE_IDLE:begin
 // 			if(ifu_ready_i)begin
-// 				if_to_id_ready_o 	= 1'b1;
+// 				if_to_id_valid_o 	= 1'b1;
 
 // 				ifu_pc_o				 	= pc;
 // 				ifu_inst_o			 	= inst;
 // 			end
 // 			else begin
-// 				if_to_id_ready_o		= 'b0;
+// 				if_to_id_valid_o		= 'b0;
 // 			end
 // 		end
 // 		IFU_PIPE_READY:begin
-// 			if_to_id_ready_o = 1'b1;
+// 			if_to_id_valid_o = 1'b1;
 
 // 			ifu_pc_o           = ifu_pc_o_t;
 // 			ifu_inst_o				 = ifu_inst_o_t;
@@ -179,7 +179,7 @@ end
 // 				end
 // 			end
 // 			IFU_PIPE_READY:begin
-// 				if(if_to_id_valid_i)begin
+// 				if(if_to_id_ready_i)begin
 // 					ifu_pipe_state	<= IFU_PIPE_IDLE;
 // 				end
 // 			end
@@ -208,13 +208,13 @@ end
 
 always @(posedge clock) begin
 	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
-		if_to_id_ready_o	<= 'd1;	//发出握手
+		if_to_id_valid_o	<= 'd1;	//发出握手
 
 		ifu_pc_o				<= pc;
 		ifu_inst_o			<= inst;
 	end
-	else if(if_to_id_valid_i)begin	//接收到握手，维持pc和inst
-		if_to_id_ready_o	<= 'd0;
+	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
+		if_to_id_valid_o	<= 'd0;
 
 		ifu_pc_o				<= ifu_pc_o;
 		ifu_inst_o			<= ifu_inst_o;

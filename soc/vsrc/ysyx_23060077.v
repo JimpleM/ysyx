@@ -175,7 +175,7 @@ ysyx_23060077_ifu ifu_u0(
 	.jump_pc        	( jump_pc       		),
 	.jump_pc_valid  	( jump_pc_valid 		),
 	.stall          	( stall        			),
-	.wbu_stall      	( ex_to_wb_ready & ex_to_wb_valid    ),
+	.wbu_stall      	( ex_to_wb_valid & ex_to_wb_ready    ),
 
 	.Icache_r_valid_o ( Icache_r_valid_o 	),
 	.Icache_r_addr_o  ( Icache_r_addr_o  	),
@@ -184,14 +184,14 @@ ysyx_23060077_ifu ifu_u0(
 	.Icache_r_len_o   ( Icache_r_len_o   	),
 	.Icache_r_last_i  ( Icache_r_last_i  	),
 
-	.if_to_id_ready_o	( if_to_id_ready 		),
-	.if_to_id_valid_i	( if_to_id_valid 		),
+	.if_to_id_ready_i	( if_to_id_ready 		),
+	.if_to_id_valid_o	( if_to_id_valid		),
 	.ifu_pc_o       	( ifu_pc        		),
 	.ifu_inst_o     	( ifu_inst      		)
 );
 
-wire if_to_id_ready;
-reg if_to_id_valid;
+wire if_to_id_valid;
+reg if_to_id_ready;
 
 ysyx_23060077_pipeline#(
 	.WIDTH          (`DATA_WIDTH+`INST_WIDTH), 
@@ -199,8 +199,8 @@ ysyx_23060077_pipeline#(
 )pipeline_if_to_id(
 	.clock	( clock ),
 	.reset	( reset ),
-	.wen		( if_to_id_ready & if_to_id_valid ),
-	.stall	( !if_to_id_valid),
+	.wen		( if_to_id_valid & if_to_id_ready ),
+	.stall	( !if_to_id_ready),
 	.flush	( ),
 	.din		( {ifu_pc,ifu_inst}),
 	.dout		( {idu_pc,idu_inst})
@@ -208,14 +208,14 @@ ysyx_23060077_pipeline#(
 
 always @(posedge clock) begin
 	if(reset)begin
-		if_to_id_valid	<= 'd1;
+		if_to_id_ready	<= 'd1;
 	end
 	else begin
-		if(if_to_id_ready)begin
-			if_to_id_valid <= 'd0;
+		if(if_to_id_valid)begin
+			if_to_id_ready <= 'd0;
 		end
-		else if(id_to_ex_ready & id_to_ex_valid)begin	// 后级传递过去了，当前级可以接收新的数据了
-			if_to_id_valid <= 'd1;
+		else if(id_to_ex_valid & id_to_ex_ready)begin	// 后级传递过去了，当前级可以接收新的数据了
+			if_to_id_ready <= 'd1;
 		end
 	end
 end
@@ -226,7 +226,7 @@ always @(posedge clock) begin
 		idu_stall <= 'd0;
 	end
 	else begin
-		if(if_to_id_ready & if_to_id_valid)begin
+		if(if_to_id_valid & if_to_id_ready)begin
 			idu_stall <= 'd1;
 		end
 		else begin
@@ -237,14 +237,14 @@ end
 
 always @(posedge clock) begin
 	if(reset)begin
-		id_to_ex_ready	<= 'd0;
+		id_to_ex_valid	<= 'd0;
 	end
 	else begin
 		if(idu_stall)begin	// 运行完了
-			id_to_ex_ready <= 'd1;
+			id_to_ex_valid <= 'd1;
 		end
-		else if(id_to_ex_valid)begin
-			id_to_ex_ready <= 'd0;
+		else if(id_to_ex_ready)begin
+			id_to_ex_valid <= 'd0;
 		end
 	end
 end
@@ -277,8 +277,8 @@ ysyx_23060077_regfile regfile_u0(
 	.reg_rd_data		( wbu_rd_data	)	
 );
 
-reg id_to_ex_ready;
 reg id_to_ex_valid;
+reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
 	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH), 
@@ -286,8 +286,8 @@ ysyx_23060077_pipeline#(
 )pipeline_id_to_ex(
 	.clock	( clock ),
 	.reset	( reset ),
-	.wen		( id_to_ex_ready & id_to_ex_valid ),
-	.stall	( !id_to_ex_valid),
+	.wen		( id_to_ex_valid & id_to_ex_ready ),
+	.stall	( !id_to_ex_ready),
 	.flush	( ),
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr})
@@ -295,14 +295,14 @@ ysyx_23060077_pipeline#(
 
 always @(posedge clock) begin
 	if(reset)begin
-		id_to_ex_valid <= 'd1;
+		id_to_ex_ready <= 'd1;
 	end
 	else begin
-		if(id_to_ex_ready)begin
-			id_to_ex_valid <= 'd0;
+		if(id_to_ex_valid)begin
+			id_to_ex_ready <= 'd0;
 		end
-		else if(ex_to_wb_ready & ex_to_wb_valid)begin
-			id_to_ex_valid <= 'd1;
+		else if(ex_to_wb_valid & ex_to_wb_ready)begin
+			id_to_ex_ready <= 'd1;
 		end
 	end
 end
@@ -312,7 +312,7 @@ always @(posedge clock) begin
 		exu_stall <= 'd0;
 	end
 	else begin
-		if(id_to_ex_ready & id_to_ex_valid)begin // exu运行一个周期
+		if(id_to_ex_valid & id_to_ex_ready)begin // exu运行一个周期
 			exu_stall <= 'd1;
 		end
 		else begin
@@ -323,17 +323,17 @@ end
 
 always @(posedge clock) begin
 	if(reset)begin
-		ex_to_wb_ready <= 'd0;
+		ex_to_wb_valid <= 'd0;
 	end
 	else begin
 		if(lsu_rd_wen)begin
-			ex_to_wb_ready <= 'd1;
+			ex_to_wb_valid <= 'd1;
 		end
 		else if(!mem_stall& exu_stall)begin // lsu不工作
-			ex_to_wb_ready <= 'd1;
+			ex_to_wb_valid <= 'd1;
 		end
-		else if(ex_to_wb_valid)begin
-			ex_to_wb_ready <= 'd0;
+		else if(ex_to_wb_ready)begin
+			ex_to_wb_valid <= 'd0;
 		end
 	end
 end
@@ -375,7 +375,7 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_w_len_o    	( lsu_w_len_o   ),
 	.lsu_w_last_i   	( lsu_w_last_i  ),
 
-	.id_to_ex					( id_to_ex_ready & id_to_ex_valid),
+	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
 	.mem_stall      	( mem_stall     ),
 	.lsu_rd_wen     	( lsu_rd_wen    ),
 	.lsu_result				( lsu_result    )
@@ -404,19 +404,19 @@ ysyx_23060077_csr  csr_u0 (
 	.o_mpec         ( csr_mpec                  )
 );
 
-reg ex_to_wb_ready;
 reg ex_to_wb_valid;
+reg ex_to_wb_ready;
 
 always @(posedge clock) begin
 	if(reset)begin
-		ex_to_wb_valid <= 'd1;
+		ex_to_wb_ready <= 'd1;
 	end
 	else begin
-		if(ex_to_wb_ready)begin
-			ex_to_wb_valid <= 'd0;
+		if(ex_to_wb_valid)begin
+			ex_to_wb_ready <= 'd0;
 		end
 		else begin
-			ex_to_wb_valid <= 'd1;
+			ex_to_wb_ready <= 'd1;
 		end
 	end
 end
@@ -427,7 +427,7 @@ ysyx_23060077_pipeline#(
 )pipeline_ex_to_wb(
 	.clock	( clock ),
 	.reset	( reset ),
-	.wen		( ex_to_wb_ready & ex_to_wb_valid ),
+	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
 	.din		( {exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data}),
