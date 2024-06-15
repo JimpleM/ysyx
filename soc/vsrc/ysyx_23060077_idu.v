@@ -1,23 +1,19 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_idu(
-    input 	    [`INST_WIDTH-1:0]       inst,
+	input 	    [`INST_WIDTH-1:0]       inst								,
 
-    output                              branch,
-    output                              jal,
-    output                              jalr,
-
-    output  reg [`REG_WIDTH-1:0]        rd,
-    output  reg                         rd_wen,
-    output  reg [`REG_WIDTH-1:0]        rs1,
-    output  reg [`REG_WIDTH-1:0]        rs2,
-
-
-    output  reg [`DATA_WIDTH-1:0]       imm,
-
-    output      [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    output      [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output      [`LSU_OPT_WIDTH-1:0]    lsu_opt,
-    output      [2:0]                   funct3
+	output                              branch							,
+	output                              jal									,
+	output                              jalr								,
+	output  reg [`REG_WIDTH-1:0]        rd									,
+	output  reg                         rd_wen							,
+	output  reg [`REG_WIDTH-1:0]        rs1									,
+	output  reg [`REG_WIDTH-1:0]        rs2									,
+	output  reg [`DATA_WIDTH-1:0]       imm									,
+	output      [`ALU_OPT_WIDTH-1:0]    alu_opt							,
+	output      [`SRC_SEL_WIDTH-1:0]    src_sel							,
+	output      [`LSU_OPT_WIDTH-1:0]    lsu_opt							,
+	output      [2:0]                   funct3
 
 );
 

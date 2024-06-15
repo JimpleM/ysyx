@@ -1,7 +1,7 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_id_imm(
-    input 	    [`INST_WIDTH-1:0]   inst,
-    output  	[`DATA_WIDTH-1:0]   imm
+	input 	    [`INST_WIDTH-1:0]   		inst								,
+	output  		[`DATA_WIDTH-1:0]   		imm
 );
 reg [`DATA_WIDTH-1:0]   imm_r;
 assign imm = imm_r;

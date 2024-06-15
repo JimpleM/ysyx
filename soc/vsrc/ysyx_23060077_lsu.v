@@ -1,34 +1,34 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_lsu(
-    input 	                            clock 			    ,
-    input 	                            reset 			    ,    
+  input 	                            clock 			   			,
+  input 	                            reset 			   			,    
 
-    input  	    [`DATA_WIDTH-1:0]       src1  			    ,
-    input  	    [`DATA_WIDTH-1:0]       src2  			    ,
-    input  	    [`DATA_WIDTH-1:0]       imm 			      ,
+  input  	    [`DATA_WIDTH-1:0]       src1  			   			,
+  input  	    [`DATA_WIDTH-1:0]       src2  			   			,
+  input  	    [`DATA_WIDTH-1:0]       imm 			     			,
 
-    input       [`LSU_OPT_WIDTH-1:0]    lsu_opt 		    ,
-    input       [2:0]                   funct3  		    ,
-    // LSU Interface
-    output                              lsu_r_valid_o 	,
-    output 	    [`AXI_ADDR_WIDTH-1:0]   lsu_r_addr_o  	,
-    input                               lsu_r_ready_i 	,
-    input       [`DATA_WIDTH-1:0]       lsu_r_data_i  	,
-    output 	    [`AXI_SIZE_WIDTH-1:0]   lsu_r_size_o    ,
-    output      [`AXI_LEN_WIDTH-1:0]    lsu_r_len_o     ,
-    input                               lsu_r_last_i  	,
-    output                              lsu_w_valid_o 	,
-    output      [`AXI_ADDR_WIDTH-1:0]   lsu_w_addr_o  	,
-    input                               lsu_w_ready_i 	,
-    output      [`DATA_WIDTH-1:0]       lsu_w_data_o  	,
-	  output 	    [`AXI_SIZE_WIDTH-1:0]   lsu_w_size_o    ,
-	  output      [`AXI_LEN_WIDTH-1:0]    lsu_w_len_o     ,
-    input                               lsu_w_last_i    ,
+  input       [`LSU_OPT_WIDTH-1:0]    lsu_opt 		   			,
+  input       [2:0]                   funct3  		   			,
+  // LSU Interface
+  output                              lsu_r_valid_o 			,
+  output 	    [`AXI_ADDR_WIDTH-1:0]   lsu_r_addr_o  			,
+  input                               lsu_r_ready_i 			,
+  input       [`DATA_WIDTH-1:0]       lsu_r_data_i  			,
+  output 	    [`AXI_SIZE_WIDTH-1:0]   lsu_r_size_o   			,
+  output      [`AXI_LEN_WIDTH-1:0]    lsu_r_len_o    			,
+  input                               lsu_r_last_i  			,
+  output                              lsu_w_valid_o 			,
+  output      [`AXI_ADDR_WIDTH-1:0]   lsu_w_addr_o  			,
+  input                               lsu_w_ready_i 			,
+  output      [`DATA_WIDTH-1:0]       lsu_w_data_o  			,
+  output 	    [`AXI_SIZE_WIDTH-1:0]   lsu_w_size_o   			,
+  output      [`AXI_LEN_WIDTH-1:0]    lsu_w_len_o    			,
+  input                               lsu_w_last_i   			,
 
-    input                               id_to_ex        ,
-    output                              mem_stall 		  ,
-    output                              lsu_rd_wen  	  ,
-    output 	reg [`DATA_WIDTH-1:0]       lsu_result
+  input                               id_to_ex       			,
+  output                              mem_stall 		 			,
+  output                              lsu_rd_wen  	 			,
+  output 	reg [`DATA_WIDTH-1:0]       lsu_result
 );
 
 wire [`DATA_WIDTH-1:0] raddr;

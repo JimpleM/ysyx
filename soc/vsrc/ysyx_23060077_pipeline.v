@@ -3,13 +3,13 @@ module ysyx_23060077_pipeline #(
   WIDTH = 1, 
   RESET_VAL = 0
 ) (
-  input clock,
-  input reset,
-  input wen,
-  input stall,
-  input flush,
-  input [WIDTH-1:0] din,
-  output reg [WIDTH-1:0] dout
+  input                               clock               ,
+  input                               reset               ,
+  input                               wen                 ,
+  input                               stall               ,
+  input                               flush               ,
+  input       [WIDTH-1:0]             din                 ,
+  output  reg [WIDTH-1:0]             dout
   
 );
 initial begin

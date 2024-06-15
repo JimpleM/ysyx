@@ -1,20 +1,20 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_exu(
-    input 	    [`DATA_WIDTH-1:0]       pc,
+	input 	    [`DATA_WIDTH-1:0]       pc									,
 
-    input  	    [`DATA_WIDTH-1:0]       src1,
-    input  	    [`DATA_WIDTH-1:0]       src2,
+	input  	    [`DATA_WIDTH-1:0]       src1								,
+	input  	    [`DATA_WIDTH-1:0]       src2								,
 
-    input       [`DATA_WIDTH-1:0]       imm,
+	input       [`DATA_WIDTH-1:0]       imm									,
 
-    input                               branch,
+	input                               branch							,
 
-    input       [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    input       [`SRC_SEL_WIDTH-1:0]    src_sel,
-    input       [2:0]                   funct3,
+	input       [`ALU_OPT_WIDTH-1:0]    alu_opt							,
+	input       [`SRC_SEL_WIDTH-1:0]    src_sel							,
+	input       [2:0]                   funct3							,
 
-    output                              zero_flag,
-    output      [`DATA_WIDTH-1:0]       exu_result
+	output                              zero_flag						,
+	output      [`DATA_WIDTH-1:0]       exu_result
 );
 // 将每个bit或起来取反
 assign zero_flag = ~(|exu_result);

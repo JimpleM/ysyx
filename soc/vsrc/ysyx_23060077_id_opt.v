@@ -1,11 +1,11 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_id_opt(
-    input 	    [6:0]                   opcode,
-    input 	    [2:0]                   funct3,
-    input 	    [6:0]                   funct7,
-    output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    output  reg [`SRC_SEL_WIDTH-1:0]    src_sel,
-    output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt
+	input 	    [6:0]                   opcode						,
+	input 	    [2:0]                   funct3						,
+	input 	    [6:0]                   funct7						,
+	output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt						,
+	output  reg [`SRC_SEL_WIDTH-1:0]    src_sel						,
+	output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt
 );
 
 always @(*)begin

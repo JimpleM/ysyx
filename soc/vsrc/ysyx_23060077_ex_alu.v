@@ -1,9 +1,9 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_ex_alu(
-    input            [`ALU_OPT_WIDTH-1:0]    alu_opt,
-    input           [`DATA_WIDTH-1:0]       alu_a_data,
-    input           [`DATA_WIDTH-1:0]       alu_b_data,
-    output  	      [`DATA_WIDTH-1:0]       alu_out_data
+  input       [`ALU_OPT_WIDTH-1:0]    alu_opt             ,
+  input       [`DATA_WIDTH-1:0]       alu_a_data          ,
+  input       [`DATA_WIDTH-1:0]       alu_b_data          ,
+  output  	  [`DATA_WIDTH-1:0]       alu_out_data
 );
 
 wire sub_flag = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);

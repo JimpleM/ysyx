@@ -2,27 +2,27 @@
 `include"ysyx_23060077_axi_define.v"
 
 module ysyx_23060077_ifu(
-		input                               clock           ,
-		input                               reset           ,
+	input                               clock           		,
+	input                               reset           		,
 
-		input       [`DATA_WIDTH-1:0]     	jump_pc         ,
-		input                               jump_pc_valid   ,
-		input                               stall           ,
-		input                               wbu_stall       ,
+	input       [`DATA_WIDTH-1:0]     	jump_pc         		,
+	input                               jump_pc_valid   		,
+	input                               stall           		,
+	input                               wbu_stall       		,
 
-		// IFU Interface
-		output  		                        Icache_r_valid_o,
-		output  		[`AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o ,
-		input   		                        Icache_r_ready_i,
-		input   		[`DATA_WIDTH-1:0]       Icache_r_data_i ,
-		output  		[`AXI_LEN_WIDTH-1:0]    Icache_r_len_o  ,
-		input   		                        Icache_r_last_i ,
+	// IFU Interface	
+	output  		                        Icache_r_valid_o		,
+	output  		[`AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o 		,
+	input   		                        Icache_r_ready_i		,
+	input   		[`DATA_WIDTH-1:0]       Icache_r_data_i 		,
+	output  		[`AXI_LEN_WIDTH-1:0]    Icache_r_len_o  		,
+	input   		                        Icache_r_last_i 		,
 
-		// output                              ifu_stall       ,
-		output reg                         	if_to_id_ready_o,
-		input 															if_to_id_valid_i,
-		output reg	[`INST_WIDTH-1:0]       ifu_pc_o				,
-		output reg	[`INST_WIDTH-1:0]       ifu_inst_o
+	// output                              ifu_stall    		   ,
+	output 	reg                         if_to_id_ready_o		,
+	input 															if_to_id_valid_i		,
+	output 	reg	[`INST_WIDTH-1:0]       ifu_pc_o						,
+	output 	reg	[`INST_WIDTH-1:0]       ifu_inst_o
 );
 
 // reg  	[`INST_WIDTH-1:0]       ifu_pc_o_r;
