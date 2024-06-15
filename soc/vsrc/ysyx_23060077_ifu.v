@@ -53,9 +53,11 @@ initial begin
 		`ifdef NPC_SIM
 				pc = 32'h8000_0000;
 				ifu_pc_o = 32'h8000_0000;
+				ifu_pc_o_t = 32'h8000_0000;
 		`else
 				pc = 32'h3000_0000;
 				ifu_pc_o = 32'h3000_0000;
+				ifu_pc_o_t = 32'h3000_0000;
 		`endif
 end
 always @(posedge clock) begin
@@ -131,64 +133,53 @@ end
 // 		end
 // end
 
-// localparam IFU_PIPE_WITH  = 2;
-// reg [IFU_PIPE_WITH-1:0] 				ifu_pipe_state;
-// localparam [IFU_PIPE_WITH-1:0] 	IFU_PIPE_IDLE   	= 'd0;
-// localparam [IFU_PIPE_WITH-1:0] 	IFU_PIPE_READY    = 'd1;
+reg 													if_to_id_valid_o_t;
+reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
+reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
 
-// reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
-// reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
 
-// // 利用组合逻辑在ifu_ready_i置1时也将if_to_id_ready_o置1输出（减少1个周期握手时间）
-// always @(*) begin
-// 	case(ifu_pipe_state)
-// 		IFU_PIPE_IDLE:begin
-// 			if(ifu_ready_i)begin
-// 				if_to_id_valid_o 	= 1'b1;
+// 利用组合逻辑在ifu_ready_i置1时也将if_to_id_ready_o置1输出（减少1个周期握手时间）
+always @(*) begin
+	if(ifu_ready_i)begin
+		if_to_id_valid_o 	= 1'b1;
 
-// 				ifu_pc_o				 	= pc;
-// 				ifu_inst_o			 	= inst;
-// 			end
-// 			else begin
-// 				if_to_id_valid_o		= 'b0;
-// 			end
-// 		end
-// 		IFU_PIPE_READY:begin
-// 			if_to_id_valid_o = 1'b1;
+		ifu_pc_o				 	= pc;
+		ifu_inst_o			 	= inst;
+	end
+	else begin
+		if_to_id_valid_o	= if_to_id_valid_o_t;
 
-// 			ifu_pc_o           = ifu_pc_o_t;
-// 			ifu_inst_o				 = ifu_inst_o_t;
-// 		end
-// 	endcase
-// end
+		ifu_pc_o				 	= ifu_pc_o_t;
+		ifu_inst_o			 	= ifu_inst_o_t;
+	end
+end
 
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		ifu_pipe_state 	<= IFU_PIPE_IDLE;
-// 		ifu_pc_o_t			<= 'd0;
-// 		ifu_inst_o_t    <= 'd0;
-// 	end
-// 	else begin
-// 		case(ifu_pipe_state)
-// 			IFU_PIPE_IDLE:begin
-// 				if(ifu_ready_i)begin
-// 					ifu_pipe_state	<= IFU_PIPE_READY;
-
-// 					ifu_pc_o_t			<= pc;			// 避免指令拿到了idu没准备好，先存起来
-// 					ifu_inst_o_t    <= inst;
-// 				end
-// 			end
-// 			IFU_PIPE_READY:begin
-// 				if(if_to_id_ready_i)begin
-// 					ifu_pipe_state	<= IFU_PIPE_IDLE;
-// 				end
-// 			end
-// 			default:begin
-// 				ifu_pipe_state 	<= IFU_PIPE_IDLE;
-// 			end
-// 		endcase
-// 	end
-// end
+always @(posedge clock) begin
+	if(reset)begin
+		if_to_id_valid_o_t 	<= 'd0;
+		`ifdef NPC_SIM
+				ifu_pc_o_t <= 32'h8000_0000;
+		`else
+				ifu_pc_o_t <= 32'h3000_0000;
+		`endif
+		ifu_inst_o_t    		<= 'd0;
+	end
+	else begin
+		if(ifu_ready_i)begin
+			if(if_to_id_ready_i)begin
+				if_to_id_valid_o_t 	<= 'd0;
+			end
+			else begin
+				if_to_id_valid_o_t 	<= 'd1;
+			end
+			ifu_pc_o_t			<= pc;			// 避免指令拿到了idu没准备好，先存起来
+			ifu_inst_o_t    <= inst;
+		end
+		else if(if_to_id_ready_i)begin
+			if_to_id_valid_o_t 	<= 'd0;
+		end
+	end
+end
 
 reg ifu_valid_o_r;
 always @(posedge clock) begin
@@ -206,20 +197,20 @@ always @(posedge clock) begin
 end
 
 
-always @(posedge clock) begin
-	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
-		if_to_id_valid_o	<= 'd1;	//发出握手
+// always @(posedge clock) begin
+// 	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
+// 		if_to_id_valid_o	<= 'd1;	//发出握手
 
-		ifu_pc_o				<= pc;
-		ifu_inst_o			<= inst;
-	end
-	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
-		if_to_id_valid_o	<= 'd0;
+// 		ifu_pc_o				<= pc;
+// 		ifu_inst_o			<= inst;
+// 	end
+// 	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
+// 		if_to_id_valid_o	<= 'd0;
 
-		ifu_pc_o				<= ifu_pc_o;
-		ifu_inst_o			<= ifu_inst_o;
-	end
-end
+// 		ifu_pc_o				<= ifu_pc_o;
+// 		ifu_inst_o			<= ifu_inst_o;
+// 	end
+// end
 
 // 在其他模块运行完stall=0，且if_to_id中没有指令
 assign ifu_valid_o   = ifu_valid_o_r;

@@ -162,7 +162,7 @@ static void statistic() {
   if(sum_inst+1 != total_inst_cnt){
     printf(ANSI_FMT("total_inst_cnt is not equal to sum_inst\n",ANSI_FG_RED));
   }
-  if(Icache_access_counter[0] + Icache_miss_counter[0] != total_inst_cnt){
+  if(Icache_access_counter[0] + Icache_miss_counter[0] != sum_inst){
     printf(ANSI_FMT("total_inst_cnt is not equal to Icache axi read times\n",ANSI_FG_RED));
   }
 }
