@@ -52,7 +52,7 @@ module ysyx_23060077_csr(
 
 
 reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
-`ifdef
+`ifdef USING_DPI_C
 import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg []);
 initial set_csr_ptr(csr_reg);
 `endif

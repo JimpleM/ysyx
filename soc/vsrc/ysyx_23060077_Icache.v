@@ -66,14 +66,7 @@ reg  [1:0] data_cnt;
 assign Icache_r_len_o 	= 8'd3;
 
 always @(*) begin
-	if(reset)begin
-		ifu_ready_o				= 'd0;
-		ifu_data_o				= 'd0;
-		Icache_r_valid_o		= 'd0;
-		Icache_r_addr_o			= 'd0;
-	end
-	else begin
-		case(icache_state)
+	case(icache_state)
 		ICACHE_IDLE:begin
 			ifu_ready_o			= 'd0;
 			ifu_data_o			= 'd0;
@@ -106,8 +99,7 @@ always @(*) begin
 			Icache_r_valid_o	= 'd0;
 			Icache_r_addr_o		= 'd0;
 		end
-		endcase
-	end
+	endcase
 end
 always @(posedge clock) begin
 	if(reset | ifu_fence_i)begin

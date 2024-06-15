@@ -19,7 +19,11 @@ extern VerilatedVcdC* tfp;
 extern uint32_t cpu_pc;
 extern uint32_t cpu_inst;
 extern uint32_t *cpu_gpr;
+#ifdef NPC_SIM
+uint32_t cpu_lpc = 0x80000000;
+#else
 uint32_t cpu_lpc = 0x30000000;
+#endif
 
 NPCState npc_state = { .state = NPC_STOP };
 CPU_state cpu = {};
