@@ -240,7 +240,8 @@ always @(posedge clock) begin
 		id_to_ex_valid	<= 'd0;
 	end
 	else begin
-		if(idu_stall)begin	// 运行完了
+		// if(idu_stall)begin	// 运行完了
+		if(if_to_id_valid & if_to_id_ready)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
 			id_to_ex_valid <= 'd1;
 		end
 		else if(id_to_ex_ready)begin
