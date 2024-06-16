@@ -26,17 +26,17 @@ always @(*)begin
 				default : alu_opt = `ALU_NONE;
 			endcase
 		end
-		`LOAD  :begin alu_opt = `ALU_NONE;    end            //lb,lh,lw,lbu,lhu
-		`STORE :begin alu_opt = `ALU_NONE;    end            //sb,sh,sw
+		`LOAD  :begin alu_opt = `ALU_NONE;    end       //lb,lh,lw,lbu,lhu
+		`STORE :begin alu_opt = `ALU_NONE;    end       //sb,sh,sw
 		`OP_IMM:begin 
 			case(funct3)
-				3'b000 :begin alu_opt = `ALU_ADD;   end//addi
-				3'b010 :begin alu_opt = `ALU_SUB;   end//slti
-				3'b011 :begin alu_opt = `ALU_SLTU;  end//sltiu
-				3'b100 :begin alu_opt = `ALU_XOR;   end//xori
-				3'b110 :begin alu_opt = `ALU_OR;    end//ori
-				3'b111 :begin alu_opt = `ALU_AND;   end//andi
-				3'b001 :begin alu_opt = `ALU_SLL;   end//slli
+				3'b000 :begin alu_opt = `ALU_ADD;   end			//addi
+				3'b010 :begin alu_opt = `ALU_SUB;   end			//slti
+				3'b011 :begin alu_opt = `ALU_SLTU;  end			//sltiu
+				3'b100 :begin alu_opt = `ALU_XOR;   end			//xori
+				3'b110 :begin alu_opt = `ALU_OR;    end			//ori
+				3'b111 :begin alu_opt = `ALU_AND;   end			//andi
+				3'b001 :begin alu_opt = `ALU_SLL;   end			//slli
 				3'b101 :begin                          
 					case(funct7)                       
 						1'b0 : begin alu_opt = `ALU_SRL;     end //srli
@@ -56,10 +56,10 @@ always @(*)begin
 						default : alu_opt = `ALU_NONE;
 					endcase                                            
 				end                                                    
-				3'b001:begin alu_opt = `ALU_SLL;end                    // sll
-				3'b010:begin alu_opt = `ALU_SLT;end                    // slt  
-				3'b011:begin alu_opt = `ALU_SLTU;end                   //sltu
-				3'b100:begin alu_opt = `ALU_XOR;end                    // xor
+				3'b001:begin alu_opt = `ALU_SLL;end          // sll
+				3'b010:begin alu_opt = `ALU_SLT;end          // slt  
+				3'b011:begin alu_opt = `ALU_SLTU;end         //sltu
+				3'b100:begin alu_opt = `ALU_XOR;end          // xor
 				3'b101:begin                                           
 					case(funct7)                                       
 						1'b0 : begin alu_opt = `ALU_SRL;     end // srl
@@ -67,8 +67,8 @@ always @(*)begin
 						default : alu_opt = `ALU_NONE;
 					endcase
 				end
-				3'b110:begin alu_opt = `ALU_OR ;end                     // or
-				3'b111:begin alu_opt = `ALU_AND;end                     // and
+				3'b110:begin alu_opt = `ALU_OR ;end          // or
+				3'b111:begin alu_opt = `ALU_AND;end          // and
 				default : alu_opt = `ALU_NONE;
 			endcase
 		end

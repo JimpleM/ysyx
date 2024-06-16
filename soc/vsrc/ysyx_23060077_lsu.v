@@ -33,20 +33,16 @@ module ysyx_23060077_lsu(
 
 wire [`DATA_WIDTH-1:0] raddr;
 wire [`DATA_WIDTH-1:0] rdata;
-reg  [`DATA_WIDTH-1:0] rsize;
+reg  [2:0]             rsize;
 wire [`DATA_WIDTH-1:0] waddr;
 wire [`DATA_WIDTH-1:0] wdata;
-wire [`DATA_WIDTH-1:0] wmask;
-reg  [`DATA_WIDTH-1:0]  mask;
+reg  [2:0]             wmask;
 
 
 assign raddr = (lsu_opt == `LSU_OPT_LOAD)  ? src1 + imm : 'd0;
 assign waddr = (lsu_opt == `LSU_OPT_STORE) ? src1 + imm : 'd0;
 assign wdata = src2;
-assign wmask = mask;
 
-// reg [`DATA_WIDTH-1:0]     lsu_result_r;
-// assign lsu_result = lsu_result_r;
 always @(posedge clock) begin
   if(reset)begin
     lsu_result <= 'd0 ;
@@ -65,21 +61,21 @@ end
 
 always @(*) begin
   case({lsu_opt,funct3})
-      {`LSU_OPT_LOAD,3'b000}: rsize = 32'd0	;
-      {`LSU_OPT_LOAD,3'b001}: rsize = 32'd1	;
-      {`LSU_OPT_LOAD,3'b010}: rsize = 32'd2	;
-      {`LSU_OPT_LOAD,3'b100}: rsize = 32'd0	;
-      {`LSU_OPT_LOAD,3'b101}: rsize = 32'd1	;
+      {`LSU_OPT_LOAD,3'b000}: rsize = 3'd0	;
+      {`LSU_OPT_LOAD,3'b001}: rsize = 3'd1	;
+      {`LSU_OPT_LOAD,3'b010}: rsize = 3'd2	;
+      {`LSU_OPT_LOAD,3'b100}: rsize = 3'd0	;
+      {`LSU_OPT_LOAD,3'b101}: rsize = 3'd1	;
       default: 				rsize = 'd0 ; 
   endcase
 end
 
 always @(*) begin
 	case({lsu_opt,funct3})
-		{`LSU_OPT_STORE,3'b000}: mask = {32'd0};
-		{`LSU_OPT_STORE,3'b001}: mask = {32'd1};
-		{`LSU_OPT_STORE,3'b010}: mask = {32'd2};
-		default: 			 	 mask = 'd0 ; 
+		{`LSU_OPT_STORE,3'b000}: wmask = 3'd0;
+		{`LSU_OPT_STORE,3'b001}: wmask = 3'd1;
+		{`LSU_OPT_STORE,3'b010}: wmask = 3'd2;
+		default: 			 	 wmask = 'd0 ; 
 	endcase
 end
 
@@ -115,14 +111,14 @@ assign lsu_r_valid_o  = ren;
 assign lsu_r_addr_o   = raddr;
 assign lsu_rd_wen_r   = lsu_r_ready_i & lsu_r_last_i;
 assign rdata          = lsu_r_data_i;
-assign lsu_r_size_o   = rsize[2:0];
+assign lsu_r_size_o   = rsize;
 assign lsu_r_len_o	  = 8'd0;
 
 assign lsu_w_valid_o  = wen;
 assign lsu_w_addr_o   = waddr;
 assign lsu_rd_wen_w   = lsu_w_last_i;
 assign lsu_w_data_o   = wdata;
-assign lsu_w_size_o   = wmask[2:0];
+assign lsu_w_size_o   = wmask;
 assign lsu_w_len_o	  = 8'd0;
 
 // always @(posedge clock ) begin

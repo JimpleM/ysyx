@@ -28,14 +28,8 @@ module ysyx_23060077_ifu(
 
 
 
-reg   [`DATA_WIDTH-1:0]         pc;
-wire  [`INST_WIDTH-1:0]         inst;
-// reg   [`INST_WIDTH-1:0]         inst_t;
-
-// reg ifu_jump_flag;
-// reg flush_inst;
-
-// assign ifu_stall = ifu_stall_r;
+reg   	[`DATA_WIDTH-1:0]         pc;
+wire  	[`INST_WIDTH-1:0]         inst;
 
 wire    ifu_fence_i =  (ifu_inst_o[6:0] == 7'b00011_11) ? ifu_inst_o[12] : 1'b0;
 

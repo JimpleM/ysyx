@@ -1,40 +1,11 @@
 `include"ysyx_23060077_define.v"
 
-// csr reg addr
-`define CSR_ADDR_WIDTH      12
-`define CSR_M_CYCLE_ADDR    `CSR_ADDR_WIDTH'hb00    
-`define CSR_MSTATUS_ADDR    `CSR_ADDR_WIDTH'h300
-`define CSR_MIE_ADDR        `CSR_ADDR_WIDTH'h304
-`define CSR_MTVEC_ADDR      `CSR_ADDR_WIDTH'h305    
-`define CSR_MEPC_ADDR       `CSR_ADDR_WIDTH'h341
-`define CSR_MCAUSE_ADDR     `CSR_ADDR_WIDTH'h342
-`define CSR_MTVAL_ADDR      `CSR_ADDR_WIDTH'h343
-`define CSR_MINSTRET_ADDR   `CSR_ADDR_WIDTH'hb02
-`define CSR_MSCRATCH_ADDR   `CSR_ADDR_WIDTH'h340
-`define CSR_MVENDORID_ADDR  `CSR_ADDR_WIDTH'hF11
-`define CSR_MARCHID_ADDR    `CSR_ADDR_WIDTH'hF12
-
-`define CSR_REG_WIDTH       4
-`define CSR_M_CYCLE         `CSR_REG_WIDTH'd0    
-`define CSR_MSTATUS         `CSR_REG_WIDTH'd1
-`define CSR_MIE             `CSR_REG_WIDTH'd2
-`define CSR_MTVEC           `CSR_REG_WIDTH'd3    
-`define CSR_MEPC            `CSR_REG_WIDTH'd4
-`define CSR_MCAUSE          `CSR_REG_WIDTH'd5
-`define CSR_MTVAL           `CSR_REG_WIDTH'd6
-`define CSR_MINSTRET        `CSR_REG_WIDTH'd7
-`define CSR_MSCRATCH        `CSR_REG_WIDTH'd8
-`define CSR_MVENDORID       `CSR_REG_WIDTH'd9
-`define CSR_MARCHID         `CSR_REG_WIDTH'd10
-
 module ysyx_23060077_csr(
 	input 	                            clock       				,
 	input 	                            reset       				,
-	// input                               enable,
+
 	input       [`CSR_ADDR_WIDTH-1:0]   csr_wr_addr 				,
 	input       [`DATA_WIDTH-1:0]       csr_wr_data 				,
-
-	// input                               enable,
 	input       [`CSR_ADDR_WIDTH-1:0]   csr_rd_addr 				,
 	output 	reg [`DATA_WIDTH-1:0]       csr_rd_data 				,
 
@@ -55,11 +26,6 @@ reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
 
 
 wire enable = sys & (|funct3); //funct3不为0
-
-// wire [`DATA_WIDTH-1:0]        wr_data_r;
-// wire [`DATA_WIDTH-1:0]        temp;
-// assign temp = csr_reg[csr_wr_addr];
-// assign wr_data_r = (funct3[1:0] == 2'b01) ? csr_wr_data : (funct3[1:0] == 2'b10) ? temp | csr_wr_data : temp & (~csr_wr_data);
 
 assign csr_reg[`CSR_MVENDORID]  = `MVENDORID;
 assign csr_reg[`CSR_MARCHID]    = `MARCHID;

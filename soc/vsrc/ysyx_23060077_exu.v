@@ -14,7 +14,7 @@ module ysyx_23060077_exu(
 	input       [2:0]                   funct3							,
 
 	output                              zero_flag						,
-	output      [`DATA_WIDTH-1:0]       exu_result
+	output 	reg [`DATA_WIDTH-1:0]       exu_result
 );
 // 将每个bit或起来取反
 assign zero_flag = ~(|exu_result);
@@ -43,17 +43,15 @@ ysyx_23060077_ex_alu ex_alu(
    	.alu_out_data    (alu_out_data)
 );
 
-reg [`DATA_WIDTH-1:0]   exu_result_r;
-assign exu_result = exu_result_r;
 always @(*) begin
   	case({branch,funct3})
-  	    {1'b1,3'b000} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
-  	    {1'b1,3'b001} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
-  	    {1'b1,3'b100} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-  	    {1'b1,3'b101} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-  	    {1'b1,3'b110} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-  	    {1'b1,3'b111} : exu_result_r = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-  	    default:    	exu_result_r = alu_out_data; 
+  	    {1'b1,3'b000} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
+  	    {1'b1,3'b001} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
+  	    {1'b1,3'b100} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+  	    {1'b1,3'b101} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+  	    {1'b1,3'b110} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+  	    {1'b1,3'b111} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+  	    default:    		exu_result = alu_out_data; 
   	endcase
 end
 
