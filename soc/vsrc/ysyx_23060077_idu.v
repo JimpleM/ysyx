@@ -2,9 +2,6 @@
 module ysyx_23060077_idu(
 	input 	    [`INST_WIDTH-1:0]       inst								,
 
-	output                              branch							,
-	output                              jal									,
-	output                              jalr								,
 	output  reg [`REG_WIDTH-1:0]        rd									,
 	output  reg                         rd_wen							,
 	output  reg [`REG_WIDTH-1:0]        rs1									,
@@ -16,10 +13,6 @@ module ysyx_23060077_idu(
 	output      [2:0]                   funct3
 
 );
-
-assign  branch  = (inst[6:0] == `BRANCH)    ? 1'b1 : 1'b0;
-assign  jal     = (inst[6:0] == `JAL)       ? 1'b1 : 1'b0;
-assign  jalr    = (inst[6:0] == `JALR)      ? 1'b1 : 1'b0;
 
 
 wire [6:0]  opcode;

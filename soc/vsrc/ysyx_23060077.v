@@ -64,7 +64,7 @@ module ysyx_23060077(
 	output      [1:0]           io_slave_rresp      ,
 	output      [63:0]          io_slave_rdata      ,
 	output                      io_slave_rlast      ,
-	output      [3:0]           io_slave_rid        
+	output      [3:0]           io_slave_rid
 );
 
 
@@ -75,7 +75,7 @@ wire [`INST_WIDTH-1:0]      ifu_inst_t      	;
 
 wire [`DATA_WIDTH-1:0]      jump_pc         	;
 wire                        jump_pc_valid   	;
-wire                        stall           	; 
+wire                        stall           	;
 
 wire                        Icache_r_valid_o	;
 wire [`AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o 	;
@@ -84,6 +84,12 @@ wire [`DATA_WIDTH-1:0]      Icache_r_data_i 	;
 wire [`AXI_LEN_WIDTH-1:0]   Icache_r_len_o  	;
 wire                        Icache_r_last_i 	;
 
+wire   											ifu_jal 					;
+wire   											ifu_jalr 					;
+wire   											ifu_branch 				;
+wire   											ifu_csr_ecall			;
+wire   											ifu_csr_mret			;
+wire   											ifu_jump					;
 
 
 // idu
@@ -102,12 +108,17 @@ wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	    	;
 wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
 wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
 wire [2:0]                  idu_funct3	    	;
+wire 												idu_csr_ecall			;
+wire 												idu_csr_mret			;
 
 //regfile
 wire [`DATA_WIDTH-1:0]     	idu_src1					;
 wire [`DATA_WIDTH-1:0]     	idu_src2					;
+wire 												rs1_busy					;
+wire 												rs2_busy					;
+wire 												rd_busy						;
 
-//exu 
+//exu
 
 wire [`DATA_WIDTH-1:0]      exu_pc          	;
 wire [`INST_WIDTH-1:0]      exu_inst        	;
@@ -121,14 +132,16 @@ wire [2:0]                  exu_funct3	    	;
 wire                       	exu_branch				;
 wire                       	exu_rd_wen				;
 wire [`REG_WIDTH-1:0]   		exu_rd_addr				;
+wire 												exu_csr_ecall			;
+wire 												exu_csr_mret 			;
 
 wire                        zero_flag					;
 wire [`DATA_WIDTH-1:0]      exu_result				;
 
 //lsu
 wire [`DATA_WIDTH-1:0]     	lsu_result				;
-wire                        mem_stall       	;     
-wire                        lsu_rd_wen      	; 
+wire                        mem_stall       	;
+wire                        lsu_rd_wen      	;
 
 wire                        lsu_r_valid_o   	;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    	;
@@ -146,6 +159,9 @@ wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     	;
 wire                        lsu_w_last_i    	;
 
 //wbu
+wire [`DATA_WIDTH-1:0]      wbu_pc          	;
+wire [`INST_WIDTH-1:0]      wbu_inst        	;
+
 wire [`DATA_WIDTH-1:0]			wb_exu_result			;
 wire                        wbu_rd_wen      	;
 wire [`REG_WIDTH-1:0]   		wbu_rd_addr				;
@@ -154,8 +170,6 @@ wire [`LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
 wire [`DATA_WIDTH-1:0]			wbu_lsu_result		;
 wire [`DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
 //csr
-wire                        csr_ecall       	;
-wire                        csr_mret        	;
 wire [`DATA_WIDTH-1:0]     	csr_wr_data				;
 wire [`DATA_WIDTH-1:0]     	csr_rd_data				;
 wire [`DATA_WIDTH-1:0]      csr_mstatus     	;
@@ -163,10 +177,23 @@ wire [`DATA_WIDTH-1:0]      csr_mtvec       	;
 wire [`INST_WIDTH-1:0]      csr_mpec        	;
 
 
-assign jump_pc = csr_mret ? csr_mpec : (csr_ecall ? csr_mtvec :(((idu_branch && !zero_flag) || idu_jal) ? ifu_pc + idu_imm : (idu_jalr ? idu_src1 + idu_imm : 'd0)));
-assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu_jal) | idu_jalr;
+
+
+// assign jump_pc = csr_mret ? csr_mpec : (csr_ecall ? csr_mtvec :(((idu_branch && !zero_flag) || idu_jal) ? ifu_pc + idu_imm : (idu_jalr ? idu_src1 + idu_imm : 'd0)));
+// assign jump_pc_valid = csr_mret | csr_ecall | ((idu_branch && !zero_flag) || idu_jal) | idu_jalr;
 
 assign stall = mem_stall;
+wire [`DATA_WIDTH-1:0]      jump_pc_src1;
+
+assign jump_pc_src1 = idu_jalr ? idu_src1 : ifu_pc;
+assign jump_pc = exu_csr_mret ? csr_mpec : ( exu_csr_ecall ? csr_mtvec : ((idu_branch && !zero_flag) || idu_jal ? jump_pc_src1 + idu_imm : (idu_jalr ? jump_pc_src1 + idu_imm : jump_pc_src1+4)));
+assign jump_pc_valid = exu_csr_mret | exu_csr_ecall | idu_branch | idu_jal | idu_jalr;	//
+// 想办法算pc只例化一个加法器
+// csr cmret+ecall 				exu_stall 不用ex_wb握手，因为会被lsu卡住（ifu读和lsu写不冲突）
+// branch exu的zero_flag 
+// jal jarl 
+// 用jump_pc_valid更新pc
+// 用ifu_jump 暂停ifu请求，等待idu_stall / exu_stall
 
 // ifu要等idu和exu运行完才能那pc去访存
 ysyx_23060077_ifu ifu_u0(
@@ -174,8 +201,8 @@ ysyx_23060077_ifu ifu_u0(
 	.reset          	( reset         		),
 	.jump_pc        	( jump_pc       		),
 	.jump_pc_valid  	( jump_pc_valid 		),
-	.stall          	( stall        			),
-	.wbu_stall      	( ex_to_wb_valid & ex_to_wb_ready    ),
+	.ifu_jump					( ifu_jump					),
+	.exu_finished     ( ex_to_wb_valid & ex_to_wb_ready &(exu_pc == ifu_pc)   ),
 
 	.Icache_r_valid_o ( Icache_r_valid_o 	),
 	.Icache_r_addr_o  ( Icache_r_addr_o  	),
@@ -190,11 +217,22 @@ ysyx_23060077_ifu ifu_u0(
 	.ifu_inst_o     	( ifu_inst      		)
 );
 
+ysyx_23060077_pre_decode pre_decode_u0(
+	.ifu_inst     		( ifu_inst     			),
+	.ifu_jal 					( ifu_jal 					),
+	.ifu_jalr 				( ifu_jalr 					),
+	.ifu_branch 			( ifu_branch 				),
+	.ifu_csr_ecall		( ifu_csr_ecall			),
+	.ifu_csr_mret			( ifu_csr_mret			),
+	.ifu_jump					( ifu_jump					)
+);
+
+
 wire if_to_id_valid;
 reg if_to_id_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH+`INST_WIDTH), 
+	.WIDTH          (`DATA_WIDTH+`INST_WIDTH+5),
 	.RESET_VAL      ('d0)
 )pipeline_if_to_id(
 	.clock	( clock ),
@@ -202,20 +240,20 @@ ysyx_23060077_pipeline#(
 	.wen		( if_to_id_valid & if_to_id_ready ),
 	.stall	( !if_to_id_ready),
 	.flush	( ),
-	.din		( {ifu_pc,ifu_inst}),
-	.dout		( {idu_pc,idu_inst})
+	.din		( {ifu_pc,ifu_inst,ifu_jal,ifu_jalr,ifu_branch,ifu_csr_ecall,ifu_csr_mret}),
+	.dout		( {idu_pc,idu_inst,idu_jal,idu_jalr,idu_branch,idu_csr_ecall,idu_csr_mret})
 );
 
 always @(posedge clock) begin
 	if(reset)begin
 		if_to_id_ready	<= 'd1;
 	end
-	else begin
-		if(if_to_id_valid)begin
-			if_to_id_ready <= 'd0;
-		end
-		else if(id_to_ex_valid & id_to_ex_ready)begin	// 后级传递过去了，当前级可以接收新的数据了
+	else begin	// 必须是后级传输成功然后拉高ready在前面
+		if(id_to_ex_valid & id_to_ex_ready)begin	// 后级传递过去了，当前级可以接收新的数据了
 			if_to_id_ready <= 'd1;
+		end
+		else if(if_to_id_valid)begin
+			if_to_id_ready <= 'd0;
 		end
 	end
 end
@@ -229,6 +267,9 @@ always @(posedge clock) begin
 		if(if_to_id_valid & if_to_id_ready)begin
 			idu_stall <= 'd1;
 		end
+		else if((rs1_busy | rs2_busy | rd_busy))begin
+			idu_stall <= 'd1;
+		end
 		else begin
 			idu_stall <= 'd0;
 		end
@@ -240,8 +281,8 @@ always @(posedge clock) begin
 		id_to_ex_valid	<= 'd0;
 	end
 	else begin
-		// if(idu_stall)begin	// 运行完了
-		if(if_to_id_valid & if_to_id_ready)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
+		if(idu_stall & (!(rs1_busy | rs2_busy | rd_busy)))begin	// 运行完了
+		// if(if_to_id_valid & if_to_id_ready)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
 			id_to_ex_valid <= 'd1;
 		end
 		else if(id_to_ex_ready)begin
@@ -250,11 +291,23 @@ always @(posedge clock) begin
 	end
 end
 
+reg idu_rd_wen_t;
+always @(posedge clock) begin
+	if(reset)begin
+		idu_rd_wen_t <= 'd0;
+	end
+	else begin
+		if(id_to_ex_valid & id_to_ex_ready & idu_rd_wen)begin
+			idu_rd_wen_t <= 'd1;
+		end
+		else begin
+			idu_rd_wen_t <= 'd0;
+		end
+	end
+end
+
 ysyx_23060077_idu idu_u0(
 	.inst						( idu_inst	  ),
-	.branch					( idu_branch	),
-	.jal						( idu_jal			),
-	.jalr						( idu_jalr	  ),
 	.rd							( idu_rd_addr	),
 	.rd_wen					( idu_rd_wen	),
 	.rs1						( idu_rs1			),
@@ -269,20 +322,26 @@ ysyx_23060077_idu idu_u0(
 ysyx_23060077_regfile regfile_u0(
 	.clock					( clock		    ),
 	.reset      		( reset       ),
+	.rs1_busy  			( rs1_busy  	),
+	.rs2_busy 			( rs2_busy 		),
+	.rd_busy				( rd_busy 		),
+	.idu_rd_addr		( idu_rd_addr	),
+	.idu_rd_wen			( idu_rd_wen_t),
+
 	.rs1_addr				( idu_rs1	    ),
 	.rs1_data				( idu_src1		),
 	.rs2_addr				( idu_rs2	    ),
 	.rs2_data				( idu_src2		),
 	.reg_rd_en			( wbu_rd_wen  ),
 	.reg_rd_addr		( wbu_rd_addr	),
-	.reg_rd_data		( wbu_rd_data	)	
+	.reg_rd_data		( wbu_rd_data	)
 );
 
 reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH), 
+	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+2),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -290,8 +349,8 @@ ysyx_23060077_pipeline#(
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
 	.flush	( ),
-	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr}),
-	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr})
+	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret}),
+	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret})
 );
 
 always @(posedge clock) begin
@@ -299,11 +358,11 @@ always @(posedge clock) begin
 		id_to_ex_ready <= 'd1;
 	end
 	else begin
-		if(id_to_ex_valid)begin
-			id_to_ex_ready <= 'd0;
-		end
-		else if(ex_to_wb_valid & ex_to_wb_ready)begin
+		if(ex_to_wb_valid & ex_to_wb_ready)begin	
 			id_to_ex_ready <= 'd1;
+		end
+		else if(id_to_ex_valid)begin
+			id_to_ex_ready <= 'd0;
 		end
 	end
 end
@@ -383,8 +442,8 @@ ysyx_23060077_lsu lsu_u0(
 );
 
 assign csr_wr_data = exu_inst[14] ? {27'd0,exu_inst[19:15]} : exu_src1;
-assign csr_ecall = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'd0);
-assign csr_mret  = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'b0011_0000_0010);
+// assign csr_ecall = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'd0);
+// assign csr_mret  = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'b0011_0000_0010);
 
 ysyx_23060077_csr  csr_u0 (
 	.clock          ( clock                     ),
@@ -394,8 +453,8 @@ ysyx_23060077_csr  csr_u0 (
 	.csr_rd_addr    ( exu_imm[`CSR_WIDTH-1:0]   ),
 	.csr_rd_data    ( csr_rd_data               ),
 
-	.i_csr_ecall    ( csr_ecall                 ),
-	.i_csr_mret     ( csr_mret                  ),
+	.i_csr_ecall    ( exu_csr_ecall             ),
+	.i_csr_mret     ( exu_csr_mret              ),
 
 	.i_inst         ( exu_inst                  ),
 	.i_pc           ( exu_pc                    ),
@@ -423,7 +482,7 @@ always @(posedge clock) begin
 end
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH), 
+	.WIDTH          (`DATA_WIDTH*3+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -431,8 +490,8 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data}),
-	.dout		( {wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data})
+	.din		( {exu_pc,exu_inst,exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data}),
+	.dout		( {wbu_pc,wbu_inst,wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data})
 );
 
 ysyx_23060077_wbu wbu_u0(
@@ -441,7 +500,7 @@ ysyx_23060077_wbu wbu_u0(
 	.lsu_result				( wbu_lsu_result   	),
 	.csr_result     	( wbu_rd_csr_data  	),
 	.wbu_result				( wbu_rd_data      	)
-	
+
 );
 
 
@@ -512,9 +571,9 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
 
 import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit valid);
 always @(*)begin
-	set_pc_ptr(ifu_pc,ifu_inst,1'b1);
+	set_pc_ptr(wbu_pc,wbu_inst,1'b1);
 end
-	
+
 
 import "DPI-C" function void inst_type_count(input int inst);
 always @(posedge clock)begin

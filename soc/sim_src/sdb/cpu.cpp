@@ -58,7 +58,7 @@ int is_exit_status_bad() {
 uint32_t wave_pc_count = 0;
 static void dump_wave(){
 #ifdef CONFIG_WAVE
-  if(cpu_pc == CONFIG_WAVE_PC_BEGIN){
+  if(cpu_pc == CONFIG_WAVE_PC_BEGIN | CONFIG_WAVE_PC_BEGIN == 0){
     wave_flag = true;
   }
   if(cpu_pc == CONFIG_WAVE_PC_END){
@@ -224,7 +224,7 @@ static void execute(uint64_t n) {
         nvboard_update();
       #endif
       exec_once();
-      if(cpu_lpc != cpu_pc){
+      if(cpu_lpc != cpu_pc && (cpu_pc !=0)&& (cpu_pc !=0x80000000)){
         total_inst_cnt++;
         trace_and_difftest();
         #ifdef CONFIG_FTRACE

@@ -7,8 +7,8 @@ module ysyx_23060077_ifu(
 
 	input       [`DATA_WIDTH-1:0]     	jump_pc         		,
 	input                               jump_pc_valid   		,
-	input                               stall           		,
-	input                               wbu_stall       		,
+	input                               ifu_jump           	,
+	input                               exu_finished       		,
 
 	// IFU Interface	
 	output  		                        Icache_r_valid_o		,
@@ -25,19 +25,14 @@ module ysyx_23060077_ifu(
 	output 	reg	[`INST_WIDTH-1:0]       ifu_inst_o
 );
 
-// reg  	[`INST_WIDTH-1:0]       ifu_pc_o_r;
-// reg  	[`INST_WIDTH-1:0]       ifu_inst_o_r;
 
 
-
-// assign ifu_pc_o = ifu_pc_o_r;
-// assign ifu_inst_o = ifu_inst_o_r;
 
 reg   [`DATA_WIDTH-1:0]         pc;
 wire  [`INST_WIDTH-1:0]         inst;
 // reg   [`INST_WIDTH-1:0]         inst_t;
 
-reg ifu_jump_flag;
+// reg ifu_jump_flag;
 // reg flush_inst;
 
 // assign ifu_stall = ifu_stall_r;
@@ -68,16 +63,16 @@ always @(posedge clock) begin
 						pc <= 32'h3000_0000;
 				`endif
 		end
-		// else if(ifu_valid_o)begin
+		// else if(ifu_jump)begin
 		// 		pc <= pc;
 		// end
-		// else if(stall | !wbu_stall)begin
+		// else if(stall | !exu_finished)begin
 		// 		pc <= pc;
 		// end
 		else if(jump_pc_valid)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
 				pc <= jump_pc;
 		end
-		else if(wbu_stall & !ifu_jump_flag)begin
+		else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
 				pc <= pc + 4;
 		end
 		else begin
@@ -85,101 +80,53 @@ always @(posedge clock) begin
 		end
 end
 
-always @(posedge clock) begin
-	if(reset)begin
-		ifu_jump_flag	<= 1'b0;
-	end
-	else begin
-		if(jump_pc_valid)begin
-			ifu_jump_flag	<= 1'b1;
-		end
-		else if(ifu_ready_i)begin
-			ifu_jump_flag	<= 1'b0;
-		end
-	end
-end
-
-// always @(posedge clock) begin
-// 		if(ifu_ready_i)begin
-// 				ifu_pc_o_t      <= pc;
-// 				ifu_inst_o_t    <= inst;
-// 				if((!stall) & (!wbu_stall))begin
-// 						flush_inst      <= 1'b0;
-// 				end
-// 				else begin
-// 						flush_inst      <= 1'b1;
-// 				end
-// 		end
-// 		else if((!stall) & (!wbu_stall))begin
-// 				flush_inst      <= 1'b0;
-// 		end
-// end
-
-// always @(posedge clock) begin
-// 		if(ifu_ready_i & (!stall) & (!wbu_stall))begin
-// 				ifu_pc_o_r <= pc;
-// 				ifu_inst_o_r <= inst;
-// 				ifu_stall_r <= 1'b0;
-// 		end
-// 		else if(flush_inst & (!stall) & (!wbu_stall))begin
-// 				ifu_pc_o_r <= ifu_pc_o_t;
-// 				ifu_inst_o_r <= ifu_inst_o_t;
-// 				ifu_stall_r <= 1'b0;
-// 		end
-// 		else begin
-// 				ifu_pc_o_r <= ifu_pc_o_r;
-// 				ifu_inst_o_r <= ifu_inst_o_r;
-// 				ifu_stall_r <= 1'b1;
-// 		end
-// end
-
-reg 													if_to_id_valid_o_t;
+// reg 													if_to_id_valid_o_t;
 reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
-reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
+// reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
 
 
-// 利用组合逻辑在ifu_ready_i置1时也将if_to_id_ready_o置1输出（减少1个周期握手时间）
-always @(*) begin
-	if(ifu_ready_i)begin
-		if_to_id_valid_o 	= 1'b1;
+// // 利用组合逻辑在ifu_ready_i置1时也将if_to_id_ready_o置1输出（减少1个周期握手时间）
+// always @(*) begin
+// 	if(ifu_ready_i)begin
+// 		if_to_id_valid_o 	= 1'b1;
 
-		ifu_pc_o				 	= pc;
-		ifu_inst_o			 	= inst;
-	end
-	else begin
-		if_to_id_valid_o	= if_to_id_valid_o_t;
+// 		ifu_pc_o				 	= pc;
+// 		ifu_inst_o			 	= inst;
+// 	end
+// 	else begin
+// 		if_to_id_valid_o	= if_to_id_valid_o_t;
 
-		ifu_pc_o				 	= ifu_pc_o_t;
-		ifu_inst_o			 	= ifu_inst_o_t;
-	end
-end
+// 		ifu_pc_o				 	= ifu_pc_o_t;
+// 		ifu_inst_o			 	= ifu_inst_o_t;
+// 	end
+// end
 
-always @(posedge clock) begin
-	if(reset)begin
-		if_to_id_valid_o_t 	<= 'd0;
-		`ifdef NPC_SIM
-				ifu_pc_o_t <= 32'h8000_0000;
-		`else
-				ifu_pc_o_t <= 32'h3000_0000;
-		`endif
-		ifu_inst_o_t    		<= 'd0;
-	end
-	else begin
-		if(ifu_ready_i)begin
-			if(if_to_id_ready_i)begin
-				if_to_id_valid_o_t 	<= 'd0;
-			end
-			else begin
-				if_to_id_valid_o_t 	<= 'd1;
-			end
-			ifu_pc_o_t			<= pc;			// 避免指令拿到了idu没准备好，先存起来
-			ifu_inst_o_t    <= inst;
-		end
-		else if(if_to_id_ready_i)begin
-			if_to_id_valid_o_t 	<= 'd0;
-		end
-	end
-end
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		if_to_id_valid_o_t 	<= 'd0;
+// 		`ifdef NPC_SIM
+// 				ifu_pc_o_t <= 32'h8000_0000;
+// 		`else
+// 				ifu_pc_o_t <= 32'h3000_0000;
+// 		`endif
+// 		ifu_inst_o_t    		<= 'd0;
+// 	end
+// 	else begin
+// 		if(ifu_ready_i)begin
+// 			if(if_to_id_ready_i)begin
+// 				if_to_id_valid_o_t 	<= 'd0;
+// 			end
+// 			else begin
+// 				if_to_id_valid_o_t 	<= 'd1;
+// 			end
+// 			ifu_pc_o_t			<= pc;			// 避免指令拿到了idu没准备好，先存起来
+// 			ifu_inst_o_t    <= inst;
+// 		end
+// 		else if(if_to_id_ready_i)begin
+// 			if_to_id_valid_o_t 	<= 'd0;
+// 		end
+// 	end
+// end
 
 reg ifu_valid_o_r;
 always @(posedge clock) begin
@@ -190,27 +137,30 @@ always @(posedge clock) begin
 		if(ifu_ready_i)begin
 			ifu_valid_o_r	<= 1'b0;
 		end
-		else if(wbu_stall)begin
+		else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin		// 没有jump的情况下直接请求下一个
+			ifu_valid_o_r	<= 1'b1;
+		end
+		else if(exu_finished & ifu_jump)begin	// 有jump等exu运行完
 			ifu_valid_o_r	<= 1'b1;
 		end
 	end
 end
 
 
-// always @(posedge clock) begin
-// 	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
-// 		if_to_id_valid_o	<= 'd1;	//发出握手
+always @(posedge clock) begin
+	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
+		if_to_id_valid_o	<= 'd1;	//发出握手
 
-// 		ifu_pc_o				<= pc;
-// 		ifu_inst_o			<= inst;
-// 	end
-// 	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
-// 		if_to_id_valid_o	<= 'd0;
+		ifu_pc_o				<= pc;
+		ifu_inst_o			<= inst;
+	end
+	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
+		if_to_id_valid_o	<= 'd0;
 
-// 		ifu_pc_o				<= ifu_pc_o;
-// 		ifu_inst_o			<= ifu_inst_o;
-// 	end
-// end
+		ifu_pc_o				<= ifu_pc_o;
+		ifu_inst_o			<= ifu_inst_o;
+	end
+end
 
 // 在其他模块运行完stall=0，且if_to_id中没有指令
 assign ifu_valid_o   = ifu_valid_o_r;
