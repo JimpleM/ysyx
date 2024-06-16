@@ -570,9 +570,22 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
 
 `ifdef USING_DPI_C
 
+reg wbu_stall;
+always @(posedge clock)begin
+	if(!reset)begin
+		wbu_stall <= 'd1;
+	end
+	else if(ex_to_wb_valid & ex_to_wb_ready)begin
+		wbu_stall <= 'd1;
+	end
+	else begin
+		wbu_stall <= 'd0;
+	end
+end
+
 import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit valid);
 always @(*)begin
-	set_pc_ptr(wbu_pc,wbu_inst,1'b1);
+	set_pc_ptr(wbu_pc,wbu_inst,wbu_stall);
 end
 
 
