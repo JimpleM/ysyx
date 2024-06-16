@@ -159,7 +159,7 @@ wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     	;
 wire                        lsu_w_last_i    	;
 
 //wbu
-wire [`DATA_WIDTH-1:0]      wbu_pc          	;
+wire [`DATA_WIDTH-1:0]      wbu_pc          	;	// 为了difftest
 wire [`INST_WIDTH-1:0]      wbu_inst        	;
 
 wire [`DATA_WIDTH-1:0]			wb_exu_result			;
@@ -184,16 +184,12 @@ wire [`INST_WIDTH-1:0]      csr_mpec        	;
 
 assign stall = mem_stall;
 wire [`DATA_WIDTH-1:0]      jump_pc_src1;
+wire [`DATA_WIDTH-1:0]      jump_pc_add;
 
 assign jump_pc_src1 = idu_jalr ? idu_src1 : ifu_pc;
-assign jump_pc = exu_csr_mret ? csr_mpec : ( exu_csr_ecall ? csr_mtvec : ((idu_branch && !zero_flag) || idu_jal ? jump_pc_src1 + idu_imm : (idu_jalr ? jump_pc_src1 + idu_imm : jump_pc_src1+4)));
+assign jump_pc_add  = jump_pc_src1 + idu_imm;
+assign jump_pc = exu_csr_mret ? csr_mpec : ( exu_csr_ecall ? csr_mtvec : ((idu_branch && !zero_flag) || idu_jal || idu_jalr ? jump_pc_add : jump_pc_src1+4));
 assign jump_pc_valid = exu_csr_mret | exu_csr_ecall | idu_branch | idu_jal | idu_jalr;	//
-// 想办法算pc只例化一个加法器
-// csr cmret+ecall 				exu_stall 不用ex_wb握手，因为会被lsu卡住（ifu读和lsu写不冲突）
-// branch exu的zero_flag 
-// jal jarl 
-// 用jump_pc_valid更新pc
-// 用ifu_jump 暂停ifu请求，等待idu_stall / exu_stall
 
 // ifu要等idu和exu运行完才能那pc去访存
 ysyx_23060077_ifu ifu_u0(
@@ -202,7 +198,7 @@ ysyx_23060077_ifu ifu_u0(
 	.jump_pc        	( jump_pc       		),
 	.jump_pc_valid  	( jump_pc_valid 		),
 	.ifu_jump					( ifu_jump					),
-	.exu_finished     ( ex_to_wb_valid & ex_to_wb_ready &(exu_pc == ifu_pc)   ),
+	.exu_finished     ( ex_to_wb_valid & ex_to_wb_ready &(exu_pc == ifu_pc)   ),	// 需要等待exu运行到当前pc值
 
 	.Icache_r_valid_o ( Icache_r_valid_o 	),
 	.Icache_r_addr_o  ( Icache_r_addr_o  	),

@@ -8,7 +8,7 @@ module ysyx_23060077_ifu(
 	input       [`DATA_WIDTH-1:0]     	jump_pc         		,
 	input                               jump_pc_valid   		,
 	input                               ifu_jump           	,
-	input                               exu_finished       		,
+	input                               exu_finished       	,
 
 	// IFU Interface	
 	output  		                        Icache_r_valid_o		,
@@ -73,7 +73,7 @@ always @(posedge clock) begin
 				pc <= jump_pc;
 		end
 		else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
-				pc <= pc + 4;
+				pc <= ifu_pc_o + 4;
 		end
 		else begin
 				pc <= pc;
