@@ -10,17 +10,17 @@
 
 
 // opcode
-`define LUI     7'b01101_11     //lui
-`define AUIPC   7'b00101_11     //auipc
-`define JAL     7'b11011_11     //jal
-`define JALR    7'b11001_11     //jalr
-`define BRANCH  7'b11000_11     //beq,bne,blt,bge,bltu,bgeu
-`define LOAD    7'b00000_11     //lb,lh,lw,lbu,lhu
-`define STORE   7'b01000_11     //sb,sh,sw
-`define OP_IMM  7'b00100_11     //addi,slti,sltiu,xori,ori,andi,slli,srli,srai
-`define OP      7'b01100_11     //add,sub,sll,slt,ltu,xor,srl,sra,or,and
-`define FENCE   7'b00011_11     //fence,fence.i
-`define SYS     7'b11100_11     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
+`define LUI     7'b01101_??     //lui
+`define AUIPC   7'b00101_??     //auipc
+`define JAL     7'b11011_??     //jal
+`define JALR    7'b11001_??     //jalr
+`define BRANCH  7'b11000_??     //beq,bne,blt,bge,bltu,bgeu
+`define LOAD    7'b00000_1?     //lb,lh,lw,lbu,lhu
+`define STORE   7'b01000_??     //sb,sh,sw
+`define OP_IMM  7'b00100_??     //addi,slti,sltiu,xori,ori,andi,slli,srli,srai
+`define OP      7'b01100_??     //add,sub,sll,slt,ltu,xor,srl,sra,or,and
+`define FENCE   7'b00011_??     //fence,fence.i
+`define SYS     7'b11100_??     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
 
 `define ALU_OPT_WIDTH      4
 `define ALU_NONE        `ALU_OPT_WIDTH'd0

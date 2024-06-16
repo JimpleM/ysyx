@@ -37,7 +37,7 @@ wire  [`INST_WIDTH-1:0]         inst;
 
 // assign ifu_stall = ifu_stall_r;
 
-wire    ifu_fence_i =  (ifu_inst_o[6:0] == `FENCE) ? ifu_inst_o[12] : 1'b0;
+wire    ifu_fence_i =  (ifu_inst_o[6:0] == 7'b00011_11) ? ifu_inst_o[12] : 1'b0;
 
 wire                        ifu_valid_o ;
 wire    [`INST_WIDTH-1:0]   ifu_addr_o  ;

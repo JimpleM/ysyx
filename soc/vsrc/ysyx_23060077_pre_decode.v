@@ -15,10 +15,10 @@ module ysyx_23060077_pre_decode(
 );
 
 wire ifu_sys;
-assign  ifu_branch      = (ifu_inst[6:0] == `BRANCH)    ? 1'b1 : 1'b0;
-assign  ifu_jal         = (ifu_inst[6:0] == `JAL)       ? 1'b1 : 1'b0;
-assign  ifu_jalr        = (ifu_inst[6:0] == `JALR)      ? 1'b1 : 1'b0;
-assign 	ifu_sys   	    = (ifu_inst[6:0] == `SYS && ifu_inst[14:12] == 3'b000);
+assign  ifu_branch      = (ifu_inst[6:0] == 7'b11000_11)    ? 1'b1 : 1'b0;
+assign  ifu_jal         = (ifu_inst[6:0] == 7'b11011_11)       ? 1'b1 : 1'b0;
+assign  ifu_jalr        = (ifu_inst[6:0] == 7'b11001_11)      ? 1'b1 : 1'b0;
+assign 	ifu_sys   	    = (ifu_inst[6:0] == 7'b11100_11 && ifu_inst[14:12] == 3'b000);
 assign  ifu_csr_ecall   = ifu_sys&(~(|ifu_inst[31:20]));
 assign  ifu_csr_mret    = ifu_sys&(ifu_inst[31:20] == 12'b0011_0000_0010);
 

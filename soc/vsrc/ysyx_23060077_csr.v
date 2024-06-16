@@ -56,8 +56,8 @@ import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg [
 initial set_csr_ptr(csr_reg);
 `endif
 wire wr_en,rd_en;
-assign wr_en = (i_inst[6:0] == `SYS && i_inst[14:12] != 3'b000);
-assign rd_en = (i_inst[6:0] == `SYS && i_inst[14:12] != 3'b000);
+assign wr_en = (i_inst[6:0] == 7'b11100_11 && i_inst[14:12] != 3'b000);
+assign rd_en = (i_inst[6:0] == 7'b11100_11 && i_inst[14:12] != 3'b000);
 
 // wire [`DATA_WIDTH-1:0]        wr_data_r;
 // wire [`DATA_WIDTH-1:0]        temp;
