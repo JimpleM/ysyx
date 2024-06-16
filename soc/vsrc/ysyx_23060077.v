@@ -160,8 +160,6 @@ wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     	;
 wire                        lsu_w_last_i    	;
 
 //wbu
-wire [`DATA_WIDTH-1:0]      wbu_pc          	;	// 为了difftest
-wire [`INST_WIDTH-1:0]      wbu_inst        	;
 
 wire [`DATA_WIDTH-1:0]			wb_exu_result			;
 wire                        wbu_rd_wen      	;
@@ -483,7 +481,7 @@ always @(posedge clock) begin
 end
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*3+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH),
+	.WIDTH          (`DATA_WIDTH+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -491,8 +489,8 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_inst,exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data}),
-	.dout		( {wbu_pc,wbu_inst,wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data})
+	.din		( {exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data}),
+	.dout		( {wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data})
 );
 
 ysyx_23060077_wbu wbu_u0(
@@ -569,23 +567,27 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
 );
 
 `ifdef USING_DPI_C
+reg [`DATA_WIDTH-1:0]      commit_pc          	;	// 为了difftest
+reg [`INST_WIDTH-1:0]      commit_inst        	;
 
-reg wbu_stall;
 always @(posedge clock)begin
-	if(!reset)begin
-		wbu_stall <= 'd1;
+	if(reset)begin
+		`ifdef NPC_SIM
+			commit_pc <= 32'h0000_0000;
+		`else
+			commit_pc <= 32'h3000_0000;
+		`endif
 	end
 	else if(ex_to_wb_valid & ex_to_wb_ready)begin
-		wbu_stall <= 'd1;
-	end
-	else begin
-		wbu_stall <= 'd0;
+		commit_pc		<= exu_pc;
+		commit_inst	<= exu_inst;
 	end
 end
+// ex_to_wb_valid & ex_to_wb_ready
 
 import "DPI-C" function void set_pc_ptr(input int pc, input int inst, input bit valid);
-always @(*)begin
-	set_pc_ptr(wbu_pc,wbu_inst,wbu_stall);
+always @(posedge clock)begin
+	set_pc_ptr(commit_pc,commit_inst,1'b1);
 end
 
 

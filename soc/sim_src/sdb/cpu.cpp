@@ -20,7 +20,7 @@ extern uint32_t cpu_pc;
 extern uint32_t cpu_inst;
 extern uint32_t *cpu_gpr;
 #ifdef NPC_SIM
-uint32_t cpu_lpc = 0x80000000;
+uint32_t cpu_lpc = 0;
 #else
 uint32_t cpu_lpc = 0x30000000;
 #endif
@@ -224,7 +224,7 @@ static void execute(uint64_t n) {
         nvboard_update();
       #endif
       exec_once();
-      if(cpu_lpc != cpu_pc && (cpu_pc !=0)&& (cpu_pc !=0x80000000)){
+      if(cpu_lpc != cpu_pc){
         total_inst_cnt++;
         trace_and_difftest();
         #ifdef CONFIG_FTRACE

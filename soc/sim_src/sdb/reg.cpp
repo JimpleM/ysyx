@@ -34,18 +34,23 @@ void isa_reg_display() {
 //   printf("$pc : 0x%08x\n",cpu.pc);
 //   printf("------------------------------reg display end -----------------------------\n");
 }
-
+#ifdef NPC_SIM
+uint32_t pc_store = 0x80000000; // difftest 给的pc是运行完当前指令得到的dnpc
+#else
+uint32_t pc_store = 0x30000000;
+#endif
 bool isa_difftest_checkregs(CPU_state *ref){
-    if(ref->pc != cpu_pc){
-        printf("pc ref:0x%08x dut:0x%08x  \n",ref->pc,cpu_pc);
-        return false;
-    }
-    for(int i=0; i<32; i++){
-        if(cpu_gpr[i] != ref->gpr[i]){
-            printf("%s: ref:0x%08x dut:0x%08x  \n",regs[i],ref->gpr[i],cpu_gpr[i]);
-            return false;
-        }
-    }
+  if(pc_store != cpu_pc){
+      printf("pc ref:0x%08x dut:0x%08x  \n",ref->pc,cpu_pc);
+      return false;
+  }
+  pc_store = ref->pc;
+  for(int i=0; i<32; i++){
+      if(cpu_gpr[i] != ref->gpr[i]){
+          printf("%s: ref:0x%08x dut:0x%08x  \n",regs[i],ref->gpr[i],cpu_gpr[i]);
+          return false;
+      }
+  }
 	if(cpu_csr[CSR_MSTATUS] != ref->csr[MSTATUS]){
 		printf("MSTATUS: ref:0x%08x dut:0x%08x  \n",ref->csr[MSTATUS],cpu_csr[CSR_MSTATUS]);
         return false;

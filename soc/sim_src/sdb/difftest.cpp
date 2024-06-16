@@ -78,8 +78,13 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
       "This will help you a lot for debugging, but also significantly reduce the performance. "
       "If it is not necessary, you can turn it off in menuconfig.", ref_so_file);
   ref_difftest_init(port);
-  ref_difftest_memcpy(PMEM_LEFT, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
-  package_cpu(PMEM_LEFT);
+#ifdef NPC_SIM
+package_cpu(0x80000000);
+ref_difftest_memcpy(0x80000000, guest_to_host(PMEM_LEFT), img_size, DIFFTEST_TO_REF);
+#else
+package_cpu(0x30000000);
+ref_difftest_memcpy(0x30000000, flash_guest_to_host(0x30000000), img_size, DIFFTEST_TO_REF);
+#endif
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
 }
 void difftest_memcpy_dut(paddr_t addr, void *buf, size_t n) {

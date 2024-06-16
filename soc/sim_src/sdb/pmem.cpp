@@ -3,6 +3,10 @@
 #define PG_ALIGN __attribute((aligned(4096)))
 
 uint8_t pmem[PMEM_SIZE] PG_ALIGN = {};
+uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
+uint8_t psram_mem[PSRAM_SIZE] PG_ALIGN = {};
+
+uint8_t* flash_guest_to_host(paddr_t paddr) { return flash_mem + paddr - FLASH_LEFT; }
 
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - PMEM_LEFT; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + PMEM_LEFT; }

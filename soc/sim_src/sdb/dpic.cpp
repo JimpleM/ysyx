@@ -33,8 +33,8 @@ uint64_t Icache_miss_counter[2];
 
 #define PG_ALIGN __attribute((aligned(4096)))
 
-uint8_t flash_mem[FLASH_SIZE] PG_ALIGN = {};
-uint8_t psram_mem[PSRAM_SIZE] PG_ALIGN = {};
+extern uint8_t flash_mem [FLASH_SIZE];
+extern uint8_t psram_mem [PSRAM_SIZE];
 
 extern "C" void psram_read(uint32_t addr, uint32_t *data) {
 	if(addr >= 0 && addr <= PSRAM_SIZE){
