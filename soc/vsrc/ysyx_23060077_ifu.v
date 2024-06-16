@@ -39,39 +39,39 @@ wire                        ifu_ready_i ;
 wire 		[`DATA_WIDTH-1:0]   ifu_data_i  ;
 
 initial begin
-		`ifdef NPC_SIM
-				pc = 32'h8000_0000;
-				ifu_pc_o = 32'h8000_0000;
-				ifu_pc_o_t = 32'h8000_0000;
-		`else
-				pc = 32'h3000_0000;
-				ifu_pc_o = 32'h3000_0000;
-				ifu_pc_o_t = 32'h3000_0000;
-		`endif
+	`ifdef NPC_SIM
+		pc = 32'h8000_0000;
+		ifu_pc_o = 32'h8000_0000;
+		ifu_pc_o_t = 32'h8000_0000;
+	`else
+		pc = 32'h3000_0000;
+		ifu_pc_o = 32'h3000_0000;
+		ifu_pc_o_t = 32'h3000_0000;
+	`endif
 end
 always @(posedge clock) begin
-		if(reset)begin
-				`ifdef NPC_SIM
-						pc <= 32'h8000_0000;
-				`else
-						pc <= 32'h3000_0000;
-				`endif
-		end
-		// else if(ifu_jump)begin
-		// 		pc <= pc;
-		// end
-		// else if(stall | !exu_finished)begin
-		// 		pc <= pc;
-		// end
-		else if(jump_pc_valid)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
-				pc <= jump_pc;
-		end
-		else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
-				pc <= ifu_pc_o + 4;
-		end
-		else begin
-				pc <= pc;
-		end
+	if(reset)begin
+		`ifdef NPC_SIM
+				pc <= 32'h8000_0000;
+		`else
+				pc <= 32'h3000_0000;
+		`endif
+	end
+	// else if(ifu_jump)begin
+	// 		pc <= pc;
+	// end
+	// else if(stall | !exu_finished)begin
+	// 		pc <= pc;
+	// end
+	else if(jump_pc_valid)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
+		pc <= jump_pc;
+	end
+	else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
+		pc <= ifu_pc_o + 4;
+	end
+	else begin
+		pc <= pc;
+	end
 end
 
 // reg 													if_to_id_valid_o_t;
@@ -163,19 +163,19 @@ assign inst          = ifu_data_i;
 
 
 ysyx_23060077_Icache Icache_u0(
-		.clock              (clock          ),
-		.reset              (reset          ),
-		.ifu_valid_i        (ifu_valid_o    ),
-		.ifu_addr_i         (ifu_addr_o     ),
-		.ifu_ready_o        (ifu_ready_i    ),
-		.ifu_data_o         (ifu_data_i     ),
-		.ifu_fence_i        (ifu_fence_i    ),
-		.Icache_r_valid_o   (Icache_r_valid_o  ),
-		.Icache_r_addr_o    (Icache_r_addr_o   ),
-		.Icache_r_ready_i   (Icache_r_ready_i  ),
-		.Icache_r_data_i    (Icache_r_data_i   ),
-		.Icache_r_len_o     (Icache_r_len_o    ),
-		.Icache_r_last_i    (Icache_r_last_i   )
+	.clock              (clock          ),
+	.reset              (reset          ),
+	.ifu_valid_i        (ifu_valid_o    ),
+	.ifu_addr_i         (ifu_addr_o     ),
+	.ifu_ready_o        (ifu_ready_i    ),
+	.ifu_data_o         (ifu_data_i     ),
+	.ifu_fence_i        (ifu_fence_i    ),
+	.Icache_r_valid_o   (Icache_r_valid_o  ),
+	.Icache_r_addr_o    (Icache_r_addr_o   ),
+	.Icache_r_ready_i   (Icache_r_ready_i  ),
+	.Icache_r_data_i    (Icache_r_data_i   ),
+	.Icache_r_len_o     (Icache_r_len_o    ),
+	.Icache_r_last_i    (Icache_r_last_i   )
 );
 
 `ifdef USING_DPI_C

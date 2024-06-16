@@ -36,18 +36,18 @@ reg [`DATA_WIDTH-1:0]       alu_out_data_r;
 assign alu_out_data = alu_out_data_r;
 always @(*) begin
   case(alu_opt)
-      `ALU_ADD  : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
-      `ALU_SUB  : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
-      `ALU_SLL  : alu_out_data_r = alu_a_data << alu_b_data[4:0]                  ;
-      `ALU_SLT  : alu_out_data_r = {{(`DATA_WIDTH-1){1'b0}},sign_flag^over_flag}  ;
-      `ALU_SLTU : alu_out_data_r = {{(`DATA_WIDTH-1){1'b0}},carry_flag}           ;
-      `ALU_XOR  : alu_out_data_r = alu_a_data ^ alu_b_data                        ;
-      `ALU_SRL  : alu_out_data_r = alu_a_data >> alu_b_data[4:0]                  ;
-      `ALU_SRA  : alu_out_data_r = sra_result                                     ;
-      `ALU_OR   : alu_out_data_r = alu_a_data | alu_b_data                        ;
-      `ALU_AND  : alu_out_data_r = alu_a_data & alu_b_data                        ;
-      `ALU_SUBU : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
-      default:    alu_out_data_r = 'd0; 
+    `ALU_ADD  : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
+    `ALU_SUB  : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
+    `ALU_SLL  : alu_out_data_r = alu_a_data << alu_b_data[4:0]                  ;
+    `ALU_SLT  : alu_out_data_r = {{(`DATA_WIDTH-1){1'b0}},sign_flag^over_flag}  ;
+    `ALU_SLTU : alu_out_data_r = {{(`DATA_WIDTH-1){1'b0}},carry_flag}           ;
+    `ALU_XOR  : alu_out_data_r = alu_a_data ^ alu_b_data                        ;
+    `ALU_SRL  : alu_out_data_r = alu_a_data >> alu_b_data[4:0]                  ;
+    `ALU_SRA  : alu_out_data_r = sra_result                                     ;
+    `ALU_OR   : alu_out_data_r = alu_a_data | alu_b_data                        ;
+    `ALU_AND  : alu_out_data_r = alu_a_data & alu_b_data                        ;
+    `ALU_SUBU : alu_out_data_r = add_out[`DATA_WIDTH-1:0]                       ;
+    default:    alu_out_data_r = 'd0; 
   endcase
 end
 

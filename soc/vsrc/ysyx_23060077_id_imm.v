@@ -37,20 +37,20 @@ assign imm_typeR        = {`DATA_WIDTH{1'b0}};
 assign imm_type_NONE    = {`DATA_WIDTH{1'b0}};
 
 always @(*) begin
-		case(inst[6:0])
-				`LUI   : imm_r = imm_typeU    ;
-				`AUIPC : imm_r = imm_typeU    ;
-				`JAL   : imm_r = imm_typeJ    ;
-				`JALR  : imm_r = imm_typeI    ;
-				`BRANCH: imm_r = imm_typeB    ;
-				`LOAD  : imm_r = imm_typeI    ;
-				`STORE : imm_r = imm_typeS    ;
-				`OP_IMM: imm_r = imm_typeI    ;
-				`OP    : imm_r = imm_typeR    ;
-				`FENCE : imm_r = imm_type_NONE;
-				`SYS   : imm_r = imm_typeI    ;
-				default: imm_r = imm_type_NONE; 
-		endcase
+	case(inst[6:0])
+		`LUI   : imm_r = imm_typeU    ;
+		`AUIPC : imm_r = imm_typeU    ;
+		`JAL   : imm_r = imm_typeJ    ;
+		`JALR  : imm_r = imm_typeI    ;
+		`BRANCH: imm_r = imm_typeB    ;
+		`LOAD  : imm_r = imm_typeI    ;
+		`STORE : imm_r = imm_typeS    ;
+		`OP_IMM: imm_r = imm_typeI    ;
+		`OP    : imm_r = imm_typeR    ;
+		`FENCE : imm_r = imm_type_NONE;
+		`SYS   : imm_r = imm_typeI    ;
+		default: imm_r = imm_type_NONE; 
+	endcase
 end
 
 

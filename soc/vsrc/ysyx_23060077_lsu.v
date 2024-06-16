@@ -49,24 +49,24 @@ always @(posedge clock) begin
   end
   else if(lsu_rd_wen_r)begin
   	case({lsu_opt,funct3})
-  	    {`LSU_OPT_LOAD,3'b000}: lsu_result <= {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]} 	;
-  	    {`LSU_OPT_LOAD,3'b001}: lsu_result <= {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]}	;
-  	    {`LSU_OPT_LOAD,3'b010}: lsu_result <= {{(`DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]}	;
-  	    {`LSU_OPT_LOAD,3'b100}: lsu_result <= {{(`DATA_WIDTH-8){1'b0}}        ,rdata[7:0]} 	;
-  	    {`LSU_OPT_LOAD,3'b101}: lsu_result <= {{(`DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}	;
-  	    default: 				lsu_result <= 'd0 ; 
+      {`LSU_OPT_LOAD,3'b000}: lsu_result <= {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]} 	;
+      {`LSU_OPT_LOAD,3'b001}: lsu_result <= {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]}	;
+      {`LSU_OPT_LOAD,3'b010}: lsu_result <= {{(`DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]}	;
+      {`LSU_OPT_LOAD,3'b100}: lsu_result <= {{(`DATA_WIDTH-8){1'b0}}        ,rdata[7:0]} 	;
+      {`LSU_OPT_LOAD,3'b101}: lsu_result <= {{(`DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}	;
+      default: 				lsu_result <= 'd0 ; 
   	endcase
   end
 end
 
 always @(*) begin
   case({lsu_opt,funct3})
-      {`LSU_OPT_LOAD,3'b000}: rsize = 3'd0	;
-      {`LSU_OPT_LOAD,3'b001}: rsize = 3'd1	;
-      {`LSU_OPT_LOAD,3'b010}: rsize = 3'd2	;
-      {`LSU_OPT_LOAD,3'b100}: rsize = 3'd0	;
-      {`LSU_OPT_LOAD,3'b101}: rsize = 3'd1	;
-      default: 				rsize = 'd0 ; 
+    {`LSU_OPT_LOAD,3'b000}: rsize = 3'd0	;
+    {`LSU_OPT_LOAD,3'b001}: rsize = 3'd1	;
+    {`LSU_OPT_LOAD,3'b010}: rsize = 3'd2	;
+    {`LSU_OPT_LOAD,3'b100}: rsize = 3'd0	;
+    {`LSU_OPT_LOAD,3'b101}: rsize = 3'd1	;
+    default: 				rsize = 'd0 ; 
   endcase
 end
 

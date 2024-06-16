@@ -26,33 +26,33 @@ wire carry_flag;
 wire signed_flag;
 
 always @(*) begin
-  	case(src_sel)
-      	`SRC_SEL_RS1_2    : begin alu_a_data = src1;  alu_b_data = src2 ; end
-      	`SRC_SEL_RS1_IMM  : begin alu_a_data = src1;  alu_b_data = imm  ; end
-      	`SRC_SEL_PC_4     : begin alu_a_data = pc  ;  alu_b_data = 32'd4; end
-      	`SRC_SEL_PC_IMM   : begin alu_a_data = pc  ;  alu_b_data = imm  ; end
-      	default:            begin alu_a_data = 'd0 ;  alu_b_data = 'd0  ; end
-  	endcase
+	case(src_sel)
+		`SRC_SEL_RS1_2    : begin alu_a_data = src1;  alu_b_data = src2 ; end
+		`SRC_SEL_RS1_IMM  : begin alu_a_data = src1;  alu_b_data = imm  ; end
+		`SRC_SEL_PC_4     : begin alu_a_data = pc  ;  alu_b_data = 32'd4; end
+		`SRC_SEL_PC_IMM   : begin alu_a_data = pc  ;  alu_b_data = imm  ; end
+		default:            begin alu_a_data = 'd0 ;  alu_b_data = 'd0  ; end
+	endcase
 end
 
 
 ysyx_23060077_ex_alu ex_alu(
-   	.alu_opt         (alu_opt),
-   	.alu_a_data      (alu_a_data),
-   	.alu_b_data      (alu_b_data),
-   	.alu_out_data    (alu_out_data)
+	.alu_opt         (alu_opt),
+	.alu_a_data      (alu_a_data),
+	.alu_b_data      (alu_b_data),
+	.alu_out_data    (alu_out_data)
 );
 
 always @(*) begin
-  	case({branch,funct3})
-  	    {1'b1,3'b000} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
-  	    {1'b1,3'b001} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
-  	    {1'b1,3'b100} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-  	    {1'b1,3'b101} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-  	    {1'b1,3'b110} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-  	    {1'b1,3'b111} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-  	    default:    		exu_result = alu_out_data; 
-  	endcase
+	case({branch,funct3})
+		{1'b1,3'b000} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
+		{1'b1,3'b001} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
+		{1'b1,3'b100} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+		{1'b1,3'b101} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+		{1'b1,3'b110} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+		{1'b1,3'b111} : exu_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+		default:    		exu_result = alu_out_data; 
+	endcase
 end
 
 
