@@ -90,7 +90,7 @@ wire   											ifu_branch 				;
 wire   											ifu_csr_ecall			;
 wire   											ifu_csr_mret			;
 wire   											ifu_jump					;
-
+wire												ifu_sys						;
 
 // idu
 wire [`DATA_WIDTH-1:0]      idu_pc          	;
@@ -110,7 +110,7 @@ wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
 wire [2:0]                  idu_funct3	    	;
 wire 												idu_csr_ecall			;
 wire 												idu_csr_mret			;
-
+wire												idu_sys						;
 //regfile
 wire [`DATA_WIDTH-1:0]     	idu_src1					;
 wire [`DATA_WIDTH-1:0]     	idu_src2					;
@@ -134,6 +134,7 @@ wire                       	exu_rd_wen				;
 wire [`REG_WIDTH-1:0]   		exu_rd_addr				;
 wire 												exu_csr_ecall			;
 wire 												exu_csr_mret 			;
+wire												exu_sys						;
 
 wire                        zero_flag					;
 wire [`DATA_WIDTH-1:0]      exu_result				;
@@ -218,6 +219,7 @@ ysyx_23060077_pre_decode pre_decode_u0(
 	.ifu_jal 					( ifu_jal 					),
 	.ifu_jalr 				( ifu_jalr 					),
 	.ifu_branch 			( ifu_branch 				),
+	.ifu_sys					( ifu_sys						),
 	.ifu_csr_ecall		( ifu_csr_ecall			),
 	.ifu_csr_mret			( ifu_csr_mret			),
 	.ifu_jump					( ifu_jump					)
@@ -228,7 +230,7 @@ wire if_to_id_valid;
 reg if_to_id_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH+`INST_WIDTH+5),
+	.WIDTH          (`DATA_WIDTH+`INST_WIDTH+6),
 	.RESET_VAL      ('d0)
 )pipeline_if_to_id(
 	.clock	( clock ),
@@ -236,8 +238,8 @@ ysyx_23060077_pipeline#(
 	.wen		( if_to_id_valid & if_to_id_ready ),
 	.stall	( !if_to_id_ready),
 	.flush	( ),
-	.din		( {ifu_pc,ifu_inst,ifu_jal,ifu_jalr,ifu_branch,ifu_csr_ecall,ifu_csr_mret}),
-	.dout		( {idu_pc,idu_inst,idu_jal,idu_jalr,idu_branch,idu_csr_ecall,idu_csr_mret})
+	.din		( {ifu_pc,ifu_inst,ifu_jal,ifu_jalr,ifu_branch,ifu_csr_ecall,ifu_csr_mret,ifu_sys}),
+	.dout		( {idu_pc,idu_inst,idu_jal,idu_jalr,idu_branch,idu_csr_ecall,idu_csr_mret,idu_sys})
 );
 
 always @(posedge clock) begin
@@ -337,7 +339,7 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+2),
+	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+3),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -345,8 +347,8 @@ ysyx_23060077_pipeline#(
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
 	.flush	( ),
-	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret}),
-	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret})
+	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys}),
+	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys})
 );
 
 always @(posedge clock) begin
@@ -437,27 +439,30 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_result				( lsu_result    )
 );
 
-assign csr_wr_data = exu_inst[14] ? {27'd0,exu_inst[19:15]} : exu_src1;
-// assign csr_ecall = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'd0);
-// assign csr_mret  = (exu_inst[6:0] == `SYS && exu_inst[14:12] == 3'b000 && exu_inst[31:20] == 12'b0011_0000_0010);
+
+
+wire [`CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`CSR_WIDTH];
+// assign csr_wr_data = exu_inst[14] ? {27'd0,exu_inst[19:15]} : exu_src1;
+assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
 
 ysyx_23060077_csr  csr_u0 (
-	.clock          ( clock                     ),
-	.reset          ( reset                     ),
-	.csr_wr_addr    ( exu_imm[`CSR_WIDTH-1:0]   ),
-	.csr_wr_data    ( csr_wr_data               ),
-	.csr_rd_addr    ( exu_imm[`CSR_WIDTH-1:0]   ),
-	.csr_rd_data    ( csr_rd_data               ),
+	.clock          ( clock         ),
+	.reset          ( reset         ),
+	.csr_wr_addr    ( csr_imm   		),
+	.csr_wr_data    ( csr_wr_data  	),
+	.csr_rd_addr    ( csr_imm   		),
+	.csr_rd_data    ( csr_rd_data   ),
 
-	.i_csr_ecall    ( exu_csr_ecall             ),
-	.i_csr_mret     ( exu_csr_mret              ),
+	.csr_ecall_i    ( exu_csr_ecall ),
+	.csr_mret_i     ( exu_csr_mret  ),
 
-	.i_inst         ( exu_inst                  ),
-	.i_pc           ( exu_pc                    ),
+	.sys 						( exu_sys				),
+	.funct3         ( exu_funct3    ),
+	.csr_pc         ( exu_pc        ),
 
-	.o_mstatus      ( csr_mstatus               ),
-	.o_mtvec        ( csr_mtvec                 ),
-	.o_mpec         ( csr_mpec                  )
+	.csr_mstatus    ( csr_mstatus   ),
+	.csr_mtvec      ( csr_mtvec     ),
+	.csr_mpec       ( csr_mpec      )
 );
 
 reg ex_to_wb_valid;

@@ -30,39 +30,36 @@
 module ysyx_23060077_csr(
 	input 	                            clock       				,
 	input 	                            reset       				,
-	// input                               wr_en,
+	// input                               enable,
 	input       [`CSR_ADDR_WIDTH-1:0]   csr_wr_addr 				,
 	input       [`DATA_WIDTH-1:0]       csr_wr_data 				,
 
-	// input                               rd_en,
+	// input                               enable,
 	input       [`CSR_ADDR_WIDTH-1:0]   csr_rd_addr 				,
 	output 	reg [`DATA_WIDTH-1:0]       csr_rd_data 				,
 
-	input                               i_csr_ecall 				,
-	input                               i_csr_mret  				,
+	input                               csr_ecall_i 				,
+	input                               csr_mret_i  				,
 
-	input       [`INST_WIDTH-1:0]       i_inst      				, 
-	input       [`DATA_WIDTH-1:0]       i_pc        				,
+	input              									sys      						, 
+	input       [2:0]       						funct3        			,
+	input       [`DATA_WIDTH-1:0]       csr_pc        			,
 
-	output      [`DATA_WIDTH-1:0]       o_mstatus   				,
-	output      [`DATA_WIDTH-1:0]       o_mtvec     				,
-	output      [`INST_WIDTH-1:0]       o_mpec   
+	output      [`DATA_WIDTH-1:0]       csr_mstatus   			,
+	output      [`DATA_WIDTH-1:0]       csr_mtvec     			,
+	output      [`INST_WIDTH-1:0]       csr_mpec   
 );
 
 
 reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
-`ifdef USING_DPI_C
-import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg []);
-initial set_csr_ptr(csr_reg);
-`endif
-wire wr_en,rd_en;
-assign wr_en = (i_inst[6:0] == 7'b11100_11 && i_inst[14:12] != 3'b000);
-assign rd_en = (i_inst[6:0] == 7'b11100_11 && i_inst[14:12] != 3'b000);
+
+
+wire enable = sys & (|funct3); //funct3不为0
 
 // wire [`DATA_WIDTH-1:0]        wr_data_r;
 // wire [`DATA_WIDTH-1:0]        temp;
 // assign temp = csr_reg[csr_wr_addr];
-// assign wr_data_r = (i_inst[13:12] == 2'b01) ? csr_wr_data : (i_inst[13:12] == 2'b10) ? temp | csr_wr_data : temp & (~csr_wr_data);
+// assign wr_data_r = (funct3[1:0] == 2'b01) ? csr_wr_data : (funct3[1:0] == 2'b10) ? temp | csr_wr_data : temp & (~csr_wr_data);
 
 assign csr_reg[`CSR_MVENDORID]  = `MVENDORID;
 assign csr_reg[`CSR_MARCHID]    = `MARCHID;
@@ -72,7 +69,7 @@ always @(*) begin
     if(reset)begin  
         csr_rd_data = 'd0; 
     end
-    else if(rd_en)begin
+    else if(enable)begin
         case(csr_rd_addr)
             `CSR_M_CYCLE_ADDR  :begin csr_rd_data = csr_reg[`CSR_M_CYCLE];    end
             `CSR_MSTATUS_ADDR  :begin csr_rd_data = csr_reg[`CSR_MSTATUS];    end
@@ -96,20 +93,20 @@ always @(*) begin
 end
 
 // mstatus
-assign o_mstatus = csr_reg[`CSR_MSTATUS];
+assign csr_mstatus = csr_reg[`CSR_MSTATUS];
 
 always @(posedge clock) begin
     if(reset)begin
         csr_reg[`CSR_MSTATUS]   <= 'd0;
     end
-    else if(i_csr_ecall)begin
-        csr_reg[`CSR_MSTATUS]   <= o_mstatus | 32'h0000_1800;
+    else if(csr_ecall_i)begin
+        csr_reg[`CSR_MSTATUS]   <= csr_mstatus | 32'h0000_1800;
     end
-    else if(i_csr_mret)begin
-        csr_reg[`CSR_MSTATUS]   <= o_mstatus & ~(32'h0000_1800);
+    else if(csr_mret_i)begin
+        csr_reg[`CSR_MSTATUS]   <= csr_mstatus & ~(32'h0000_1800);
     end
-    else if(wr_en && csr_wr_addr == `CSR_MSTATUS_ADDR)begin
-        case(i_inst[13:12])
+    else if(enable && csr_wr_addr == `CSR_MSTATUS_ADDR)begin
+        case(funct3[1:0])
             2'b01:  csr_reg[`CSR_MSTATUS]   <= csr_wr_data;
             2'b10:  csr_reg[`CSR_MSTATUS]   <= csr_wr_data | csr_reg[`CSR_MSTATUS];
             2'b11:  csr_reg[`CSR_MSTATUS]   <= (~csr_wr_data) & csr_reg[`CSR_MSTATUS];
@@ -123,13 +120,13 @@ always @(posedge clock) begin
 end
 
 //mtvec
-assign o_mtvec = csr_reg[`CSR_MTVEC];
+assign csr_mtvec = csr_reg[`CSR_MTVEC];
 always @(posedge clock) begin
     if(reset)begin
         csr_reg[`CSR_MTVEC] <= 'd0;
     end
-    else if(wr_en && csr_wr_addr == `CSR_MTVEC_ADDR)begin
-        case(i_inst[13:12])
+    else if(enable && csr_wr_addr == `CSR_MTVEC_ADDR)begin
+        case(funct3[1:0])
             2'b01:  csr_reg[`CSR_MTVEC]   <= csr_wr_data;
             2'b10:  csr_reg[`CSR_MTVEC]   <= csr_wr_data | csr_reg[`CSR_MTVEC];
             2'b11:  csr_reg[`CSR_MTVEC]   <= (~csr_wr_data) & csr_reg[`CSR_MTVEC];
@@ -144,19 +141,19 @@ end
 
 //mepc
 // reg [`INST_WIDTH-1:0] mepc_inst_r;
-assign o_mpec = csr_reg[`CSR_MEPC];
+assign csr_mpec = csr_reg[`CSR_MEPC];
 
 always @(posedge clock) begin
     if(reset)begin
         csr_reg[`CSR_MEPC]  <= 'd0;
         // mepc_inst_r         <= 'd0;
     end
-    else if(i_csr_ecall)begin
-        csr_reg[`CSR_MEPC]   <= i_pc;
+    else if(csr_ecall_i)begin
+        csr_reg[`CSR_MEPC]   <= csr_pc;
         // mepc_inst_r          <= i_inst;
     end
-    else if(wr_en && csr_wr_addr == `CSR_MEPC_ADDR)begin
-        case(i_inst[13:12])
+    else if(enable && csr_wr_addr == `CSR_MEPC_ADDR)begin
+        case(funct3[1:0])
             2'b01:  csr_reg[`CSR_MEPC]   <= csr_wr_data;
             2'b10:  csr_reg[`CSR_MEPC]   <= csr_wr_data | csr_reg[`CSR_MEPC];
             2'b11:  csr_reg[`CSR_MEPC]   <= (~csr_wr_data) & csr_reg[`CSR_MEPC];
@@ -178,11 +175,11 @@ always @(posedge clock) begin
     if(reset)begin
         csr_reg[`CSR_MCAUSE]    <= 'd0;
     end
-    else if(i_csr_ecall)begin
+    else if(csr_ecall_i)begin
         csr_reg[`CSR_MCAUSE]    <= 32'd11;
     end
-    else if(wr_en && csr_wr_addr == `CSR_MCAUSE_ADDR)begin
-        case(i_inst[13:12])
+    else if(enable && csr_wr_addr == `CSR_MCAUSE_ADDR)begin
+        case(funct3[1:0])
             2'b01:  csr_reg[`CSR_MCAUSE]   <= csr_wr_data;
             2'b10:  csr_reg[`CSR_MCAUSE]   <= csr_wr_data | csr_reg[`CSR_MCAUSE];
             2'b11:  csr_reg[`CSR_MCAUSE]   <= (~csr_wr_data) & csr_reg[`CSR_MCAUSE];
@@ -194,5 +191,11 @@ always @(posedge clock) begin
         csr_reg[`CSR_MCAUSE]    <= csr_reg[`CSR_MCAUSE];
     end
 end
+
+
+`ifdef USING_DPI_C
+import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg []);
+initial set_csr_ptr(csr_reg);
+`endif
 
 endmodule

@@ -58,7 +58,7 @@ always @(*) begin
 		`OP_IMM: imm = {{20{inst[31]}},inst[31:20]}    ;
 		`OP    : imm = 32'd0    ;
 		`FENCE : imm = 32'd0;
-		`SYS   : imm = {{20{inst[31]}},inst[31:20]}    ;
+		`SYS   : imm = {{15{inst[31]}},inst[31:15]}    ;	// 将zimm也放入imm中
 		default: imm = 32'd0; 
 	endcase
 end
