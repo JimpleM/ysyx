@@ -186,7 +186,7 @@ wire [`DATA_WIDTH-1:0]      jump_pc_src1;
 wire [`DATA_WIDTH-1:0]      jump_pc_add;
 
 assign jump_pc_src1 = idu_jalr ? idu_src1 : ifu_pc;
-assign jump_pc_add  = jump_pc_src1 + idu_imm;
+assign jump_pc_add  = jump_pc_src1 + idu_imm;			// 这里应该是要用exu_branch的
 assign jump_pc = exu_csr_mret ? csr_mpec : ( exu_csr_ecall ? csr_mtvec : ((idu_branch && !zero_flag) || idu_jal || idu_jalr ? jump_pc_add : jump_pc_src1+4));
 assign jump_pc_valid = exu_csr_mret | exu_csr_ecall | idu_branch | idu_jal | idu_jalr;	//
 
@@ -304,6 +304,10 @@ end
 
 ysyx_23060077_idu idu_u0(
 	.inst						( idu_inst	  ),
+	.idu_jal				( idu_jal			),
+	.idu_jalr				( idu_jalr		),
+	.idu_branch			( idu_branch	),
+	.idu_sys				( idu_sys			),
 	.rd							( idu_rd_addr	),
 	.rd_wen					( idu_rd_wen	),
 	.rs1						( idu_rs1			),

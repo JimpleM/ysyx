@@ -38,6 +38,8 @@ wire    [`INST_WIDTH-1:0]   ifu_addr_o  ;
 wire                        ifu_ready_i ;
 wire 		[`DATA_WIDTH-1:0]   ifu_data_i  ;
 
+wire no_jump = (if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump;
+
 initial begin
 	`ifdef NPC_SIM
 		pc = 32'h8000_0000;
@@ -66,7 +68,7 @@ always @(posedge clock) begin
 	else if(jump_pc_valid)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
 		pc <= jump_pc;
 	end
-	else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
+	else if(no_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
 		pc <= ifu_pc_o + 4;
 	end
 	else begin

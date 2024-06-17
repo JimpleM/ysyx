@@ -34,6 +34,8 @@ assign rs2_busy = scoreboard[rs2_addr];
 
 assign rd_busy  = scoreboard[idu_rd_addr];
 
+wire [`DATA_WIDTH-1:0] reg_rd_data_t = (|reg_rd_addr) ? reg_rd_data : 'd0;
+wire scoreboard_data_t = (|idu_rd_addr) ? 1'b1 : 1'b0;
 // reg_rd_addr == 5'd0，不能删掉，会有一些指令把无用数据写到0寄存器
 // 用(|reg_rd_addr)代表不为0，节省逻辑电路
 always @(posedge clock) begin
@@ -44,12 +46,12 @@ always @(posedge clock) begin
 		end   
 	end
 	else begin
-		if (reg_rd_en & (|reg_rd_addr) )begin
-			gpr[reg_rd_addr] <= reg_rd_data;
+		if (reg_rd_en)begin
+			gpr[reg_rd_addr] <= reg_rd_data_t;
 			scoreboard [reg_rd_addr] <= 1'b0;
 		end 
-		if(idu_rd_wen & (|idu_rd_addr))begin
-			scoreboard [idu_rd_addr] <= 1'b1;
+		if(idu_rd_wen)begin
+			scoreboard [idu_rd_addr] <= scoreboard_data_t;
 		end
 	end
 end
