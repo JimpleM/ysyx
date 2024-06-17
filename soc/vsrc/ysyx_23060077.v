@@ -186,6 +186,8 @@ wire [`INST_WIDTH-1:0]      csr_mpec        	;
 assign stall = mem_stall;
 
 wire [`DATA_WIDTH-1:0]      wbu_jump_pc;
+wire [`DATA_WIDTH-1:0]      wbu_jump_pc_add;
+assign wbu_jump_pc = ifu_branch ?(!wbu_zero_flag ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
 assign jump_pc = ifu_csr_mret ? wb_csr_mpec : ( ifu_csr_ecall ? wb_csr_mtvec :wbu_jump_pc);
 
 // ifu要等idu和exu运行完才能那pc去访存
@@ -486,10 +488,7 @@ end
 
 
 wire [`DATA_WIDTH-1:0] 			jump_pc_add;
-wire [`DATA_WIDTH-1:0]      exu_jump_pc;
-
-assign jump_pc_add  = ex_idu_jump_src1 + exu_imm;		
-assign exu_jump_pc = exu_branch ?(!zero_flag ? jump_pc_add : exu_pc+4):jump_pc_add;
+assign jump_pc_add  = ex_idu_jump_src1 + exu_imm;	
 
 ysyx_23060077_pipeline#(
 	.WIDTH          (`DATA_WIDTH*2+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH+1+`DATA_WIDTH*3),
@@ -500,8 +499,8 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,exu_jump_pc,csr_mtvec,csr_mpec}),
-	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wbu_jump_pc,wb_csr_mtvec,wb_csr_mpec})
+	.din		( {exu_pc,exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
+	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
 );
 reg wbu_stall;
 always @(posedge clock) begin
