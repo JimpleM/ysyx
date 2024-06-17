@@ -37,10 +37,11 @@
 `define ALU_SUBU        `ALU_OPT_WIDTH'd11
 
 `define SRC_SEL_WIDTH      2
-`define SRC_SEL_RS1_2   `SRC_SEL_WIDTH'd0
-`define SRC_SEL_RS1_IMM `SRC_SEL_WIDTH'd1
-`define SRC_SEL_PC_4    `SRC_SEL_WIDTH'd2
-`define SRC_SEL_PC_IMM  `SRC_SEL_WIDTH'd3
+`define SRC_SEL_RS1_IMM `SRC_SEL_WIDTH'd0
+`define SRC_SEL_PC_IMM  `SRC_SEL_WIDTH'd1
+`define SRC_SEL_RS1_2   `SRC_SEL_WIDTH'd2
+`define SRC_SEL_PC_4    `SRC_SEL_WIDTH'd3
+
 
 `define LSU_OPT_WIDTH      2
 `define LSU_OPT_NONE    `LSU_OPT_WIDTH'd0

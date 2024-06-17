@@ -7,10 +7,10 @@ module ysyx_23060077_idu(
 	input																idu_sys							,
 
 	output   		[`REG_WIDTH-1:0]        rd									,
-	output  reg                         rd_wen							,
+	output                           		rd_wen							,
 	output   		[`REG_WIDTH-1:0]        rs1									,
 	output   		[`REG_WIDTH-1:0]        rs2									,
-	output  reg [`DATA_WIDTH-1:0]       imm									,
+	output   		[`DATA_WIDTH-1:0]       imm									,
 	output      [`ALU_OPT_WIDTH-1:0]    alu_opt							,
 	output      [`SRC_SEL_WIDTH-1:0]    src_sel							,
 	output      [`LSU_OPT_WIDTH-1:0]    lsu_opt							,
@@ -20,82 +20,101 @@ module ysyx_23060077_idu(
 
 assign funct3   = inst[14:12];
 
-wire [6:0]  opcode  = inst[6:0];
-wire 				funct7	= inst[30] ;
+wire [6:0]  					opcode  = inst[6:0]		;
+wire 									funct7	= inst[30] 		;
+wire [`REG_WIDTH-1:0]	rs1_t 	= inst[19:15]	;
+wire [`REG_WIDTH-1:0]	rs2_t		= inst[24:20]	;
+wire [`REG_WIDTH-1:0]	rd_t 		= inst[11:7]	;
 
 
-wire [`REG_WIDTH-1:0] reg_zero;
-assign reg_zero = {`REG_WIDTH{1'b0}};
+wire TYPE_LUI   	= (opcode == 7'b01101_11);
+wire TYPE_AUIPC 	= (opcode == 7'b00101_11);
+wire TYPE_JAL   	= idu_jal;
+wire TYPE_JALR  	= idu_jalr;
+wire TYPE_BRANCH	= idu_branch;
+wire TYPE_LOAD  	= (opcode == 7'b00000_11);
+wire TYPE_STORE 	= (opcode == 7'b01000_11);
+wire TYPE_OP_IMM	= (opcode == 7'b00100_11);
+wire TYPE_OP    	= (opcode == 7'b01100_11);
+wire TYPE_FENCE 	= (opcode == 7'b00011_11);
+wire TYPE_SYS   	= idu_sys;
 
-wire [`REG_WIDTH-1:0]	rs1_temp	= inst[19:15]	;
-wire [`REG_WIDTH-1:0]	rs2_temp	= inst[24:20]	;
-wire [`REG_WIDTH-1:0]	rd_temp 	= inst[11:7]	;
-assign rs1 = rs1_sel ? rs1_temp : 'd0;
-assign rs2 = rs2_sel ? rs2_temp : 'd0;
-assign rd  = rd_sel  ? rd_temp  : 'd0;
+wire I_TYPE 			= TYPE_JALR | TYPE_LOAD | TYPE_OP_IMM | TYPE_SYS;
+wire U_TYPE 			= TYPE_LUI | TYPE_AUIPC;
+wire J_TYPE 			= TYPE_JAL;
+wire B_TYPE 			= TYPE_BRANCH;
+wire S_TYPE 			= TYPE_STORE;
+wire R_TYPE 			= TYPE_OP; 
+
+// rs1 rs2 rd
+wire rs1_sel			= I_TYPE | B_TYPE | S_TYPE | R_TYPE ;
+wire rs2_sel			= B_TYPE | S_TYPE | R_TYPE;
+assign rd_wen			= U_TYPE | J_TYPE | I_TYPE | R_TYPE;
+assign rs1 = rs1_sel ? rs1_t 	: 'd0;
+assign rs2 = rs2_sel ? rs2_t 	: 'd0;
+assign rd  = rd_wen  ? rd_t 	: 'd0;
+
+// imm
+wire [`DATA_WIDTH-1:0]  I_TYPE_imm 	= {{20{inst[31]}},inst[31:20]};
+wire [`DATA_WIDTH-1:0]  U_TYPE_imm 	= {inst[31:12],12'd0};
+wire [`DATA_WIDTH-1:0]  J_TYPE_imm 	= {{11{inst[31]}},inst[31],inst[19:12],inst[20],inst[30:21],1'b0};
+wire [`DATA_WIDTH-1:0]  B_TYPE_imm 	= {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
+wire [`DATA_WIDTH-1:0]  S_TYPE_imm 	= {{20{inst[31]}},inst[31:25],inst[11:7]};
+wire [`DATA_WIDTH-1:0]  SYS_imm 		= {{15{inst[31]}},inst[31:15]}    ;	// 将zimm也放入imm中
+assign imm	= 
+({{(`DATA_WIDTH){I_TYPE & !TYPE_SYS}} & I_TYPE_imm }) |
+({{(`DATA_WIDTH){U_TYPE}} & U_TYPE_imm }) |
+({{(`DATA_WIDTH){J_TYPE}} & J_TYPE_imm }) |
+({{(`DATA_WIDTH){B_TYPE}} & B_TYPE_imm }) |
+({{(`DATA_WIDTH){S_TYPE}} & S_TYPE_imm }) |
+({{(`DATA_WIDTH){TYPE_SYS}} & SYS_imm });
+
+
+// //src_sel 为0时为 SRC_SEL_RS1_IMM
+// assign src_sel = 
+// ({{(`SRC_SEL_WIDTH){TYPE_AUIPC}} 					& `SRC_SEL_PC_IMM })|
+// ({{(`SRC_SEL_WIDTH){TYPE_JAL|TYPE_JALR}} 	& `SRC_SEL_PC_4  	})|
+// ({{(`SRC_SEL_WIDTH){TYPE_BRANCH|TYPE_OP}} & `SRC_SEL_RS1_2 	});	
+
+
+// //lsu_opt
+// assign lsu_opt = 
+// ({{(`LSU_OPT_WIDTH){TYPE_LOAD}} 	& `LSU_OPT_LOAD })|
+// ({{(`LSU_OPT_WIDTH){TYPE_STORE}} 	& `LSU_OPT_STORE})|
+// ({{(`LSU_OPT_WIDTH){TYPE_SYS}} 		& `LSU_OPT_SYS 	});
+
+
+// assign alu_opt =
+// (TYPE_OP_IMM) ? 
+// ((funct3 == 3'b000) ? `ALU_ADD 	:
+// (funct3 == 3'b010) 	? `ALU_SUB	:
+// (funct3 == 3'b011) 	? `ALU_SLTU	:
+// (funct3 == 3'b100) 	? `ALU_XOR	: 
+// (funct3 == 3'b110) 	? `ALU_OR		:  
+// (funct3 == 3'b111) 	? `ALU_AND	: 
+// (funct3 == 3'b001) 	? `ALU_SLL	: 
+// (funct3 == 3'b101) 	? ((funct7) ? `ALU_SRA : `ALU_SRL):0) :
+// (TYPE_OP)			?
+// ((funct3 == 3'b000)	?	((funct7) ? `ALU_SUB : `ALU_ADD) :
+// (funct3 == 3'b001)	?	`ALU_SLL	:
+// (funct3 == 3'b010)	?	`ALU_SLT	:
+// (funct3 == 3'b011)	?	`ALU_SLTU	:
+// (funct3 == 3'b100)	?	`ALU_XOR	:
+// (funct3 == 3'b101)	?	((funct7) ? `ALU_SRA : `ALU_SRL) :
+// (funct3 == 3'b110)	?	`ALU_OR		:
+// (funct3 == 3'b111)	?	`ALU_AND	: 0)	:
+// (TYPE_BRANCH) ? 
+// ((funct3 == 3'b000) ? `ALU_SUB 	:
+// (funct3 == 3'b001) 	? `ALU_SUB 	:
+// (funct3 == 3'b100) 	? `ALU_SLT 	:
+// (funct3 == 3'b101) 	? `ALU_SLT 	:
+// (funct3 == 3'b110) 	? `ALU_SLTU	:
+// (funct3 == 3'b111) 	? `ALU_SLTU	: 0)	:
+// (TYPE_LUI|TYPE_AUIPC|TYPE_JAL|TYPE_JALR) ? `ALU_ADD : `ALU_NONE;
 
 
 
-reg  rs1_sel;
-reg  rs2_sel;
-reg  rd_sel;
 
-
-always @(*) begin
-  casez(opcode)
-		`LUI   : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b0  , 1'b0  , 1'b1	, 1'b1} ;
-		`AUIPC : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b0  , 1'b0  , 1'b1	, 1'b1} ;
-		`JAL   : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b0  , 1'b0  , 1'b1	, 1'b1} ;
-		`JALR  : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b0  , 1'b1	, 1'b1} ;
-		`BRANCH: {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b1	, 1'b0  , 1'b0} ;
-		`LOAD  : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b0  , 1'b1	, 1'b1} ;
-		`STORE : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b1	, 1'b0  , 1'b0} ;
-		`OP_IMM: {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b0  , 1'b1	, 1'b1} ;
-		`OP    : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b1	, 1'b1	, 1'b1} ;
-		`FENCE : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b0  , 1'b0  , 1'b0  , 1'b0} ;
-		`SYS   : {rs1_sel,rs2_sel,rd_sel,rd_wen} = {1'b1	, 1'b0  , 1'b1	, 1'b1} ;
-		default: {rs1_sel,rs2_sel,rd_sel,rd_wen} = 'd0 ; 
-  endcase
-end
-
-
-// always @(*) begin
-//   casez(opcode)
-// 		`LUI   : {rs1,rs2,rd,rd_wen} = {reg_zero   , reg_zero   , inst[11:7], 1'b1} ;
-// 		`AUIPC : {rs1,rs2,rd,rd_wen} = {reg_zero   , reg_zero   , inst[11:7], 1'b1} ;
-// 		`JAL   : {rs1,rs2,rd,rd_wen} = {reg_zero   , reg_zero   , inst[11:7], 1'b1} ;
-// 		`JALR  : {rs1,rs2,rd,rd_wen} = {inst[19:15], reg_zero   , inst[11:7], 1'b1} ;
-// 		`BRANCH: {rs1,rs2,rd,rd_wen} = {inst[19:15], inst[24:20], reg_zero  , 1'b0} ;
-// 		`LOAD  : {rs1,rs2,rd,rd_wen} = {inst[19:15], reg_zero   , inst[11:7], 1'b1} ;
-// 		`STORE : {rs1,rs2,rd,rd_wen} = {inst[19:15], inst[24:20], reg_zero  , 1'b0} ;
-// 		`OP_IMM: {rs1,rs2,rd,rd_wen} = {inst[19:15], reg_zero   , inst[11:7], 1'b1} ;
-// 		`OP    : {rs1,rs2,rd,rd_wen} = {inst[19:15], inst[24:20], inst[11:7], 1'b1} ;
-// 		`FENCE : {rs1,rs2,rd,rd_wen} = {reg_zero   , reg_zero   , reg_zero  , 1'b0} ;
-// 		`SYS   : {rs1,rs2,rd,rd_wen} = {inst[19:15], reg_zero   , inst[11:7], 1'b1} ;
-// 		default: {rs1,rs2,rd,rd_wen} = 'd0 ; 
-//   endcase
-// end
-
-// ysyx_23060077_id_imm id_imm_idu(
-//     .inst      (inst),
-//     .imm       (imm)
-// );
-always @(*) begin
-	casez(opcode)
-		`LUI   : imm = {inst[31:12],12'd0}    ;
-		`AUIPC : imm = {inst[31:12],12'd0}    ;
-		`JAL   : imm = {{11{inst[31]}},inst[31],inst[19:12],inst[20],inst[30:21],1'b0}    ;
-		`JALR  : imm = {{20{inst[31]}},inst[31:20]}    ;
-		`BRANCH: imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0}    ;
-		`LOAD  : imm = {{20{inst[31]}},inst[31:20]}    ;
-		`STORE : imm = {{20{inst[31]}},inst[31:25],inst[11:7]}    ;
-		`OP_IMM: imm = {{20{inst[31]}},inst[31:20]}    ;
-		`OP    : imm = 32'd0    ;
-		`FENCE : imm = 32'd0;
-		`SYS   : imm = {{15{inst[31]}},inst[31:15]}    ;	// 将zimm也放入imm中
-		default: imm = 32'd0; 
-	endcase
-end
 
 ysyx_23060077_id_opt id_opt_idu(
     .opcode     (opcode),
