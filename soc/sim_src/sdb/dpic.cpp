@@ -30,6 +30,7 @@ uint64_t exu_data_counter = 0;
 
 uint64_t Icache_access_counter[2];	// 0 store times, 1 clock
 uint64_t Icache_miss_counter[2];
+uint64_t ifu_jump_stall_counter[2];
 
 #define PG_ALIGN __attribute((aligned(4096)))
 
@@ -162,6 +163,13 @@ extern "C"  void Icache_miss(svBit valid){
 		Icache_miss_counter[0]++;
 	}
 	Icache_miss_counter[1]++;
+}
+
+extern "C"  void ifu_jump_stall(svBit valid){
+	if(valid){
+		ifu_jump_stall_counter[0]++;
+	}
+	ifu_jump_stall_counter[1]++;
 }
 
 //后面的函数已弃用

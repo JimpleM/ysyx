@@ -39,6 +39,7 @@ extern uint64_t lsu_write_clock;
 extern uint64_t exu_data_counter;
 extern uint64_t Icache_access_counter[2];	// 0 store times, 1 clock
 extern uint64_t Icache_miss_counter[2];
+extern uint64_t ifu_jump_stall_counter[2];
 
 // static bool g_print_step = false;
 #ifdef CONFIG_ITRACE
@@ -140,22 +141,20 @@ static void statistic() {
     sum_clock += inst_type_counter[idx][1];
   };
   printf("----------------------------------------------------------\n");
-  printf("|                         Summary                        |\n");
+  printf("|  Module  |        Counter       |        Clock         |\n");
   printf("----------------------------------------------------------\n");
-  printf("|   SUM clock              |        %16lld     |\n", sum_clock);
-  printf("|   SUM inst               |        %16lld     |\n", sum_inst);
+  printf("|  SUMMARY |     %16lld |     %16lld |\n", sum_inst,sum_clock);
   printf("----------------------------------------------------------\n");
-  printf("|   IFU inst counter       |        %16lld     |\n", ifu_inst_counter);
-  printf("|   LSU read  clock        |        %16lld     |\n", lsu_read_clock);
-  printf("|   LSU r_avr clock        |        %16.3f     |\n", (float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
-  printf("|   LSU write clock        |        %16lld     |\n", lsu_write_clock);
-  printf("|   LSU w_avr clock        |        %16.3f     |\n", (float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
-  printf("|   EXU data counter       |        %16lld     |\n", exu_data_counter);
+  printf("|   IFU    |     %16lld |     %16lld |\n", ifu_inst_counter,0);
+  printf("|   EXU    |     %16lld |     %16lld |\n", exu_data_counter,0);
+  printf("|  LSU_R   |%16lld(clk) |%16.3f(Avg) |\n", lsu_read_clock,(float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
+  printf("|  LSU_W   |%16lld(clk) |%16.3f(Avg) |\n", lsu_write_clock,(float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
   printf("----------------------------------------------------------\n");
-  printf("|   Icache access times    |        %16lld     |\n", Icache_access_counter[0]);
-  printf("|   Icache access clock    |        %16lld     |\n", Icache_access_counter[1]);
-  printf("|   Icache miss times      |        %16lld     |\n", Icache_miss_counter[0]);
-  printf("|   Icache miss clock      |        %16lld     |\n", Icache_miss_counter[1]);
+  printf("|IF_j_stall|     %16lld |     %16lld |\n", ifu_jump_stall_counter[0],ifu_jump_stall_counter[1]);
+  printf("----------------------------------------------------------\n");
+  printf("|  I_hit   |     %16lld |     %16lld |\n", Icache_access_counter[0],Icache_access_counter[1]);
+  printf("|  I_miss  |     %16lld |     %16lld |\n", Icache_miss_counter[0],Icache_miss_counter[1]);
+  printf("----------------------------------------------------------\n");
   printf("|   Icache hit percent     |      %17.3f%%     |\n", (float)Icache_access_counter[0]*100/(Icache_access_counter[0]+Icache_miss_counter[0]));
   printf("----------------------------------------------------------\n");
   // check

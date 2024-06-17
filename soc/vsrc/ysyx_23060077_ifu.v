@@ -187,6 +187,12 @@ always @(posedge clock)begin
 		ifu_inst_arrived();
 	end
 end
+import "DPI-C" function void ifu_jump_stall(input bit valid);
+always @(posedge clock)begin
+	if(ifu_jump)begin
+		ifu_jump_stall(ifu_ready_i);
+	end
+end
 `endif
 
 endmodule
