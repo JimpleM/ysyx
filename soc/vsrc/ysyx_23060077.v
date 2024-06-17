@@ -248,7 +248,7 @@ always @(posedge clock) begin
 		if(id_to_ex_valid & id_to_ex_ready)begin	// 后级传递过去了，当前级可以接收新的数据了
 			if_to_id_ready <= 'd1;
 		end
-		else if(if_to_id_valid)begin
+		else if(if_to_id_valid & if_to_id_ready)begin
 			if_to_id_ready <= 'd0;
 		end
 	end
@@ -281,7 +281,7 @@ always @(posedge clock) begin
 		// if(if_to_id_valid & if_to_id_ready)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
 			id_to_ex_valid <= 'd1;
 		end
-		else if(id_to_ex_ready)begin
+		else if(id_to_ex_valid & id_to_ex_ready)begin
 			id_to_ex_valid <= 'd0;
 		end
 	end
@@ -361,7 +361,7 @@ always @(posedge clock) begin
 		if(ex_to_wb_valid & ex_to_wb_ready)begin	
 			id_to_ex_ready <= 'd1;
 		end
-		else if(id_to_ex_valid)begin
+		else if(id_to_ex_valid & id_to_ex_ready)begin
 			id_to_ex_ready <= 'd0;
 		end
 	end
@@ -392,7 +392,7 @@ always @(posedge clock) begin
 		else if(!mem_stall& exu_stall)begin // lsu不工作
 			ex_to_wb_valid <= 'd1;
 		end
-		else if(ex_to_wb_ready)begin
+		else if(ex_to_wb_valid & ex_to_wb_ready)begin
 			ex_to_wb_valid <= 'd0;
 		end
 	end
@@ -475,7 +475,7 @@ always @(posedge clock) begin
 		ex_to_wb_ready <= 'd1;
 	end
 	else begin
-		if(ex_to_wb_valid)begin
+		if(ex_to_wb_valid & ex_to_wb_ready)begin
 			ex_to_wb_ready <= 'd0;
 		end
 		else begin

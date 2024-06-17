@@ -159,7 +159,7 @@ static void statistic() {
   printf("|   Icache hit percent     |      %17.3f%%     |\n", (float)Icache_access_counter[0]*100/(Icache_access_counter[0]+Icache_miss_counter[0]));
   printf("----------------------------------------------------------\n");
   // check
-  if(sum_inst+1 != total_inst_cnt){
+  if(sum_inst != total_inst_cnt){
     printf(ANSI_FMT("total_inst_cnt is not equal to sum_inst\n",ANSI_FG_RED));
   }
   if(Icache_access_counter[0] + Icache_miss_counter[0] != sum_inst){

@@ -67,7 +67,7 @@ assign imm	=
 ({{(`DATA_WIDTH){J_TYPE}} & J_TYPE_imm }) |
 ({{(`DATA_WIDTH){B_TYPE}} & B_TYPE_imm }) |
 ({{(`DATA_WIDTH){S_TYPE}} & S_TYPE_imm }) |
-({{(`DATA_WIDTH){TYPE_SYS}} & SYS_imm });
+({{(`DATA_WIDTH){TYPE_SYS}} & SYS_imm })  | 'd0;
 
 
 // //src_sel 为0时为 SRC_SEL_RS1_IMM
