@@ -23,7 +23,7 @@ module ysyx_23060077_Icache(
 );
 
 localparam M = 4;  // b = 2 ^m = 4 块大小
-localparam N = 4;  // k = 2 ^n = 16 块数
+localparam N = 6;  // k = 2 ^n = 16 块数
 localparam BLOCK_SIZE   = 8*(2**M);
 localparam BLOCK_NUM    = 2**N;
 localparam TAG_SIZE     = BLOCK_SIZE/32;
