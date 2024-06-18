@@ -41,7 +41,7 @@ uint32_t pc_store = 0x30000000;
 #endif
 bool isa_difftest_checkregs(CPU_state *ref){
   if(pc_store != cpu_pc){
-      printf("pc ref:0x%08x dut:0x%08x  \n",ref->pc,cpu_pc);
+      printf("pc ref:0x%08x store:0x%08x dut:0x%08x  \n",ref->pc,pc_store,cpu_pc);
       return false;
   }
   pc_store = ref->pc;

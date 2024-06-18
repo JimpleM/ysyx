@@ -114,6 +114,8 @@ wire												idu_sys						;
 //regfile
 wire [`DATA_WIDTH-1:0]     	idu_src1					;
 wire [`DATA_WIDTH-1:0]     	idu_src2					;
+wire [`DATA_WIDTH-1:0]     	idu_rs1_data			;
+wire [`DATA_WIDTH-1:0]     	idu_rs2_data			;
 wire 												rs1_busy					;
 wire 												rs2_busy					;
 wire 												rd_busy						;
@@ -263,8 +265,13 @@ always @(posedge clock) begin
 		if(if_to_id_valid & if_to_id_ready)begin
 			idu_stall <= 'd1;
 		end
-		else if((rs1_busy | rs2_busy | rd_busy))begin
-			idu_stall <= 'd1;
+		// else if((rs1_busy | rs2_busy | rd_busy))begin
+		// 	idu_stall <= 'd1;
+		// end
+		else if(exu_lsu_opt == `LSU_OPT_LOAD &(idu_rs1 == exu_rd_addr | idu_rs2 == exu_rd_addr))begin
+			if(lsu_rd_wen)begin
+				idu_stall <= 'd0;
+			end
 		end
 		else begin
 			idu_stall <= 'd0;
@@ -277,8 +284,8 @@ always @(posedge clock) begin
 		id_to_ex_valid	<= 'd0;
 	end
 	else begin
-		if(idu_stall & (!(rs1_busy | rs2_busy | rd_busy)))begin	// 运行完了
-		// if(if_to_id_valid & if_to_id_ready)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
+		// if(idu_stall & (!(rs1_busy | rs2_busy | rd_busy)))begin	// 运行完了
+		if(idu_stall)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
 			id_to_ex_valid <= 'd1;
 		end
 		else if(id_to_ex_valid & id_to_ex_ready)begin
@@ -329,15 +336,26 @@ ysyx_23060077_regfile regfile_u0(
 	.idu_rd_wen			( idu_rd_wen_t),
 
 	.rs1_addr				( idu_rs1	    ),
-	.rs1_data				( idu_src1		),
+	.rs1_data				( idu_rs1_data),
 	.rs2_addr				( idu_rs2	    ),
-	.rs2_data				( idu_src2		),
+	.rs2_data				( idu_rs2_data),
 	.reg_rd_en			( wbu_rd_wen  ),
 	.reg_rd_addr		( wbu_rd_addr	),
 	.reg_rd_data		( wbu_rd_data	)
 );
 wire [`DATA_WIDTH-1:0] idu_jump_src1 = idu_jalr ? idu_src1 : idu_pc;
 wire [`DATA_WIDTH-1:0] ex_idu_jump_src1;
+
+assign idu_src1 =	
+(|idu_rs1) ? (
+(idu_rs1 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
+(idu_rs1 == wbu_rd_addr) ? wbu_rd_data : idu_rs1_data
+) : idu_rs1_data;
+assign idu_src2 =
+(|idu_rs2) ? (
+(idu_rs2 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
+(idu_rs2 == wbu_rd_addr) ? wbu_rd_data : idu_rs2_data
+) : idu_rs2_data;
 
 reg id_to_ex_valid;
 reg id_to_ex_ready;
