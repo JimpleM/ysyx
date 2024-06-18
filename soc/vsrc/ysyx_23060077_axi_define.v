@@ -22,7 +22,7 @@
 
 `define AXI_STRB_WIDTH          8
 
-`define AXI_W_STATE_WIDTH       3        
+`define AXI_W_STATE_WIDTH       2        
 `define AXI_R_STATE_WIDTH       2        
 `define AXI_ARB_STATE_WIDTH     2
 

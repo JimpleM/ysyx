@@ -65,18 +65,22 @@
 `define CSR_MVENDORID_ADDR  `CSR_ADDR_WIDTH'hF11
 `define CSR_MARCHID_ADDR    `CSR_ADDR_WIDTH'hF12
 
-`define CSR_REG_WIDTH       4
-`define CSR_M_CYCLE         `CSR_REG_WIDTH'd0    
+`define CSR_REG_WIDTH       3
+   
 `define CSR_MSTATUS         `CSR_REG_WIDTH'd1
-`define CSR_MIE             `CSR_REG_WIDTH'd2
-`define CSR_MTVEC           `CSR_REG_WIDTH'd3    
-`define CSR_MEPC            `CSR_REG_WIDTH'd4
-`define CSR_MCAUSE          `CSR_REG_WIDTH'd5
-`define CSR_MTVAL           `CSR_REG_WIDTH'd6
-`define CSR_MINSTRET        `CSR_REG_WIDTH'd7
-`define CSR_MSCRATCH        `CSR_REG_WIDTH'd8
-`define CSR_MVENDORID       `CSR_REG_WIDTH'd9
-`define CSR_MARCHID         `CSR_REG_WIDTH'd10
+`define CSR_MTVEC           `CSR_REG_WIDTH'd2   
+`define CSR_MEPC            `CSR_REG_WIDTH'd3
+`define CSR_MCAUSE          `CSR_REG_WIDTH'd4
+// read only
+`define CSR_MVENDORID       `CSR_REG_WIDTH'd5
+`define CSR_MARCHID         `CSR_REG_WIDTH'd6
+// not use
+// `define CSR_M_CYCLE         `CSR_REG_WIDTH'd0 
+// `define CSR_MIE             `CSR_REG_WIDTH'd2
+// `define CSR_MTVAL           `CSR_REG_WIDTH'd6
+// `define CSR_MINSTRET        `CSR_REG_WIDTH'd7
+// `define CSR_MSCRATCH        `CSR_REG_WIDTH'd8
+
 
 `define MVENDORID       `DATA_WIDTH'h79737978
 `define MARCHID         `DATA_WIDTH'h015FDE6D

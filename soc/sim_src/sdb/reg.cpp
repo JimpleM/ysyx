@@ -14,9 +14,9 @@ extern uint32_t *cpu_csr;
 extern CPU_state cpu;
 
 #define CSR_MSTATUS  1
-#define CSR_MTVEC    3
-#define CSR_MEPC     4
-#define CSR_MCAUSE   5
+#define CSR_MTVEC    2
+#define CSR_MEPC     3
+#define CSR_MCAUSE   4
 
 void isa_reg_display() {
 	printf("---------------------------cpu reg display start ---------------------------\n");

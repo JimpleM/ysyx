@@ -23,40 +23,91 @@ module ysyx_23060077_csr(
 
 
 reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
-
+reg [`CSR_REG_WIDTH-1:0] csr_reg_addr;
 
 wire enable = sys & (|funct3); //funct3不为0
 
-assign csr_reg[`CSR_MVENDORID]  = `MVENDORID;
-assign csr_reg[`CSR_MARCHID]    = `MARCHID;
+
+// assign csr_rd_data =
+// (csr_rd_addr == `CSR_M_CYCLE_ADDR  ) ? csr_reg[`CSR_M_CYCLE]  	:
+// (csr_rd_addr == `CSR_MSTATUS_ADDR  ) ? csr_reg[`CSR_MSTATUS]  	:
+// (csr_rd_addr == `CSR_MIE_ADDR      ) ? csr_reg[`CSR_MIE]      	:
+// (csr_rd_addr == `CSR_MTVEC_ADDR    ) ? csr_reg[`CSR_MTVEC]    	:
+// (csr_rd_addr == `CSR_MEPC_ADDR     ) ? csr_reg[`CSR_MEPC]    		:
+// (csr_rd_addr == `CSR_MCAUSE_ADDR   ) ? csr_reg[`CSR_MCAUSE]  		:
+// (csr_rd_addr == `CSR_MTVAL_ADDR    ) ? csr_reg[`CSR_MTVAL]    	:
+// (csr_rd_addr == `CSR_MINSTRET_ADDR ) ? csr_reg[`CSR_MINSTRET] 	:
+// (csr_rd_addr == `CSR_MSCRATCH_ADDR ) ? csr_reg[`CSR_MSCRATCH] 	:
+// (csr_rd_addr == `CSR_MVENDORID_ADDR) ? csr_reg[`CSR_MVENDORID]	:
+// (csr_rd_addr == `CSR_MARCHID_ADDR  ) ? csr_reg[`CSR_MARCHID] 		:
+// 'd0;
+
+always @(*) begin
+	csr_reg_addr = 'd0; 
+	case(csr_rd_addr)
+		`CSR_MSTATUS_ADDR  :begin csr_reg_addr = `CSR_MSTATUS			;   end
+		`CSR_MTVEC_ADDR    :begin csr_reg_addr = `CSR_MTVEC				;   end
+		`CSR_MEPC_ADDR     :begin csr_reg_addr = `CSR_MEPC				;   end
+		`CSR_MCAUSE_ADDR   :begin csr_reg_addr = `CSR_MCAUSE			;   end
+		`CSR_MVENDORID_ADDR:begin csr_reg_addr = `CSR_MVENDORID		;  	end
+		`CSR_MARCHID_ADDR  :begin csr_reg_addr = `CSR_MARCHID			;   end
+		default:begin
+			csr_reg_addr = 'd0;
+		end
+	endcase
+end
+
 
 //csr_rd_data
 always @(*) begin
-	if(reset)begin  
-		csr_rd_data = 'd0; 
-	end
-	else if(enable)begin
-		case(csr_rd_addr)
-			`CSR_M_CYCLE_ADDR  :begin csr_rd_data = csr_reg[`CSR_M_CYCLE];    end
-			`CSR_MSTATUS_ADDR  :begin csr_rd_data = csr_reg[`CSR_MSTATUS];    end
-			`CSR_MIE_ADDR      :begin csr_rd_data = csr_reg[`CSR_MIE];        end
-			`CSR_MTVEC_ADDR    :begin csr_rd_data = csr_reg[`CSR_MTVEC];      end
-			`CSR_MEPC_ADDR     :begin csr_rd_data = csr_reg[`CSR_MEPC];       end
-			`CSR_MCAUSE_ADDR   :begin csr_rd_data = csr_reg[`CSR_MCAUSE];     end
-			`CSR_MTVAL_ADDR    :begin csr_rd_data = csr_reg[`CSR_MTVAL];      end
-			`CSR_MINSTRET_ADDR :begin csr_rd_data = csr_reg[`CSR_MINSTRET];   end
-			`CSR_MSCRATCH_ADDR :begin csr_rd_data = csr_reg[`CSR_MSCRATCH];   end
-			`CSR_MVENDORID_ADDR:begin csr_rd_data = csr_reg[`CSR_MVENDORID];  end
-			`CSR_MARCHID_ADDR  :begin csr_rd_data = csr_reg[`CSR_MARCHID];    end
-			default:begin
-					csr_rd_data = 'd0;
-			end
-		endcase
-	end
-	else begin
-		csr_rd_data = 'd0;
-	end
+	csr_rd_data = 'd0;
+	case(csr_reg_addr)
+		`CSR_MSTATUS		:begin csr_rd_data = csr_reg[`CSR_MSTATUS]	;   end
+		`CSR_MTVEC			:begin csr_rd_data = csr_reg[`CSR_MTVEC]		;   end
+		`CSR_MEPC				:begin csr_rd_data = csr_reg[`CSR_MEPC]			;   end
+		`CSR_MCAUSE			:begin csr_rd_data = csr_reg[`CSR_MCAUSE]		;   end
+		`CSR_MVENDORID	:begin csr_rd_data = `MVENDORID							;  	end
+		`CSR_MARCHID		:begin csr_rd_data = `MARCHID								;   end
+		default:begin
+				csr_rd_data = 'd0;
+		end
+	endcase
 end
+// integer i;
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		csr_reg[`CSR_MSTATUS]   <= 'd0;
+// 		csr_reg[`CSR_MTVEC] 		<= 'd0;
+// 		csr_reg[`CSR_MEPC]  		<= 'd0;
+// 		csr_reg[`CSR_MCAUSE]    <= 'd0;
+// 	end
+// 	else if(csr_ecall_i)begin
+// 		csr_reg[`CSR_MSTATUS]   <= csr_reg[`CSR_MSTATUS] | 32'h0000_1800;
+// 		csr_reg[`CSR_MEPC]   		<= csr_pc;
+// 		csr_reg[`CSR_MCAUSE]    <= 32'd11;
+// 	end
+// 	else if(csr_mret_i)begin
+// 		csr_reg[`CSR_MSTATUS]   <= csr_reg[`CSR_MSTATUS] & ~(32'h0000_1800);
+// 	end
+// 	else if(enable)begin
+// 		for(i=0; i<7;i++)begin
+// 			if(i[2:0] == csr_reg_addr)begin
+// 				case(funct3[1:0])
+// 					2'b01:  csr_reg[i]   <= csr_wr_data;
+// 					2'b10:  csr_reg[i]   <= csr_wr_data | csr_reg[i];
+// 					2'b11:  csr_reg[i]   <= (~csr_wr_data) & csr_reg[i];
+// 					default: csr_reg[i]   <= csr_reg[i];
+// 				endcase
+// 			end
+// 			else begin
+// 				csr_reg[i]   <= csr_reg[i];
+// 			end
+// 		end
+		
+// 	end
+// end
+
+
 
 // mstatus
 assign csr_mstatus = csr_reg[`CSR_MSTATUS];
@@ -71,16 +122,13 @@ always @(posedge clock) begin
 	else if(csr_mret_i)begin
 		csr_reg[`CSR_MSTATUS]   <= csr_mstatus & ~(32'h0000_1800);
 	end
-	else if(enable && csr_wr_addr == `CSR_MSTATUS_ADDR)begin
+	else if(enable && csr_reg_addr == `CSR_MSTATUS)begin
 		case(funct3[1:0])
 			2'b01:  csr_reg[`CSR_MSTATUS]   <= csr_wr_data;
 			2'b10:  csr_reg[`CSR_MSTATUS]   <= csr_wr_data | csr_reg[`CSR_MSTATUS];
 			2'b11:  csr_reg[`CSR_MSTATUS]   <= (~csr_wr_data) & csr_reg[`CSR_MSTATUS];
 			default: csr_reg[`CSR_MSTATUS]   <= csr_reg[`CSR_MSTATUS];
 		endcase
-	end
-	else begin
-		csr_reg[`CSR_MSTATUS]   <= csr_reg[`CSR_MSTATUS];
 	end
 end
 
@@ -90,16 +138,13 @@ always @(posedge clock) begin
 	if(reset)begin
 		csr_reg[`CSR_MTVEC] <= 'd0;
 	end
-	else if(enable && csr_wr_addr == `CSR_MTVEC_ADDR)begin
+	else if(enable && csr_reg_addr == `CSR_MTVEC)begin
 		case(funct3[1:0])
 			2'b01:  csr_reg[`CSR_MTVEC]   <= csr_wr_data;
 			2'b10:  csr_reg[`CSR_MTVEC]   <= csr_wr_data | csr_reg[`CSR_MTVEC];
 			2'b11:  csr_reg[`CSR_MTVEC]   <= (~csr_wr_data) & csr_reg[`CSR_MTVEC];
 			default: csr_reg[`CSR_MTVEC]   <= csr_reg[`CSR_MTVEC];
 		endcase
-	end
-	else begin
-		csr_reg[`CSR_MTVEC]   <= csr_reg[`CSR_MTVEC];
 	end
 end
 
@@ -113,16 +158,13 @@ always @(posedge clock) begin
 	else if(csr_ecall_i)begin
 		csr_reg[`CSR_MEPC]   <= csr_pc;
 	end
-	else if(enable && csr_wr_addr == `CSR_MEPC_ADDR)begin
+	else if(enable && csr_reg_addr == `CSR_MEPC)begin
 		case(funct3[1:0])
 			2'b01:  csr_reg[`CSR_MEPC]   <= csr_wr_data;
 			2'b10:  csr_reg[`CSR_MEPC]   <= csr_wr_data | csr_reg[`CSR_MEPC];
 			2'b11:  csr_reg[`CSR_MEPC]   <= (~csr_wr_data) & csr_reg[`CSR_MEPC];
 			default: csr_reg[`CSR_MEPC]   <= csr_reg[`CSR_MEPC];
 		endcase
-	end
-	else begin
-		csr_reg[`CSR_MEPC]   <= csr_reg[`CSR_MEPC];
 	end
 end
 
@@ -136,16 +178,13 @@ always @(posedge clock) begin
 	else if(csr_ecall_i)begin
 		csr_reg[`CSR_MCAUSE]    <= 32'd11;
 	end
-	else if(enable && csr_wr_addr == `CSR_MCAUSE_ADDR)begin
+	else if(enable && csr_reg_addr == `CSR_MCAUSE)begin
 		case(funct3[1:0])
 			2'b01:  csr_reg[`CSR_MCAUSE]   <= csr_wr_data;
 			2'b10:  csr_reg[`CSR_MCAUSE]   <= csr_wr_data | csr_reg[`CSR_MCAUSE];
 			2'b11:  csr_reg[`CSR_MCAUSE]   <= (~csr_wr_data) & csr_reg[`CSR_MCAUSE];
 			default: csr_reg[`CSR_MCAUSE]  <= csr_reg[`CSR_MCAUSE];
 		endcase
-	end
-	else begin
-		csr_reg[`CSR_MCAUSE]    <= csr_reg[`CSR_MCAUSE];
 	end
 end
 
