@@ -329,11 +329,11 @@ ysyx_23060077_idu idu_u0(
 ysyx_23060077_regfile regfile_u0(
 	.clock					( clock		    ),
 	.reset      		( reset       ),
-	.rs1_busy  			( rs1_busy  	),
-	.rs2_busy 			( rs2_busy 		),
-	.rd_busy				( rd_busy 		),
-	.idu_rd_addr		( idu_rd_addr	),
-	.idu_rd_wen			( idu_rd_wen_t),
+	// .rs1_busy  			( rs1_busy  	),
+	// .rs2_busy 			( rs2_busy 		),
+	// .rd_busy				( rd_busy 		),
+	// .idu_rd_addr		( idu_rd_addr	),
+	// .idu_rd_wen			( idu_rd_wen_t),
 
 	.rs1_addr				( idu_rs1	    ),
 	.rs1_data				( idu_rs1_data),

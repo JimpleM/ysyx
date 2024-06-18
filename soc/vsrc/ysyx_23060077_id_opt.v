@@ -3,9 +3,9 @@ module ysyx_23060077_id_opt(
 	input 	    [6:0]                   opcode						,
 	input 	    [2:0]                   funct3						,
 	input 	    		                   	funct7						,
-	output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt						,
 	output  reg [`SRC_SEL_WIDTH-1:0]    src_sel						,
-	output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt
+	output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt						,
+	output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt						
 );
 
 always @(*)begin
@@ -30,13 +30,13 @@ always @(*)begin
 		`STORE :begin alu_opt = `ALU_NONE;    end       //sb,sh,sw
 		`OP_IMM:begin 
 			case(funct3)
-				3'b000 :begin alu_opt = `ALU_ADD;   end			//addi
-				3'b010 :begin alu_opt = `ALU_SUB;   end			//slti
-				3'b011 :begin alu_opt = `ALU_SLTU;  end			//sltiu
-				3'b100 :begin alu_opt = `ALU_XOR;   end			//xori
-				3'b110 :begin alu_opt = `ALU_OR;    end			//ori
-				3'b111 :begin alu_opt = `ALU_AND;   end			//andi
-				3'b001 :begin alu_opt = `ALU_SLL;   end			//slli
+				3'b000 :begin alu_opt = `ALU_ADD	;   end			//addi
+				3'b010 :begin alu_opt = `ALU_SUB	;   end			//slti
+				3'b011 :begin alu_opt = `ALU_SLTU	;  end			//sltiu
+				3'b100 :begin alu_opt = `ALU_XOR	;   end			//xori
+				3'b110 :begin alu_opt = `ALU_OR		;    end			//ori
+				3'b111 :begin alu_opt = `ALU_AND	;   end			//andi
+				3'b001 :begin alu_opt = `ALU_SLL	;   end			//slli
 				3'b101 :begin                          
 					case(funct7)                       
 						1'b0 : begin alu_opt = `ALU_SRL;     end //srli
