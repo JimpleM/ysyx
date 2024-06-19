@@ -1,0 +1,73 @@
+# Building microbench-run [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
++ CC src/riscv/ysyxsoc/trm.c
++ AR -> build/am-riscv32e-ysyxsoc.a
+# Building klib-archive [riscv32e-ysyxsoc]
++ LD -> build/microbench-riscv32e-ysyxsoc.elf
+# Creating image [riscv32e-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull__ALL.o
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin, size = 33916[0m
+f
+======= Running MicroBench [input *train*] =======
+[qsort] Quick sort: * Passed.
+  min time: 0.000 ms [0]
+[queen] Queen placement: * Passed.
+  min time: 0.000 ms [0]
+[bf] Brainf**k interpreter: * Passed.
+  min time: 0.000 ms [0]
+[fib] Fibonacci number: * Passed.
+  min time: 0.000 ms [0]
+[sieve] Eratosthenes sieve: * Passed.
+  min time: 0.000 ms [0]
+[15pz] A* 15-puzzle search: * Passed.
+  min time: 0.000 ms [0]
+[dinic] Dinic's maxflow algorithm: * Passed.
+  min time: 0.000 ms [0]
+[lzip] Lzip compression: * Passed.
+  min time: 0.000 ms [0]
+[ssort] Suffix sort: * Passed.
+  min time: 0.000 ms [0]
+[md5] MD5 digest: * Passed.
+  min time: 0.000 ms [0]
+==================================================
+MicroBench PASS
+Scored time: 0.000 ms
+Total  time: 0.000 ms
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:285 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa00056ac[0m
+----------------------------------------------------------
+| Total clock amount                   |      1325271222 |
+| Total instructions amount            |       195230988 |
+| Average cycles of each instruction   |           6.788 |
+----------------------------------------------------------
+----------------------------------------------------------
+|  Inst  |    Amount    |    cycles    |  AVG  | percent |
+----------------------------------------------------------
+| LUI    |       734331 |      2584583 |  3.52 |   0.38% |
+| AUIPC  |       851846 |      5304272 |  6.23 |   0.44% |
+| JAL    |      1928501 |     40572954 | 21.04 |   0.99% |
+| JALR   |      2032661 |     42680503 | 21.00 |   1.04% |
+| BRANCH |     52597221 |    544160871 | 10.35 |  26.94% |
+| LOAD   |     15623301 |     98710796 |  6.32 |   8.00% |
+| STORE  |      7171411 |     82972333 | 11.57 |   3.67% |
+| OP_IMM |     88309514 |    367470082 |  4.16 |  45.23% |
+| OP     |     25982201 |    140812596 |  5.42 |  13.31% |
+| FENCE  |            0 |            0 |  0.00 |   0.00% |
+| SYS    |            1 |            6 |  6.00 |   0.00% |
+----------------------------------------------------------
+|  Module  |        Counter       |        Clock         |
+----------------------------------------------------------
+|  SUMMARY |            195230988 |           1325268996 |
+----------------------------------------------------------
+|   IFU    |               404021 |                    0 |
+|   EXU    |            172436276 |                    0 |
+|  LSU_R   |       332873626(clk) |          21.306(Avg) |
+|  LSU_W   |       137023525(clk) |          19.107(Avg) |
+----------------------------------------------------------
+|IF_j_stall|             56558383 |            627414328 |
+----------------------------------------------------------
+|  I_hit   |            194826967 |            194826967 |
+|  I_miss  |               404021 |             17142341 |
+----------------------------------------------------------
+|   Icache hit percent     |                 99.793%     |
+----------------------------------------------------------
