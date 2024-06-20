@@ -155,7 +155,8 @@ static void statistic() {
   printf("|  I_hit   |     %16lld |     %16lld |\n", Icache_access_counter[0],Icache_access_counter[1]);
   printf("|  I_miss  |     %16lld |     %16lld |\n", Icache_miss_counter[0],Icache_miss_counter[1]);
   printf("----------------------------------------------------------\n");
-  printf("|   Icache hit percent     |      %17.3f%%     |\n", (float)Icache_access_counter[0]*100/(Icache_access_counter[0]+Icache_miss_counter[0]));
+  printf("|   Icache hit percent     |      %17.3f%%     |\n", (double)Icache_access_counter[0]*100/(Icache_access_counter[0]+Icache_miss_counter[0]));
+  printf("|           AMAT           |        %16.3f     |\n", 1+(double)(Icache_miss_counter[1]-Icache_miss_counter[0])/(Icache_access_counter[0]+Icache_miss_counter[0]));
   printf("----------------------------------------------------------\n");
   // check
   if(sum_inst != total_inst_cnt){
