@@ -10,6 +10,8 @@ module ysyx_23060077_exu(
 	input                               branch							,
 
 	input       [`ALU_OPT_WIDTH-1:0]    alu_opt							,
+	input 															alu_mul							,
+	input 															alu_div							,
 	input       [`SRC_SEL_WIDTH-1:0]    src_sel							,
 	input       [2:0]                   funct3							,
 

@@ -1,5 +1,4 @@
-`include "ysyx_23060077_define.v"
-`include"ysyx_23060077_axi_define.v"
+`include"ysyx_23060077_define.v"
 
 module ysyx_23060077_pre_decode(
 	input       [`INST_WIDTH-1:0]       ifu_inst           	,

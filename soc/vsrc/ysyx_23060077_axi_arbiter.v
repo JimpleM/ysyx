@@ -1,4 +1,4 @@
-`include"ysyx_23060077_axi_define.v"
+`include"ysyx_23060077_define.v"
 
 module ysyx_23060077_axi_arbiter(
 	input   		                        aclk            		,

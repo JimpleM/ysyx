@@ -1,6 +1,4 @@
-`include"ysyx_23060077_axi_define.v"
 `include"ysyx_23060077_define.v"
-
 module ysyx_23060077(
 	input                       clock               ,
 	input                       reset               ,
@@ -107,6 +105,8 @@ wire [`DATA_WIDTH-1:0]     	idu_imm		   			;
 wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	    	;
 wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
 wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
+wire 												idu_alu_mul				;
+wire 												idu_alu_div				;
 wire [2:0]                  idu_funct3	    	;
 wire 												idu_csr_ecall			;
 wire 												idu_csr_mret			;
@@ -131,6 +131,8 @@ wire [`ALU_OPT_WIDTH-1:0]   exu_alu_opt	    	;
 wire [`SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
 wire [`LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
 wire [2:0]                  exu_funct3	    	;
+wire 												exu_alu_mul				;
+wire 												exu_alu_div				;
 wire                       	exu_branch				;
 wire                       	exu_rd_wen				;
 wire [`REG_WIDTH-1:0]   		exu_rd_addr				;
@@ -323,6 +325,8 @@ ysyx_23060077_idu idu_u0(
 	.alu_opt				( idu_alu_opt	),
 	.src_sel				( idu_src_sel	),
 	.lsu_opt				( idu_lsu_opt	),
+	.alu_mul				( idu_alu_mul	),
+	.alu_div				( idu_alu_div	),
 	.funct3		  		( idu_funct3	)
 );
 
@@ -361,7 +365,7 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+3+`DATA_WIDTH),
+	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+3+`DATA_WIDTH+2),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -369,8 +373,10 @@ ysyx_23060077_pipeline#(
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
 	.flush	( ),
-	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,idu_jump_src1}),
-	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,ex_idu_jump_src1})
+	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
+	idu_jump_src1,idu_alu_mul,idu_alu_div}),
+	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
+	ex_idu_jump_src1,exu_alu_mul,exu_alu_div})
 );
 
 always @(posedge clock) begin
@@ -425,6 +431,8 @@ ysyx_23060077_exu exu_u0(
 	.imm							( exu_imm					),
 	.branch						( exu_branch			),
 	.alu_opt					( exu_alu_opt			),
+	.alu_mul					( exu_alu_mul			),
+	.alu_div					( exu_alu_div			),
 	.src_sel					( exu_src_sel			),
 	.funct3		    		( exu_funct3    	),
 	.zero_flag				( zero_flag     	),
@@ -656,6 +664,21 @@ import "DPI-C" function void exu_data_finished();
 always @(posedge clock)begin
 	if((exu_stall) && (idu_alu_opt != `ALU_NONE))begin
 		exu_data_finished();
+	end
+end
+
+import "DPI-C" function void ifu_jump_stall(input int index,input bit valid);
+always @(posedge clock)begin
+	if(ifu_jump)begin
+		if(ifu_jal 		)begin
+			ifu_jump_stall(32'd0,Icache_r_last_i);
+		end
+		if(ifu_jalr 	)begin
+			ifu_jump_stall(32'd1,Icache_r_last_i);
+		end
+		if(ifu_branch	)begin
+			ifu_jump_stall(32'd2,Icache_r_last_i);
+		end
 	end
 end
 

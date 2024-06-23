@@ -1,5 +1,4 @@
-`include "ysyx_23060077_define.v"
-`include"ysyx_23060077_axi_define.v"
+`include"ysyx_23060077_define.v"
 
 module ysyx_23060077_ifu(
 	input                               clock           		,
@@ -185,12 +184,6 @@ import "DPI-C" function void ifu_inst_arrived();
 always @(posedge clock)begin
 	if(Icache_r_last_i)begin
 		ifu_inst_arrived();
-	end
-end
-import "DPI-C" function void ifu_jump_stall(input bit valid);
-always @(posedge clock)begin
-	if(ifu_jump)begin
-		ifu_jump_stall(ifu_ready_i);
 	end
 end
 `endif

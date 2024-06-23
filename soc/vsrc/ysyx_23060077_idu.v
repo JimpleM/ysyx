@@ -14,6 +14,8 @@ module ysyx_23060077_idu(
 	output      [`ALU_OPT_WIDTH-1:0]    alu_opt							,
 	output      [`SRC_SEL_WIDTH-1:0]    src_sel							,
 	output      [`LSU_OPT_WIDTH-1:0]    lsu_opt							,
+	output 															alu_mul							,
+	output 															alu_div 						,
 	output      [2:0]                   funct3
 
 );
@@ -68,6 +70,9 @@ assign imm	=
 ({{(`DATA_WIDTH){B_TYPE}} & B_TYPE_imm }) |
 ({{(`DATA_WIDTH){S_TYPE}} & S_TYPE_imm }) |
 ({{(`DATA_WIDTH){TYPE_SYS}} & SYS_imm })  | 'd0;
+
+assign alu_mul = 	inst[25] & R_TYPE & !funct3[2];
+assign alu_div = 	inst[25] & R_TYPE &  funct3[2];
 
 
 // //src_sel 为0时为 SRC_SEL_RS1_IMM

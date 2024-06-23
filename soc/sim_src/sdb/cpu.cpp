@@ -39,7 +39,7 @@ extern uint64_t lsu_write_clock;
 extern uint64_t exu_data_counter;
 extern uint64_t Icache_access_counter[2];	// 0 store times, 1 clock
 extern uint64_t Icache_miss_counter[2];
-extern uint64_t ifu_jump_stall_counter[2];
+extern uint64_t ifu_jump_stall_counter[4][2];
 
 // static bool g_print_step = false;
 #ifdef CONFIG_ITRACE
@@ -150,7 +150,9 @@ static void statistic() {
   printf("|  LSU_R   |%16lld(clk) |%16.3f(Avg) |\n", lsu_read_clock,(float)lsu_read_clock/inst_type_counter[opcodeArray[5].opcode][0]);
   printf("|  LSU_W   |%16lld(clk) |%16.3f(Avg) |\n", lsu_write_clock,(float)lsu_write_clock/inst_type_counter[opcodeArray[6].opcode][0]);
   printf("----------------------------------------------------------\n");
-  printf("|IF_j_stall|     %16lld |     %16lld |\n", ifu_jump_stall_counter[0],ifu_jump_stall_counter[1]);
+  printf("|    jal   |     %16lld |     %16lld |\n", ifu_jump_stall_counter[0][0],ifu_jump_stall_counter[0][1]);
+  printf("|    jalr  |     %16lld |     %16lld |\n", ifu_jump_stall_counter[1][0],ifu_jump_stall_counter[1][1]);
+  printf("|  branch  |     %16lld |     %16lld |\n", ifu_jump_stall_counter[2][0],ifu_jump_stall_counter[2][1]);
   printf("----------------------------------------------------------\n");
   printf("|  I_hit   |     %16lld |     %16lld |\n", Icache_access_counter[0],Icache_access_counter[1]);
   printf("|  I_miss  |     %16lld |     %16lld |\n", Icache_miss_counter[0],Icache_miss_counter[1]);
