@@ -51,8 +51,6 @@
 
 // csr reg addr
 `define CSR_ADDR_WIDTH      12
-`define CSR_REG_WIDTH       3
-
 
 `define AXI_ADDR_WIDTH          32
 `define AXI_DATA_WIDTH          64

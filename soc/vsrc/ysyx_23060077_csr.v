@@ -33,12 +33,13 @@ localparam CSR_MSCRATCH_ADDR  	= `CSR_ADDR_WIDTH'h340;
 localparam CSR_MVENDORID_ADDR 	= `CSR_ADDR_WIDTH'hF11;
 localparam CSR_MARCHID_ADDR   	= `CSR_ADDR_WIDTH'hF12;
 
-localparam CSR_MSTATUS         	= `CSR_REG_WIDTH'd1;
-localparam CSR_MTVEC           	= `CSR_REG_WIDTH'd2;
-localparam CSR_MEPC            	= `CSR_REG_WIDTH'd3;
-localparam CSR_MCAUSE          	= `CSR_REG_WIDTH'd4;
-localparam CSR_MVENDORID       	= `CSR_REG_WIDTH'd5;
-localparam CSR_MARCHID         	= `CSR_REG_WIDTH'd6;
+localparam CSR_REG_WIDTH 				= 3;
+localparam CSR_MSTATUS         	= CSR_REG_WIDTH'd1;
+localparam CSR_MTVEC           	= CSR_REG_WIDTH'd2;
+localparam CSR_MEPC            	= CSR_REG_WIDTH'd3;
+localparam CSR_MCAUSE          	= CSR_REG_WIDTH'd4;
+localparam CSR_MVENDORID       	= CSR_REG_WIDTH'd5;
+localparam CSR_MARCHID         	= CSR_REG_WIDTH'd6;
 localparam MVENDORID       		 	= `DATA_WIDTH'h79737978;
 localparam MARCHID         		 	= `DATA_WIDTH'h015FDE6D;
 
