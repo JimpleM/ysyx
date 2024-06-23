@@ -14,7 +14,9 @@ module ysyx_23060077_regfile (
 	input       [`DATA_WIDTH-1:0]       reg_rd_data
 );
 
-reg [`DATA_WIDTH-1:0] gpr [`REG_COUNT-1:0];
+localparam REG_COUNT = (1<<`REG_WIDTH);
+
+reg [`DATA_WIDTH-1:0] gpr [REG_COUNT-1:0];
 
 
 // read rs1
@@ -29,7 +31,7 @@ wire [`DATA_WIDTH-1:0] reg_rd_data_t = (|reg_rd_addr) ? reg_rd_data : 'd0;
 // 用(|reg_rd_addr)代表不为0，节省逻辑电路
 always @(posedge clock) begin
 	if(reset)begin
-		for(i=0; i<`REG_COUNT; i=i+1)begin
+		for(i=0; i<REG_COUNT; i=i+1)begin
 			gpr[i] = 0;
 		end   
 	end
@@ -41,10 +43,10 @@ always @(posedge clock) begin
 end
 
 // sta无法综合，奇怪？？
-// wire  gpr_wen [`REG_COUNT-1:0];
+// wire  gpr_wen [REG_COUNT-1:0];
 // genvar i;
 // generate
-// 	for(i=0; i<`REG_COUNT; i++)begin
+// 	for(i=0; i<REG_COUNT; i++)begin
 // 		if(i == 0)begin
 // 			assign gpr_wen[i] = 1'b0;
 // 			assign gpr[i] 		= 'd0;
