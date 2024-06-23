@@ -1,5 +1,4 @@
-`include"ysyx_23060077_define.v"
-
+// `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_axi(
 	input                               aclk            		,
@@ -55,10 +54,10 @@ module ysyx_23060077_axi(
 
 // 写逻辑
 reg [`AXI_W_STATE_WIDTH-1:0] axi_w_state;
-parameter [`AXI_W_STATE_WIDTH-1:0] AXI_W_IDLE   = 'd0;
-parameter [`AXI_W_STATE_WIDTH-1:0] AXI_W_ADDR   = 'd1;
-parameter [`AXI_W_STATE_WIDTH-1:0] AXI_W_DATA   = 'd2;
-parameter [`AXI_W_STATE_WIDTH-1:0] AXI_W_RESP   = 'd3;
+localparam [`AXI_W_STATE_WIDTH-1:0] AXI_W_IDLE   = 'd0;
+localparam [`AXI_W_STATE_WIDTH-1:0] AXI_W_ADDR   = 'd1;
+localparam [`AXI_W_STATE_WIDTH-1:0] AXI_W_DATA   = 'd2;
+localparam [`AXI_W_STATE_WIDTH-1:0] AXI_W_RESP   = 'd3;
 
 assign axi_aw_valid_o   = (axi_w_state == AXI_W_ADDR) ? 'b1 : 'b0;
 assign axi_aw_addr_o    = cpu_w_addr_i;
@@ -131,9 +130,9 @@ end
 
 //读逻辑
 reg [`AXI_R_STATE_WIDTH-1:0] axi_r_state;
-parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_IDLE   = 'd0;
-parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_ADDR   = 'd1;
-parameter [`AXI_R_STATE_WIDTH-1:0] AXI_R_DATA   = 'd2;
+localparam [`AXI_R_STATE_WIDTH-1:0] AXI_R_IDLE   = 'd0;
+localparam [`AXI_R_STATE_WIDTH-1:0] AXI_R_ADDR   = 'd1;
+localparam [`AXI_R_STATE_WIDTH-1:0] AXI_R_DATA   = 'd2;
 
 assign axi_ar_valid_o   = (axi_r_state == AXI_R_ADDR) ? 'b1 : 'b0;
 assign axi_ar_addr_o    = cpu_r_addr_i;

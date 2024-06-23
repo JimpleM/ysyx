@@ -1,4 +1,4 @@
-`include"ysyx_23060077_define.v"
+// `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_axi_arbiter(
 	input   		                        aclk            		,
@@ -80,9 +80,9 @@ wire                                cpu_w_last_i    ;
 
 
 reg [`AXI_ARB_STATE_WIDTH-1:0] arbiter_state;
-parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_IDLE   = 'd0;
-parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_IFU    = 'd1;
-parameter [`AXI_ARB_STATE_WIDTH-1:0] ARB_LSU    = 'd2;
+localparam [`AXI_ARB_STATE_WIDTH-1:0] ARB_IDLE   = 'd0;
+localparam [`AXI_ARB_STATE_WIDTH-1:0] ARB_IFU    = 'd1;
+localparam [`AXI_ARB_STATE_WIDTH-1:0] ARB_LSU    = 'd2;
 
 assign cpu_r_valid_o    = (arbiter_state == ARB_IFU) ? Icache_r_valid_i : (arbiter_state == ARB_LSU) ? lsu_r_valid_i : 'd0;
 assign cpu_r_addr_o     = (arbiter_state == ARB_IFU) ? Icache_r_addr_i  : (arbiter_state == ARB_LSU) ? lsu_r_addr_i  : 'd0;

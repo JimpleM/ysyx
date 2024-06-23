@@ -34,17 +34,17 @@ localparam CSR_MVENDORID_ADDR 	= `CSR_ADDR_WIDTH'hF11;
 localparam CSR_MARCHID_ADDR   	= `CSR_ADDR_WIDTH'hF12;
 
 localparam CSR_REG_WIDTH 				= 3;
-localparam CSR_MSTATUS         	= CSR_REG_WIDTH'd1;
-localparam CSR_MTVEC           	= CSR_REG_WIDTH'd2;
-localparam CSR_MEPC            	= CSR_REG_WIDTH'd3;
-localparam CSR_MCAUSE          	= CSR_REG_WIDTH'd4;
-localparam CSR_MVENDORID       	= CSR_REG_WIDTH'd5;
-localparam CSR_MARCHID         	= CSR_REG_WIDTH'd6;
+localparam CSR_MSTATUS         	= 'd1;
+localparam CSR_MTVEC           	= 'd2;
+localparam CSR_MEPC            	= 'd3;
+localparam CSR_MCAUSE          	= 'd4;
+localparam CSR_MVENDORID       	= 'd5;
+localparam CSR_MARCHID         	= 'd6;
 localparam MVENDORID       		 	= `DATA_WIDTH'h79737978;
 localparam MARCHID         		 	= `DATA_WIDTH'h015FDE6D;
 
-reg [`DATA_WIDTH-1:0] csr_reg [2**`CSR_REG_WIDTH-1:0];
-reg [`CSR_REG_WIDTH-1:0] csr_reg_addr;
+reg [`DATA_WIDTH-1:0] csr_reg [2**CSR_REG_WIDTH-1:0];
+reg [CSR_REG_WIDTH-1:0] csr_reg_addr;
 
 wire enable = sys & (|funct3); //funct3不为0
 
