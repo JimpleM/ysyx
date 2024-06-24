@@ -442,7 +442,7 @@ ysyx_23060077_exu exu_u0(
 	.zero_flag				( zero_flag     	),
 
 	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
-	.ex_to_id					( ex_to_wb_valid & ex_to_wb_ready),
+	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
 	.exu_stall      	( exu_stall     	),
 	.exu_result_valid ( exu_result_valid),
 	.exu_result				( exu_result    	)

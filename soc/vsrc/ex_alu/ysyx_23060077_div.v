@@ -10,8 +10,8 @@ module ysyx_23060077_div(
 
   input 	                            flush       				,
   input 	                            div_valid       		,
-	output 	                            div_ready       	  ,
-  output 	                            out_valid       	  ,
+	output 	reg                         div_ready       	  ,
+  output 	reg                         out_valid       	  ,
   output  reg [`DATA_WIDTH-1:0]       quotient				    ,
   output  reg [`DATA_WIDTH-1:0]       remainder				    
 
@@ -38,7 +38,7 @@ reg [31:0] quot_r;
 wire [32:0] dividend_sub;
 assign dividend_sub = d_reg[63:31] - {1'b0,s_reg};
 
-assign div_ready = (div_state == DIV_END);
+// assign div_ready = (div_state == DIV_END);
 
 always @(posedge clock) begin
   if(reset)begin
@@ -49,11 +49,18 @@ always @(posedge clock) begin
     quot_r      <= 'd0;
     quotient    <= 'd0;
     remainder   <= 'd0;
+
+    div_ready   <= 'd0;
+    out_valid   <= 'd0;
   end
   else begin
     case(div_state)
       DIV_IDLE:begin
+        out_valid   <= 'd0;
+        div_ready   <= 'd1;
         if(div_valid)begin
+          div_ready   <= 'd0;
+
           d_reg       <= {32'd0,dividend_abs};
           s_reg       <= divisor_abs;
           div_count   <= 'd31;
@@ -82,6 +89,7 @@ always @(posedge clock) begin
         div_state   <= DIV_END;
       end
       DIV_END:begin
+        out_valid   <= 'd1;
         div_state   <= DIV_IDLE;
       end
     endcase

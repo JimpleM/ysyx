@@ -10,8 +10,8 @@ module ysyx_23060077_wallace(
 
   input 	                            flush       				,
   input 	                            mul_valid       		,
-	output 	                            mul_ready       	  ,
-  output 	                            out_valid       	  ,
+	output 	reg                         mul_ready       	  ,
+  output 	reg                         out_valid       	  ,
   output  reg [`DATA_WIDTH-1:0]       result_hi				    ,
   output  reg [`DATA_WIDTH-1:0]       result_ho				    
 
@@ -21,16 +21,11 @@ localparam PP_NUM = 17;
 localparam MUL_STATE_WITDH = 2;
 reg [MUL_STATE_WITDH-1:0] 			mul_state;
 localparam [MUL_STATE_WITDH-1:0] MUL_IDLE   		= 'd0;
-localparam [MUL_STATE_WITDH-1:0] MUL_BOOTH      = 'd1;
-localparam [MUL_STATE_WITDH-1:0] MUL_RD_AXI 	  = 'd2;
-localparam [MUL_STATE_WITDH-1:0] MUL_FENCE  		= 'd3;
+localparam [MUL_STATE_WITDH-1:0] MUL_STAGE1     = 'd1;
+localparam [MUL_STATE_WITDH-1:0] MUL_STAGE2 	  = 'd2;
+localparam [MUL_STATE_WITDH-1:0] MUL_STAGE3  		= 'd3;
 
 wire [PP_LEN-1:0] result = pipe6_s[0] + {pipe6_c[0][PP_LEN-2:0],1'b0};
-// assign {result_hi,result_ho} = result[63:0];
-
-// wire  [1:0]             booth_signed = mul_signed 	;
-// wire  [`DATA_WIDTH-1:0] booth_src1   = multiplicand ;
-// wire  [`DATA_WIDTH-1:0] booth_src2   = multiplier	  ;
 
 reg   [1:0]             booth_signed;
 reg   [`DATA_WIDTH-1:0] booth_src1  ;
@@ -50,24 +45,34 @@ always @(posedge clock) begin
     end
   end
 end
-assign mul_ready = (mul_state == MUL_BOOTH);
-assign out_valid = (mul_state == MUL_BOOTH);
 always @(posedge clock) begin
   if(reset)begin
     mul_state   <= MUL_IDLE;
     result_ho   <= 'd0;
     result_hi   <= 'd0;
+    mul_ready   <= 'd0;
+    out_valid   <= 'd0;
   end
   else begin
     case(mul_state)
       MUL_IDLE:begin
+        mul_ready <= 'd1;
+        out_valid   <= 'd0;
         if(mul_valid)begin
-          mul_state <= MUL_BOOTH;
+          mul_state <= MUL_STAGE1;
+          mul_ready <= 'd0;
         end
       end
-      MUL_BOOTH:begin
+      MUL_STAGE1:begin
+        mul_state <= MUL_STAGE2;
+      end
+      MUL_STAGE2:begin
+        mul_state <= MUL_STAGE3;
+      end
+      MUL_STAGE3:begin
         mul_state <= MUL_IDLE;
         {result_hi,result_ho} <= result[63:0];
+        out_valid   <= 'd1;
       end
       default:begin
         mul_state <= MUL_IDLE;

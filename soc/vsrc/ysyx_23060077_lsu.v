@@ -82,8 +82,8 @@ end
 
 // reg ren;
 // reg wen;
-wire ren = (lsu_opt == `LSU_OPT_LOAD) & lsu_finished;
-wire wen = (lsu_opt == `LSU_OPT_STORE) & lsu_finished;
+wire ren = (lsu_opt == `LSU_OPT_LOAD) & !lsu_finished;
+wire wen = (lsu_opt == `LSU_OPT_STORE) & !lsu_finished;
 
 wire lsu_rd_wen_r;
 wire lsu_rd_wen_w;
@@ -93,13 +93,13 @@ reg lsu_finished;
 
 always @(posedge clock ) begin
   if(reset)begin
-    lsu_finished <= 'd1;
-  end
-  else if(lsu_rd_wen)begin
     lsu_finished <= 'd0;
   end
-  else if(id_to_ex)begin
+  else if(lsu_rd_wen)begin
     lsu_finished <= 'd1;
+  end
+  else if(id_to_ex)begin
+    lsu_finished <= 'd0;
   end
 
 end

@@ -21,7 +21,7 @@ module ysyx_23060077_exu(
 	output                              zero_flag						,
 
 	input 															id_to_ex						,
-	input 															ex_to_id						,
+	input 															ex_to_wb						,
 	output 	reg 												exu_stall 					,
 	output 	 														exu_result_valid 		,
 	output 	    [`DATA_WIDTH-1:0]       exu_result
@@ -65,11 +65,26 @@ always @(*) begin
 		default:    		branch_result = 'd0; 
 	endcase
 end
+// 上面的单元只运行一拍
+reg  ex_alu_doing;
+always @(posedge clock) begin
+	if(reset)begin
+		ex_alu_doing	<= 'd0;
+	end
+	else if(id_to_ex)begin
+		ex_alu_doing	<= 'd1;
+	end
+	else begin
+		ex_alu_doing	<= 'd0;
+	end
+end
 
 reg  [1:0]  mul_signed;
 reg  [`DATA_WIDTH-1:0] mul_result;
 wire [31:0] result_hi;
 wire [31:0] result_ho;
+wire mul_ready;
+wire mul_out_valid;
 always @(*) begin
 	case({alu_mul,funct3})
 		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
@@ -79,10 +94,9 @@ always @(*) begin
 		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
 	endcase
 end
-reg  mul_finished;
-wire mul_valid = alu_mul & (~mul_finished);
-wire mul_ready;
-wire mul_out_valid;
+reg  mul_doing;
+wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
+wire mul_busy  = alu_mul & !mul_out_valid;
 ysyx_23060077_wallace wallace_u0(
 	.clock       		( clock					),
 	.reset       		( reset					),
@@ -99,16 +113,13 @@ ysyx_23060077_wallace wallace_u0(
 
 always @(posedge clock) begin
 	if(reset)begin
-		mul_finished	<= 'd0;
+		mul_doing	<= 'd0;
 	end
-	else if(id_to_ex | ex_to_id)begin
-		mul_finished	<= 'd0;
-	end
-	else if(!alu_mul)begin
-		mul_finished	<= 'd1;
+	else if(mul_out_valid)begin
+		mul_doing	<= 'd0;
 	end
 	else if(mul_valid & mul_ready)begin
-		mul_finished	<= 'd1;
+		mul_doing	<= 'd1;
 	end
 end
 
@@ -117,6 +128,8 @@ reg  div_signed;
 reg  [`DATA_WIDTH-1:0] div_result;
 wire [31:0] quotient;
 wire [31:0] remainder;
+wire div_ready;
+wire div_out_valid;
 always @(*) begin
 	case({alu_div,funct3})
 		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
@@ -126,10 +139,9 @@ always @(*) begin
 		default:    		begin div_signed = 'd0; div_result = 'd0; end
 	endcase
 end
-reg  div_finished;
-wire div_valid = alu_div & (~div_finished);
-wire div_ready;
-wire div_out_valid;
+reg  div_doing;
+wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
+wire div_busy  = alu_div & !div_out_valid;
 ysyx_23060077_div div_u0(
 	.clock       		( clock			 		),
 	.reset       		( reset			 		),
@@ -146,64 +158,53 @@ ysyx_23060077_div div_u0(
 
 always @(posedge clock) begin
 	if(reset)begin
-		div_finished	<= 'd0;
+		div_doing	<= 'd0;
 	end
-	else if(id_to_ex | ex_to_id)begin
-		div_finished	<= 'd0;
-	end
-	else if(!alu_div)begin
-		div_finished	<= 'd1;
+	else if(div_out_valid)begin
+		div_doing	<= 'd0;
 	end
 	else if(div_valid & div_ready)begin
-		div_finished	<= 'd1;
+		div_doing	<= 'd1;
 	end
 end
 
+reg  	[`DATA_WIDTH-1:0] exu_result_buff;
 
-
-reg  ex_alu_stall;
-reg  ex_alu_finished;
-always @(posedge clock) begin
+always @(posedge clock ) begin
 	if(reset)begin
-		ex_alu_stall	<= 'd0;
+		exu_result_buff	<= 'd0;
 	end
-	else if(id_to_ex)begin
-		ex_alu_stall	<= 'd1;
+	else if(mul_out_valid)begin
+		exu_result_buff	<= mul_result;
 	end
-	else begin
-		ex_alu_stall	<= 'd0;
+	else if(div_out_valid)begin
+		exu_result_buff	<= div_result;
 	end
-end
-always @(posedge clock) begin
-	if(reset)begin
-		ex_alu_finished	<= 'd0;
-	end
-	else if(id_to_ex | ex_to_id)begin
-		ex_alu_finished	<= 'd0;
-	end
-	else if(ex_alu_stall)begin
-		ex_alu_finished	<= 'd1;
+	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
+		exu_result_buff	<= branch ? branch_result : alu_out_data;
 	end
 end
 
-always @(posedge clock) begin
+reg		exu_finished;
+always @(posedge clock ) begin
 	if(reset)begin
-		exu_stall			<= 'd1;
+		exu_finished	<= 'd0;
 	end
-	else if(id_to_ex)begin
-		exu_stall			<= 'd1;
+	else if(mul_out_valid | div_out_valid)begin
+		exu_finished	<= 'd1;
 	end
-	else if(mul_ready)begin
-		exu_stall			<= 'd0;
+	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
+		exu_finished	<= 'd1;
 	end
-	else if(ex_alu_finished)begin
-		exu_stall			<= 'd0;
+	else if(ex_to_wb)begin
+		exu_finished	<= 'd0;
 	end
 end
-wire exu_finished			= mul_finished & ex_alu_finished & div_finished;
+
+
 assign exu_result_valid = exu_finished;
 
-assign exu_result = branch ? branch_result : alu_mul ? mul_result : alu_div ? div_result :alu_out_data;
+assign exu_result = exu_result_buff;
 
 endmodule
 
