@@ -1,0 +1,9 @@
+# Building microbench-run [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
++ CC src/riscv/ysyxsoc/trm.c
++ AR -> build/am-riscv32e-ysyxsoc.a
+# Building klib-archive [riscv32e-ysyxsoc]
++ LD -> build/microbench-riscv32e-ysyxsoc.elf
+# Creating image [riscv32e-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h4d156741__1.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024root__DepSet_h0188974b__1.o VysyxSoCFull___024root__DepSet_h0188974b__2.o VysyxSoCFull___024root__DepSet_h0188974b__3.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__Trace__1.o VysyxSoCFull__Trace__2.o VysyxSoCFull__Trace__3.o VysyxSoCFull__Trace__4.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__1__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__2__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__3__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o VysyxSoCFull__Trace__1__Slow.o VysyxSoCFull__Trace__2__Slow.o VysyxSoCFull__Trace__3__Slow.o VysyxSoCFull__Trace__4__Slow.o

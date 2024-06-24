@@ -12,8 +12,8 @@ module ysyx_23060077_wallace(
   input 	                            mul_valid       		,
 	output 	                            mul_ready       	  ,
   output 	                            out_valid       	  ,
-  output      [`DATA_WIDTH-1:0]       result_hi				    ,
-  output      [`DATA_WIDTH-1:0]       result_ho				    
+  output  reg [`DATA_WIDTH-1:0]       result_hi				    ,
+  output  reg [`DATA_WIDTH-1:0]       result_ho				    
 
 );
 localparam PP_LEN = 68;
@@ -26,7 +26,11 @@ localparam [MUL_STATE_WITDH-1:0] MUL_RD_AXI 	  = 'd2;
 localparam [MUL_STATE_WITDH-1:0] MUL_FENCE  		= 'd3;
 
 wire [PP_LEN-1:0] result = pipe6_s[0] + {pipe6_c[0][PP_LEN-2:0],1'b0};
-assign {result_ho,result_hi} = result[63:0];
+// assign {result_hi,result_ho} = result[63:0];
+
+// wire  [1:0]             booth_signed = mul_signed 	;
+// wire  [`DATA_WIDTH-1:0] booth_src1   = multiplicand ;
+// wire  [`DATA_WIDTH-1:0] booth_src2   = multiplier	  ;
 
 reg   [1:0]             booth_signed;
 reg   [`DATA_WIDTH-1:0] booth_src1  ;
@@ -39,13 +43,20 @@ always @(posedge clock) begin
     booth_src2  <= 'd0;
   end
   else begin
-    
+    if(mul_valid && mul_state == MUL_IDLE)begin
+      booth_signed<= mul_signed;
+      booth_src1  <= multiplicand;
+      booth_src2  <= multiplier;
+    end
   end
 end
-
+assign mul_ready = (mul_state == MUL_BOOTH);
+assign out_valid = (mul_state == MUL_BOOTH);
 always @(posedge clock) begin
   if(reset)begin
     mul_state   <= MUL_IDLE;
+    result_ho   <= 'd0;
+    result_hi   <= 'd0;
   end
   else begin
     case(mul_state)
@@ -55,7 +66,11 @@ always @(posedge clock) begin
         end
       end
       MUL_BOOTH:begin
-        
+        mul_state <= MUL_IDLE;
+        {result_hi,result_ho} <= result[63:0];
+      end
+      default:begin
+        mul_state <= MUL_IDLE;
       end
     endcase
   end

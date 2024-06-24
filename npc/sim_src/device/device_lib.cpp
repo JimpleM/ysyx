@@ -33,7 +33,7 @@ uint32_t device_read(uint32_t addr){
     return 0;
 }
 void device_write(uint32_t addr, uint32_t data){
-    if(top->clk == 0){
+    if(top->clock == 0){
         if(addr == SERIAL_PORT){
             uart_write(data);
         }else if(addr == SYNC_ADDR){

@@ -140,6 +140,8 @@ wire 												exu_csr_ecall			;
 wire 												exu_csr_mret 			;
 wire												exu_sys						;
 
+wire                        exu_stall					;
+wire                        exu_result_valid	;
 wire                        zero_flag					;
 wire [`DATA_WIDTH-1:0]      exu_result				;
 
@@ -372,7 +374,7 @@ ysyx_23060077_pipeline#(
 	.reset	( reset ),
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
-	.flush	( ),
+	.flush	( ex_to_wb_valid & ex_to_wb_ready),
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
 	idu_jump_src1,idu_alu_mul,idu_alu_div}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
@@ -392,20 +394,20 @@ always @(posedge clock) begin
 		end
 	end
 end
-reg exu_stall;
-always @(posedge clock) begin
-	if(reset)begin
-		exu_stall <= 'd0;
-	end
-	else begin
-		if(id_to_ex_valid & id_to_ex_ready)begin // exu运行一个周期
-			exu_stall <= 'd1;
-		end
-		else begin
-			exu_stall <= 'd0;
-		end
-	end
-end
+// reg exu_stall;
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		exu_stall <= 'd0;
+// 	end
+// 	else begin
+// 		if(id_to_ex_valid & id_to_ex_ready)begin // exu运行一个周期
+// 			exu_stall <= 'd1;
+// 		end
+// 		else begin
+// 			exu_stall <= 'd0;
+// 		end
+// 	end
+// end
 
 always @(posedge clock) begin
 	if(reset)begin
@@ -415,16 +417,18 @@ always @(posedge clock) begin
 		if(lsu_rd_wen)begin
 			ex_to_wb_valid <= 'd1;
 		end
-		else if(!mem_stall& exu_stall)begin // lsu不工作
-			ex_to_wb_valid <= 'd1;
-		end
-		else if(ex_to_wb_valid & ex_to_wb_ready)begin
+		else if(ex_to_wb_valid & ex_to_wb_ready)begin //因为要借助握手拉低finished信号
 			ex_to_wb_valid <= 'd0;
+		end
+		else if(!mem_stall& exu_result_valid)begin // lsu不工作
+			ex_to_wb_valid <= 'd1;
 		end
 	end
 end
 
 ysyx_23060077_exu exu_u0(
+	.clock						( clock		    		),
+	.reset        		( reset         	),
 	.pc								( exu_pc					),
 	.src1							( exu_src1		    ),
 	.src2							( exu_src2		    ),
@@ -436,6 +440,11 @@ ysyx_23060077_exu exu_u0(
 	.src_sel					( exu_src_sel			),
 	.funct3		    		( exu_funct3    	),
 	.zero_flag				( zero_flag     	),
+
+	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
+	.ex_to_id					( ex_to_wb_valid & ex_to_wb_ready),
+	.exu_stall      	( exu_stall     	),
+	.exu_result_valid ( exu_result_valid),
 	.exu_result				( exu_result    	)
 );
 

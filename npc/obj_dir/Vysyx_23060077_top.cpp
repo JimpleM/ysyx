@@ -4,7 +4,6 @@
 #include "Vysyx_23060077_top.h"
 #include "Vysyx_23060077_top__Syms.h"
 #include "verilated_vcd_c.h"
-#include "verilated_dpi.h"
 
 //============================================================
 // Constructors
@@ -12,7 +11,7 @@
 Vysyx_23060077_top::Vysyx_23060077_top(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vysyx_23060077_top__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
+    , clock{vlSymsp->TOP.clock}
     , rst_n{vlSymsp->TOP.rst_n}
     , rootp{&(vlSymsp->TOP)}
 {

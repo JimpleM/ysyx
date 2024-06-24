@@ -54,12 +54,12 @@ static void dump_wave(){
 }
 
 static void exec_once() {
-    top->clk = 1;
+    top->clock = 1;
     top->eval();
 
     dump_wave();
 
-    top->clk = 0;
+    top->clock = 0;
     top->eval();
     
     dump_wave();
