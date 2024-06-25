@@ -82,12 +82,8 @@ assign alu_div = 	inst[25] & R_TYPE &  funct3[2];
 // (TYPE_BRANCH|TYPE_OP) ? `SRC_SEL_RS1_2 	:
 // `SRC_SEL_RS1_IMM;
 
-// //lsu_opt
-// assign lsu_opt = 
-// (TYPE_LOAD) 	? `LSU_OPT_LOAD 	:
-// (TYPE_STORE) 	? `LSU_OPT_STORE 	:
-// (TYPE_SYS) 		? `LSU_OPT_SYS 		:
-// `LSU_OPT_NONE;
+//lsu_opt
+assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 
 
 
@@ -144,29 +140,13 @@ assign alu_div = 	inst[25] & R_TYPE &  funct3[2];
 // );
 
 
-// ysyx_23060077_mux#(
-//     .NR_KEY      (3), 
-//     .KEY_LEN     (7), 
-//     .DATA_LEN    (`LSU_OPT_WIDTH)
-// )ysyx_23060077_riscv_mux_id_lsu_opt(
-//     .key              ({opcode}),//opcode
-//     .default_out      (`LSU_OPT_NONE),
-//     .out              (lsu_opt),
-//     .lut({  `LOAD  ,{`LSU_OPT_LOAD},
-//             `STORE ,{`LSU_OPT_STORE},
-//             `SYS   ,{`LSU_OPT_SYS}
-//   })
-// );
-
-
-
 ysyx_23060077_id_opt id_opt_idu(
     .opcode     (opcode),
     .funct3     (funct3),
     .funct7     (funct7),
     
     .src_sel    (src_sel  ),
-    .lsu_opt    (lsu_opt  ),
+    // .lsu_opt    (lsu_opt  ),
 		.alu_opt    (alu_opt  )
 );
 

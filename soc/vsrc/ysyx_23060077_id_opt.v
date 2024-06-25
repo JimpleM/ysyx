@@ -4,7 +4,7 @@ module ysyx_23060077_id_opt(
 	input 	    [2:0]                   funct3						,
 	input 	    		                   	funct7						,
 	output  reg [`SRC_SEL_WIDTH-1:0]    src_sel						,
-	output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt						,
+	// output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt						,
 	output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt						
 );
 
@@ -98,14 +98,14 @@ always @(*) begin
 end
 
 
-always @(*) begin
-	casez(opcode)
-		`LOAD  : lsu_opt = `LSU_OPT_LOAD    ;
-		`STORE : lsu_opt = `LSU_OPT_STORE   ;
-		`SYS   : lsu_opt = `LSU_OPT_SYS     ;
-		default: lsu_opt = `LSU_OPT_NONE    ; 
-	endcase
-end
+// always @(*) begin
+// 	casez(opcode)
+// 		`LOAD  : lsu_opt = `LSU_OPT_LOAD    ;
+// 		`STORE : lsu_opt = `LSU_OPT_STORE   ;
+// 		`SYS   : lsu_opt = `LSU_OPT_SYS     ;
+// 		default: lsu_opt = `LSU_OPT_NONE    ; 
+// 	endcase
+// end
 
 
 endmodule

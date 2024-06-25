@@ -141,7 +141,7 @@ wire 												exu_csr_mret 			;
 wire												exu_sys						;
 
 wire                        exu_stall					;
-wire                        exu_result_valid	;
+wire                        exu_finished			;
 wire                        zero_flag					;
 wire [`DATA_WIDTH-1:0]      exu_result				;
 
@@ -175,6 +175,7 @@ wire [`DATA_WIDTH-1:0]     	wbu_rd_data		  	;
 wire [`LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
 wire [`DATA_WIDTH-1:0]			wbu_lsu_result		;
 wire [`DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
+wire												wbu_sys						;
 
 wire [`DATA_WIDTH-1:0]			wb_csr_mtvec;
 wire [`DATA_WIDTH-1:0]			wb_csr_mpec;
@@ -381,22 +382,6 @@ always @(posedge clock) begin
 	end
 end
 
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		ex_to_wb_valid <= 'd0;
-// 	end
-// 	else begin
-// 		if(lsu_rd_wen)begin
-// 			ex_to_wb_valid <= 'd1;
-// 		end
-// 		else if(ex_to_wb_valid & ex_to_wb_ready)begin //因为要借助握手拉低finished信号
-// 			ex_to_wb_valid <= 'd0;
-// 		end
-// 		else if(!mem_stall& exu_result_valid)begin // lsu不工作
-// 			ex_to_wb_valid <= 'd1;
-// 		end
-// 	end
-// end
 
 reg lsu_finished;
 always @(posedge clock) begin
@@ -412,7 +397,7 @@ always @(posedge clock) begin
 		end
 	end
 end
-wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_result_valid;
+wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_finished;
 
 ysyx_23060077_exu exu_u0(
 	.clock						( clock		    		),
@@ -432,7 +417,7 @@ ysyx_23060077_exu exu_u0(
 	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
 	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
 	.exu_stall      	( exu_stall     	),
-	.exu_result_valid ( exu_result_valid),
+	.exu_finished 		( exu_finished		),
 	.exu_result				( exu_result    	)
 );
 
@@ -469,7 +454,6 @@ ysyx_23060077_lsu lsu_u0(
 
 
 wire [`CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`CSR_WIDTH];
-// assign csr_wr_data = exu_inst[14] ? {27'd0,exu_inst[19:15]} : exu_src1;
 assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
 
 ysyx_23060077_csr  csr_u0 (
@@ -492,29 +476,12 @@ ysyx_23060077_csr  csr_u0 (
 	.csr_mpec       ( csr_mpec      )
 );
 
-// reg ex_to_wb_valid;
-// reg ex_to_wb_ready;
-
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		ex_to_wb_ready <= 'd1;
-// 	end
-// 	else begin
-// 		if(ex_to_wb_valid & ex_to_wb_ready)begin
-// 			ex_to_wb_ready <= 'd0;
-// 		end
-// 		else begin
-// 			ex_to_wb_ready <= 'd1;
-// 		end
-// 	end
-// end
-
 
 wire [`DATA_WIDTH-1:0] 			jump_pc_add;
 assign jump_pc_add  = ex_idu_jump_src1 + exu_imm;	
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*2+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH+1+`DATA_WIDTH*3),
+	.WIDTH          (`DATA_WIDTH*2+1+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH+1+`DATA_WIDTH*3),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -522,25 +489,9 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
-	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
+	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_sys,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
+	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_sys,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
 );
-// 优化的地方，将rd_wen改成rd_wen_req，根据这个信号来选择是否产生rd_wen信号，这时可以ex_to_wb_ready=!rd_wen减少一个寄存器。
-// ifu部分删除wbu_stall信号，直接wbu_pc == ifu_pc 利用那一个周期去更新pc
-// reg wbu_stall;
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		wbu_stall <= 'd0;
-// 	end
-// 	else begin
-// 		if(ex_to_wb_valid & ex_to_wb_ready)begin
-// 			wbu_stall <= 'd1;
-// 		end
-// 		else begin
-// 			wbu_stall <= 'd0;
-// 		end
-// 	end
-// end
 reg 	wbu_doing;
 wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;
 wire ex_to_wb_ready = !wbu_rd_wen;
@@ -560,6 +511,7 @@ always @(posedge clock) begin
 
 ysyx_23060077_wbu wbu_u0(
 	.lsu_opt					( wbu_lsu_opt     	),
+	.wbu_sys					( wbu_sys						),
 	.exu_result				( wb_exu_result			),
 	.lsu_result				( wbu_lsu_result   	),
 	.csr_result     	( wbu_rd_csr_data  	),
@@ -677,7 +629,7 @@ end
 
 import "DPI-C" function void exu_data_finished();
 always @(posedge clock)begin
-	if((exu_stall) && (idu_alu_opt != `ALU_NONE))begin
+	if(exu_finished&ex_to_wb_valid & ex_to_wb_ready)begin
 		exu_data_finished();
 	end
 end

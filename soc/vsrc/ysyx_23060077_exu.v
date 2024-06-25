@@ -23,7 +23,7 @@ module ysyx_23060077_exu(
 	input 															id_to_ex						,
 	input 															ex_to_wb						,
 	output 	reg 												exu_stall 					,
-	output 	 														exu_result_valid 		,
+	output 	reg 												exu_finished 				,
 	output 	    [`DATA_WIDTH-1:0]       exu_result
 );
 // 将每个bit或起来取反
@@ -185,7 +185,6 @@ always @(posedge clock ) begin
 	end
 end
 
-reg		exu_finished;
 always @(posedge clock ) begin
 	if(reset)begin
 		exu_finished	<= 'd0;
@@ -200,9 +199,6 @@ always @(posedge clock ) begin
 		exu_finished	<= 'd0;
 	end
 end
-
-
-assign exu_result_valid = exu_finished;
 
 assign exu_result = exu_result_buff;
 

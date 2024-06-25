@@ -43,10 +43,9 @@
 
 
 `define LSU_OPT_WIDTH      2
-`define LSU_OPT_NONE    `LSU_OPT_WIDTH'd0
-`define LSU_OPT_LOAD    `LSU_OPT_WIDTH'd1
-`define LSU_OPT_STORE   `LSU_OPT_WIDTH'd2
-`define LSU_OPT_SYS     `LSU_OPT_WIDTH'd3
+`define LSU_OPT_NONE    `LSU_OPT_WIDTH'b00
+`define LSU_OPT_LOAD    `LSU_OPT_WIDTH'b01
+`define LSU_OPT_STORE   `LSU_OPT_WIDTH'b10
 
 
 // csr reg addr
