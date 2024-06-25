@@ -98,7 +98,7 @@ wire                       	idu_branch				;
 wire                       	idu_jal		   			;
 wire                       	idu_jalr					;
 wire [`REG_WIDTH-1:0]   		idu_rd_addr				;
-wire                       	idu_rd_wen				;
+wire                       	idu_rd_wen_req		;
 wire [`REG_WIDTH-1:0]   		idu_rs1		   			;
 wire [`REG_WIDTH-1:0]   		idu_rs2		   			;
 wire [`DATA_WIDTH-1:0]     	idu_imm		   			;
@@ -134,7 +134,7 @@ wire [2:0]                  exu_funct3	    	;
 wire 												exu_alu_mul				;
 wire 												exu_alu_div				;
 wire                       	exu_branch				;
-wire                       	exu_rd_wen				;
+wire                       	exu_rd_wen_req		;
 wire [`REG_WIDTH-1:0]   		exu_rd_addr				;
 wire 												exu_csr_ecall			;
 wire 												exu_csr_mret 			;
@@ -169,7 +169,7 @@ wire                        lsu_w_last_i    	;
 wire [`DATA_WIDTH-1:0]      wbu_pc          	;
 wire 												wbu_zero_flag			;
 wire [`DATA_WIDTH-1:0]			wb_exu_result			;
-wire                        wbu_rd_wen      	;
+wire                        wbu_rd_wen_req    ;
 wire [`REG_WIDTH-1:0]   		wbu_rd_addr				;
 wire [`DATA_WIDTH-1:0]     	wbu_rd_data		  	;
 wire [`LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
@@ -200,10 +200,10 @@ assign jump_pc = ifu_csr_mret ? wb_csr_mpec : ( ifu_csr_ecall ? wb_csr_mtvec :wb
 ysyx_23060077_ifu ifu_u0(
 	.clock          	( clock         		),
 	.reset          	( reset         		),
-	.jump_pc        	( jump_pc       ),
-	.jump_pc_valid  	( ifu_jump &  wbu_stall		),
+	.jump_pc        	( jump_pc       		),
+	.jump_pc_valid  	( ifu_jump&wbu_doing),	// pc更新信号需要调整！！
 	.ifu_jump					( ifu_jump					),
-	.exu_finished     ( wbu_stall&(wbu_pc == ifu_pc)   ),	// 需要等待wbu运行到当前pc值
+	.exu_finished     ( wbu_doing&(wbu_pc == ifu_pc)),	// 需要等待wbu运行到当前pc值
 
 	.Icache_r_valid_o ( Icache_r_valid_o 	),
 	.Icache_r_addr_o  ( Icache_r_addr_o  	),
@@ -272,11 +272,11 @@ always @(posedge clock) begin
 		// else if((rs1_busy | rs2_busy | rd_busy))begin
 		// 	idu_stall <= 'd1;
 		// end
-		else if(exu_lsu_opt == `LSU_OPT_LOAD &(idu_rs1 == exu_rd_addr | idu_rs2 == exu_rd_addr))begin
-			if(lsu_rd_wen)begin
-				idu_stall <= 'd0;
-			end
-		end
+		// else if(exu_lsu_opt == `LSU_OPT_LOAD &(idu_rs1 == exu_rd_addr | idu_rs2 == exu_rd_addr))begin
+		// 	if(lsu_rd_wen)begin
+		// 		idu_stall <= 'd0;
+		// 	end
+		// end
 		else begin
 			idu_stall <= 'd0;
 		end
@@ -287,9 +287,9 @@ always @(posedge clock) begin
 	if(reset)begin
 		id_to_ex_valid	<= 'd0;
 	end
-	else begin
+	else begin// 不用阻塞等待后级的结果，因为ex不传递结果到wbu无法从id传到ex
 		// if(idu_stall & (!(rs1_busy | rs2_busy | rd_busy)))begin	// 运行完了
-		if(idu_stall)begin	// IDU只运行一个周期，当前级握手完成后，就可以拉搞valid，在下一个周期直接握手
+		if(idu_stall)begin
 			id_to_ex_valid <= 'd1;
 		end
 		else if(id_to_ex_valid & id_to_ex_ready)begin
@@ -298,20 +298,6 @@ always @(posedge clock) begin
 	end
 end
 
-reg idu_rd_wen_t;
-always @(posedge clock) begin
-	if(reset)begin
-		idu_rd_wen_t <= 'd0;
-	end
-	else begin
-		if(id_to_ex_valid & id_to_ex_ready & idu_rd_wen)begin
-			idu_rd_wen_t <= 'd1;
-		end
-		else begin
-			idu_rd_wen_t <= 'd0;
-		end
-	end
-end
 
 ysyx_23060077_idu idu_u0(
 	.inst						( idu_inst	  ),
@@ -320,7 +306,7 @@ ysyx_23060077_idu idu_u0(
 	.idu_branch			( idu_branch	),
 	.idu_sys				( idu_sys			),
 	.rd							( idu_rd_addr	),
-	.rd_wen					( idu_rd_wen	),
+	.rd_wen					( idu_rd_wen_req	),
 	.rs1						( idu_rs1			),
 	.rs2						( idu_rs2			),
 	.imm						( idu_imm			),
@@ -339,7 +325,7 @@ ysyx_23060077_regfile regfile_u0(
 	// .rs2_busy 			( rs2_busy 		),
 	// .rd_busy				( rd_busy 		),
 	// .idu_rd_addr		( idu_rd_addr	),
-	// .idu_rd_wen			( idu_rd_wen_t),
+	// .idu_rd_wen_req			( idu_rd_wen_req_t),
 
 	.rs1_addr				( idu_rs1	    ),
 	.rs1_data				( idu_rs1_data),
@@ -374,10 +360,10 @@ ysyx_23060077_pipeline#(
 	.reset	( reset ),
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
-	.flush	( ex_to_wb_valid & ex_to_wb_ready),
-	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
+	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
+	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
 	idu_jump_src1,idu_alu_mul,idu_alu_div}),
-	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
+	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
 	ex_idu_jump_src1,exu_alu_mul,exu_alu_div})
 );
 
@@ -394,37 +380,39 @@ always @(posedge clock) begin
 		end
 	end
 end
-// reg exu_stall;
+
 // always @(posedge clock) begin
 // 	if(reset)begin
-// 		exu_stall <= 'd0;
+// 		ex_to_wb_valid <= 'd0;
 // 	end
 // 	else begin
-// 		if(id_to_ex_valid & id_to_ex_ready)begin // exu运行一个周期
-// 			exu_stall <= 'd1;
+// 		if(lsu_rd_wen)begin
+// 			ex_to_wb_valid <= 'd1;
 // 		end
-// 		else begin
-// 			exu_stall <= 'd0;
+// 		else if(ex_to_wb_valid & ex_to_wb_ready)begin //因为要借助握手拉低finished信号
+// 			ex_to_wb_valid <= 'd0;
+// 		end
+// 		else if(!mem_stall& exu_result_valid)begin // lsu不工作
+// 			ex_to_wb_valid <= 'd1;
 // 		end
 // 	end
 // end
 
+reg lsu_finished;
 always @(posedge clock) begin
 	if(reset)begin
-		ex_to_wb_valid <= 'd0;
+		lsu_finished <= 'd0;
 	end
 	else begin
 		if(lsu_rd_wen)begin
-			ex_to_wb_valid <= 'd1;
+			lsu_finished <= 'd1;
 		end
 		else if(ex_to_wb_valid & ex_to_wb_ready)begin //因为要借助握手拉低finished信号
-			ex_to_wb_valid <= 'd0;
-		end
-		else if(!mem_stall& exu_result_valid)begin // lsu不工作
-			ex_to_wb_valid <= 'd1;
+			lsu_finished <= 'd0;
 		end
 	end
 end
+wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_result_valid;
 
 ysyx_23060077_exu exu_u0(
 	.clock						( clock		    		),
@@ -504,22 +492,22 @@ ysyx_23060077_csr  csr_u0 (
 	.csr_mpec       ( csr_mpec      )
 );
 
-reg ex_to_wb_valid;
-reg ex_to_wb_ready;
+// reg ex_to_wb_valid;
+// reg ex_to_wb_ready;
 
-always @(posedge clock) begin
-	if(reset)begin
-		ex_to_wb_ready <= 'd1;
-	end
-	else begin
-		if(ex_to_wb_valid & ex_to_wb_ready)begin
-			ex_to_wb_ready <= 'd0;
-		end
-		else begin
-			ex_to_wb_ready <= 'd1;
-		end
-	end
-end
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		ex_to_wb_ready <= 'd1;
+// 	end
+// 	else begin
+// 		if(ex_to_wb_valid & ex_to_wb_ready)begin
+// 			ex_to_wb_ready <= 'd0;
+// 		end
+// 		else begin
+// 			ex_to_wb_ready <= 'd1;
+// 		end
+// 	end
+// end
 
 
 wire [`DATA_WIDTH-1:0] 			jump_pc_add;
@@ -534,23 +522,41 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_result,exu_rd_wen,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
-	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
+	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
+	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
 );
-reg wbu_stall;
+// 优化的地方，将rd_wen改成rd_wen_req，根据这个信号来选择是否产生rd_wen信号，这时可以ex_to_wb_ready=!rd_wen减少一个寄存器。
+// ifu部分删除wbu_stall信号，直接wbu_pc == ifu_pc 利用那一个周期去更新pc
+// reg wbu_stall;
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		wbu_stall <= 'd0;
+// 	end
+// 	else begin
+// 		if(ex_to_wb_valid & ex_to_wb_ready)begin
+// 			wbu_stall <= 'd1;
+// 		end
+// 		else begin
+// 			wbu_stall <= 'd0;
+// 		end
+// 	end
+// end
+reg 	wbu_doing;
+wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;
+wire ex_to_wb_ready = !wbu_rd_wen;
 always @(posedge clock) begin
-	if(reset)begin
-		wbu_stall <= 'd0;
-	end
-	else begin
-		if(ex_to_wb_valid & ex_to_wb_ready)begin
-			wbu_stall <= 'd1;
+		if(reset)begin
+			wbu_doing <= 'd0;
 		end
 		else begin
-			wbu_stall <= 'd0;
+			if(ex_to_wb_valid & ex_to_wb_ready)begin
+				wbu_doing <= 'd1;
+			end
+			else begin
+				wbu_doing <= 'd0;
+			end
 		end
 	end
-end
 
 ysyx_23060077_wbu wbu_u0(
 	.lsu_opt					( wbu_lsu_opt     	),
