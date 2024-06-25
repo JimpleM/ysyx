@@ -25,9 +25,9 @@ module ysyx_23060077_lsu(
   output      [`AXI_LEN_WIDTH-1:0]    lsu_w_len_o    			,
   input                               lsu_w_last_i   			,
 
-  input                               id_to_ex       			,
+  input                               ex_to_wb       			,
   output                              mem_stall 		 			,
-  output                              lsu_rd_wen  	 			,
+  output  reg                         lsu_finished  	 		,
   output 	reg [`DATA_WIDTH-1:0]       lsu_result
 );
 
@@ -50,46 +50,60 @@ wire [2:0] wmask = lsu_opt[1]?(
 (funct3[1:0] == 2'b10) ? 3'd2 :
 3'd0 ) : 3'd0;
 
-always @(posedge clock) begin
-  if(reset)begin
-    lsu_result <= 'd0 ;
-  end
-  else if(lsu_rd_wen_r)begin
-  	case({lsu_opt[0],funct3})
-      {1'b1,3'b000}: lsu_result <= {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]} 	;
-      {1'b1,3'b001}: lsu_result <= {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]}	;
-      {1'b1,3'b010}: lsu_result <= {{(`DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]}	;
-      {1'b1,3'b100}: lsu_result <= {{(`DATA_WIDTH-8){1'b0}}        ,rdata[7:0]} 	;
-      {1'b1,3'b101}: lsu_result <= {{(`DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}	;
-      default: 				lsu_result <= 'd0 ; 
-  	endcase
-  end
-end
-
 wire ren = lsu_opt[0] & !lsu_finished;
 wire wen = lsu_opt[1] & !lsu_finished;
 
 wire lsu_rd_wen_r;
 wire lsu_rd_wen_w;
-assign lsu_rd_wen = lsu_rd_wen_r | lsu_rd_wen_w;
 
-reg lsu_finished;
+wire rdata_bit8   = !funct3[2] & rdata[7];
+wire [`DATA_WIDTH-1:0] rdata_8bits = {{(`DATA_WIDTH-8){rdata_bit8}} ,rdata[7:0]};
+wire rdata_bit16  = !funct3[2] & rdata[15];
+wire [`DATA_WIDTH-1:0] rdata_16bits= {{(`DATA_WIDTH-16){rdata_bit16}},rdata[15:0]};
+wire [`DATA_WIDTH-1:0] rdata_32bits= rdata;
+wire [`DATA_WIDTH-1:0] rdata_result = 
+(funct3[1:0] == 2'b00) ? rdata_8bits  :
+(funct3[1:0] == 2'b01) ? rdata_16bits :
+(funct3[1:0] == 2'b10) ? rdata_32bits : 
+'d0;
+
+always @(posedge clock) begin
+  if(reset)begin
+    lsu_result  <= 'd0 ;
+  end
+  else if(lsu_rd_wen_r)begin
+    lsu_result   <= rdata_result;
+  end
+end
+
+// always @(posedge clock) begin
+//   if(reset)begin
+//     lsu_result <= 'd0 ;
+//   end
+//   else if(lsu_rd_wen_r)begin
+//   	case({lsu_opt[0],funct3})
+//       {1'b1,3'b000}: lsu_result <= {{(`DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]} 	;
+//       {1'b1,3'b001}: lsu_result <= {{(`DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]}	;
+//       {1'b1,3'b010}: lsu_result <= {{(`DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]}	;
+//       {1'b1,3'b100}: lsu_result <= {{(`DATA_WIDTH-8){1'b0}}        ,rdata[7:0]} 	;
+//       {1'b1,3'b101}: lsu_result <= {{(`DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}	;
+//       default: 			 lsu_result <= 'd0 ; 
+//   	endcase
+//   end
+// end
 
 always @(posedge clock ) begin
   if(reset)begin
     lsu_finished <= 'd0;
   end
-  else if(lsu_rd_wen)begin
+  else if(lsu_rd_wen_r | lsu_rd_wen_w)begin
     lsu_finished <= 'd1;
   end
-  else if(id_to_ex)begin
+  else if(ex_to_wb)begin
     lsu_finished <= 'd0;
   end
-
 end
 
-
-assign mem_stall = (ren | wen) & !lsu_rd_wen;
 
 assign lsu_r_valid_o  = ren;
 assign lsu_r_addr_o   = addr;

@@ -97,7 +97,7 @@ always @(*) begin
 				2'd3:ifu_data_o = cache_read_data[96+:32];
 			endcase
 		end
-		ICACHE_RD_AXI:begin
+		ICACHE_RD_AXI:begin	// todo 优化方向：当offset==当前读到的第n个数时直接赋值输出，按照概率能优化2个周期
 			Icache_r_valid_o	= 'd1;
 			Icache_r_addr_o		= {ifu_addr_i[31:4],4'd0};
 
@@ -151,13 +151,13 @@ always @(posedge clock ) begin
 end
 
 always @(posedge clock) begin
-	if(cache_wen)begin
+	if(Icache_r_last_i)begin
 		tag_ram[cache_index][random_data_cnt]				<= cache_tag;
 		case(random_data_cnt)
-			2'd0:cache_data0[cache_index] 				<= cache_write_data;
-			2'd1:cache_data1[cache_index] 				<= cache_write_data;
-			2'd2:cache_data2[cache_index] 				<= cache_write_data;
-			2'd3:cache_data3[cache_index] 				<= cache_write_data;
+			2'd0:cache_data0[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
+			2'd1:cache_data1[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
+			2'd2:cache_data2[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
+			2'd3:cache_data3[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
 		endcase
 	end
 end
@@ -170,7 +170,7 @@ always @(posedge clock) begin
 		end
 	end
 	else begin
-		if(cache_wen)begin
+		if(Icache_r_last_i)begin
 			tag_valid_ram[cache_index][random_data_cnt]	<= 'd1;
 		end
 	end

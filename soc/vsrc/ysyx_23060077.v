@@ -73,7 +73,6 @@ wire [`INST_WIDTH-1:0]      ifu_inst_t      	;
 
 wire [`DATA_WIDTH-1:0]      jump_pc         	;
 wire                        jump_pc_valid   	;
-wire                        stall           	;
 
 wire                        Icache_r_valid_o	;
 wire [`AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o 	;
@@ -148,7 +147,7 @@ wire [`DATA_WIDTH-1:0]      exu_result				;
 //lsu
 wire [`DATA_WIDTH-1:0]     	lsu_result				;
 wire                        mem_stall       	;
-wire                        lsu_rd_wen      	;
+wire                        lsu_finished      ;
 
 wire                        lsu_r_valid_o   	;
 wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    	;
@@ -189,9 +188,6 @@ wire [`INST_WIDTH-1:0]      csr_mpec        	;
 
 
 
-
-assign stall = mem_stall;
-
 wire [`DATA_WIDTH-1:0]      wbu_jump_pc;
 wire [`DATA_WIDTH-1:0]      wbu_jump_pc_add;
 assign wbu_jump_pc = ifu_branch ?(!wbu_zero_flag ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
@@ -202,7 +198,7 @@ ysyx_23060077_ifu ifu_u0(
 	.clock          	( clock         		),
 	.reset          	( reset         		),
 	.jump_pc        	( jump_pc       		),
-	.jump_pc_valid  	( ifu_jump&wbu_doing),	// pc更新信号需要调整！！
+	.jump_pc_valid  	( ifu_jump&(wbu_pc == ifu_pc)),	// pc更新信号需要调整！！
 	.ifu_jump					( ifu_jump					),
 	.exu_finished     ( wbu_doing&(wbu_pc == ifu_pc)),	// 需要等待wbu运行到当前pc值
 
@@ -260,37 +256,15 @@ always @(posedge clock) begin
 		end
 	end
 end
-// 代表运行了一个周期
-reg idu_stall;
-always @(posedge clock) begin
-	if(reset)begin
-		idu_stall <= 'd0;
-	end
-	else begin
-		if(if_to_id_valid & if_to_id_ready)begin
-			idu_stall <= 'd1;
-		end
-		// else if((rs1_busy | rs2_busy | rd_busy))begin
-		// 	idu_stall <= 'd1;
-		// end
-		// else if(exu_lsu_opt == `LSU_OPT_LOAD &(idu_rs1 == exu_rd_addr | idu_rs2 == exu_rd_addr))begin
-		// 	if(lsu_rd_wen)begin
-		// 		idu_stall <= 'd0;
-		// 	end
-		// end
-		else begin
-			idu_stall <= 'd0;
-		end
-	end
-end
 
 always @(posedge clock) begin
 	if(reset)begin
 		id_to_ex_valid	<= 'd0;
 	end
 	else begin// 不用阻塞等待后级的结果，因为ex不传递结果到wbu无法从id传到ex
-		// if(idu_stall & (!(rs1_busy | rs2_busy | rd_busy)))begin	// 运行完了
-		if(idu_stall)begin
+		//与ifu握手完就可以传输了，idu直接在拉高那个周期执行
+		// if(idu_stall)begin
+		if(if_to_id_valid & if_to_id_ready)begin
 			id_to_ex_valid <= 'd1;
 		end
 		else if(id_to_ex_valid & id_to_ex_ready)begin
@@ -383,20 +357,6 @@ always @(posedge clock) begin
 end
 
 
-reg lsu_finished;
-always @(posedge clock) begin
-	if(reset)begin
-		lsu_finished <= 'd0;
-	end
-	else begin
-		if(lsu_rd_wen)begin
-			lsu_finished <= 'd1;
-		end
-		else if(ex_to_wb_valid & ex_to_wb_ready)begin //因为要借助握手拉低finished信号
-			lsu_finished <= 'd0;
-		end
-	end
-end
 wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_finished;
 
 ysyx_23060077_exu exu_u0(
@@ -445,9 +405,9 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_w_len_o    	( lsu_w_len_o   ),
 	.lsu_w_last_i   	( lsu_w_last_i  ),
 
-	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
+	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
 	.mem_stall      	( mem_stall     ),
-	.lsu_rd_wen     	( lsu_rd_wen    ),
+	.lsu_finished     ( lsu_finished  ),
 	.lsu_result				( lsu_result    )
 );
 

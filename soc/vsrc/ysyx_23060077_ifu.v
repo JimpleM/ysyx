@@ -20,8 +20,8 @@ module ysyx_23060077_ifu(
 	// output                              ifu_stall    		   ,
 	input 															if_to_id_ready_i		,
 	output 	reg                         if_to_id_valid_o		,
-	output 	reg	[`INST_WIDTH-1:0]       ifu_pc_o						,
-	output 	reg	[`INST_WIDTH-1:0]       ifu_inst_o
+	output 		 	[`INST_WIDTH-1:0]       ifu_pc_o						,
+	output 		 	[`INST_WIDTH-1:0]       ifu_inst_o
 );
 
 
@@ -43,11 +43,9 @@ initial begin
 	`ifdef NPC_SIM
 		pc = 32'h8000_0000;
 		ifu_pc_o = 32'h8000_0000;
-		ifu_pc_o_t = 32'h8000_0000;
 	`else
 		pc = 32'h3000_0000;
 		ifu_pc_o = 32'h3000_0000;
-		ifu_pc_o_t = 32'h3000_0000;
 	`endif
 end
 always @(posedge clock) begin
@@ -75,53 +73,57 @@ always @(posedge clock) begin
 	end
 end
 
-// reg 													if_to_id_valid_o_t;
+assign ifu_pc_o 		= ifu_ready_i ? pc : ifu_pc_o_t;
+assign ifu_inst_o 	= ifu_ready_i ? inst : ifu_inst_o_t;
+
 reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
-// reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
+reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
 
+localparam IFU_STATE_WITDH = 1;
+reg [IFU_STATE_WITDH-1:0] 			icache_state;
+localparam [IFU_STATE_WITDH-1:0] ICACHE_IDLE   		= 'd0;
+localparam [IFU_STATE_WITDH-1:0] ICACHE_RD_CACHE  = 'd1;
+// 节省一个周期，主频会下降一点，但把icache流水化后主频会提高
+always @(*) begin
+	case(icache_state)
+		ICACHE_IDLE:begin
+			if_to_id_valid_o  = ifu_ready_i;
+		end
+		ICACHE_RD_CACHE:begin
+			if_to_id_valid_o 	= 1'b1;
+		end
+	endcase
+end
 
-// // 利用组合逻辑在ifu_ready_i置1时也将if_to_id_ready_o置1输出（减少1个周期握手时间）
-// always @(*) begin
-// 	if(ifu_ready_i)begin
-// 		if_to_id_valid_o 	= 1'b1;
-
-// 		ifu_pc_o				 	= pc;
-// 		ifu_inst_o			 	= inst;
-// 	end
-// 	else begin
-// 		if_to_id_valid_o	= if_to_id_valid_o_t;
-
-// 		ifu_pc_o				 	= ifu_pc_o_t;
-// 		ifu_inst_o			 	= ifu_inst_o_t;
-// 	end
-// end
-
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		if_to_id_valid_o_t 	<= 'd0;
-// 		`ifdef NPC_SIM
-// 				ifu_pc_o_t <= 32'h8000_0000;
-// 		`else
-// 				ifu_pc_o_t <= 32'h3000_0000;
-// 		`endif
-// 		ifu_inst_o_t    		<= 'd0;
-// 	end
-// 	else begin
-// 		if(ifu_ready_i)begin
-// 			if(if_to_id_ready_i)begin
-// 				if_to_id_valid_o_t 	<= 'd0;
-// 			end
-// 			else begin
-// 				if_to_id_valid_o_t 	<= 'd1;
-// 			end
-// 			ifu_pc_o_t			<= pc;			// 避免指令拿到了idu没准备好，先存起来
-// 			ifu_inst_o_t    <= inst;
-// 		end
-// 		else if(if_to_id_ready_i)begin
-// 			if_to_id_valid_o_t 	<= 'd0;
-// 		end
-// 	end
-// end
+always @(posedge clock) begin
+	if(reset)begin
+		icache_state	<= ICACHE_IDLE;
+		`ifdef NPC_SIM
+				ifu_pc_o_t <= 32'h8000_0000;
+		`else
+				ifu_pc_o_t <= 32'h3000_0000;
+		`endif
+		ifu_inst_o_t	<= 'd0;
+	end
+	else begin
+		case(icache_state)
+			ICACHE_IDLE:begin
+				if(ifu_ready_i)begin
+					ifu_pc_o_t	<= pc;
+					ifu_inst_o_t	<= inst;
+					if(!if_to_id_ready_i)begin
+						icache_state	<= ICACHE_RD_CACHE;
+					end
+				end
+			end
+			ICACHE_RD_CACHE:begin
+				if(if_to_id_ready_i & if_to_id_valid_o)begin
+					icache_state	<= ICACHE_IDLE;
+				end
+			end
+		endcase
+	end
+end
 
 reg ifu_valid_o_r;
 always @(posedge clock) begin
@@ -129,33 +131,18 @@ always @(posedge clock) begin
 		ifu_valid_o_r	<= 1'b1;
 	end
 	else begin
-		if(ifu_ready_i)begin
+		if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin		// 没有jump的情况下直接请求下一个
+			ifu_valid_o_r	<= 1'b1;
+		end
+		else if(exu_finished)begin	// 有jump等exu运行完
+			ifu_valid_o_r	<= 1'b1;
+		end
+		else if(ifu_ready_i)begin
 			ifu_valid_o_r	<= 1'b0;
 		end
-		else if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin		// 没有jump的情况下直接请求下一个
-			ifu_valid_o_r	<= 1'b1;
-		end
-		else if(exu_finished & ifu_jump)begin	// 有jump等exu运行完
-			ifu_valid_o_r	<= 1'b1;
-		end
 	end
 end
 
-
-always @(posedge clock) begin
-	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
-		if_to_id_valid_o	<= 'd1;	//发出握手
-
-		ifu_pc_o				<= pc;
-		ifu_inst_o			<= inst;
-	end
-	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
-		if_to_id_valid_o	<= 'd0;
-
-		ifu_pc_o				<= ifu_pc_o;
-		ifu_inst_o			<= ifu_inst_o;
-	end
-end
 
 // 在其他模块运行完stall=0，且if_to_id中没有指令
 assign ifu_valid_o   = ifu_valid_o_r;
