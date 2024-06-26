@@ -7,7 +7,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
-
+static int offset_x = 0, offset_y = 0;
 int event_fd;
 int dispinfo_fd;
 int fb_fd;
@@ -29,13 +29,15 @@ void NDL_OpenCanvas(int *w, int *h) {
   // printf("%s\n",dispinfo);
   sscanf(dispinfo,"Width:%d,Height:%d\n",&screen_w,&screen_h);
   close(dispinfo_fd);
-  // printf("%d %d\n", screen_w, screen_h);
-  // printf("%d %d\n", *w, *h);
-  if(*w ==0 && *h==0){
-    *w = screen_w;
-    *h = screen_h;
-  }
-
+  printf("%d %d\n", screen_w, screen_h);
+  printf("%d %d\n", *w, *h);
+  // if(*w ==0 || *h==0){
+  //   *w = screen_w;
+  //   *h = screen_h;
+  // }
+  offset_x = (screen_w - *w) >> 1;
+  offset_y = (screen_h - *h) >> 1;
+  printf("%d %d\n",offset_x,offset_y);
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -57,7 +59,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  size_t offset = (x << 16) | y;   // 16bit够用了
+  size_t offset = ((x+offset_x) << 16) | (y+offset_y);   // 16bit够用了
   size_t len    = (w << 16) | h;
   // printf("offset:%x len:x\n",offset,len);
   lseek(fb_fd,offset,SEEK_SET);

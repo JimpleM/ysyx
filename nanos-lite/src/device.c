@@ -50,7 +50,6 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   fbctl.y      = offset & 0x0000FFFF;
   fbctl.w      = len >> 16;
   fbctl.h      = len & 0x0000FFFF;
-  printf("%d %d %d %d\n",fbctl.x,fbctl.y,fbctl.w,fbctl.h);
   ioe_write(AM_GPU_FBDRAW,&fbctl);
   return len;
 }

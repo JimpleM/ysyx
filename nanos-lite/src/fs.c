@@ -77,7 +77,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 
 size_t fs_write(int fd, const void *buf, size_t len){
   if(fd < FD_NUMS){
-    return file_table[fd].write(buf,0,len);
+    return file_table[fd].write(buf,file_table[fd].file_offset,len);
   }
   assert(file_table[fd].file_offset + len <= file_table[fd].size);
   ramdisk_write((void *)buf,file_table[fd].disk_offset+file_table[fd].file_offset,len);
@@ -86,6 +86,13 @@ size_t fs_write(int fd, const void *buf, size_t len){
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
+  if(fd < FD_NUMS){  
+     // 前面的直接赋值，主要是显存那一块用位移比除法快，
+     // 但利用移位会导致offset超过size
+     // 把这一部分剔除在assert外
+    file_table[fd].file_offset = offset;
+    return file_table[fd].file_offset;
+  }
   assert(offset <= file_table[fd].size);
   switch(whence){
     case SEEK_SET:
