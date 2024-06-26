@@ -1,8 +1,9 @@
 #include <common.h>
 #include "syscall.h"
 #include "fs.h"
+#include <sys/time.h>
 
-#define STRACE
+// #define STRACE
 #ifdef STRACE
 #define Strace_Log(format, ...) Log(format,## __VA_ARGS__)
 #else
@@ -19,7 +20,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_exit:
       Strace_Log("SYS_exit");
-      halt(0);
+      halt(a[1]);
       break;
     case SYS_yield:
       Strace_Log("SYS_yield");
@@ -47,6 +48,16 @@ void do_syscall(Context *c) {
       break;
     case SYS_brk:
       Strace_Log("SYS_brk");
+      c->GPRx = 0;
+      break;
+    case SYS_gettimeofday:
+      Strace_Log("SYS_gettimeofday");
+
+      struct timeval *tv = (struct timeval *)a[1];
+      size_t time = io_read(AM_TIMER_UPTIME).us;
+      tv->tv_usec = time % 1000000;
+      tv->tv_sec  = time / 1000000;
+
       c->GPRx = 0;
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);

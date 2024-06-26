@@ -8,7 +8,7 @@ extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 extern size_t get_ramdisk_size();
 
 extern size_t serial_write(const void *buf, size_t offset, size_t len);
-
+extern size_t events_read(void *buf, size_t offset, size_t len);
 typedef struct {
   char *name;
   size_t size;
@@ -18,7 +18,8 @@ typedef struct {
   size_t file_offset;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB, FD_EVENTS, FD_NUMS};
+
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -35,6 +36,8 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
+  [FD_FB]     = {"/dev/fb",0,0,invalid_read,invalid_write},
+  [FD_EVENTS] = {"/dev/events",0,0,events_read,invalid_write},
 #include "files.h"
 };
 
@@ -54,7 +57,7 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
-  if(fd < 3){
+  if(fd < FD_NUMS){
     return file_table[fd].read(buf,0,len);
   }
   size_t read_len = len;
@@ -67,7 +70,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
-  if(fd < 3){
+  if(fd < FD_NUMS){
     return file_table[fd].write(buf,0,len);
   }
   assert(file_table[fd].file_offset + len <= file_table[fd].size);

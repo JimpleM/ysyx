@@ -8,12 +8,17 @@ static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 
+int event_fd;
+
 uint32_t NDL_GetTicks() {
-  return 0;
+  struct timeval now;
+  gettimeofday(&now, NULL);
+  // us 太大了输出ms
+  return (now.tv_sec * 1000) + (now.tv_usec / 1000);
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  return 0;
+  return read(event_fd,(void *)buf,len);
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -57,6 +62,9 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+
+  event_fd = open("/dev/events",0,0);
+  printf("Init event_fd: %d\n",event_fd);
   return 0;
 }
 
