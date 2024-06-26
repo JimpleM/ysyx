@@ -29,7 +29,8 @@ void init_proc() {
   // naive_uload(NULL,NULL);
   // naive_uload(NULL,"/bin/hello");
   // naive_uload(NULL,"/bin/timer-test");
-  naive_uload(NULL,"/bin/event-test");
+  // naive_uload(NULL,"/bin/event-test");
+  naive_uload(NULL,"/bin/bmp-test");
 }
 
 Context* schedule(Context *prev) {

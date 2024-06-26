@@ -6,7 +6,7 @@ int main(){
   printf("start\n");
   uint32_t boot_time = NDL_GetTicks();
 
-  printf("%d\n",boot_time);
+  printf("boot_time:%d\n",boot_time);
   uint32_t time;
   while(1){
     time  = NDL_GetTicks();
