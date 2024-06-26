@@ -44,13 +44,6 @@ void *malloc(size_t size) {
   memory_heep += size;
   return memory_heep-size;
 
-  // if(memory_heep - memory_pool + size > MEMORY_POOL_SIZE){
-  //   assert(0);
-  //   return NULL;
-  // }
-  // void *ptr = (void *)memory_heep;
-  // memory_heep += size;
-  // return ptr;
 
 #endif
   return NULL;

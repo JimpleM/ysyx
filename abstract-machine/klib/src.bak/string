@@ -95,12 +95,12 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 // memcpy本身不允许重叠
 void  *memcpy(void *dst, const void *src, size_t n){
-  // char *out_t = (char *) out;
-  // char *in_t = (char *) in;
-  // for(;n;n--){
-  //   *out_t++ = *in_t++;
-  // }
-  memmove(dst,src,n);
+  char *out_t = (char *) out;
+  char *in_t = (char *) in;
+  for(;n;n--){
+    *out_t++ = *in_t++;
+  }
+  // memmove(dst,src,n);
   return dst;
 }
 

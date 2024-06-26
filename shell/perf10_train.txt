@@ -1,0 +1,78 @@
+# Building microbench-run [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
++ CC src/riscv/ysyxsoc/trm.c
++ AR -> build/am-riscv32e-ysyxsoc.a
+# Building klib-archive [riscv32e-ysyxsoc]
++ LD -> build/microbench-riscv32e-ysyxsoc.elf
+# Creating image [riscv32e-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
+Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h4d156741__1.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024root__DepSet_h0188974b__1.o VysyxSoCFull___024root__DepSet_h0188974b__2.o VysyxSoCFull___024root__DepSet_h0188974b__3.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__Trace__1.o VysyxSoCFull__Trace__2.o VysyxSoCFull__Trace__3.o VysyxSoCFull__Trace__4.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__1__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__2__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__3__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o VysyxSoCFull__Trace__1__Slow.o VysyxSoCFull__Trace__2__Slow.o VysyxSoCFull__Trace__3__Slow.o VysyxSoCFull__Trace__4__Slow.o
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin, size = 31468[0m
+f
+======= Running MicroBench [input *train*] =======
+[qsort] Quick sort: * Passed.
+  min time: 0.000 ms [0]
+[queen] Queen placement: * Passed.
+  min time: 0.000 ms [0]
+[bf] Brainf**k interpreter: * Passed.
+  min time: 0.000 ms [0]
+[fib] Fibonacci number: * Passed.
+  min time: 0.000 ms [0]
+[sieve] Eratosthenes sieve: * Passed.
+  min time: 0.000 ms [0]
+[15pz] A* 15-puzzle search: * Passed.
+  min time: 0.000 ms [0]
+[dinic] Dinic's maxflow algorithm: * Passed.
+  min time: 0.000 ms [0]
+[lzip] Lzip compression: * Passed.
+  min time: 0.000 ms [0]
+[ssort] Suffix sort: * Passed.
+  min time: 0.000 ms [0]
+[md5] MD5 digest: * Passed.
+  min time: 0.000 ms [0]
+==================================================
+MicroBench PASS
+Scored time: 0.000 ms
+Total  time: 0.000 ms
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:288 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa0004f84[0m
+----------------------------------------------------------
+| Total clock amount                   |       542412135 |
+| Total instructions amount            |        63155555 |
+| Average cycles of each instruction   |           8.589 |
+----------------------------------------------------------
+----------------------------------------------------------
+|  Inst  |    Amount    |    cycles    |  AVG  | percent |
+----------------------------------------------------------
+| LUI    |       665662 |      1984831 |  2.98 |   1.05% |
+| AUIPC  |       851218 |      4893532 |  5.75 |   1.35% |
+| JAL    |       990113 |     14011628 | 14.15 |   1.57% |
+| JALR   |      1097767 |     28468856 | 25.93 |   1.74% |
+| BRANCH |      8638094 |    160222334 | 18.55 |  13.68% |
+| LOAD   |     10839596 |     54317145 |  5.01 |  17.16% |
+| STORE  |      5145422 |     44726224 |  8.69 |   8.15% |
+| OP_IMM |     19604496 |    148147594 |  7.56 |  31.04% |
+| OP     |     15323187 |     85637764 |  5.59 |  24.26% |
+| FENCE  |            0 |            0 |  0.00 |   0.00% |
+| SYS    |            1 |            2 |  2.00 |   0.00% |
+----------------------------------------------------------
+|  Module  |        Counter       |        Clock         |
+----------------------------------------------------------
+|  SUMMARY |             63155556 |            542409910 |
+----------------------------------------------------------
+|   IFU    |               363508 |                    0 |
+|   EXU    |             63155555 |                    0 |
+|  LSU_R   |       221992690(clk) |          20.480(Avg) |
+|  LSU_W   |        96397598(clk) |          18.735(Avg) |
+----------------------------------------------------------
+|    jal   |                 3355 |             14011628 |
+|    jalr  |                 2901 |             28468856 |
+|  branch  |                29827 |            160222334 |
+----------------------------------------------------------
+|  I_hit   |             62792048 |             62792048 |
+|  I_miss  |               363508 |             15212070 |
+----------------------------------------------------------
+|   Icache hit percent     |                 99.424%     |
+|           AMAT           |                   1.235     |
+----------------------------------------------------------
+[1;31mtotal_inst_cnt is not equal to sum_inst
+[0m

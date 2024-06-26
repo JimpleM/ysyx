@@ -2,13 +2,14 @@ AM_SRCS := riscv/ysyxnpc/start.S \
            riscv/ysyxnpc/trm.c \
            riscv/ysyxnpc/trap.S \
            platform/dummy/vme.c \
+           riscv/ysyxnpc/ioe.c \
+           riscv/ysyxnpc/timer.c \
+           riscv/ysyxnpc/input.c \
+           riscv/ysyxnpc/gpu.c \
+           riscv/ysyxnpc/cte.c \
            platform/dummy/mpe.c
 
-        #    riscv/ysyxnpc/ioe.c \
-        #    riscv/ysyxnpc/timer.c \
-        #    riscv/ysyxnpc/input.c \
-        #    riscv/ysyxnpc/gpu.c \
-        #    riscv/ysyxnpc/cte.c \
+        
 
 
 
