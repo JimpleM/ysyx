@@ -1,5 +1,6 @@
 #include <common.h>
 #include "syscall.h"
+#include "fs.h"
 
 #define STRACE
 #ifdef STRACE
@@ -24,15 +25,25 @@ void do_syscall(Context *c) {
       Strace_Log("SYS_yield");
       yield();
       break;
-
+    case SYS_open:
+      Strace_Log("SYS_open:%s",(const char*)a[1]);
+      c->GPRx = fs_open((const char*)a[1],a[2],a[3]);
+      break;
+    case SYS_read:
+      Strace_Log("SYS_read:%s",fs_fdname(a[1]));
+      c->GPRx = fs_read(a[1],(void *)a[2],a[3]);
+      break;
     case SYS_write:
-      Strace_Log("SYS_write,fd:%d",a[1]);
-      char *ch = (char *)a[2];
-      for(int i=0; i<a[3]; i++){
-        putch(ch[i]);
-      }
-      // 成功write要返回长度，失败返回-1
-      c->GPRx = a[3];
+      Strace_Log("SYS_write:%s",fs_fdname(a[1]));
+      c->GPRx = fs_write(a[1],(void *)a[2],a[3]);
+      break;
+    case SYS_close:
+      Strace_Log("SYS_close:%s",fs_fdname(a[1]));
+      c->GPRx = fs_close(a[1]);
+      break;
+    case SYS_lseek:
+      Strace_Log("SYS_lseek:%s",fs_fdname(a[1]));
+      c->GPRx = fs_lseek(a[1],a[2],a[3]);
       break;
     case SYS_brk:
       Strace_Log("SYS_brk");
