@@ -13,7 +13,7 @@ int SDL_RemoveTimer(SDL_TimerID id) {
   assert(0);
   return 1;
 }
-
+// Note that this value wraps if the program runs for more than ~49 days.
 uint32_t SDL_GetTicks() {
   return NDL_GetTicks();
 }

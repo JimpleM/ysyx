@@ -5,6 +5,18 @@
 
 char handle_key(SDL_Event *ev);
 
+static int cmd_echo(char *args,int i);
+
+static struct {
+  const char *name;
+  const char *descripion;
+  int (*handler) (char *,int);
+}cmd_table[] = {
+  {"echo","display a line of text",cmd_echo},
+};
+
+#define CMD_NUM (int)(sizeof(cmd_table)/sizeof(cmd_table[0]))
+
 static void sh_printf(const char *format, ...) {
   static char buf[256] = {};
   va_list ap;
@@ -23,6 +35,17 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
+  char *cmd_cmd = strtok((char *)cmd," ");
+  char *cmd_args = cmd_cmd + strlen(cmd_cmd) + 1;
+  int i = 0;
+  for(i=0; i<CMD_NUM; i++){
+    if(strcmp(cmd_cmd,cmd_table[i].name) == 0){
+      if(cmd_table[i].handler(cmd_args,i) < 0 ){
+        return ;
+      }
+      break;
+    }
+  }
 }
 
 void builtin_sh_run() {
@@ -42,4 +65,10 @@ void builtin_sh_run() {
     }
     refresh_terminal();
   }
+}
+
+
+static int cmd_echo(char *args,int i){
+  printf("%s",args);
+  return 0;
 }
