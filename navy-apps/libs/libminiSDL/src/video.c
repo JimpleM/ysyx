@@ -7,8 +7,6 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  
-  assert(dst->format->BitsPerPixel == 32);
 
   SDL_Rect d_rect,s_rect;
   d_rect = (dstrect == NULL) ? (SDL_Rect){0,0,0,0} : *dstrect;
@@ -17,25 +15,41 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(s_rect.w <= (dst->w - d_rect.x));
   assert(s_rect.h <= (dst->h - d_rect.y));
 
-  uint32_t *dst_pixel = (uint32_t *)dst->pixels;
-  uint32_t *src_pixel = (uint32_t *)src->pixels;
+  uint32_t *dst_pixel32 = (uint32_t *)dst->pixels;
+  uint32_t *src_pixel32 = (uint32_t *)src->pixels;
+
+  uint8_t *dst_pixel8 = (uint8_t *)dst->pixels;
+  uint8_t *src_pixel8 = (uint8_t *)src->pixels;
 
   uint32_t dst_offset = d_rect.y * dst->w + d_rect.x;
   uint32_t src_offset = s_rect.y * src->w + s_rect.x;
   
-  for(size_t i=0; i<s_rect.h; i++){
-    for(size_t j=0; j<s_rect.w; j++){  //行填充
-      dst_pixel[dst_offset + j] = src_pixel[src_offset + j];
+  if(src->format->BitsPerPixel == 8){
+    for(size_t i=0; i<s_rect.h; i++){
+      for(size_t j=0; j<s_rect.w; j++){  //行填充
+        dst_pixel8[dst_offset + j] = src_pixel8[src_offset + j];
+      }
+      // 填充完这行到下一行
+      dst_offset += dst->w;
+      src_offset += src->w;
     }
-    // 填充完这行到下一行
-    dst_offset += dst->w;
-    src_offset += src->w;
+  }
+  else if(src->format->BitsPerPixel == 32){
+    for(size_t i=0; i<s_rect.h; i++){
+      for(size_t j=0; j<s_rect.w; j++){  //行填充
+        dst_pixel32[dst_offset + j] = src_pixel32[src_offset + j];
+      }
+      // 填充完这行到下一行
+      dst_offset += dst->w;
+      src_offset += src->w;
+    }
+  }else{
+    assert(0);
   }
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   SDL_Rect rect;
-  assert(dst->format->BitsPerPixel == 32);
   if(dstrect == NULL){
     rect = (SDL_Rect){0,0,dst->w,dst->h};
   }else{
@@ -44,22 +58,49 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   // printf("SDL_FillRect%d %d\n",dst->w,dst->h);
 
   uint32_t size = rect.w*rect.h;
-  // 一个像素32bit，个数要乘以4
-  uint32_t *pixels = (uint32_t *) (dst->pixels + ((rect.y*dst->w + rect.x)<<2));
-  for(int i=0; i<size;i++){
-    *(pixels++) = color;
+  if(dst->format->BitsPerPixel == 8){
+    uint8_t* pixels8 = (uint8_t *)(dst->pixels + ((rect.y*dst->w + rect.x)<<2));
+    memset(pixels8,color,size);
+    // for(size_t i=0; i<size;i++){
+    //   *(pixels8++) = (uint8_t)color;
+    // }
   }
-
+  else if(dst->format->BitsPerPixel == 32){
+    // 一个像素32bit，个数要乘以4
+    uint32_t* pixels32 = (uint32_t *)(dst->pixels + ((rect.y*dst->w + rect.x)<<2));
+    for(size_t i=0; i<size;i++){
+      *(pixels32++) = color;
+    }
+  }else{
+    assert(0);
+  }
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   assert(s);
-  assert(s->format->BitsPerPixel == 32);
+
   if(w == 0 || w>s->w) w = s->w;
   if(h == 0 || h>s->h) h = s->h;
 
-  NDL_DrawRect((uint32_t*)s->pixels,x,y,w,h);
-  // printf("SDL_UpdateRect%d %d\n",s->w,s->h);
+  if(s->format->BitsPerPixel == 8){
+    uint32_t* pixels_convert = malloc(w*h*sizeof(uint32_t));
+    uint32_t  offset = y * s->w + x;
+    uint32_t* dst_t = pixels_convert;
+    SDL_Color color;
+    for(int i=0; i<h;i++){
+      for(int j=0; j<w;j++){
+        color = s->format->palette->colors[s->pixels[offset+j]];
+        *(dst_t++) = color.val;
+      }
+      offset += s->w;
+    }
+    NDL_DrawRect(pixels_convert,x,y,w,h);
+    free(pixels_convert);
+  }else if(s->format->BitsPerPixel == 32){
+    NDL_DrawRect((uint32_t*)s->pixels,x,y,w,h);
+  }else{
+    assert(0);
+  }
 }
 
 // APIs below are already implemented.
