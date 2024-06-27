@@ -29,15 +29,18 @@ void NDL_OpenCanvas(int *w, int *h) {
   // printf("%s\n",dispinfo);
   sscanf(dispinfo,"Width:%d\nHeight:%d\n",&screen_w,&screen_h);
   close(dispinfo_fd);
-  printf("%d %d\n", screen_w, screen_h);
-  printf("%d %d\n", *w, *h);
-  // if(*w ==0 || *h==0){
-  //   *w = screen_w;
-  //   *h = screen_h;
-  // }
+  printf("screen_size:%d %d\n", screen_w, screen_h);
+  printf("canvas_size:%d %d\n", *w, *h);
+  // 如果画布为空，则设置全屏幕为画布，传指针目的就是要修改这个值
+  // libminiSDl/src/video.c SDL_SetVideoMode函数调用本函数传入了0，0
+  if(*w ==0 || *h==0){
+    *w = screen_w;
+    *h = screen_h;
+  }
+ // 居中显示
   offset_x = (screen_w - *w) >> 1;
   offset_y = (screen_h - *h) >> 1;
-  printf("%d %d\n",offset_x,offset_y);
+  printf("offset: %d %d\n",offset_x,offset_y);
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
