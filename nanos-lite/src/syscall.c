@@ -2,6 +2,7 @@
 #include "syscall.h"
 #include "fs.h"
 #include <sys/time.h>
+#include "proc.h"
 
 // #define STRACE
 #ifdef STRACE
@@ -20,6 +21,9 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_exit:
       Strace_Log("SYS_exit");
+      naive_uload(current,"/bin/menu");
+      switch_boot_pcb();
+      yield();
       halt(a[1]);
       break;
     case SYS_yield:
@@ -49,6 +53,17 @@ void do_syscall(Context *c) {
     case SYS_brk:
       Strace_Log("SYS_brk");
       c->GPRx = 0;
+      break;
+    case SYS_execve:
+      Strace_Log("SYS_execve");
+      if(fs_open((char *)a[1],0,0)<0){
+        c->GPRx = -1;
+      }else{
+        naive_uload(current,(char *)a[1]);
+        switch_boot_pcb();
+        yield();
+        c->GPRx = 0;
+      }
       break;
     case SYS_gettimeofday:
       Strace_Log("SYS_gettimeofday");

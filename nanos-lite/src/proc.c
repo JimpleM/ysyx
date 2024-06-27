@@ -5,7 +5,6 @@
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
-extern void naive_uload(PCB *pcb, const char *filename);
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -33,7 +32,7 @@ void init_proc() {
   // naive_uload(NULL,"/bin/bmp-test");
   // naive_uload(NULL,"/bin/nslider");
   // naive_uload(NULL,"/bin/pal");
-  naive_uload(NULL,"/bin/am-kernals");
+  naive_uload(NULL,"/bin/menu");
 }
 
 Context* schedule(Context *prev) {

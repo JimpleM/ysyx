@@ -18,4 +18,6 @@ typedef union {
 
 extern PCB *current;
 
+void switch_boot_pcb();
+void naive_uload(PCB *pcb, const char *filename);
 #endif

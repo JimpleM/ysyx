@@ -32,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   assert(filename!=NULL);
   Log("%s",filename);
   int fd = fs_open(filename,0,0);
-
+  fs_lseek(fd,0,SEEK_SET);
   fs_read(fd,&ehdr,sizeof(Elf_Ehdr));
   // printf("%x\n",*(uint32_t *)ehdr.e_ident);
   assert(*(uint32_t *)ehdr.e_ident == 0x464C457F);

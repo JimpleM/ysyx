@@ -5,7 +5,14 @@
 
 char handle_key(SDL_Event *ev);
 
-static int cmd_echo(char *args,int i);
+static int cmd_echo(char *args,int i){
+  printf("%s",args);
+  return 0;
+}
+static int cmd_exit(char *args,int i){
+  exit(0);
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -13,6 +20,7 @@ static struct {
   int (*handler) (char *,int);
 }cmd_table[] = {
   {"echo","display a line of text",cmd_echo},
+  {"exit","sys_exit",cmd_exit},
 };
 
 #define CMD_NUM (int)(sizeof(cmd_table)/sizeof(cmd_table[0]))
@@ -68,7 +76,3 @@ void builtin_sh_run() {
 }
 
 
-static int cmd_echo(char *args,int i){
-  printf("%s",args);
-  return 0;
-}
