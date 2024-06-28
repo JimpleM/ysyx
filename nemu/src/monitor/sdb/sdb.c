@@ -278,7 +278,7 @@ static int cmd_load(char *args){
   assert(ret == 1);
   fclose(fp_reg);
 // load完后默认开启difftest并进行拷贝。
-  cmd_attach();
+  cmd_attach(NULL);
 
   return 0;
 }

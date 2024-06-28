@@ -5,7 +5,7 @@
 #define keyname(k) #k,
 static char EventInfo[32];
 static char kb_down[4];
-static char kb_name[16];
+static char kb_name[20];
 
 static uint8_t kb_state[SDLK_PAGEDOWN+1] = {};
 

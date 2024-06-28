@@ -15,6 +15,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
+  yield();
   char *ch = (char *)buf;
   for(int i=0; i<len; i++){
     putch(ch[i]);
@@ -23,8 +24,10 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+  yield();
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
-  assert(len>6);
+  // 最长RIGHTBRACKET 12个字符，加上kd空格，一共15个
+  assert(len>16);
   if(ev.keycode == 0){
     return 0;
   }
@@ -44,6 +47,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+  yield();
   AM_GPU_FBDRAW_T fbctl;
   fbctl.pixels = (void *)buf;
   fbctl.x      = offset >> 16;

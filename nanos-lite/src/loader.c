@@ -69,3 +69,14 @@ void naive_uload(PCB *pcb, const char *filename) {
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(RANGE(pcb->stack,pcb->stack + STACK_SIZE),entry,arg);
 }
+// 要和naive_load一样
+void context_uload(PCB *pcb, const char *filename){
+  char *ustack_start = (char *)new_page(8);
+  char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
+
+  uintptr_t entry = loader(pcb, filename);
+
+  pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
+  pcb->cp->GPRx = (uintptr_t)ustack_end;
+  printf("ustack_end%p\n",ustack_end);
+}
