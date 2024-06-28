@@ -76,7 +76,10 @@ static void sh_handle_cmd(const char *cmd) {
         return ;
       }
     }
-    execvp(args[0],args);
+    // for(i=0; i<args_cnt;i++){
+    //   printf("%s\n",args[i]);
+    // }
+    execvp(args[0],args+1);
   }
 
 }

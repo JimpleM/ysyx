@@ -21,7 +21,8 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_exit:
       Strace_Log("SYS_exit");
-      naive_uload(current,"/bin/nterm");
+      // naive_uload(current,"/bin/nterm");
+      context_uload(current,"/bin/nterm",NULL,NULL);
       switch_boot_pcb();
       yield();
       halt(a[1]);

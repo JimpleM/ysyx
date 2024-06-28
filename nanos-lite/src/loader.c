@@ -76,11 +76,15 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   int argv_cnt = 0;
   int envp_cnt = 0;
-  while(argv[argv_cnt] != NULL){
-    argv_cnt++;
+  if(argv != NULL){
+    while(argv[argv_cnt] != NULL){
+      argv_cnt++;
+    }
   }
-  while(envp[envp_cnt] != NULL){
-    envp_cnt++;
+  if(envp != NULL){
+    while(envp[envp_cnt] != NULL){
+      envp_cnt++;
+    }
   }
   Log("argv_cnt:%d,envp_cnt:%d",argv_cnt,envp_cnt);
 
@@ -100,18 +104,19 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // 二级指针，这里面存放string_area_p的指针
   uintptr_t *point_area_start = (uintptr_t *)point_area_end;
   char *string_area_p = string_area_start;
+
   *(--point_area_start) = (uintptr_t)NULL;
   for(size_t i = 0; i < envp_cnt; i++){
     *(--point_area_start) = (uintptr_t)string_area_p;
     // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
-    // printf("%s\n",string_area_p);
+    printf("envp:%s\n",string_area_p);
     string_area_p += strlen(string_area_p) + 1;
   }
   *(--point_area_start) = (uintptr_t)NULL;
   for(size_t i = 0; i < argv_cnt; i++){
     *(--point_area_start) = (uintptr_t)string_area_p;
     // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
-    // printf("%s\n",string_area_p);
+    printf("argv:%s\n",string_area_p);
     string_area_p += strlen(string_area_p) + 1;
   }
   // 下面point_area_start不能再更改了
@@ -127,8 +132,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
   pcb->cp->GPRx = (uintptr_t)argc_area_start;
 
-  printf("%p %p\n",argc_area_start,point_area_start);
+  // printf("%p %p\n",argc_area_start,point_area_start);
 
+// 看一下写入的结果是否对
   // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;
   // uintptr_t *test_p = (uintptr_t *) (pcb->cp->GPRx + sizeof(uintptr_t));
   // for(size_t i = 0; i < test_cnt; i++){

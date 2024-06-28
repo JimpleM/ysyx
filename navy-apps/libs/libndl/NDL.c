@@ -89,13 +89,13 @@ int NDL_Init(uint32_t flags) {
   }
 
   dispinfo_fd = open("/proc/dispinfo",0);
-  printf("Init dispinfo_fd: %d\n",dispinfo_fd);
+  // printf("Init dispinfo_fd: %d\n",dispinfo_fd);
 
   fb_fd = open("/dev/fb",0);
-  printf("Init fb_fd: %d\n",fb_fd);
+  // printf("Init fb_fd: %d\n",fb_fd);
 
   event_fd = open("/dev/events",0);
-  printf("Init event_fd: %d\n",event_fd);
+  // printf("Init event_fd: %d\n",event_fd);
 
   return 0;
 }
