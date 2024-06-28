@@ -21,11 +21,22 @@ void hello_fun(void *arg) {
     yield();
   }
 }
+// 下面两个数组要加上NULL，不然判断NULL的话会越界
+char *uload_argv[] = {
+  "/bin/hello",
+  "bbbb",
+  NULL,
+};
+char *uload_envp[] = {
+  "cccc",
+  "dddd",
+  NULL,
+};
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "abcd");
   // context_kload(&pcb[1], hello_fun, "efgh");
-  context_uload(&pcb[1],"/bin/pal");
+  context_uload(&pcb[1],"/bin/pal",uload_argv,uload_envp);
 
   switch_boot_pcb();
 

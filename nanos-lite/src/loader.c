@@ -70,13 +70,104 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(RANGE(pcb->stack,pcb->stack + STACK_SIZE),entry,arg);
 }
 // 要和naive_load一样
-void context_uload(PCB *pcb, const char *filename){
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
 
-  uintptr_t entry = loader(pcb, filename);
+  int argv_cnt = 0;
+  int envp_cnt = 0;
+  while(argv[argv_cnt] != NULL){
+    argv_cnt++;
+  }
+  while(envp[envp_cnt] != NULL){
+    envp_cnt++;
+  }
+  Log("argv_cnt:%d,envp_cnt:%d",argv_cnt,envp_cnt);
 
+  char *string_area_start = ustack_end;
+  for(size_t i = 0; i < argv_cnt; i++){
+    string_area_start -= (strlen(argv[i]) + 1); //要算上\0的位置
+    strcpy(string_area_start,argv[i]);
+  }
+  for(size_t i = 0; i < envp_cnt; i++){
+    string_area_start -= (strlen(envp[i]) + 1); //要算上\0的位置
+    strcpy(string_area_start,envp[i]);
+  }
+  // 下面string_area_start不能再更改了
+  // 有Unspecified 需要对地址向下对齐，考虑到native64位这里进行8字节对齐
+  char *point_area_end = (char *)ROUNDDOWN(string_area_start,8);
+
+  // 二级指针，这里面存放string_area_p的指针
+  uintptr_t *point_area_start = (uintptr_t *)point_area_end;
+  char *string_area_p = string_area_start;
+  *(--point_area_start) = (uintptr_t)NULL;
+  for(size_t i = 0; i < envp_cnt; i++){
+    *(--point_area_start) = (uintptr_t)string_area_p;
+    // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
+    // printf("%s\n",string_area_p);
+    string_area_p += strlen(string_area_p) + 1;
+  }
+  *(--point_area_start) = (uintptr_t)NULL;
+  for(size_t i = 0; i < argv_cnt; i++){
+    *(--point_area_start) = (uintptr_t)string_area_p;
+    // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
+    // printf("%s\n",string_area_p);
+    string_area_p += strlen(string_area_p) + 1;
+  }
+  // 下面point_area_start不能再更改了
+  assert(string_area_p == ustack_end);
+  assert((uintptr_t)point_area_start + (argv_cnt + envp_cnt + 2)*sizeof(uintptr_t) == (uintptr_t)point_area_end);
+
+  // 放入argv_cnt
+  uintptr_t *argc_area_start = (uintptr_t *)(point_area_start - 1);
+  *argc_area_start = argv_cnt;
+
+
+  uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
-  pcb->cp->GPRx = (uintptr_t)ustack_end;
-  printf("ustack_end%p\n",ustack_end);
+  pcb->cp->GPRx = (uintptr_t)argc_area_start;
+
+  printf("%p %p\n",argc_area_start,point_area_start);
+
+  // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;
+  // uintptr_t *test_p = (uintptr_t *) (pcb->cp->GPRx + sizeof(uintptr_t));
+  // for(size_t i = 0; i < test_cnt; i++){
+  //   printf("%d,%s,%p\n",i,test_p[i],test_p[i]);
+  // }
 }
+
+/*
+|               |
++---------------+ <---- ustack.end
+|  Unspecified  |
++---------------+
+|               | <----------+
+|    string     | <--------+ |
+|     area      | <------+ | |
+|               | <----+ | | |
+|               | <--+ | | | |
++---------------+    | | | | |
+|  Unspecified  |    | | | | |
++---------------+    | | | | |
+|     NULL      |    | | | | |
++---------------+    | | | | |
+|    ......     |    | | | | |
++---------------+    | | | | |
+|    envp[1]    | ---+ | | | |
++---------------+      | | | |
+|    envp[0]    | -----+ | | |
++---------------+        | | |
+|     NULL      |        | | |
++---------------+        | | |
+| argv[argc-1]  | -------+ | |
++---------------+          | |
+|    ......     |          | |
++---------------+          | |
+|    argv[1]    | ---------+ |
++---------------+            |
+|    argv[0]    | -----------+
++---------------+
+|      argc     |
++---------------+ <---- cp->GPRx
+|               |
+*/

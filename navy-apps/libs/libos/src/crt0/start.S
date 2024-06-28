@@ -7,7 +7,7 @@ _start:
   // (rsp + 8) should be multiple of 16 when
   // control is transfered to the function entry point.
   // See amd64 ABI manual for more details
-  
+
 // PA4.1实现多道程序，在_start中设置正确的栈指针
 // RTFSC 发现返回寄存器是rax，栈指针寄存器是rsp
   movq %rax, %rsp
