@@ -13,13 +13,19 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    if(j==100000){
+      Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (uintptr_t)arg, j);
+      j = 0;
+    }
     j ++;
     yield();
   }
 }
 
 void init_proc() {
+  context_kload(&pcb[0], hello_fun, "abcd");
+  context_kload(&pcb[1], hello_fun, "efgh");
+
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -32,9 +38,12 @@ void init_proc() {
   // naive_uload(NULL,"/bin/bmp-test");
   // naive_uload(NULL,"/bin/nslider");
   // naive_uload(NULL,"/bin/pal");
-  naive_uload(NULL,"/bin/nterm");
+  // naive_uload(NULL,"/bin/nterm");
+
 }
 
 Context* schedule(Context *prev) {
-  return NULL;
+  current->cp = prev;
+  current = (current == &pcb[0] ? &pcb[1]: &pcb[0]);
+  return current->cp;
 }

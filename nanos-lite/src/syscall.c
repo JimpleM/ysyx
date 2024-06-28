@@ -29,6 +29,7 @@ void do_syscall(Context *c) {
     case SYS_yield:
       Strace_Log("SYS_yield");
       yield();
+      c->GPRx = 0;
       break;
     case SYS_open:
       Strace_Log("SYS_open:%s",(const char*)a[1]);
