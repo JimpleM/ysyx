@@ -19,8 +19,15 @@
 #include <readline/history.h>
 #include <memory/paddr.h>
 #include "sdb.h"
+#include "cpu/difftest.h"
 
 static int is_batch_mode = false;
+int difftest_status = true;  // menu开启difftest后默认开启
+
+extern long img_size;
+
+static char *snapshot_mem_file = "/home/jimple/Documents/ysyx/ysyx-workbench/nemu/snapshot/snapshot_mem.txt";
+static char *snapshot_reg_file = "/home/jimple/Documents/ysyx/ysyx-workbench/nemu/snapshot/snapshot_reg.txt";
 
 void init_regex();
 void init_wp_pool();
@@ -47,13 +54,10 @@ static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
-
-
 static int cmd_q(char *args) {
   nemu_state.state = NEMU_QUIT;
   return -1;
 }
-
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
@@ -61,6 +65,10 @@ static int cmd_x(char *args);
 static int cmd_p(char *args);
 static int cmd_w(char *args);
 static int cmd_d(char *args);
+static int cmd_attach(char *args);
+static int cmd_detach(char *args);
+static int cmd_save(char *args);
+static int cmd_load(char *args);
 
 static struct {
   const char *name;
@@ -78,6 +86,10 @@ static struct {
   { "p", "find the value of expression", cmd_p },
   { "w", "set watchpoint, If changed, program will stop and print all watchpoint info", cmd_w },
   { "d", "delete watchpoint with the number of N", cmd_d },
+  { "attach", "open difftest", cmd_attach },
+  { "detach", "close difftest", cmd_detach },
+  { "save", "save snapshot into path", cmd_save },
+  { "load", "load snapshot from path", cmd_load },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -104,7 +116,6 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
-
 
 static int cmd_si(char *args) {
   /* extract the first argument */
@@ -216,6 +227,62 @@ static int cmd_d(char *args) {
   }
   return 0;
 }
+
+static int cmd_attach(char *args){
+  difftest_status = true;
+#ifdef CONFIG_DIFFTEST
+  ref_difftest_memcpy(RESET_VECTOR, guest_to_host(RESET_VECTOR), CONFIG_MSIZE, DIFFTEST_TO_REF);
+  ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
+#endif
+  return 0;
+}
+
+static int cmd_detach(char *args){
+  difftest_status = false;
+  return 0;
+}
+
+static int cmd_save(char *args){
+  int ret;
+
+  FILE *fp_mem = fopen(snapshot_mem_file,"wb");
+  Assert(fp_mem, "Can not open mem_file '%s'", snapshot_mem_file);
+
+  ret = fwrite(guest_to_host(RESET_VECTOR),CONFIG_MSIZE,1,fp_mem);
+  assert(ret == 1);
+  fclose(fp_mem);
+
+  FILE *fp_reg = fopen(snapshot_reg_file,"wb");
+  Assert(fp_reg, "Can not open reg_file '%s'", snapshot_reg_file);
+
+  ret = fwrite(&cpu,sizeof(CPU_state),1,fp_reg);
+  assert(ret == 1);
+  fclose(fp_reg);
+
+  return 0;
+}
+static int cmd_load(char *args){
+  int ret;
+
+  FILE *fp_mem = fopen(snapshot_mem_file,"rb");
+  Assert(fp_mem, "Can not open mem_file '%s'", snapshot_mem_file);
+
+  ret = fread(guest_to_host(RESET_VECTOR),CONFIG_MSIZE,1,fp_mem);
+  assert(ret == 1);
+  fclose(fp_mem);
+
+  FILE *fp_reg = fopen(snapshot_reg_file,"rb");
+  Assert(fp_reg, "Can not open reg_file '%s'", snapshot_reg_file);
+
+  ret = fread(&cpu,sizeof(CPU_state),1,fp_reg);
+  assert(ret == 1);
+  fclose(fp_reg);
+// load完后默认开启difftest并进行拷贝。
+  cmd_attach();
+
+  return 0;
+}
+
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;

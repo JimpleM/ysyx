@@ -20,7 +20,7 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 LDFLAGS   += --gc-sections -e _start
 ### 传递nemu的flags，用于传递一些文件路径或运行模式
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
-NEMUFLAGS += -b 
+# NEMUFLAGS += -b 
 NEMUFLAGS += -e $(IMAGE).elf
 
 ### 定义了一个名为 MAINARGS 的宏，并为它设置一个字符串值，该字符串的内容由 $(mainargs) 变量的值
@@ -34,7 +34,7 @@ CFLAGS += -I$(AM_HOME)/am/src/platform/nemu/include
 ###    --set-section-flags   .bss=alloc,contents 选项设置 .bss 节的标志，以指示它应该被分配并包含内容。
 ###    -O binary 输出为二进制文件
 image: $(IMAGE).elf ### 生成可执行文件的目标依赖于 $(IMAGE).elf 文件
-	@$(OBJDUMP) -d $(IMAGE).elf > $(IMAGE).txt 
+	@$(OBJDUMP) -h -t -d $(IMAGE).elf > $(IMAGE).txt
 	@echo + OBJCOPY "->" $(IMAGE_REL).bin 
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
