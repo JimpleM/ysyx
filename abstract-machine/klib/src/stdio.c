@@ -8,8 +8,8 @@
 #define ul unsigned long long
 #define uint unsigned int
 #define strcat_out(a,b) *a = '\0';strcat(a,b);a += strlen(b);
-static char str_temp[1024];
-static char str_printf[1024];
+static char str_temp[4096];
+static char str_printf[4096];
 
 ul my_pow(int a,int b){
   ul ans = a;
@@ -61,56 +61,6 @@ char* insert_space(const char *out, int number,char ch){
   }
   return out_t;
 }
-// for debug
-int debug_printf(const char *fmt, ...) {
-  assert(fmt != NULL);
-
-  // int count = 0;
-
-  // char* ArgStr = NULL;      // 接收字符型
-  // char ch;
-  // int ArgInt = 0;
-  // char str_temp[100];
-  // ul num_temp = 0;
-
-  // va_list args;
-  // va_start(args,fmt);
-  // while(*fmt != '\0'){
-  //   if(*fmt == '%'){
-  //     fmt++;
-  //     if(*fmt == 's'){
-  //       ArgStr = va_arg(args, char*);
-  //       while(*ArgStr !='\0'){
-  //         putch(*ArgStr);
-  //         ArgStr++;
-  //       }
-  //     }else if(*fmt == 'd'){
-  //       ArgInt = va_arg(args, ul);
-  //       if(ArgInt<0){
-  //         putch('-');
-  //         ArgInt = -ArgInt;
-  //         num_temp = UINT_MAX - ((unsigned int)(ArgInt)) + 1U;
-  //       }
-  //       number_to_str(str_temp,(ul)num_temp,10);
-  //       debug_printf("%s",str_temp);
-  //     }
-  //     else if(*fmt == 'u'){
-  //       num_temp = va_arg(args, ul);
-  //       number_to_str(str_temp,(ul)num_temp,10);
-  //       printf("%s",str_temp);
-  //     }else if(*fmt == 'c'){
-  //       ArgInt = va_arg(args, int);
-  //       putch(ArgInt);
-  //     }
-  //   }else{
-  //     putch(*fmt);
-  //   } 
-  //   fmt++;
-  // }
-  // va_end(args);
-  // return count;
-  return 0;
-}
 
 int printf(const char *format, ...) {
   assert(format != NULL);
@@ -131,8 +81,7 @@ int vsprintf(char *str, const char *format, va_list ap) {
 
   char *str_t = str;
 
-  // char str_temp[1024];
-  // unsigned long num_temp;
+  // char str_temp[128];
 
   char* ArgStr = NULL;      // 接收字符型
   int ArgInt = 0;           // 接收整型

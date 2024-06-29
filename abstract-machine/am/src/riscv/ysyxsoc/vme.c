@@ -14,5 +14,14 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
-  return NULL;
+  // 从栈中分配空间并初始化
+  Context *c = (Context *)((uintptr_t)kstack.end - sizeof(Context));
+  memset(c,0,sizeof(Context));
+
+  assert(kstack.end - (void *)c == sizeof(Context));
+
+  c->mepc = (uintptr_t) entry;
+  c->mstatus = 0x1800;
+
+  return c;
 }

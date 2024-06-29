@@ -30,7 +30,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr = {};
   Elf_Phdr phdr = {};
   assert(filename!=NULL);
-  // Log("%s",filename);
+  Log("%s",filename);
+
   int fd = fs_open(filename,0,0);
   fs_lseek(fd,0,SEEK_SET);
   fs_read(fd,&ehdr,sizeof(Elf_Ehdr));
@@ -50,11 +51,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_lseek(fd,phdr.p_offset,SEEK_SET);
       fs_read(fd,(void *)phdr.p_vaddr,phdr.p_filesz);
       // 因为p_memsz>=p_filesz，多出来的部分为BSS段要清零
-      // Log("phdr.p_files[%x] %x %x",phdr.p_filesz,phdr.p_vaddr+phdr.p_filesz,phdr.p_memsz-phdr.p_filesz);
+      Log("phdr.p_files[%x] %x %x",phdr.p_filesz,phdr.p_vaddr+phdr.p_filesz,phdr.p_memsz-phdr.p_filesz);
       memset((void *)(phdr.p_vaddr+phdr.p_filesz),0,phdr.p_memsz-phdr.p_filesz);
     }
   }
-  // printf("%x\n",*(uint32_t *)ehdr.e_entry);
+  printf("ehdr.e_entry:%x\n",*(uint32_t *)ehdr.e_entry);
   //启动程序
   return ehdr.e_entry;
 }
@@ -72,6 +73,8 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
+
+  printf("ustack_end:%x\n",ustack_end);
 
   int argv_cnt = 0;
   int envp_cnt = 0;
@@ -129,9 +132,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
+  printf("%x\n",pcb->cp);
   pcb->cp->GPRx = (uintptr_t)argc_area_start;
 
-  // printf("%p %p\n",argc_area_start,point_area_start);
+  printf("%x %x\n",argc_area_start,point_area_start);
 
 // 看一下写入的结果是否对
   // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;

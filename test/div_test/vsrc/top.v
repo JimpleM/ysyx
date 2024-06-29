@@ -11,10 +11,10 @@ wire [67:0]partial_product[0:16];
 ysyx_23060077_div div_u0(
 	.clock       		(clock)		,
 	.reset       		(reset)	,
-  .div_signed 		(1'b1) ,
+  .div_signed 		(1'b0) ,
   .dividend     	(a)			,
 	.divisor				(b)     ,
-  .flush            (),
+  .flush          (),
   .div_valid      ( div_valid),
   .div_ready      ( ),
   .out_valid      ( ),

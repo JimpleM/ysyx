@@ -54,6 +54,8 @@ always @(posedge clock) begin
     out_valid   <= 'd0;
   end
   else begin
+    // $display("quotient:%x remainder:%x",quotient,remainder);
+
     case(div_state)
       DIV_IDLE:begin
         out_valid   <= 'd0;

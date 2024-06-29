@@ -145,7 +145,7 @@ wire div_busy  = alu_div & !div_out_valid;
 ysyx_23060077_div div_u0(
 	.clock       		( clock			 		),
 	.reset       		( reset			 		),
-  .div_signed 		( 1'b1			 		),
+  .div_signed 		( div_signed 		),
   .dividend     	( alu_a_data 		),
 	.divisor				( alu_b_data 		),
   .flush          ( 							),	

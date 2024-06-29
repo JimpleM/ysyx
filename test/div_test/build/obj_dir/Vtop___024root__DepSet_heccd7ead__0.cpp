@@ -27,85 +27,78 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__top__DOT__div_u0__DOT__div_count = 0;
     IData/*31:0*/ __Vdly__top__DOT__div_u0__DOT__quot_r;
     __Vdly__top__DOT__div_u0__DOT__quot_r = 0;
+    IData/*31:0*/ __Vdly__quotient;
+    __Vdly__quotient = 0;
+    IData/*31:0*/ __Vdly__remainder;
+    __Vdly__remainder = 0;
     // Body
+    __Vdly__remainder = vlSelf->remainder;
+    __Vdly__quotient = vlSelf->quotient;
     __Vdly__top__DOT__div_u0__DOT__quot_r = vlSelf->top__DOT__div_u0__DOT__quot_r;
     __Vdly__top__DOT__div_u0__DOT__div_count = vlSelf->top__DOT__div_u0__DOT__div_count;
     __Vdly__top__DOT__div_u0__DOT__div_state = vlSelf->top__DOT__div_u0__DOT__div_state;
     __Vdly__top__DOT__div_u0__DOT__s_reg = vlSelf->top__DOT__div_u0__DOT__s_reg;
     __Vdly__top__DOT__div_u0__DOT__d_reg = vlSelf->top__DOT__div_u0__DOT__d_reg;
-    if (vlSelf->reset) {
+    if (VL_LIKELY(vlSelf->reset)) {
         __Vdly__top__DOT__div_u0__DOT__div_state = 0U;
         __Vdly__top__DOT__div_u0__DOT__d_reg = 0ULL;
         __Vdly__top__DOT__div_u0__DOT__s_reg = 0U;
         __Vdly__top__DOT__div_u0__DOT__div_count = 0U;
         __Vdly__top__DOT__div_u0__DOT__quot_r = 0U;
-        vlSelf->quotient = 0U;
-        vlSelf->remainder = 0U;
-    } else if ((2U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
-        if ((1U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
-            __Vdly__top__DOT__div_u0__DOT__div_state = 0U;
-        } else {
-            vlSelf->quotient = (((vlSelf->a ^ vlSelf->b) 
-                                 >> 0x1fU) ? ((IData)(1U) 
-                                              + (~ vlSelf->top__DOT__div_u0__DOT__quot_r))
-                                 : vlSelf->top__DOT__div_u0__DOT__quot_r);
-            vlSelf->remainder = ((vlSelf->a >> 0x1fU)
-                                  ? ((IData)(1U) + 
-                                     (~ (IData)((vlSelf->top__DOT__div_u0__DOT__d_reg 
-                                                 >> 0x20U))))
-                                  : (IData)((vlSelf->top__DOT__div_u0__DOT__d_reg 
-                                             >> 0x20U)));
-            __Vdly__top__DOT__div_u0__DOT__div_state = 3U;
-        }
-    } else if ((1U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
-        __Vdly__top__DOT__div_u0__DOT__div_count = 
-            (0xffU & ((IData)(vlSelf->top__DOT__div_u0__DOT__div_count) 
-                      - (IData)(1U)));
-        if (((vlSelf->top__DOT__div_u0__DOT__d_reg 
-              >> 0x1fU) >= (QData)((IData)(vlSelf->top__DOT__div_u0__DOT__s_reg)))) {
-            __Vdly__top__DOT__div_u0__DOT__quot_r = 
-                (1U | (vlSelf->top__DOT__div_u0__DOT__quot_r 
-                       << 1U));
-            __Vdly__top__DOT__div_u0__DOT__d_reg = 
-                (((QData)((IData)(vlSelf->top__DOT__div_u0__DOT__dividend_sub)) 
-                  << 0x20U) | (QData)((IData)(((IData)(vlSelf->top__DOT__div_u0__DOT__d_reg) 
-                                               << 1U))));
-        } else {
-            __Vdly__top__DOT__div_u0__DOT__quot_r = 
-                (vlSelf->top__DOT__div_u0__DOT__quot_r 
-                 << 1U);
-            __Vdly__top__DOT__div_u0__DOT__d_reg = 
-                (vlSelf->top__DOT__div_u0__DOT__d_reg 
-                 << 1U);
-        }
-        __Vdly__top__DOT__div_u0__DOT__div_state = 
-            ((0U == (IData)(vlSelf->top__DOT__div_u0__DOT__div_count))
-              ? 2U : 1U);
+        __Vdly__quotient = 0U;
+        __Vdly__remainder = 0U;
     } else {
-        __Vdly__top__DOT__div_u0__DOT__d_reg = (QData)((IData)(
-                                                               ((vlSelf->a 
-                                                                 >> 0x1fU)
-                                                                 ? 
-                                                                ((IData)(1U) 
-                                                                 + 
-                                                                 (~ vlSelf->a))
-                                                                 : vlSelf->a)));
-        __Vdly__top__DOT__div_u0__DOT__s_reg = ((vlSelf->b 
-                                                 >> 0x1fU)
-                                                 ? 
-                                                ((IData)(1U) 
-                                                 + 
-                                                 (~ vlSelf->b))
-                                                 : vlSelf->b);
-        __Vdly__top__DOT__div_u0__DOT__div_count = 0x1fU;
-        __Vdly__top__DOT__div_u0__DOT__quot_r = 0U;
-        vlSelf->quotient = 0U;
-        vlSelf->remainder = 0U;
-        __Vdly__top__DOT__div_u0__DOT__div_state = 1U;
+        VL_WRITEF("quotient:%x remainder:%x\n",32,vlSelf->quotient,
+                  32,vlSelf->remainder);
+        if ((2U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
+            if ((1U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
+                __Vdly__top__DOT__div_u0__DOT__div_state = 0U;
+            } else {
+                __Vdly__quotient = vlSelf->top__DOT__div_u0__DOT__quot_r;
+                __Vdly__remainder = (IData)((vlSelf->top__DOT__div_u0__DOT__d_reg 
+                                             >> 0x20U));
+                __Vdly__top__DOT__div_u0__DOT__div_state = 3U;
+            }
+        } else if ((1U & (IData)(vlSelf->top__DOT__div_u0__DOT__div_state))) {
+            __Vdly__top__DOT__div_u0__DOT__div_count 
+                = (0xffU & ((IData)(vlSelf->top__DOT__div_u0__DOT__div_count) 
+                            - (IData)(1U)));
+            if (((vlSelf->top__DOT__div_u0__DOT__d_reg 
+                  >> 0x1fU) >= (QData)((IData)(vlSelf->top__DOT__div_u0__DOT__s_reg)))) {
+                __Vdly__top__DOT__div_u0__DOT__quot_r 
+                    = (1U | (vlSelf->top__DOT__div_u0__DOT__quot_r 
+                             << 1U));
+                __Vdly__top__DOT__div_u0__DOT__d_reg 
+                    = (((QData)((IData)(vlSelf->top__DOT__div_u0__DOT__dividend_sub)) 
+                        << 0x20U) | (QData)((IData)(
+                                                    ((IData)(vlSelf->top__DOT__div_u0__DOT__d_reg) 
+                                                     << 1U))));
+            } else {
+                __Vdly__top__DOT__div_u0__DOT__quot_r 
+                    = (vlSelf->top__DOT__div_u0__DOT__quot_r 
+                       << 1U);
+                __Vdly__top__DOT__div_u0__DOT__d_reg 
+                    = (vlSelf->top__DOT__div_u0__DOT__d_reg 
+                       << 1U);
+            }
+            __Vdly__top__DOT__div_u0__DOT__div_state 
+                = ((0U == (IData)(vlSelf->top__DOT__div_u0__DOT__div_count))
+                    ? 2U : 1U);
+        } else {
+            __Vdly__top__DOT__div_u0__DOT__d_reg = (QData)((IData)(vlSelf->a));
+            __Vdly__top__DOT__div_u0__DOT__s_reg = vlSelf->b;
+            __Vdly__top__DOT__div_u0__DOT__div_count = 0x1fU;
+            __Vdly__top__DOT__div_u0__DOT__quot_r = 0U;
+            __Vdly__quotient = 0U;
+            __Vdly__remainder = 0U;
+            __Vdly__top__DOT__div_u0__DOT__div_state = 1U;
+        }
     }
     vlSelf->top__DOT__div_u0__DOT__div_state = __Vdly__top__DOT__div_u0__DOT__div_state;
     vlSelf->top__DOT__div_u0__DOT__div_count = __Vdly__top__DOT__div_u0__DOT__div_count;
     vlSelf->top__DOT__div_u0__DOT__quot_r = __Vdly__top__DOT__div_u0__DOT__quot_r;
+    vlSelf->quotient = __Vdly__quotient;
+    vlSelf->remainder = __Vdly__remainder;
     vlSelf->top__DOT__div_u0__DOT__d_reg = __Vdly__top__DOT__div_u0__DOT__d_reg;
     vlSelf->top__DOT__div_u0__DOT__s_reg = __Vdly__top__DOT__div_u0__DOT__s_reg;
     vlSelf->top__DOT__div_u0__DOT__dividend_sub = (0x1ffffffffULL 

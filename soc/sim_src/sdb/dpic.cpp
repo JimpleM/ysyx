@@ -84,6 +84,7 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 extern "C" void device_skip(svBit ren,uint32_t raddr, svBit wen,uint32_t waddr) {
 	if(ren){
 		if(in_device(raddr)){
+			printf("skip");
 			device_flag = 1;
 		}
 	}
@@ -212,6 +213,7 @@ extern "C" void riscv_pmem_write(int waddr, int wdata, int wmask,svBit wen){
 		}else{
 			// device_count++;
 			// if(device_count == 3){
+			// printf("write : %8x %8x\n",waddr,wdata);
 				device_write((uint32_t) waddr, (uint32_t) wdata);
 			// 	device_count = 0;
 			// }
