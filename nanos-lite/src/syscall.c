@@ -13,7 +13,7 @@
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
-  a[0] = c->GPR1; //reg a5
+  a[0] = c->GPR1; //reg a5 or a7
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;

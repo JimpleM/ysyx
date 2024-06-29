@@ -9,15 +9,15 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
     switch (c->mcause) {
       case 11:   
-        ev.event = EVENT_YIELD; 
+        // ev.event = EVENT_YIELD; 
+        // printf("%d\n",c->GPR1 );
+        if (c->GPR1 == -1) {
+          ev.event = EVENT_YIELD;
+        }
+        else {
+          ev.event = EVENT_SYSCALL;
+        }
         // 软件加4问题，不加4会在yield中不断调用__am_irq_handle，
-        // 只能输出一对AB。
-        // if (c->GPR1 == -1) {
-        //   ev.event = EVENT_YIELD;
-        // }
-        // else {
-        //   ev.event = EVENT_SYSCALL;
-        // }
         c->mepc +=4;
         break;
       default:  ev.event = EVENT_ERROR; printf("event_error: %d\n",c->mcause); break;
@@ -53,7 +53,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
   c->mepc = (uintptr_t)entry;
   //系统调用参数从a0-a7寄存器中传递,gpr[10]是a0寄存器
-  c->gpr[10] = (uintptr_t)arg;
+  c->GPR1 = (uintptr_t)arg;
   //配合difftest
   c->mstatus = 0x1800;
 
