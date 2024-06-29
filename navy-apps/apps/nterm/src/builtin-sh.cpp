@@ -2,32 +2,11 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <SDL.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
 
 char handle_key(SDL_Event *ev);
-
-static int cmd_echo(char *args,int i){
-  if(args == NULL){
-    printf("\n");
-    return 0;
-  }
-  printf("%s\n",args);
-  return 0;
-}
-static int cmd_exit(char *args,int i){
-  exit(0);
-  return 0;
-}
-
-
-
-static struct {
-  const char *name;
-  const char *descripion;
-  int (*handler) (char *,int);
-}cmd_table[] = {
-  {"echo","display a line of text",cmd_echo},
-  {"exit","sys_exit",cmd_exit},
-};
 
 #define CMD_NUM (int)(sizeof(cmd_table)/sizeof(cmd_table[0]))
 
@@ -67,19 +46,9 @@ static void sh_handle_cmd(const char *cmd) {
   args[args_cnt] = NULL;
 
   if(args[0] != NULL){
-    int i = 0;
-    for(i=0; i<CMD_NUM; i++){
-      if(strcmp(args[0],cmd_table[i].name) == 0){
-        if(cmd_table[i].handler(args[1],i) < 0 ){
-          return ;
-        }
-        return ;
-      }
-    }
-    // for(i=0; i<args_cnt;i++){
-    //   printf("%s\n",args[i]);
-    // }
-    execvp(args[0],args+1);
+    // 要将命令也传进到args里面
+    execvp(args[0],args);
+    printf("%s\n", strerror(errno));
   }
 
 }
@@ -88,7 +57,7 @@ void builtin_sh_run() {
   sh_banner();
   sh_prompt();
 // 设置环境变量
-  setenv("PATH","/bin",0);
+  setenv("PATH","/bin:/usr/bin",0);
 
   while (1) {
     SDL_Event ev;

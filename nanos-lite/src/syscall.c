@@ -59,7 +59,7 @@ void do_syscall(Context *c) {
     case SYS_execve:
       Strace_Log("SYS_execve");
       if(fs_open((char *)a[1],0,0)<0){
-        c->GPRx = -1;
+        c->GPRx = -2;
       }else{
         // naive_uload(current,(char *)a[1]);
         context_uload(current,(char *)a[1],(char **)a[2],(char **)a[3]);

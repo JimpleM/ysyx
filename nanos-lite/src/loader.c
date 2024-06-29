@@ -30,7 +30,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr ehdr = {};
   Elf_Phdr phdr = {};
   assert(filename!=NULL);
-  Log("%s",filename);
+  // Log("%s",filename);
   int fd = fs_open(filename,0,0);
   fs_lseek(fd,0,SEEK_SET);
   fs_read(fd,&ehdr,sizeof(Elf_Ehdr));
@@ -45,7 +45,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // ramdisk_read(&phdr,ehdr.e_phoff+ehdr.e_phentsize*i,sizeof(Elf_Phdr));
     
     if(phdr.p_type == PT_LOAD){
-      Log("VirtAddr:[0x%x - 0x%x]",phdr.p_vaddr,phdr.p_vaddr+phdr.p_memsz);
+      // Log("VirtAddr:[0x%x - 0x%x]",phdr.p_vaddr,phdr.p_vaddr+phdr.p_memsz);
       // 将程序读取到phdr.p_vaddr，大小为phdr.p_filesz
       fs_lseek(fd,phdr.p_offset,SEEK_SET);
       fs_read(fd,(void *)phdr.p_vaddr,phdr.p_filesz);
