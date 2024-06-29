@@ -9,7 +9,7 @@ void device_init(){
     init_map();
 
     timer_init();
-    // keyboard_init();
+    keyboard_init();
     // IFDEF(CONFIG_VGA, init_vga());
 #ifdef CONFIG_VGA
     init_vga();
@@ -29,7 +29,9 @@ uint32_t device_read(uint32_t addr){
         return mmio_read(addr,4);
     }else{
         // Assert(0,"no device addr %8x",addr);
-        return -1;
+        printf("no device read addr %8x",addr);
+        npc_state.halt_pc = cpu_pc;
+        npc_state.state = NPC_ABORT;
     }
     return 0;
 }
@@ -38,7 +40,7 @@ void device_write(uint32_t addr, uint32_t data){
     // if(top->clock == 0){
         // printf("%8x addr",addr);
         if(addr == SYNC_ADDR){
-            vga_update_screen(data);
+            vga_update_screen();
         }else if(addr >= FB_ADDR && addr < AUDIO_SBUF_ADDR){
             mmio_write(addr,4,data);
             // printf("mmio addr %x data %x\n",addr,data);
@@ -60,4 +62,16 @@ bool in_device(uint32_t addr){
         return true;
     }
     return false;
+}
+static uint32_t device_count = 0;
+void device_update(){
+    device_count++;
+    if(device_count >400){
+#ifdef CONFIG_VGA
+    // vga_update_screen();
+#endif
+    keyboard_update();
+    device_count = 0;
+    }
+
 }

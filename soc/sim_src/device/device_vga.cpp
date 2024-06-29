@@ -50,9 +50,9 @@ static inline void update_screen() {
   SDL_RenderPresent(renderer);
 }
 
-void vga_update_screen(uint32_t data) {
+void vga_update_screen(){
   // if(vgactl_port_base[1]){
-    update_screen();
+  update_screen();
   // }
 }
 // void write_screen(uint32_t addr, uint32_t data){

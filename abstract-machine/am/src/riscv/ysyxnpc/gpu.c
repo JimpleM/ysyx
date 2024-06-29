@@ -16,7 +16,7 @@ void __am_gpu_init() {
   // printf("%d %d\n",Width,Height);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (int i = 0; i < Width * Height; i ++){
-    fb[i] = i;
+    fb[i] = 0;
   } 
   outl(SYNC_ADDR, 1);
 }
@@ -41,19 +41,16 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   // uint32_t *pixels = (uint32_t *)ctl->pixels;
   // uint32_t *fb = (uint32_t *)FB_ADDR;
   // memcpy(fb + ((y * Width) + x),pixels,w*h*4);
-  int i,j;
+  if(w == 0 || h == 0) return ;
   uint32_t *pixels = (uint32_t *)ctl->pixels;
   uint32_t *fb = (uint32_t *)FB_ADDR;
-  memset(fb + (y*Width + x), (int)pixels, h*w*4);
-  for (i = 0; i < h; i ++){
-    for(j = 0; j < w; j++){
+  for (int i = 0; i < h; i ++){
+    for(int j = 0; j < w; j++){
       fb[(i+y)*Width + x + j] = pixels[i*w + j];
     }
   }
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
-  }else{
-    outl(SYNC_ADDR, 0);
   }
 }
 

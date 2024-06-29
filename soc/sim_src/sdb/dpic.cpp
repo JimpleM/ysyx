@@ -187,11 +187,11 @@ extern "C" void riscv_pmem_read(int raddr, int *rdata, svBit ren){
 			// 	stop_flag = 1;
 			// }
 		}
-		// else{
-		// 	device_flag = 1;
-		// 	// printf("%8x\n",raddr);
-		// 	*rdata = device_read((uint32_t) raddr);
-		// }
+		else{
+			device_flag = 1;
+			// printf("%8x\n",raddr);
+			*rdata = device_read((uint32_t) raddr);
+		}
 
 #ifdef CONFIG_MTRACE
 	if(top->clock == 0){

@@ -54,18 +54,13 @@ static void send_key(uint8_t scancode, bool is_keydown){
 }
 void keyboard_update();
 
-int keyboard_update_adapter(void* data) {
-    while(1){
-        SDL_Delay(100);
-        keyboard_update();
-    }
-    return 0;  // 返回一个整数值
-}
-
-void keyboard_init(){
-    init_keymap();
-    SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
-}
+// int keyboard_update_adapter(void* data) {
+//     while(1){
+//         SDL_Delay(100);
+//         keyboard_update();
+//     }
+//     return 0;  // 返回一个整数值
+// }
 
 uint32_t keyboard_read(){
   uint32_t temp = key_dequeue();
@@ -75,6 +70,12 @@ uint32_t keyboard_read(){
   }
   return temp;
 }
+
+void keyboard_init(){
+  init_keymap();
+    // SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
+}
+
 
 void keyboard_update(){
     SDL_Event event;
@@ -89,9 +90,6 @@ void keyboard_update(){
         uint8_t k = event.key.keysym.scancode;
         bool is_keydown = (event.key.type == SDL_KEYDOWN);
 
-//@Attention device_read触发三次，这里写三次数据
-        send_key(k, is_keydown);
-        send_key(k, is_keydown);
         send_key(k, is_keydown);
         //printf("push num:%d\n",(key_tail+KEY_QUEUE_LEN-key_head)%KEY_QUEUE_LEN);
         break;

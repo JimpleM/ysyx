@@ -23,7 +23,7 @@
 // keyboard
 void keyboard_init();
 uint32_t keyboard_read();
-
+void keyboard_update();
 
 
 //timer
@@ -35,6 +35,6 @@ uint32_t timer_read(uint32_t addr);
 //vga
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 void init_vga();
-void vga_update_screen(uint32_t data);
+void vga_update_screen();
 // void write_screen(uint32_t addr, uint32_t data);
 #endif
