@@ -11,8 +11,8 @@ AM_SRCS := riscv/ysyxnpc/start.S \
 
 CFLAGS    += -fdata-sections -ffunction-sections
 
-# LDFLAGS   += -T $(AM_HOME)/scripts/linker_ysyxnpc.ld 
-LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld 
+LDFLAGS   += -T $(AM_HOME)/scripts/linker_ysyxnpc.ld 
+# LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld 
 
 LDFLAGS   += --defsym=_pmem_start=0x80000000  \
 			--defsym=_entry_offset=0x0

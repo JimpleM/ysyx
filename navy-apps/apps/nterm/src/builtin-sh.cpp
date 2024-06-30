@@ -27,23 +27,23 @@ static void sh_prompt() {
   sh_printf("sh> ");
 }
 
-char cmd_str[64];
-char* args[8];
-int args_cnt;
-const char split[2] = " ";
+static char cmd_str[64];
+static char* args[8];
+static int args_cnt;
+
 static void sh_handle_cmd(const char *cmd) {
 
   strcpy(cmd_str,cmd);
   // 有一个情况是末尾是\n无法截取，因此将\n换成空格
-  cmd_str[strlen(cmd_str)-1] = '\0';
+  cmd_str[strlen(cmd_str)-1] = ' ';
   // printf("%s\n",cmd_str);
   args_cnt = 0;
 
-  char *token = strtok(cmd_str,split);
+  char *token = strtok(cmd_str," ");
 
   while(token != NULL){
     args[args_cnt++] = token;
-    token = strtok(NULL,split);
+    token = strtok(NULL," ");
   }
   args[args_cnt] = NULL;
 

@@ -36,6 +36,7 @@ _start:
 #elif defined(__riscv)
   mv s0, zero
 // PA4.1实现多道程序，在_start中设置正确的栈指针，返回寄存器a0
+// 加了video显示出问题
   # mv sp, a0
   jal call_main
 

@@ -76,7 +76,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
 
-  printf("ustack_end:%x\n",ustack_end);
+  // printf("ustack_end:%x\n",ustack_end);
 
   int argv_cnt = 0;
   int envp_cnt = 0;
