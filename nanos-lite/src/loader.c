@@ -56,8 +56,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     }
   }
   // printf("ehdr.e_entry:%x\n",(uint32_t *)ehdr.e_entry);
-
+#if defined(__ISA_RISCV32__) || defined (__ISA_RISCV64__)
   asm volatile("fence.i");
+#endif
   //启动程序
   return ehdr.e_entry;
 }
@@ -75,8 +76,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
-
-  // printf("ustack_end:%x\n",ustack_end);
+  printf("ustack_end:%x\n",ustack_end);
 
   int argv_cnt = 0;
   int envp_cnt = 0;

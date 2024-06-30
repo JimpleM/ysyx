@@ -8,49 +8,37 @@
 // off_t size = 4096;
 // int fd;
 #define COUNT_MAX 32
-static RingBuffer *cpu_buffer = NULL;
-static RingBuffer *number_buffer = NULL;
-int count;
+typedef struct {
+    char buffer[64];
+} Buffer;
+
+Buffer ringbuff[COUNT_MAX+1];
+static int count;
 
 void init_buffer(){
-    cpu_buffer = RingBuffer_create(4096);
-    number_buffer = RingBuffer_create(128);
     count = 0;
     return ;
 }
 
 int write_buffer(char *data, int length){
-    char str[5];
-    if(count >= COUNT_MAX){
-        char s[100];
-        read_buffer(s);
-    }
-    memcpy(str,&length,4);
-    RingBuffer_write(number_buffer,str,4);
-    count++;
-    return RingBuffer_write(cpu_buffer, data, length);
+    strncpy(ringbuff[count++].buffer,data,length);
+    count = (count == COUNT_MAX) ? 0 : count;
+    return 0;
 }
 
-int read_buffer(char *target){
-    char str[5];
-    int length=0;
-    RingBuffer_read(number_buffer,str,4);
-    memcpy(&length,str,4);
-    count--;
-    return RingBuffer_read(cpu_buffer, target, length);
-}
 
 void show_all_buffer(){
-    char str[300] = "";
     printf("--------------------- iringbuf start ---------------------\n");
-    while(!RingBuffer_empty(number_buffer)){
-        read_buffer(str);
-        if(RingBuffer_empty(number_buffer)){
-            printf("  -->%s\n",str);
-            break;
+    for(int i=0; i<COUNT_MAX; i++){
+        if(i == COUNT_MAX-1){
+            printf("  ->");
         }else{
-            printf("     %s\n",str);
+            printf("    ");
         }
+        ++count;
+        count = (count == COUNT_MAX) ? 0 : count;
+        printf("%s\n",ringbuff[count].buffer);
+        
     }
     printf("--------------------- iringbuf end ----------------------\n");
 }

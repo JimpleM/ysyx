@@ -53,7 +53,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
 	c->mepc = (uintptr_t)entry;
 	//系统调用参数从a0-a7寄存器中传递,gpr[10]是a0寄存器
-	c->GPR1 = (uintptr_t)arg;
+	c->gpr[10] = (uintptr_t)arg;
 	//配合difftest
 	c->mstatus = 0x1800;
 

@@ -5,7 +5,11 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
-  assert(s != NULL);
+  // assert(s != NULL);
+  if(s == NULL){
+    halt(-1);
+  }
+  
   unsigned long i = 0;
   while(s[i] != '\0'){
     i++;
@@ -14,8 +18,14 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
-  assert(dst != NULL);
-  assert(src != NULL);
+  if(dst == NULL){
+    halt(-1);
+  }
+  if(src == NULL){
+    halt(-1);
+  }
+  // assert(dst != NULL);
+  // assert(src != NULL);
   char *dst_t = dst;
   while(*src != '\0'){
     *dst_t++ = *src++;

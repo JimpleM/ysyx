@@ -11,9 +11,9 @@ void switch_boot_pcb() {
 }
 
 void hello_fun(void *arg) {
-  int j = 900000;
+  int j = 1;
   while (1) {
-    if(j==1000000){
+    if(j==50){
       Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (uintptr_t)arg, j);
       j = 0;
     }
@@ -21,17 +21,12 @@ void hello_fun(void *arg) {
     yield();
   }
 }
-// 下面两个数组要加上NULL，不然判断NULL的话会越界
+//空数组用于测试
 char *uload_argv[] = {
-  // "--skip",
-  // "/bin/hello",
-  // "bbbb",
-  NULL,
+  NULL
 };
 char *uload_envp[] = {
-  // "cccc",
-  // "dddd",
-  NULL,
+  NULL
 };
 
 void init_proc() {
