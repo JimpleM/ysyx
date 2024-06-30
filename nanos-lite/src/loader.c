@@ -55,7 +55,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void *)(phdr.p_vaddr+phdr.p_filesz),0,phdr.p_memsz-phdr.p_filesz);
     }
   }
-  printf("ehdr.e_entry:%x\n",(uint32_t *)ehdr.e_entry);
+  // printf("ehdr.e_entry:%x\n",(uint32_t *)ehdr.e_entry);
 
   asm volatile("fence.i");
   //启动程序
@@ -134,10 +134,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
-  printf("%x\n",pcb->cp);
+  // printf("%x\n",pcb->cp);
   pcb->cp->GPRx = (uintptr_t)argc_area_start;
 
-  printf("%x %x\n",argc_area_start,point_area_start);
+  // printf("%x %x\n",argc_area_start,point_area_start);
 
 // 看一下写入的结果是否对
   // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;
