@@ -1,7 +1,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[], char *envp[]) {
+  printf("argc:%d\n",argc);
+  printf("argv:%x\n",argv);
+  printf("envp:%x\n",envp);
   write(1, "Hello World!\n", 13);
   int i = 2;
   volatile int j = 0;

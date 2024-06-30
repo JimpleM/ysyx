@@ -8,8 +8,8 @@
 #define ul unsigned long long
 #define uint unsigned int
 #define strcat_out(a,b) *a = '\0';strcat(a,b);a += strlen(b);
-static char str_temp[4096];
-static char str_printf[4096];
+static char str_temp[1024];
+static char str_printf[1024];
 
 ul my_pow(int a,int b){
   ul ans = a;

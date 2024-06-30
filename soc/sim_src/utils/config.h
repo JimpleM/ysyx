@@ -23,10 +23,10 @@
 // #define CONFIG_MTRACE_START_ADDR    0x80000000
 // #define CONFIG_MTRACE_END_ADDR      0x8fffffff
 
-// #define CONFIG_DIFFTEST
+#define CONFIG_DIFFTEST
 // #define CONFIG_ITRACE
 // #define CONFIG_FTRACE
-// #define CONFIG_WATCHPOINT
+#define CONFIG_WATCHPOINT
 // #define CONFIG_MTRACE
 // #define CONFIG_DTRACE
 #ifndef NPC_SIM
@@ -34,16 +34,16 @@
 #endif
 #define CONFIG_VGA
 
-// #define CONFIG_WAVE
+#define CONFIG_WAVE
 
 #ifdef CONFIG_WAVE
-    // #define CONFIG_WAVE_PC_BEGIN    0xa00000f8 //main
+    // #define CONFIG_WAVE_PC_BEGIN    0x83004dc4 
     #ifdef NPC_SIM
-        #define CONFIG_WAVE_PC_BEGIN    0x800007d8
+        #define CONFIG_WAVE_PC_BEGIN    0x8FFFFFFF
     #else
         #define CONFIG_WAVE_PC_BEGIN    0xa00003e4
     #endif
-    #define CONFIG_WAVE_PC_COUNT    0x00060000
+    #define CONFIG_WAVE_PC_COUNT    0x00070000
     #define CONFIG_WAVE_PC_END      0x8FFFFFFF
 #endif
 

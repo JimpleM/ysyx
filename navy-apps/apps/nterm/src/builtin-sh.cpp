@@ -27,26 +27,29 @@ static void sh_prompt() {
   sh_printf("sh> ");
 }
 
-static char cmd_str[64];
-static char* args[8];
-static int args_cnt;
+char cmd_str[64];
+char* args[8];
+int args_cnt;
+const char split[2] = " ";
 static void sh_handle_cmd(const char *cmd) {
+
   strcpy(cmd_str,cmd);
   // 有一个情况是末尾是\n无法截取，因此将\n换成空格
-  cmd_str[strlen(cmd_str)-1] = ' ';
+  cmd_str[strlen(cmd_str)-1] = '\0';
   // printf("%s\n",cmd_str);
   args_cnt = 0;
 
-  char *token = strtok(cmd_str," ");
+  char *token = strtok(cmd_str,split);
 
   while(token != NULL){
     args[args_cnt++] = token;
-    token = strtok(NULL," ");
+    token = strtok(NULL,split);
   }
   args[args_cnt] = NULL;
 
   if(args[0] != NULL){
     // 要将命令也传进到args里面
+    // printf("%s\n",cmd_str);
     execvp(args[0],args);
     printf("%s\n", strerror(errno));
   }

@@ -9,7 +9,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 
   SDL_Rect d_rect,s_rect;
-  d_rect = (dstrect == NULL) ? (SDL_Rect){0,0,0,0} : *dstrect;
+  d_rect = (dstrect == NULL) ? (SDL_Rect){0,0,dst->w,dst->h} : *dstrect;
   s_rect = (srcrect == NULL) ? (SDL_Rect){0,0,src->w,src->h} : *srcrect;
 
   assert(s_rect.w <= (dst->w - d_rect.x));

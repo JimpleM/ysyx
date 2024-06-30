@@ -20,6 +20,7 @@
 #include <memory/paddr.h>
 #include "sdb.h"
 #include "cpu/difftest.h"
+#include "ringbuffer.h"
 
 static int is_batch_mode = false;
 int difftest_status = true;  // menu开启difftest后默认开启
@@ -31,6 +32,7 @@ static char *snapshot_reg_file = "/home/jimple/Documents/ysyx/ysyx-workbench/nem
 
 void init_regex();
 void init_wp_pool();
+
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -65,6 +67,7 @@ static int cmd_x(char *args);
 static int cmd_p(char *args);
 static int cmd_w(char *args);
 static int cmd_d(char *args);
+static int cmd_i(char *args);
 static int cmd_attach(char *args);
 static int cmd_detach(char *args);
 static int cmd_save(char *args);
@@ -86,6 +89,7 @@ static struct {
   { "p", "find the value of expression", cmd_p },
   { "w", "set watchpoint, If changed, program will stop and print all watchpoint info", cmd_w },
   { "d", "delete watchpoint with the number of N", cmd_d },
+  { "i", "show iring_buf", cmd_i },
   { "attach", "open difftest", cmd_attach },
   { "detach", "close difftest", cmd_detach },
   { "save", "save snapshot into path", cmd_save },
@@ -174,7 +178,7 @@ static int cmd_x(char *args) {
 
   for(int i=0; i<num1; i++){
     printf("0x%x:%08x\n",addr,paddr_read(addr,4));
-    addr += 4;
+    addr -= 4;
   }
 
 
@@ -225,6 +229,11 @@ static int cmd_d(char *args) {
     int number = atoi(arg);
     del_wp(number);
   }
+  return 0;
+}
+
+static int cmd_i(char *args) {
+  show_all_buffer();
   return 0;
 }
 

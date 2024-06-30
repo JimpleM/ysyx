@@ -90,7 +90,7 @@ all: defualt
 sim: $(BIN)
 
 run:sim
-	$(OBJ_DIR)/V$(TOPNAME) ${ARGS} --batch
+	$(OBJ_DIR)/V$(TOPNAME) ${ARGS}
 
 wave: 
 	gtkwave wave.vcd

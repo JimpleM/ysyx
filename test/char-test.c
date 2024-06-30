@@ -1,7 +1,24 @@
-#define UART_BASE 0x10000000
-#define UART_TX   0
-void _start() {
-  *(volatile char *)(UART_BASE + UART_TX) = 'A';
-//   *(volatile char *)(UART_BASE + UART_TX) = '\n';
-  while (1);
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+static char *
+strccpy (char *s1,
+	char *s2,
+	char c)
+{
+  char *dest = s1;
+
+  while (*s2 && *s2 != c)
+    *s1++ = *s2++;
+  *s1 = 0;
+
+  return dest;
 }
+int main(){
+  char buf[1024];
+  printf("%s\n",buf);
+  strccpy(buf,"/bin:/usr/bin",':');
+  printf("%s\n",buf);
+}
+

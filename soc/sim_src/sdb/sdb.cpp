@@ -45,6 +45,7 @@ static int cmd_x(char *args);
 static int cmd_p(char *args);
 static int cmd_w(char *args);
 static int cmd_d(char *args);
+static int cmd_wave(char *args);
 
 static struct {
   const char *name;
@@ -62,6 +63,7 @@ static struct {
   { "p", "find the value of expression", cmd_p },
   { "w", "set watchpoint, If changed, program will stop and print all watchpoint info", cmd_w },
   { "d", "delete watchpoint with the number of N", cmd_d },
+  { "wave", "config wave on/off", cmd_wave },
 };
 
 #define NR_CMD ARRLEN(cmd_table)
@@ -199,6 +201,26 @@ static int cmd_d(char *args) {
   }
   return 0;
 }
+
+bool cmd_wave_flag = false;
+static int cmd_wave(char *args) {
+  /* extract the first argument */
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) {
+    /* no argument given */
+    printf("please give argument");
+  }
+  else {
+    if(strcmp(arg,"on") == 0){
+      cmd_wave_flag = true;
+    }else{
+      cmd_wave_flag = false;
+    }
+  }
+  return 0;
+}
+
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;

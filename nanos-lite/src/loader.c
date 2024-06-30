@@ -55,7 +55,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void *)(phdr.p_vaddr+phdr.p_filesz),0,phdr.p_memsz-phdr.p_filesz);
     }
   }
-  // printf("ehdr.e_entry:%x\n",*(uint32_t *)ehdr.e_entry);
+  printf("ehdr.e_entry:%x\n",(uint32_t *)ehdr.e_entry);
+
+  asm volatile("fence.i");
   //启动程序
   return ehdr.e_entry;
 }
@@ -74,7 +76,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
 
-  // printf("ustack_end:%x\n",ustack_end);
+  printf("ustack_end:%x\n",ustack_end);
 
   int argv_cnt = 0;
   int envp_cnt = 0;
@@ -104,19 +106,19 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *point_area_end = (char *)ROUNDDOWN(string_area_start,8);
 
   // 二级指针，这里面存放string_area_p的指针
-  uintptr_t *point_area_start = (uintptr_t *)point_area_end;
+  char **point_area_start = (char **)point_area_end;
   char *string_area_p = string_area_start;
 
-  *(--point_area_start) = (uintptr_t)NULL;
+  *(--point_area_start) = NULL;
   for(size_t i = 0; i < envp_cnt; i++){
-    *(--point_area_start) = (uintptr_t)string_area_p;
+    *(--point_area_start) = string_area_p;
     // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
     printf("envp:%s\n",string_area_p);
     string_area_p += strlen(string_area_p) + 1;
   }
-  *(--point_area_start) = (uintptr_t)NULL;
+  *(--point_area_start) = NULL;
   for(size_t i = 0; i < argv_cnt; i++){
-    *(--point_area_start) = (uintptr_t)string_area_p;
+    *(--point_area_start) = string_area_p;
     // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
     printf("argv:%s\n",string_area_p);
     string_area_p += strlen(string_area_p) + 1;
@@ -132,16 +134,17 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
-  // printf("%x\n",pcb->cp);
+  printf("%x\n",pcb->cp);
   pcb->cp->GPRx = (uintptr_t)argc_area_start;
 
-  // printf("%x %x\n",argc_area_start,point_area_start);
+  printf("%x %x\n",argc_area_start,point_area_start);
 
 // 看一下写入的结果是否对
   // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;
+  // printf("%d\n",test_cnt);
   // uintptr_t *test_p = (uintptr_t *) (pcb->cp->GPRx + sizeof(uintptr_t));
-  // for(size_t i = 0; i < test_cnt; i++){
-  //   printf("%d,%s,%p\n",i,test_p[i],test_p[i]);
+  // for(size_t i = 0; i < test_cnt+1+envp_cnt+2; i++){
+  //   printf("%d,%x,%x\n",i,test_p+i,*(test_p+i));
   // }
 }
 

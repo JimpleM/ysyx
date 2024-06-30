@@ -7,7 +7,7 @@
 
 // off_t size = 4096;
 // int fd;
-#define COUNT_MAX 16
+#define COUNT_MAX 32
 static RingBuffer *cpu_buffer = NULL;
 static RingBuffer *number_buffer = NULL;
 int count;

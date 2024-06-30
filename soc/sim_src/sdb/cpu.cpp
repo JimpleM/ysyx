@@ -48,6 +48,7 @@ extern uint64_t ifu_jump_stall_counter[4][2];
 #endif
 #ifdef CONFIG_WAVE
   static bool wave_flag = false;
+  extern bool cmd_wave_flag;
 #endif
 
 
@@ -60,15 +61,23 @@ int is_exit_status_bad() {
 uint32_t wave_pc_count = 0;
 static void dump_wave(){
 #ifdef CONFIG_WAVE
-  if(cpu_pc == CONFIG_WAVE_PC_BEGIN | CONFIG_WAVE_PC_BEGIN == 0){
+  if(cmd_wave_flag == true){
     wave_flag = true;
+    if(wave_pc_count> CONFIG_WAVE_PC_COUNT){
+      wave_flag = false;
+    }
+  }else{
+    if(cpu_pc == CONFIG_WAVE_PC_BEGIN | CONFIG_WAVE_PC_BEGIN == 0){
+      wave_flag = true;
+    }
+    if(cpu_pc == CONFIG_WAVE_PC_END){
+      wave_flag = false;
+    }
+    if(wave_pc_count> CONFIG_WAVE_PC_COUNT){
+      wave_flag = false;
+    }
   }
-  if(cpu_pc == CONFIG_WAVE_PC_END){
-    wave_flag = false;
-  }
-  if(wave_pc_count> CONFIG_WAVE_PC_COUNT){
-    wave_flag = false;
-  }
+  
   if(wave_flag){
     wave_pc_count ++ ;
     tfp->dump(contextp->time());  
