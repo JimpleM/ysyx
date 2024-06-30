@@ -26,6 +26,13 @@ typedef union {
   uint32_t val;
 } SDL_Color;
 
+typedef union {
+  struct {
+    uint8_t b, g, r, a;
+  };
+  uint32_t val;
+} SDL_Color8;
+
 typedef struct {
 	int ncolors;
 	SDL_Color *colors;

@@ -40,7 +40,7 @@ void NDL_OpenCanvas(int *w, int *h) {
  // 居中显示
   offset_x = (screen_w - *w) >> 1;
   offset_y = (screen_h - *h) >> 1;
-  printf("offset: %d %d\n",offset_x,offset_y);
+  // printf("offset: %d %d\n",offset_x,offset_y);
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
