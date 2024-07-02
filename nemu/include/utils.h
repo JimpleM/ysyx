@@ -79,4 +79,5 @@ uint64_t get_time();
 // ----------- elf -----------
 
 void init_ftrace(const char *elf_file);
-void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst);
+void ftrace_write(uint32_t pc, uint32_t npc,uint32_t inst);
+void show_all_ftrace();

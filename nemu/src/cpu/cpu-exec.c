@@ -85,11 +85,14 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #ifdef CONFIG_IRINGBUF
   write_buffer(s->logbuf,strlen(s->logbuf));
   if(nemu_state.state == NEMU_ABORT){
-    show_all_buffer();
+    show_all_iringbuf();
   }
 #endif
 #ifdef CONFIG_FTRACE
-  ftrace_print(s->pc,s->dnpc,s->isa.inst.val);
+  ftrace_write(s->pc,s->dnpc,s->isa.inst.val);
+  if(nemu_state.state == NEMU_ABORT){
+    show_all_ftrace();
+  }
 #endif
 
 #endif
@@ -140,7 +143,7 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
 #ifdef CONFIG_IRINGBUF
-  show_all_buffer();
+  show_all_iringbuf();
 #endif
   statistic();
 }

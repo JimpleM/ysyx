@@ -21,6 +21,7 @@
 #include "sdb.h"
 #include "cpu/difftest.h"
 #include "ringbuffer.h"
+#include "utils.h"
 
 static int is_batch_mode = false;
 int difftest_status = true;  // menu开启difftest后默认开启
@@ -233,7 +234,8 @@ static int cmd_d(char *args) {
 }
 
 static int cmd_i(char *args) {
-  show_all_buffer();
+  show_all_iringbuf();
+  show_all_ftrace();
   return 0;
 }
 

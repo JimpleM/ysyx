@@ -13,7 +13,7 @@ typedef struct {
 void init_buffer();
 int write_buffer(char *data, int length);
 int read_buffer(char *target);
-void show_all_buffer();
+void show_all_iringbuf();
 
 RingBuffer *RingBuffer_create(int length);
 

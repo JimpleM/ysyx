@@ -4,7 +4,13 @@
 
 #define FUNC_NUM	5000
 int func_cnt = 0;
-int output_cnt = 0;
+int ftrace_cnt = 0;
+
+#define COUNT_MAX 64
+typedef struct {
+  char buffer[64];
+}Buffer;
+Buffer ftracebuff[COUNT_MAX+1];
 
 struct FUNC_TRACE{
 	Elf32_Sym symbol;
@@ -24,6 +30,7 @@ static void ReadDataFromFile(void *buffer,uint32_t size, uint32_t n, uint32_t of
 }
 
 void init_ftrace(const char *elf_file){
+	ftrace_cnt = 0;
 	elf_fp = stdout;
 	if (elf_fp != NULL) {
 		FILE *fp = fopen(elf_file, "r");
@@ -102,21 +109,45 @@ void print_space(uint32_t address, int  n){
 	}
 }
 
-void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst){
+// void ftrace_print(uint32_t pc, uint32_t npc,uint32_t inst){
+// 	for(int i=0; i<func_cnt; i++){
+// 		if(inst == 0x00008067 && (pc >= func_trace[i].symbol.st_value && pc <= func_trace[i].symbol.st_value + func_trace[i].symbol.st_size )){
+// 			print_space(pc,output_cnt);
+// 			printf("ret  [%s]\n",func_trace[i].str);
+// 			output_cnt--;
+// 			return ;
+// 		}
+// 		if(npc == func_trace[i].symbol.st_value){
+// 			print_space(pc,output_cnt);
+// 			printf("call [%s@0x%8x]\n",func_trace[i].str,npc);
+// 			output_cnt++;
+// 			return ;
+// 		}
+// 	}
+// }
+
+void ftrace_write(uint32_t pc, uint32_t npc,uint32_t inst){
 	for(int i=0; i<func_cnt; i++){
-		if(inst == 0x00008067 && (pc >= func_trace[i].symbol.st_value && pc <= func_trace[i].symbol.st_value + func_trace[i].symbol.st_size )){
-			print_space(pc,output_cnt);
-			printf("ret  [%s]\n",func_trace[i].str);
-			output_cnt--;
-			return ;
-		}
 		if(npc == func_trace[i].symbol.st_value){
-			print_space(pc,output_cnt);
-			printf("call [%s@0x%8x]\n",func_trace[i].str,npc);
-			output_cnt++;
+			sprintf(ftracebuff[ftrace_cnt++].buffer,"call [%s@0x%8x]",func_trace[i].str,npc);
+			ftrace_cnt = (ftrace_cnt == COUNT_MAX) ? 0 : ftrace_cnt;
 			return ;
 		}
 	}
-	
 }
 
+void show_all_ftrace(){
+	printf("--------------------- ftrace start ---------------------\n");
+    for(int i=0; i<COUNT_MAX; i++){
+        if(i == COUNT_MAX-1){
+            printf("  ->");
+        }else{
+            printf("    ");
+        }
+        ++ftrace_cnt;
+        ftrace_cnt = (ftrace_cnt == COUNT_MAX) ? 0 : ftrace_cnt;
+        printf("%s\n",ftracebuff[ftrace_cnt].buffer);
+        
+    }
+  printf("--------------------- ftrace end ----------------------\n");
+}

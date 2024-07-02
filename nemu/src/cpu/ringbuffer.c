@@ -27,7 +27,7 @@ int write_buffer(char *data, int length){
 }
 
 
-void show_all_buffer(){
+void show_all_iringbuf(){
     printf("--------------------- iringbuf start ---------------------\n");
     for(int i=0; i<COUNT_MAX; i++){
         if(i == COUNT_MAX-1){
