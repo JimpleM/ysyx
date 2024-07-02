@@ -35,10 +35,11 @@ void isa_reg_display() {
   printf("$pc : 0x%08x\n",cpu.pc);
   printf("------------------------------reg display end -----------------------------\n");
   printf("------------------------------csr display start ---------------------------\n");
-  printf("MSTATUS : 0x%08x \n",cpu.csr[0]);
+  printf("MSTATUS : 0x%08x  \n",cpu.csr[0]);
   printf("MTVEC   : 0x%08x  \n",cpu.csr[1]);
   printf("MEPC    : 0x%08x  \n",cpu.csr[2]);
   printf("MCAUSE  : 0x%08x  \n",cpu.csr[3]);
+  printf("SATP    : 0x%08x  \n",cpu.csr[4]);
   printf("------------------------------csr display end -----------------------------\n");
 }
 

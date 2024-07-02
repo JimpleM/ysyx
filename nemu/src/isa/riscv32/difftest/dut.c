@@ -32,23 +32,6 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
      printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
     return false;
   }
- 
-  // if(ref_r->csr[0] != cpu.csr[0]){
-  //    printf("MSTATUS:0x%08x  : 0x%08x  \n",ref_r->csr[0],cpu.csr[0]);
-  //   return false;
-  // }
-  // if(ref_r->csr[1] != cpu.csr[1]){
-  //    printf("MTVEC:0x%08x  : 0x%08x  \n",ref_r->csr[1],cpu.csr[1]);
-  //   return false;
-  // }
-  // if(ref_r->csr[1] != cpu.csr[1]){
-  //    printf("MEPC:0x%08x  : 0x%08x  \n",ref_r->csr[2],cpu.csr[2]);
-  //   return false;
-  // }
-  // if(ref_r->csr[1] != cpu.csr[1]){
-  //    printf("MCAUSE:0x%08x  : 0x%08x  \n",ref_r->csr[3],cpu.csr[3]);
-  //   return false;
-  // }
   return true;
 }
 

@@ -34,6 +34,8 @@ static inline int check_csr_idx(int idx) {
     return MCAUSE;
   }else if(idx == 0x305){
     return MTVEC;
+  }else if(idx == 0x180){
+    return SATP;
   }
   // Log("%x",idx);
   Assert(0,"error csr address: %x!",idx);

@@ -18,12 +18,12 @@
 
 #include <common.h>
 
-enum { MSTATUS, MTVEC, MEPC, MCAUSE};
+enum {MSTATUS, MTVEC, MEPC, MCAUSE, SATP, CSR_NUMS};
 
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   vaddr_t pc;
-  word_t csr[4];
+  word_t csr[5];
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
 
 // decode
@@ -33,6 +33,22 @@ typedef struct {
   } inst;
 } MUXDEF(CONFIG_RV64, riscv64_ISADecodeInfo, riscv32_ISADecodeInfo);
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+// #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+
+// typedef union pte_t {
+//   struct {
+//     word_t V        : 1;
+//     word_t R        : 1;
+//     word_t W        : 1;
+//     word_t X        : 1;
+//     word_t U        : 1;
+//     word_t G        : 1;
+//     word_t A        : 1;
+//     word_t D        : 1;
+//     word_t RSW      : 2;
+//     word_t ppn      :22;
+//   };
+//   word_t val;
+// } pte_t;
 
 #endif

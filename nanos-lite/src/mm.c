@@ -12,7 +12,12 @@ void* new_page(size_t nr_page) {
 
 #ifdef HAS_VME
 static void* pg_alloc(int n) {
-  return NULL;
+  // 4096 为 右移 12位
+  assert((n&0x00000fff) == 0);
+  size_t pg_page = (n >> 12);
+  void *pg_ptr = new_page(pg_page);
+  memset(pg_ptr,0,n);
+  return pg_ptr;
 }
 #endif
 

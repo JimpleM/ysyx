@@ -67,6 +67,26 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  assert((uintptr_t)va % PGSIZE == 0);
+  assert((uintptr_t)pa % PGSIZE == 0);
+  assert(as != NULL);
+
+  PTE **pde = (PTE **)as->ptr;
+  // 一级表地址
+  PTE vpn1 = ((PTE)va) >> 22;
+  // 二级表地址
+  PTE vpn0 = (((PTE)va) >> 12) & 0x000003ff;
+
+  if(pde[vpn1] == NULL){
+    pde[vpn1] = (PTE*)(pgalloc_usr(PGSIZE));
+  }
+
+  PTE *pte = pde[vpn1];
+  if(pte[vpn0] == 0){
+    pte[vpn0] = (PTE)pa | prot;
+  }else{
+    assert(0);
+  }
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

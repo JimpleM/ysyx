@@ -17,6 +17,28 @@
 #include <memory/vaddr.h>
 #include <memory/paddr.h>
 
-paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  return MEM_RET_FAIL;
+#define VPN1(va) (va >> 22)
+#define VPN0(va) ((va >> 12) & 0x000003ff)
+#define OFFSET(va) (va & 0x00000fff)
+
+int isa_mmu_check(vaddr_t vaddr, int len, int type){
+  // 只有最高1位为mode
+  return (cpu.csr[SATP] >> 31);
 }
+
+paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
+  
+  // SATP写入的时候左移了12位
+  paddr_t *pde = (paddr_t *)(guest_to_host((paddr_t)(cpu.csr[SATP] << 12)));
+  assert(pde != NULL);
+
+  paddr_t *pte = (paddr_t *)(guest_to_host((paddr_t)(pde[VPN1(vaddr)])));
+  assert(pte != NULL);
+
+  paddr_t paddr = (paddr_t)(pte[VPN0(vaddr)] | OFFSET(vaddr));
+
+  assert(vaddr == paddr);
+
+  return paddr;
+}
+
