@@ -58,7 +58,9 @@ __am_asm_trap:
   csrw mstatus, t1      #将 MPRV 位设置为1
 
   mv a0, sp             #保存栈指针
+  jal __am_get_cur_as
   jal __am_irq_handle   #跳到中断处理函数
+  jal __am_switch
 
 # modified 
 # __am_irq_handle返回Context*指针，返回值存储在a0-a1寄存器中，

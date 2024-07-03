@@ -29,16 +29,35 @@ int isa_mmu_check(vaddr_t vaddr, int len, int type){
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   
   // SATP写入的时候左移了12位
-  paddr_t *pde = (paddr_t *)(guest_to_host((paddr_t)(cpu.csr[SATP] << 12)));
-  assert(pde != NULL);
 
-  paddr_t *pte = (paddr_t *)(guest_to_host((paddr_t)(pde[VPN1(vaddr)])));
-  assert(pte != NULL);
+  // paddr_t pde = (paddr_t *)(guest_to_host((paddr_t)(cpu.csr[SATP] << 12)));
+  // assert(pde != NULL);
 
-  paddr_t paddr = (paddr_t)(pte[VPN0(vaddr)] | OFFSET(vaddr));
+  // paddr_t *pte = (paddr_t *)(guest_to_host((paddr_t)(pde[VPN1(vaddr)])));
+  // assert(pte != NULL);
+  
+  // paddr_t paddr = (paddr_t)((pte[VPN0(vaddr)]) | OFFSET(vaddr));
+  // assert(vaddr>=0x40000000 && vaddr <= 0xa1200000);
+  // // assert(vaddr == paddr);
 
-  assert(vaddr == paddr);
+  paddr_t pte1_addr = (cpu.csr[SATP] << 12) + VPN1(vaddr)*sizeof(pte_t);
+  pte_t pte1;
+  pte1.val = paddr_read(pte1_addr,sizeof(paddr_t));
+  if(pte1.V == 0){
+    printf("vaddr: 0x%x, pte1: 0x%x\n",vaddr,pte1.val);
+    assert(0);
+  }
 
-  return paddr;
+  paddr_t pte0_addr = (pte1.ppn << 12) + VPN0(vaddr)*sizeof(pte_t);
+  pte_t pte0;
+  pte0.val = paddr_read(pte0_addr,sizeof(paddr_t));
+  if(pte0.V == 0){
+    printf("vaddr: 0x%x, pte0: 0x%x\n",vaddr,pte0.val);
+    assert(0);
+  }
+
+
+
+  return (pte0.ppn << 12) + OFFSET(vaddr);
 }
 

@@ -35,20 +35,20 @@ typedef struct {
 
 // #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
 
-// typedef union pte_t {
-//   struct {
-//     word_t V        : 1;
-//     word_t R        : 1;
-//     word_t W        : 1;
-//     word_t X        : 1;
-//     word_t U        : 1;
-//     word_t G        : 1;
-//     word_t A        : 1;
-//     word_t D        : 1;
-//     word_t RSW      : 2;
-//     word_t ppn      :22;
-//   };
-//   word_t val;
-// } pte_t;
+typedef union pte_t {
+  struct {
+    word_t V        : 1;
+    word_t R        : 1;
+    word_t W        : 1;
+    word_t X        : 1;
+    word_t U        : 1;
+    word_t G        : 1;
+    word_t A        : 1;
+    word_t D        : 1;
+    word_t RSW      : 2;
+    word_t ppn      :22;
+  };
+  word_t val;
+} pte_t;
 
 #endif

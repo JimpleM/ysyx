@@ -7,7 +7,9 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 
 void switch_boot_pcb() {
+  printf("switch_boot_pcb current_lst=%x\n",current);
   current = &pcb_boot;
+  printf("switch_boot_pcb current_now=%x\n",current);
 }
 
 void hello_fun(void *arg) {
@@ -15,6 +17,17 @@ void hello_fun(void *arg) {
   while (1) {
     if(j==50){
       Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (uintptr_t)arg, j);
+      j = 0;
+    }
+    j ++;
+    yield();
+  }
+}
+void hello(){
+  int j = 1;
+  while (1) {
+    if(j==50){
+      Log("Hello World!");
       j = 0;
     }
     j ++;
@@ -31,8 +44,9 @@ char *uload_envp[] = {
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "abcd");
-  // context_kload(&pcb[1], hello_fun, "efgh");
-  context_uload(&pcb[1],"/bin/nterm",uload_argv,uload_envp);
+  // context_uload(&pcb[0], "/bin/dummy",uload_argv,uload_envp);
+  context_uload(&pcb[1], "/bin/dummy",uload_argv,uload_envp);
+  // context_uload(&pcb[1],"/bin/nterm",uload_argv,uload_envp);
 
   switch_boot_pcb();
 
@@ -46,7 +60,7 @@ void init_proc() {
   // naive_uload(NULL,"/bin/bmp-test");
   // naive_uload(NULL,"/bin/nslider");
   // naive_uload(NULL,"/bin/pal");
-  // naive_uload(NULL,"/bin/nterm");
+  // naive_uload(NULL,"/bin/dummy");
 
 }
 

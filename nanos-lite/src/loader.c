@@ -46,13 +46,28 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_read(fd,&phdr,sizeof(Elf_Phdr));
     
     if(phdr.p_type == PT_LOAD){
-      Log("VirtAddr:[0x%x - 0x%x]",phdr.p_vaddr,phdr.p_vaddr+phdr.p_memsz);
-      // 将程序读取到phdr.p_vaddr，大小为phdr.p_filesz
+      uintptr_t vir_addr_begin  = phdr.p_vaddr & (~0xfff);
+      uintptr_t vir_addr_offset = phdr.p_vaddr & (0xfff);
+      //减一是为了在刚好在大小是PGSIZE的倍数时，少一页，然后后面统一将page_num加1
+      uintptr_t vir_addr_end   = (phdr.p_vaddr+phdr.p_memsz - 1) & (~0xfff); 
+      int page_num = ((vir_addr_end - vir_addr_begin) >> 12) + 1;
+      uintptr_t page_ptr = (uintptr_t)new_page(page_num);
+
+      Log("VirtAddr:[0x%x - 0x%x] page_num:%d",vir_addr_begin,vir_addr_begin+page_num*PGSIZE,page_num);
+
+      for(int j=0; j<page_num; j++){
+        map(&pcb->as,(void *)(vir_addr_begin+(j << 12)),(void *)(page_ptr+(j << 12)),MMAP_READ|MMAP_WRITE);
+      }
+
+      // 将程序读取到对应的物理地址page_ptr + vir_addr_offset，大小为phdr.p_filesz
       fs_lseek(fd,phdr.p_offset,SEEK_SET);
-      fs_read(fd,(void *)phdr.p_vaddr,phdr.p_filesz);
-      // 因为p_memsz>=p_filesz，多出来的部分为BSS段要清零
-      // Log("phdr.p_files[%x] %x %x",phdr.p_filesz,phdr.p_vaddr+phdr.p_filesz,phdr.p_memsz-phdr.p_filesz);
-      memset((void *)(phdr.p_vaddr+phdr.p_filesz),0,phdr.p_memsz-phdr.p_filesz);
+      fs_read(fd,(void *)(page_ptr + vir_addr_offset),phdr.p_filesz);
+      // 因为new_page的时候清0了，这里就不用请零0
+      // memset((void *)(phdr.p_vaddr+phdr.p_filesz),0,phdr.p_memsz-phdr.p_filesz);
+
+      // 只为当前新program break超过max_brk部分的虚拟地址空间分配物理页
+      // max_brk记录了最后一页的地址
+      pcb->max_brk = vir_addr_begin + page_num * PGSIZE;
     }
   }
   // printf("ehdr.e_entry:%x\n",(uint32_t *)ehdr.e_entry);
@@ -71,12 +86,23 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(RANGE(pcb->stack,pcb->stack + STACK_SIZE),entry,arg);
+  printf("context_kload[%x - %x]\n",pcb->stack,pcb->stack + STACK_SIZE);
+  printf("context_kload.pdir %x context:%x\n",pcb->cp->pdir,pcb->cp);
 }
 // 要和naive_load一样
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
+  protect(&pcb->as);
   char *ustack_start = (char *)new_page(8);
   char *ustack_end   = (char *)(ustack_start + 8 * PGSIZE);
   printf("ustack_end:%x\n",ustack_end);
+
+  for(int i=8; i>0; i--){
+    printf("va:%x  pa:%x\n",pcb->as.area.end-i*PGSIZE,ustack_end-i*PGSIZE);
+    map(&pcb->as,(void *)(pcb->as.area.end-i*PGSIZE),(void *)(ustack_end-i*PGSIZE),MMAP_READ|MMAP_WRITE);
+  }
+
+  char *ustack_map   = (char *)(pcb->as.area.end);
+  printf("ustack_map:%x\n",ustack_map);
 
   int argv_cnt = 0;
   int envp_cnt = 0;
@@ -91,7 +117,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     }
   }
   Log("argv_cnt:%d,envp_cnt:%d",argv_cnt,envp_cnt);
-
+// 数据还是存在ustack中
   char *string_area_start = ustack_end;
   for(size_t i = 0; i < argv_cnt; i++){
     string_area_start -= (strlen(argv[i]) + 1); //要算上\0的位置
@@ -105,23 +131,32 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // 有Unspecified 需要对地址向下对齐，考虑到native64位这里进行8字节对齐
   char *point_area_end = (char *)ROUNDDOWN(string_area_start,8);
 
+
+//下面存放string的指针要存放映射后的指针
   // 二级指针，这里面存放string_area_p的指针
   char **point_area_start = (char **)point_area_end;
   char *string_area_p = string_area_start;
 
+  char *string_map_p  = (char *)(ustack_map - (ustack_end - string_area_start));
+  size_t len = 0;
+
   *(--point_area_start) = NULL;
   for(size_t i = 0; i < envp_cnt; i++){
-    *(--point_area_start) = string_area_p;
-    // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
+    *(--point_area_start) = string_map_p;
+    printf("%p map ->%p\n",string_area_p,string_map_p);
     printf("envp:%s\n",string_area_p);
-    string_area_p += strlen(string_area_p) + 1;
+    len = strlen(string_area_p) + 1;
+    string_area_p += len;
+    string_map_p  += len;
   }
   *(--point_area_start) = NULL;
   for(size_t i = 0; i < argv_cnt; i++){
-    *(--point_area_start) = string_area_p;
-    // printf("%p %p %x\n",point_area_start,string_area_p,*point_area_start);
+    *(--point_area_start) = string_map_p;
+    printf("%p map ->%p\n",string_area_p,string_map_p);
     printf("argv:%s\n",string_area_p);
-    string_area_p += strlen(string_area_p) + 1;
+    len = strlen(string_area_p) + 1;
+    string_area_p += len;
+    string_map_p  += len;
   }
   // 下面point_area_start不能再更改了
   assert(string_area_p == ustack_end);
@@ -130,12 +165,19 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // 放入argv_cnt
   uintptr_t *argc_area_start = (uintptr_t *)(point_area_start - 1);
   *argc_area_start = argv_cnt;
+  uintptr_t *argc_map_p = (uintptr_t *)(ustack_map - (ustack_end - (char *)argc_area_start));
 
+printf("argc_area_start:%x\n",argc_area_start);
+printf("argc_map_p:%x\n",argc_map_p);
 
   uintptr_t entry = loader(pcb, filename);
   pcb->cp = ucontext(&pcb->as,RANGE(pcb->stack,pcb->stack + STACK_SIZE),(void *)entry);
   // printf("%x\n",pcb->cp);
-  pcb->cp->GPRx = (uintptr_t)argc_area_start;
+  pcb->cp->GPRx = (uintptr_t)argc_map_p;
+
+printf("context_uload.pdir %x context:%x\n",pcb->cp->pdir,pcb->cp);
+printf("pcb->max_brk:%x\n",pcb->max_brk);
+  // pcb->cp->GPRx = (uintptr_t)ustack_map;
 
   // printf("%x %x\n",argc_area_start,point_area_start);
 
@@ -143,8 +185,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // uintptr_t test_cnt = *(uintptr_t *) pcb->cp->GPRx;
   // printf("%d\n",test_cnt);
   // uintptr_t *test_p = (uintptr_t *) (pcb->cp->GPRx + sizeof(uintptr_t));
-  // for(size_t i = 0; i < test_cnt+1+envp_cnt+2; i++){
-  //   printf("%d,%x,%x\n",i,test_p+i,*(test_p+i));
+  // for(size_t i = 0; i < 5; i++){
+  //   printf("%d,%x\n",i,test_p+i);
   // }
 }
 

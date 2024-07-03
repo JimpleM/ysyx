@@ -4,7 +4,7 @@
 #include <sys/time.h>
 #include "proc.h"
 
-// #define STRACE
+#define STRACE
 #ifdef STRACE
 #define Strace_Log(format, ...) Log(format,## __VA_ARGS__)
 #else
@@ -22,10 +22,11 @@ void do_syscall(Context *c) {
     case SYS_exit:
       Strace_Log("SYS_exit");
       // naive_uload(current,"/bin/nterm");
-      context_uload(current,"/bin/nterm",NULL,NULL);
-      switch_boot_pcb();
-      yield();
+      // context_uload(current,"/bin/nterm",NULL,NULL);
+      // switch_boot_pcb();
+      // yield();
       halt(a[1]);
+      c->GPRx = a[1];
       break;
     case SYS_yield:
       Strace_Log("SYS_yield");
@@ -54,7 +55,7 @@ void do_syscall(Context *c) {
       break;
     case SYS_brk:
       Strace_Log("SYS_brk");
-      c->GPRx = 0;
+      c->GPRx = mm_brk(a[1]);
       break;
     case SYS_execve:
       Strace_Log("SYS_execve");
