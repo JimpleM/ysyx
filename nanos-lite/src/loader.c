@@ -98,7 +98,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   for(int i=8; i>0; i--){
     printf("va:%x  pa:%x\n",pcb->as.area.end-i*PGSIZE,ustack_end-i*PGSIZE);
-    map(&pcb->as,(void *)(pcb->as.area.end-i*PGSIZE),(void *)(ustack_end-i*PGSIZE),MMAP_READ|MMAP_WRITE);
+    map(&pcb->as,(void *)(pcb->as.area.end-i*PGSIZE),(void *)(ustack_end-i*PGSIZE),0xf);
   }
 
   char *ustack_map   = (char *)(pcb->as.area.end);

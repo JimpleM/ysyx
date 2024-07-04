@@ -4,7 +4,7 @@
 #include <sys/time.h>
 #include "proc.h"
 
-#define STRACE
+// #define STRACE
 #ifdef STRACE
 #define Strace_Log(format, ...) Log(format,## __VA_ARGS__)
 #else
@@ -18,6 +18,7 @@ void do_syscall(Context *c) {
   a[2] = c->GPR3;
   a[3] = c->GPR4;
   // Strace_Log("a[0]:%d",a[0]);
+  // printf("do_syscall c->pdir%x\n",c->pdir);
   switch (a[0]) {
     case SYS_exit:
       Strace_Log("SYS_exit");
@@ -30,7 +31,7 @@ void do_syscall(Context *c) {
       break;
     case SYS_yield:
       Strace_Log("SYS_yield");
-      yield();
+      // yield();
       c->GPRx = 0;
       break;
     case SYS_open:

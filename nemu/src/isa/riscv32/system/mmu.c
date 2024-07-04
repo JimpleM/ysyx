@@ -25,7 +25,7 @@ int isa_mmu_check(vaddr_t vaddr, int len, int type){
   // 只有最高1位为mode
   return (cpu.csr[SATP] >> 31);
 }
-
+extern NEMUState nemu_state;
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   
   // SATP写入的时候左移了12位
@@ -45,19 +45,16 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   pte1.val = paddr_read(pte1_addr,sizeof(paddr_t));
   if(pte1.V == 0){
     printf("vaddr: 0x%x, pte1: 0x%x\n",vaddr,pte1.val);
-    assert(0);
+    // nemu_state.state = NEMU_ABORT;
+    return vaddr;
   }
 
-  paddr_t pte0_addr = (pte1.ppn << 12) + VPN0(vaddr)*sizeof(pte_t);
+  paddr_t pte0_addr = (pte1.ppn << 10) + VPN0(vaddr)*sizeof(pte_t);
   pte_t pte0;
   pte0.val = paddr_read(pte0_addr,sizeof(paddr_t));
-  if(pte0.V == 0){
-    printf("vaddr: 0x%x, pte0: 0x%x\n",vaddr,pte0.val);
-    assert(0);
-  }
 
 
 
-  return (pte0.ppn << 12) + OFFSET(vaddr);
+  return (pte0.ppn << 10) + OFFSET(vaddr);
 }
 

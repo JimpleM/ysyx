@@ -5,7 +5,7 @@
 static AddrSpace kas = {};
 static void* (*pgalloc_usr)(int) = NULL;
 static void (*pgfree_usr)(void*) = NULL;
-static int vme_enable = 0;
+int vme_enable = 0;
 
 static Area segments[] = {      // Kernel memory mappings
   NEMU_PADDR_SPACE
@@ -14,7 +14,6 @@ static Area segments[] = {      // Kernel memory mappings
 #define USER_SPACE RANGE(0x40000000, 0x80000000)
 
 static inline void set_satp(void *pdir) {
-  printf("set_satp:%x\n",pdir);
   uintptr_t mode = 1ul << (__riscv_xlen - 1);
   asm volatile("csrw satp, %0" : : "r"(mode | ((uintptr_t)pdir >> 12)));
 }
@@ -22,7 +21,7 @@ static inline void set_satp(void *pdir) {
 static inline uintptr_t get_satp() {
   uintptr_t satp;
   asm volatile("csrr %0, satp" : "=r"(satp));
-  printf("get_satp satp:%x\n",satp << 12);
+  // printf("get_satp satp:%x\n",satp << 12);
   return satp << 12;
 }
 
@@ -58,12 +57,21 @@ void protect(AddrSpace *as) {
 void unprotect(AddrSpace *as) {
 }
 
+
 void __am_get_cur_as(Context *c) {
-  c->pdir = (vme_enable ? (void *)get_satp() : NULL);
+  if (vme_enable && c->pdir != NULL) {
+    c->pdir = (void *)get_satp();
+  }
+  // c->pdir = (vme_enable ? (void *)get_satp() : NULL);
 }
 
 void __am_switch(Context *c) {
+  // if((uintptr_t)c->pdir == 0x82BCD000){
+  //   return ;
+  // }
+  // printf("__am_switch Context %x\n",c);
   if (vme_enable && c->pdir != NULL) {
+      // printf("__am_switch Context %x\n",c->pdir);
     set_satp(c->pdir);
   }
 }
@@ -108,11 +116,12 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
 
   assert(kstack.end - (void *)c == sizeof(Context));
 
+
   c->pdir = as->ptr;
+  // printf("ucontext c->pdir%x\n",c->pdir);
   c->mepc = (uintptr_t) entry;
   c->mstatus = 0x1800;
-  c->gpr[2] = (uintptr_t) as->area.end;
-  c->gpr[1] = (uintptr_t) __am_asm_trap;
+
   // c->mcause  = 0;
 
   return c;

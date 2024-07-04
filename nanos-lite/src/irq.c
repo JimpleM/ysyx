@@ -3,14 +3,13 @@
 extern void do_syscall(Context *c);
 
 static Context* do_event(Event e, Context* c) {
-  printf("do_event%d\n",e.event);
   switch (e.event) {
     case EVENT_YIELD:
-      c->mepc +=4;
+      // printf("yield\n");
       return schedule(c);
       break;
     case EVENT_SYSCALL:
-      c->mepc +=4;
+    // printf("syscall\n");
       do_syscall(c);
       break;
     case EVENT_IRQ_TIMER:
@@ -18,7 +17,6 @@ static Context* do_event(Event e, Context* c) {
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
-
   return c;
 }
 

@@ -8,11 +8,12 @@ void __am_switch(Context *c);
 
 // 终端处理
 Context* __am_irq_handle(Context *c) {
-  // __am_get_cur_as(c);
+  __am_get_cur_as(c);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
-      case 11:   
+      case 11:
+      case 8:
         // ev.event = EVENT_YIELD; 
         if (c->GPR1 == -1) {
           ev.event = EVENT_YIELD;
@@ -21,7 +22,7 @@ Context* __am_irq_handle(Context *c) {
           ev.event = EVENT_SYSCALL;
         }
         // 软件加4问题，不加4会在yield中不断调用__am_irq_handle，
-        // c->mepc +=4; // 放到软件层
+        c->mepc +=4; // 放到软件层
         break;
       default:  
        ev.event = EVENT_ERROR; 
@@ -31,9 +32,8 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
-    // printf("__am_irq_handle conext: %x\n",c);
   }
-  // __am_switch(c);
+__am_switch(c);
   return c;
 }
 
@@ -64,6 +64,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   //配合difftest
   c->mstatus = 0x1800;
   // c->mcause  = 0;
+  c->pdir   = NULL;
 
   return c;
 }

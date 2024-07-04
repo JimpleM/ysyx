@@ -7,9 +7,7 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 
 void switch_boot_pcb() {
-  printf("switch_boot_pcb current_lst=%x\n",current);
   current = &pcb_boot;
-  printf("switch_boot_pcb current_now=%x\n",current);
 }
 
 void hello_fun(void *arg) {
@@ -44,6 +42,7 @@ char *uload_envp[] = {
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "abcd");
+  // context_kload(&pcb[1], hello_fun, "efgh");
   // context_uload(&pcb[0], "/bin/dummy",uload_argv,uload_envp);
   context_uload(&pcb[1], "/bin/dummy",uload_argv,uload_envp);
   // context_uload(&pcb[1],"/bin/nterm",uload_argv,uload_envp);
@@ -67,5 +66,6 @@ void init_proc() {
 Context* schedule(Context *prev) {
   current->cp = prev;
   current = (current == &pcb[0] ? &pcb[1]: &pcb[0]);
+  // printf("current->cp->pdir%x\n",current->cp->pdir);
   return current->cp;
 }

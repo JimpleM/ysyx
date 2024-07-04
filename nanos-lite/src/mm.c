@@ -7,7 +7,7 @@ void* new_page(size_t nr_page) {
   void *last_pf = pf;
   memset(pf,0,nr_page * PGSIZE);
   pf = (void *)((uintptr_t)pf + nr_page * PGSIZE);
-  printf("new_page:[%x - %x]\n",last_pf,pf);
+  // printf("new_page:[%x - %x]\n",last_pf,pf);
   assert((uintptr_t)pf == ((uintptr_t)last_pf+ nr_page * PGSIZE));
   return last_pf;
 }
