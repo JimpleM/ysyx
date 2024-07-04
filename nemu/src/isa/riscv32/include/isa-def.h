@@ -51,4 +51,25 @@ typedef union pte_t {
   word_t val;
 } pte_t;
 
+enum{
+  INST_MISALIGNED,
+  INST_ACCESS_FAULT,
+  ILLEDGAL_INST,
+  BREAKPOINT,
+  LOAD_MISALIGNED,
+  LOAD_FAULT,
+  STORE_MISALIGNED,
+  STORE_FAULT,
+  ECALL_U,
+  ECALL_S,
+  ECALL = 10,
+  ECALL_M,
+  INST_PAGE_FAULT,
+  LOAD_PAGE_FAULT,
+  STORE_PAGE_FAULT = 15,
+};
+#define MSTATUS_MIE   (0x1 << 3)
+#define MSTATUS_MPIE  (0x1 << 7)
+#define MSTATUS_MPP   (0x3 << 11)
+
 #endif

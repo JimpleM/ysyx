@@ -19,14 +19,35 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
+  if(NO == ECALL){
+    if(cpu.csr[MSTATUS] & MSTATUS_MPP){
+      cpu.csr[MCAUSE] = ECALL_M;
+    }else{
+      cpu.csr[MCAUSE] = ECALL_M;
+      // cpu.csr[MCAUSE] = ECALL_U;
+    }
+  }else{
+    cpu.csr[MCAUSE] = NO;
+  }
   cpu.csr[MEPC] = epc;
-  cpu.csr[MSTATUS] = 0x1800;
-  cpu.csr[MCAUSE] = NO;
+  cpu.csr[MSTATUS] |= MSTATUS_MPP;
+  // cpu.csr[MSTATUS] |= (cpu.csr[MSTATUS] & MSTATUS_MIE) ? MSTATUS_MPIE : 0;
+  // cpu.csr[MSTATUS] &= ~MSTATUS_MIE;
+
+  cpu.csr[MSTATUS] &= ~MSTATUS_MPIE;
   // printf("mtvex:%x\n",cpu.csr[MTVEC]);
   #ifdef CONFIG_ETRACE
     printf("etrace: epc:%x mcause:%d\n",epc,NO);
   #endif
   return cpu.csr[MTVEC];
+}
+
+word_t isa_ret_intr(){
+  cpu.csr[MSTATUS] &= ~MSTATUS_MPP;
+  cpu.csr[MSTATUS] |= (cpu.csr[MSTATUS] & MSTATUS_MPIE) ? MSTATUS_MIE : 0;
+  cpu.csr[MSTATUS] |= MSTATUS_MPIE;
+
+  return cpu.csr[MEPC];
 }
 
 word_t isa_query_intr() {

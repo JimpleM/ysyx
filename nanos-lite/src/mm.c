@@ -31,7 +31,7 @@ int mm_brk(uintptr_t brk) {
     int page_num = ROUNDUP(brk - current->max_brk, PGSIZE) >> 12;
     uintptr_t page_ptr = (uintptr_t)new_page(page_num);
     for(int i=0; i<page_num; i++){
-      map(&current->as,(void *)(current->max_brk+(i << 12)),(void *)(page_ptr+(i << 12)),MMAP_READ|MMAP_WRITE);
+      map(&current->as,(void *)(current->max_brk+(i << 12)),(void *)(page_ptr+(i << 12)),PAGE_READ|PAGE_WRITE|PAGE_EXEC|PAGE_USER);
     }
     current->max_brk += (page_num << 12);
   }

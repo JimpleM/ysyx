@@ -35,7 +35,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
     for (; va < segments[i].end; va += PGSIZE) {
-      map(&kas, va, va, 0);
+      map(&kas, va, va, PAGE_READ|PAGE_WRITE|PAGE_EXEC|PAGE_USER);
     }
   }
 
@@ -87,14 +87,14 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   assert(((uintptr_t)as->ptr & 0x3ff) == 0);
 
   PTE *pte1 = (PTE *)((PTE)as->ptr + VPN1(va)*sizeof(PTE));
-  if(((*pte1)&0x1) == 0){
-    *pte1 = (PTE)pgalloc_usr(PGSIZE) | 1;
+  if(((*pte1)&PAGE_PRESENT) == 0){
+    *pte1 = (PTE)pgalloc_usr(PGSIZE) | PAGE_PRESENT;
   }
 
   PTE *pte0 = (PTE *)(PPN(*pte1) + VPN0(va)*sizeof(PTE));
   //XWRV
 
-  *pte0 = ((PTE)pa & (~0xfff)) | prot; 
+  *pte0 = ((PTE)pa & (~0xfff)) | (prot | PAGE_PRESENT | PAGE_ACCESS | PAGE_DIRTY); 
 
   // PTE *pte1 = (PTE *)(as->ptr);
   // if((pte1[VPN1(va)] & 0X1) == 0){
@@ -120,7 +120,8 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   c->pdir = as->ptr;
   // printf("ucontext c->pdir%x\n",c->pdir);
   c->mepc = (uintptr_t) entry;
-  c->mstatus = 0x1800;
+  // 00用户模式
+  c->mstatus = 0x000c0080;
 
   // c->mcause  = 0;
 

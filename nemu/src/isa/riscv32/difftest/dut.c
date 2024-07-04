@@ -20,16 +20,37 @@
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   for(int i=0; i<32; i++){
     // 由于mstatus还没弄，先用这种方式避过difftest
-    if(gpr(6) == 0x00001800){
-      continue;
-    }
+    // if(gpr(6) == 0x00001800){
+    //   continue;
+    // }
     if(gpr(i) != ref_r->gpr[i]){
-      printf("%d: 0x%08x  : 0x%08x  \n",i,gpr(i),ref_r->gpr[i]);
+      printf("%d: ref:0x%08x dut:0x%08x  \n",i,ref_r->gpr[i],gpr(i));
       return false;
     }
   }
   if(ref_r->pc != pc){
-     printf("0x%08x  : 0x%08x  \n",ref_r->pc,pc);
+     printf("ref:0x%08x  dut:0x%08x  \n",ref_r->pc,pc);
+    return false;
+  }
+
+  if(ref_r->csr[0] != cpu.csr[0]){
+     printf("MSTATUS :ref:0x%08x  dut:0x%08x  \n",ref_r->csr[0],cpu.csr[0]);
+    return false;
+  }
+  if(ref_r->csr[1] != cpu.csr[1]){
+     printf("MTVEC   :ref:0x%08x  dut:0x%08x  \n",ref_r->csr[1],cpu.csr[1]);
+    return false;
+  }
+  if(ref_r->csr[2] != cpu.csr[2]){
+     printf("MEPC    :ref:0x%08x  dut:0x%08x  \n",ref_r->csr[2],cpu.csr[2]);
+    return false;
+  }
+  if(ref_r->csr[3] != cpu.csr[3]){
+     printf("MCAUSE  :ref:0x%08x  dut:0x%08x  \n",ref_r->csr[3],cpu.csr[3]);
+    return false;
+  }
+  if(ref_r->csr[4] != cpu.csr[4]){
+     printf("SATP    :ref:0x%08x  dut:0x%08x  \n",ref_r->csr[4],cpu.csr[4]);
     return false;
   }
   return true;

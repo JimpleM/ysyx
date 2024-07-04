@@ -24,4 +24,30 @@ struct Context {
 #define GPR4 gpr[12]
 #define GPRx gpr[10]  //a0
 
+#define PAGE_PRESENT  (1 << 0)
+#define PAGE_READ     (1 << 1)
+#define PAGE_WRITE    (1 << 2)
+#define PAGE_EXEC     (1 << 3)
+#define PAGE_USER     (1 << 4)
+#define PAGE_GLOBAL   (1 << 5)
+#define PAGE_ACCESS   (1 << 6)
+#define PAGE_DIRTY    (1 << 7)
+
+enum{
+  INST_MISALIGNED,
+  INST_ACCESS_FAULT,
+  ILLEDGAL_INST,
+  BREAKPOINT,
+  LOAD_MISALIGNED,
+  LOAD_FAULT,
+  STORE_MISALIGNED,
+  STORE_FAULT,
+  ECALL_U,
+  ECALL_S,
+  ECALL = 10,
+  ECALL_M,
+  INST_PAGE_FAULT,
+  LOAD_PAGE_FAULT,
+  STORE_PAGE_FAULT = 15,
+};
 #endif

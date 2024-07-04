@@ -56,7 +56,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       Log("VirtAddr:[0x%x - 0x%x] page_num:%d",vir_addr_begin,vir_addr_begin+page_num*PGSIZE,page_num);
 
       for(int j=0; j<page_num; j++){
-        map(&pcb->as,(void *)(vir_addr_begin+(j << 12)),(void *)(page_ptr+(j << 12)),MMAP_READ|MMAP_WRITE);
+        map(&pcb->as,(void *)(vir_addr_begin+(j << 12)),(void *)(page_ptr+(j << 12)),PAGE_READ|PAGE_WRITE|PAGE_EXEC|PAGE_USER);
       }
 
       // 将程序读取到对应的物理地址page_ptr + vir_addr_offset，大小为phdr.p_filesz
@@ -98,7 +98,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   for(int i=8; i>0; i--){
     printf("va:%x  pa:%x\n",pcb->as.area.end-i*PGSIZE,ustack_end-i*PGSIZE);
-    map(&pcb->as,(void *)(pcb->as.area.end-i*PGSIZE),(void *)(ustack_end-i*PGSIZE),0xf);
+    map(&pcb->as,(void *)(pcb->as.area.end-i*PGSIZE),(void *)(ustack_end-i*PGSIZE),PAGE_READ|PAGE_WRITE|PAGE_EXEC|PAGE_USER);
   }
 
   char *ustack_map   = (char *)(pcb->as.area.end);

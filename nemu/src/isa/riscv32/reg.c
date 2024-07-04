@@ -23,7 +23,7 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
-void isa_reg_display() {
+void isa_reg_display(CPU_state *ref) {
   printf("------------------------------reg display start ---------------------------\n");
   for(int i=0; i<8; i++){
     printf("%3s : 0x%08x  ",regs[4*i+0],cpu.gpr[4*i+0]);
@@ -35,11 +35,11 @@ void isa_reg_display() {
   printf("$pc : 0x%08x\n",cpu.pc);
   printf("------------------------------reg display end -----------------------------\n");
   printf("------------------------------csr display start ---------------------------\n");
-  printf("MSTATUS : 0x%08x  \n",cpu.csr[0]);
-  printf("MTVEC   : 0x%08x  \n",cpu.csr[1]);
-  printf("MEPC    : 0x%08x  \n",cpu.csr[2]);
-  printf("MCAUSE  : 0x%08x  \n",cpu.csr[3]);
-  printf("SATP    : 0x%08x  \n",cpu.csr[4]);
+  printf("MSTATUS: ref:0x%08x  dut:0x%08x\n",ref->csr[0],cpu.csr[0]);
+  printf("MTVEC  : ref:0x%08x  dut:0x%08x\n",ref->csr[1],cpu.csr[1]);
+  printf("MEPC   : ref:0x%08x  dut:0x%08x\n",ref->csr[2],cpu.csr[2]);
+  printf("MCAUSE : ref:0x%08x  dut:0x%08x\n",ref->csr[3],cpu.csr[3]);
+  printf("SATP   : ref:0x%08x  dut:0x%08x\n",ref->csr[4],cpu.csr[4]);
   printf("------------------------------csr display end -----------------------------\n");
 }
 
@@ -53,6 +53,9 @@ word_t isa_reg_str2val(const char *s, bool *success) {
     //printf("%3s : 0x%08x  ",regs[i],cpu.gpr[i]);
       return cpu.gpr[i];
     }
+  }
+  if(strcmp(s,"mstatus") == 0){
+    return cpu.csr[MSTATUS];
   }
   printf("no such reg:%s\n",s);
   assert(0);
