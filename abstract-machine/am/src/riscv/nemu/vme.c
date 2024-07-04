@@ -122,8 +122,7 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   c->mepc = (uintptr_t) entry;
   // 00用户模式
   c->mstatus = 0x000c0080;
-
-  // c->mcause  = 0;
+  c->mcause  = 0;
 
   return c;
 }

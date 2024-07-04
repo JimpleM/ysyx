@@ -63,7 +63,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   c->gpr[10] = (uintptr_t)arg;
   //配合difftest,0x1800指的是机器模式
   c->mstatus = 0x00001800;
-  // c->mcause  = 0;
+  c->mcause  = 0;
   c->pdir   = NULL;
 
   return c;

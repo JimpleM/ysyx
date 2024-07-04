@@ -57,6 +57,12 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   if(strcmp(s,"mstatus") == 0){
     return cpu.csr[MSTATUS];
   }
+  if(strcmp(s,"mcause") == 0){
+    return cpu.csr[MCAUSE];
+  }
+  if(strcmp(s,"satp") == 0){
+    return cpu.csr[SATP];
+  }
   printf("no such reg:%s\n",s);
   assert(0);
   *success = false;
