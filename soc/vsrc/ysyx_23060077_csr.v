@@ -1,19 +1,19 @@
 `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_csr(
-	input 	                            clock       				,
-	input 	                            reset       				,
+	input 	                            							clock       				,
+	input 	                            							reset       				,
 
 	input       [`YSYX_23060077_CSR_ADDR_WIDTH-1:0]   csr_wr_addr 				,
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_wr_data 				,
 	input       [`YSYX_23060077_CSR_ADDR_WIDTH-1:0]   csr_rd_addr 				,
 	output 	reg [`YSYX_23060077_DATA_WIDTH-1:0]       csr_rd_data 				,
 
-	input                               csr_ecall_i 				,
-	input                               csr_mret_i  				,
+	input                               							csr_ecall_i 				,
+	input                               							csr_mret_i  				,
 
-	input              									sys      						, 
-	input       [2:0]       						funct3        			,
+	input              																sys      						, 
+	input       [2:0]       													funct3        			,
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_pc        			,
 
 	output      [`YSYX_23060077_DATA_WIDTH-1:0]       csr_mstatus   			,

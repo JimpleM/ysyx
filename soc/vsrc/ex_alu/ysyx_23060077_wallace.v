@@ -1,17 +1,17 @@
 // `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_wallace(
-	input 	                            clock       				,
-	input 	                            reset       				,
+	input 	                                          clock       				,
+	input 	                                          reset       				,
 
-  input       [1:0]                   mul_signed 				  ,
+  input       [1:0]                                 mul_signed 				  ,
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       multiplicand     		,
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       multiplier				  ,
 
-  input 	                            flush       				,
-  input 	                            mul_valid       		,
-	output 	reg                         mul_ready       	  ,
-  output 	reg                         out_valid       	  ,
+  input 	                                          flush       				,
+  input 	                                          mul_valid       		,
+	output 	reg                                       mul_ready       	  ,
+  output 	reg                                       out_valid       	  ,
   output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       result_hi				    ,
   output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       result_ho				    
 

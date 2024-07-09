@@ -1,27 +1,27 @@
 // `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_booth_code(
-  input       [1:0]                   booth_signed 				,
+  input       [1:0]                                 booth_signed 				,
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       booth_src1     				,
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       booth_src2				    ,
 
-  output      [2*LEN-1:0]             partial_product0    ,
-  output      [2*LEN-1:0]             partial_product1    ,
-  output      [2*LEN-1:0]             partial_product2    ,
-  output      [2*LEN-1:0]             partial_product3    ,
-  output      [2*LEN-1:0]             partial_product4    ,
-  output      [2*LEN-1:0]             partial_product5    ,
-  output      [2*LEN-1:0]             partial_product6    ,
-  output      [2*LEN-1:0]             partial_product7    ,
-  output      [2*LEN-1:0]             partial_product8    ,
-  output      [2*LEN-1:0]             partial_product9    ,
-  output      [2*LEN-1:0]             partial_product10   ,
-  output      [2*LEN-1:0]             partial_product11   ,
-  output      [2*LEN-1:0]             partial_product12   ,
-  output      [2*LEN-1:0]             partial_product13   ,
-  output      [2*LEN-1:0]             partial_product14   ,
-  output      [2*LEN-1:0]             partial_product15   ,
-  output      [2*LEN-1:0]             partial_product16   
+  output      [2*LEN-1:0]                           partial_product0    ,
+  output      [2*LEN-1:0]                           partial_product1    ,
+  output      [2*LEN-1:0]                           partial_product2    ,
+  output      [2*LEN-1:0]                           partial_product3    ,
+  output      [2*LEN-1:0]                           partial_product4    ,
+  output      [2*LEN-1:0]                           partial_product5    ,
+  output      [2*LEN-1:0]                           partial_product6    ,
+  output      [2*LEN-1:0]                           partial_product7    ,
+  output      [2*LEN-1:0]                           partial_product8    ,
+  output      [2*LEN-1:0]                           partial_product9    ,
+  output      [2*LEN-1:0]                           partial_product10   ,
+  output      [2*LEN-1:0]                           partial_product11   ,
+  output      [2*LEN-1:0]                           partial_product12   ,
+  output      [2*LEN-1:0]                           partial_product13   ,
+  output      [2*LEN-1:0]                           partial_product14   ,
+  output      [2*LEN-1:0]                           partial_product15   ,
+  output      [2*LEN-1:0]                           partial_product16   
 );
 localparam LEN = 34;
 localparam CNT = 17;

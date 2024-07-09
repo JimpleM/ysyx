@@ -72,52 +72,52 @@ wire [`YSYX_23060077_INST_WIDTH-1:0]      ifu_inst        	;
 wire [`YSYX_23060077_INST_WIDTH-1:0]      ifu_inst_t      	;
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      jump_pc         	;
-wire                        jump_pc_valid   	;
+wire                        							jump_pc_valid   	;
 
-wire                        Icache_r_valid_o	;
+wire                        							Icache_r_valid_o	;
 wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o 	;
-wire                        Icache_r_ready_i	;
+wire                        							Icache_r_ready_i	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      Icache_r_data_i 	;
 wire [8-1:0]   Icache_r_len_o  	;
-wire                        Icache_r_last_i 	;
+wire                        							Icache_r_last_i 	;
 
-wire   											ifu_jal 					;
-wire   											ifu_jalr 					;
-wire   											ifu_branch 				;
-wire   											ifu_csr_ecall			;
-wire   											ifu_csr_mret			;
-wire   											ifu_jump					;
-wire												ifu_sys						;
+wire   																		ifu_jal 					;
+wire   																		ifu_jalr 					;
+wire   																		ifu_branch 				;
+wire   																		ifu_csr_ecall			;
+wire   																		ifu_csr_mret			;
+wire   																		ifu_jump					;
+wire																			ifu_sys						;
 
 // idu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      idu_pc          	;
 wire [`YSYX_23060077_INST_WIDTH-1:0]      idu_inst        	;
 
-wire                       	idu_branch				;
-wire                       	idu_jal		   			;
-wire                       	idu_jalr					;
+wire                       								idu_branch				;
+wire                       								idu_jal		   			;
+wire                       								idu_jalr					;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rd_addr				;
-wire                       	idu_rd_wen_req		;
+wire                       								idu_rd_wen_req		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs1		   			;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs2		   			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_imm		   			;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   idu_alu_opt	    	;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
-wire 												idu_alu_mul				;
-wire 												idu_alu_div				;
-wire [2:0]                  idu_funct3	    	;
-wire 												idu_csr_ecall			;
-wire 												idu_csr_mret			;
-wire												idu_sys						;
+wire 																			idu_alu_mul				;
+wire 																			idu_alu_div				;
+wire [2:0]                  							idu_funct3	    	;
+wire 																			idu_csr_ecall			;
+wire 																			idu_csr_mret			;
+wire																			idu_sys						;
 //regfile
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_src1					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_src2					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_rs1_data			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_rs2_data			;
-wire 												rs1_busy					;
-wire 												rs2_busy					;
-wire 												rd_busy						;
+wire 																			rs1_busy					;
+wire 																			rs2_busy					;
+wire 																			rd_busy						;
 
 //exu
 
@@ -129,40 +129,40 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_imm		    		;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   exu_alu_opt	    	;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
-wire [2:0]                  exu_funct3	    	;
-wire 												exu_alu_mul				;
-wire 												exu_alu_div				;
-wire                       	exu_branch				;
-wire                       	exu_rd_wen_req		;
+wire [2:0]                  							exu_funct3	    	;
+wire 																			exu_alu_mul				;
+wire 																			exu_alu_div				;
+wire                       								exu_branch				;
+wire                       								exu_rd_wen_req		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
-wire 												exu_csr_ecall			;
-wire 												exu_csr_mret 			;
-wire												exu_sys						;
+wire 																			exu_csr_ecall			;
+wire 																			exu_csr_mret 			;
+wire																			exu_sys						;
 
-wire                        exu_stall					;
-wire                        exu_finished			;
-wire                        zero_flag					;
+wire                        							exu_stall					;
+wire                        							exu_finished			;
+wire                        							zero_flag					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_result				;
 
 //lsu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	lsu_result				;
-wire                        mem_stall       	;
-wire                        lsu_finished      ;
+wire                        							mem_stall       	;
+wire                        							lsu_finished      ;
 
-wire                        lsu_r_valid_o   	;
+wire                        							lsu_r_valid_o   	;
 wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    	;
-wire                        lsu_r_ready_i   	;
+wire                        							lsu_r_ready_i   	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      lsu_r_data_i    	;
-wire [3-1:0]  lsu_r_size_o    	;
-wire [8-1:0]   lsu_r_len_o     	;
-wire                        lsu_r_last_i    	;
-wire                        lsu_w_valid_o   	;
+wire [3-1:0]  														lsu_r_size_o    	;
+wire [8-1:0]   														lsu_r_len_o     	;
+wire                        							lsu_r_last_i    	;
+wire                        							lsu_w_valid_o   	;
 wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    	;
-wire                        lsu_w_ready_i   	;
+wire                        							lsu_w_ready_i   	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      lsu_w_data_o    	;
-wire [3-1:0]  lsu_w_size_o    	;
-wire [8-1:0]   lsu_w_len_o     	;
-wire                        lsu_w_last_i    	;
+wire [3-1:0]  														lsu_w_size_o    	;
+wire [8-1:0]   														lsu_w_len_o     	;
+wire                        							lsu_w_last_i    	;
 
 //wbu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_pc          	;

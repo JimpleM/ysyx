@@ -1,7 +1,7 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_regfile (
-	input                               clock								,
-	input                               reset								,
+	input                               							clock								,
+	input                               							reset								,
 
 	input       [`YSYX_23060077_REG_WIDTH-1:0]        rs1_addr						,
 	output      [`YSYX_23060077_DATA_WIDTH-1:0]       rs1_data						,

@@ -1,16 +1,15 @@
 `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_pre_decode(
-	input       [`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst           	,
+	input       [`YSYX_23060077_INST_WIDTH-1:0]  ifu_inst           	,
 
-	output 		 													ifu_jal 						,
-	output 		 													ifu_jalr 						,
-	output 		 													ifu_branch 					,
-	output 															ifu_sys							,
-	output 															ifu_csr_ecall				,
-	output 															ifu_csr_mret				,
-
-	output 															ifu_jump
+	output 		 																		ifu_jal 						,
+	output 		 																		ifu_jalr 						,
+	output 		 																		ifu_branch 					,
+	output 																				ifu_sys							,
+	output 																				ifu_csr_ecall				,
+	output 																				ifu_csr_mret				,
+	output 																				ifu_jump
 );
 
 assign  ifu_branch      = (ifu_inst[6:0] == 7'b11000_11)	? 1'b1 : 1'b0;

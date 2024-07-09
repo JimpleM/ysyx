@@ -1,7 +1,7 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_exu(
-	input 															clock 							,
-	input 															reset 							,
+	input 																						clock 							,
+	input 																						reset 							,
 
 	input 	    [`YSYX_23060077_DATA_WIDTH-1:0]       pc									,
 
@@ -10,20 +10,18 @@ module ysyx_23060077_exu(
 
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       imm									,
 
-	input                               branch							,
+	input                               							branch							,
 
 	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt							,
-	input 															alu_mul							,
-	input 															alu_div							,
+	input 																						alu_mul							,
+	input 																						alu_div							,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
-	input       [2:0]                   funct3							,
-
-	output                              zero_flag						,
-
-	input 															id_to_ex						,
-	input 															ex_to_wb						,
-	output 	reg 												exu_stall 					,
-	output 	reg 												exu_finished 				,
+	input       [2:0]                   							funct3							,
+	output                              							zero_flag						,
+	input 																						id_to_ex						,
+	input 																						ex_to_wb						,
+	output 	reg 																			exu_stall 					,
+	output 	reg 																			exu_finished 				,
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
 // 将每个bit或起来取反

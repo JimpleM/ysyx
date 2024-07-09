@@ -1,25 +1,25 @@
 `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_ifu(
-	input                               clock           		,
-	input                               reset           		,
+	input                               							clock           		,
+	input                               							reset           		,
 
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]     	jump_pc         		,
-	input                               jump_pc_valid   		,
-	input                               ifu_jump           	,
-	input                               exu_finished       	,
+	input                               							jump_pc_valid   		,
+	input                               							ifu_jump           	,
+	input                               							exu_finished       	,
 
 	// IFU Interface	
-	output  		                        Icache_r_valid_o		,
+	output  		                        							Icache_r_valid_o		,
 	output  		[`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o 		,
-	input   		                        Icache_r_ready_i		,
+	input   		                        							Icache_r_ready_i		,
 	input   		[`YSYX_23060077_DATA_WIDTH-1:0]       Icache_r_data_i 		,
 	output  		[8-1:0]    Icache_r_len_o  		,
-	input   		                        Icache_r_last_i 		,
+	input   		                        							Icache_r_last_i 		,
 
 	// output                              ifu_stall    		   ,
-	input 															if_to_id_ready_i		,
-	output 	reg                         if_to_id_valid_o		,
+	input 																						if_to_id_ready_i		,
+	output 	reg                         							if_to_id_valid_o		,
 	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o						,
 	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst_o
 );
