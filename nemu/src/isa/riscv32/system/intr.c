@@ -20,7 +20,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
    * Then return the address of the interrupt/exception vector.
    */
   if(NO == ECALL){
-    printf("cpu.csr[MSTATUS]:%x\n",cpu.csr[MSTATUS]);
+    // printf("cpu.csr[MSTATUS]:%x\n",cpu.csr[MSTATUS]);
     if(cpu.csr[MSTATUS] & MSTATUS_MPP){
       cpu.csr[MCAUSE] = ECALL_M;
     }else{

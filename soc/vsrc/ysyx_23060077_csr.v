@@ -4,34 +4,34 @@ module ysyx_23060077_csr(
 	input 	                            clock       				,
 	input 	                            reset       				,
 
-	input       [`CSR_ADDR_WIDTH-1:0]   csr_wr_addr 				,
-	input       [`DATA_WIDTH-1:0]       csr_wr_data 				,
-	input       [`CSR_ADDR_WIDTH-1:0]   csr_rd_addr 				,
-	output 	reg [`DATA_WIDTH-1:0]       csr_rd_data 				,
+	input       [`YSYX_23060077_CSR_ADDR_WIDTH-1:0]   csr_wr_addr 				,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_wr_data 				,
+	input       [`YSYX_23060077_CSR_ADDR_WIDTH-1:0]   csr_rd_addr 				,
+	output 	reg [`YSYX_23060077_DATA_WIDTH-1:0]       csr_rd_data 				,
 
 	input                               csr_ecall_i 				,
 	input                               csr_mret_i  				,
 
 	input              									sys      						, 
 	input       [2:0]       						funct3        			,
-	input       [`DATA_WIDTH-1:0]       csr_pc        			,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_pc        			,
 
-	output      [`DATA_WIDTH-1:0]       csr_mstatus   			,
-	output      [`DATA_WIDTH-1:0]       csr_mtvec     			,
-	output      [`INST_WIDTH-1:0]       csr_mpec   
+	output      [`YSYX_23060077_DATA_WIDTH-1:0]       csr_mstatus   			,
+	output      [`YSYX_23060077_DATA_WIDTH-1:0]       csr_mtvec     			,
+	output      [`YSYX_23060077_INST_WIDTH-1:0]       csr_mpec   
 );
 
-localparam CSR_M_CYCLE_ADDR   	= `CSR_ADDR_WIDTH'hb00;
-localparam CSR_MSTATUS_ADDR   	= `CSR_ADDR_WIDTH'h300;
-localparam CSR_MIE_ADDR       	= `CSR_ADDR_WIDTH'h304;
-localparam CSR_MTVEC_ADDR     	= `CSR_ADDR_WIDTH'h305;
-localparam CSR_MEPC_ADDR      	= `CSR_ADDR_WIDTH'h341;
-localparam CSR_MCAUSE_ADDR    	= `CSR_ADDR_WIDTH'h342;
-localparam CSR_MTVAL_ADDR     	= `CSR_ADDR_WIDTH'h343;
-localparam CSR_MINSTRET_ADDR  	= `CSR_ADDR_WIDTH'hb02;
-localparam CSR_MSCRATCH_ADDR  	= `CSR_ADDR_WIDTH'h340;
-localparam CSR_MVENDORID_ADDR 	= `CSR_ADDR_WIDTH'hF11;
-localparam CSR_MARCHID_ADDR   	= `CSR_ADDR_WIDTH'hF12;
+localparam CSR_M_CYCLE_ADDR   	= `YSYX_23060077_CSR_ADDR_WIDTH'hb00;
+localparam CSR_MSTATUS_ADDR   	= `YSYX_23060077_CSR_ADDR_WIDTH'h300;
+localparam CSR_MIE_ADDR       	= `YSYX_23060077_CSR_ADDR_WIDTH'h304;
+localparam CSR_MTVEC_ADDR     	= `YSYX_23060077_CSR_ADDR_WIDTH'h305;
+localparam CSR_MEPC_ADDR      	= `YSYX_23060077_CSR_ADDR_WIDTH'h341;
+localparam CSR_MCAUSE_ADDR    	= `YSYX_23060077_CSR_ADDR_WIDTH'h342;
+localparam CSR_MTVAL_ADDR     	= `YSYX_23060077_CSR_ADDR_WIDTH'h343;
+localparam CSR_MINSTRET_ADDR  	= `YSYX_23060077_CSR_ADDR_WIDTH'hb02;
+localparam CSR_MSCRATCH_ADDR  	= `YSYX_23060077_CSR_ADDR_WIDTH'h340;
+localparam CSR_MVENDORID_ADDR 	= `YSYX_23060077_CSR_ADDR_WIDTH'hF11;
+localparam CSR_MARCHID_ADDR   	= `YSYX_23060077_CSR_ADDR_WIDTH'hF12;
 
 localparam CSR_REG_WIDTH 				= 3;
 localparam CSR_MSTATUS         	= 'd1;
@@ -40,10 +40,10 @@ localparam CSR_MEPC            	= 'd3;
 localparam CSR_MCAUSE          	= 'd4;
 localparam CSR_MVENDORID       	= 'd5;
 localparam CSR_MARCHID         	= 'd6;
-localparam MVENDORID       		 	= `DATA_WIDTH'h79737978;
-localparam MARCHID         		 	= `DATA_WIDTH'h015FDE6D;
+localparam MVENDORID       		 	= `YSYX_23060077_DATA_WIDTH'h79737978;
+localparam MARCHID         		 	= `YSYX_23060077_DATA_WIDTH'h015FDE6D;
 
-reg [`DATA_WIDTH-1:0] csr_reg [2**CSR_REG_WIDTH-1:0];
+reg [`YSYX_23060077_DATA_WIDTH-1:0] csr_reg [2**CSR_REG_WIDTH-1:0];
 reg [CSR_REG_WIDTH-1:0] csr_reg_addr;
 
 wire enable = sys & (|funct3); //funct3不为0
@@ -190,7 +190,7 @@ always @(posedge clock) begin
 end
 
 //mcause
-wire [`DATA_WIDTH-1:0] mcause;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] mcause;
 assign mcause = csr_reg[CSR_MCAUSE];
 always @(posedge clock) begin
 	if(reset)begin
@@ -211,7 +211,7 @@ end
 
 
 `ifdef USING_DPI_C
-import "DPI-C" function void set_csr_ptr(input logic [`DATA_WIDTH-1:0] csr_reg []);
+import "DPI-C" function void set_csr_ptr(input logic [`YSYX_23060077_DATA_WIDTH-1:0] csr_reg []);
 initial set_csr_ptr(csr_reg);
 `endif
 

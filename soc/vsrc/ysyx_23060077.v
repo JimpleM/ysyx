@@ -67,18 +67,18 @@ module ysyx_23060077(
 
 
 // ifu
-wire [`DATA_WIDTH-1:0]      ifu_pc          	;
-wire [`INST_WIDTH-1:0]      ifu_inst        	;
-wire [`INST_WIDTH-1:0]      ifu_inst_t      	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      ifu_pc          	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      ifu_inst        	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      ifu_inst_t      	;
 
-wire [`DATA_WIDTH-1:0]      jump_pc         	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      jump_pc         	;
 wire                        jump_pc_valid   	;
 
 wire                        Icache_r_valid_o	;
-wire [`AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o 	;
+wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  Icache_r_addr_o 	;
 wire                        Icache_r_ready_i	;
-wire [`DATA_WIDTH-1:0]      Icache_r_data_i 	;
-wire [`AXI_LEN_WIDTH-1:0]   Icache_r_len_o  	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      Icache_r_data_i 	;
+wire [8-1:0]   Icache_r_len_o  	;
 wire                        Icache_r_last_i 	;
 
 wire   											ifu_jal 					;
@@ -90,20 +90,20 @@ wire   											ifu_jump					;
 wire												ifu_sys						;
 
 // idu
-wire [`DATA_WIDTH-1:0]      idu_pc          	;
-wire [`INST_WIDTH-1:0]      idu_inst        	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      idu_pc          	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      idu_inst        	;
 
 wire                       	idu_branch				;
 wire                       	idu_jal		   			;
 wire                       	idu_jalr					;
-wire [`REG_WIDTH-1:0]   		idu_rd_addr				;
+wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rd_addr				;
 wire                       	idu_rd_wen_req		;
-wire [`REG_WIDTH-1:0]   		idu_rs1		   			;
-wire [`REG_WIDTH-1:0]   		idu_rs2		   			;
-wire [`DATA_WIDTH-1:0]     	idu_imm		   			;
-wire [`ALU_OPT_WIDTH-1:0]   idu_alu_opt	    	;
-wire [`SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
-wire [`LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
+wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs1		   			;
+wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs2		   			;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_imm		   			;
+wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   idu_alu_opt	    	;
+wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
+wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
 wire 												idu_alu_mul				;
 wire 												idu_alu_div				;
 wire [2:0]                  idu_funct3	    	;
@@ -111,30 +111,30 @@ wire 												idu_csr_ecall			;
 wire 												idu_csr_mret			;
 wire												idu_sys						;
 //regfile
-wire [`DATA_WIDTH-1:0]     	idu_src1					;
-wire [`DATA_WIDTH-1:0]     	idu_src2					;
-wire [`DATA_WIDTH-1:0]     	idu_rs1_data			;
-wire [`DATA_WIDTH-1:0]     	idu_rs2_data			;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_src1					;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_src2					;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_rs1_data			;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_rs2_data			;
 wire 												rs1_busy					;
 wire 												rs2_busy					;
 wire 												rd_busy						;
 
 //exu
 
-wire [`DATA_WIDTH-1:0]      exu_pc          	;
-wire [`INST_WIDTH-1:0]      exu_inst        	;
-wire [`DATA_WIDTH-1:0]     	exu_src1					;
-wire [`DATA_WIDTH-1:0]     	exu_src2					;
-wire [`DATA_WIDTH-1:0]     	exu_imm		    		;
-wire [`ALU_OPT_WIDTH-1:0]   exu_alu_opt	    	;
-wire [`SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
-wire [`LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_pc          	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      exu_inst        	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src1					;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src2					;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_imm		    		;
+wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   exu_alu_opt	    	;
+wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
+wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
 wire [2:0]                  exu_funct3	    	;
 wire 												exu_alu_mul				;
 wire 												exu_alu_div				;
 wire                       	exu_branch				;
 wire                       	exu_rd_wen_req		;
-wire [`REG_WIDTH-1:0]   		exu_rd_addr				;
+wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
 wire 												exu_csr_ecall			;
 wire 												exu_csr_mret 			;
 wire												exu_sys						;
@@ -142,54 +142,54 @@ wire												exu_sys						;
 wire                        exu_stall					;
 wire                        exu_finished			;
 wire                        zero_flag					;
-wire [`DATA_WIDTH-1:0]      exu_result				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_result				;
 
 //lsu
-wire [`DATA_WIDTH-1:0]     	lsu_result				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	lsu_result				;
 wire                        mem_stall       	;
 wire                        lsu_finished      ;
 
 wire                        lsu_r_valid_o   	;
-wire [`AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    	;
+wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  lsu_r_addr_o    	;
 wire                        lsu_r_ready_i   	;
-wire [`DATA_WIDTH-1:0]      lsu_r_data_i    	;
-wire [`AXI_SIZE_WIDTH-1:0]  lsu_r_size_o    	;
-wire [`AXI_LEN_WIDTH-1:0]   lsu_r_len_o     	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      lsu_r_data_i    	;
+wire [3-1:0]  lsu_r_size_o    	;
+wire [8-1:0]   lsu_r_len_o     	;
 wire                        lsu_r_last_i    	;
 wire                        lsu_w_valid_o   	;
-wire [`AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    	;
+wire [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]  lsu_w_addr_o    	;
 wire                        lsu_w_ready_i   	;
-wire [`DATA_WIDTH-1:0]      lsu_w_data_o    	;
-wire [`AXI_SIZE_WIDTH-1:0]  lsu_w_size_o    	;
-wire [`AXI_LEN_WIDTH-1:0]   lsu_w_len_o     	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      lsu_w_data_o    	;
+wire [3-1:0]  lsu_w_size_o    	;
+wire [8-1:0]   lsu_w_len_o     	;
 wire                        lsu_w_last_i    	;
 
 //wbu
-wire [`DATA_WIDTH-1:0]      wbu_pc          	;
-wire 												wbu_zero_flag			;
-wire [`DATA_WIDTH-1:0]			wb_exu_result			;
-wire                        wbu_rd_wen_req    ;
-wire [`REG_WIDTH-1:0]   		wbu_rd_addr				;
-wire [`DATA_WIDTH-1:0]     	wbu_rd_data		  	;
-wire [`LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
-wire [`DATA_WIDTH-1:0]			wbu_lsu_result		;
-wire [`DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
-wire												wbu_sys						;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_pc          	;
+wire 																			wbu_zero_flag			;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_exu_result			;
+wire                        							wbu_rd_wen_req    ;
+wire [`YSYX_23060077_REG_WIDTH-1:0]   		wbu_rd_addr				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_data		  	;
+wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			wbu_lsu_result		;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
+wire																			wbu_sys						;
 
-wire [`DATA_WIDTH-1:0]			wb_csr_mtvec;
-wire [`DATA_WIDTH-1:0]			wb_csr_mpec;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_csr_mtvec;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_csr_mpec;
 //csr
-wire [`DATA_WIDTH-1:0]     	csr_wr_data				;
-wire [`DATA_WIDTH-1:0]     	csr_rd_data				;
-wire [`DATA_WIDTH-1:0]      csr_mstatus     	;
-wire [`DATA_WIDTH-1:0]      csr_mtvec       	;
-wire [`INST_WIDTH-1:0]      csr_mpec        	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_wr_data				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_rd_data				;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_mstatus     	;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_mtvec       	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      csr_mpec        	;
 
 
 
 
-wire [`DATA_WIDTH-1:0]      wbu_jump_pc;
-wire [`DATA_WIDTH-1:0]      wbu_jump_pc_add;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc_add;
 assign wbu_jump_pc = ifu_branch ?(!wbu_zero_flag ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
 assign jump_pc = ifu_csr_mret ? wb_csr_mpec : ( ifu_csr_ecall ? wb_csr_mtvec :wbu_jump_pc);
 
@@ -231,7 +231,7 @@ wire if_to_id_valid;
 reg if_to_id_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH+`INST_WIDTH+6),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_INST_WIDTH+6),
 	.RESET_VAL      ('d0)
 )pipeline_if_to_id(
 	.clock	( clock ),
@@ -310,8 +310,8 @@ ysyx_23060077_regfile regfile_u0(
 	.reg_rd_addr		( wbu_rd_addr	),
 	.reg_rd_data		( wbu_rd_data	)
 );
-wire [`DATA_WIDTH-1:0] idu_jump_src1 = idu_jalr ? idu_src1 : idu_pc;
-wire [`DATA_WIDTH-1:0] ex_idu_jump_src1;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] idu_jump_src1 = idu_jalr ? idu_src1 : idu_pc;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] ex_idu_jump_src1;
 
 assign idu_src1 =	
 (|idu_rs1) ? (
@@ -328,7 +328,7 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*5+`ALU_OPT_WIDTH+`SRC_SEL_WIDTH+3+`LSU_OPT_WIDTH+1+1+`REG_WIDTH+3+`DATA_WIDTH+2),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+3+`YSYX_23060077_DATA_WIDTH+2),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -413,7 +413,7 @@ ysyx_23060077_lsu lsu_u0(
 
 
 
-wire [`CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`CSR_WIDTH];
+wire [`YSYX_23060077_CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`YSYX_23060077_CSR_WIDTH];
 assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
 
 ysyx_23060077_csr  csr_u0 (
@@ -437,11 +437,11 @@ ysyx_23060077_csr  csr_u0 (
 );
 
 
-wire [`DATA_WIDTH-1:0] 			jump_pc_add;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] 			jump_pc_add;
 assign jump_pc_add  = ex_idu_jump_src1 + exu_imm;	
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`DATA_WIDTH*2+1+1+`REG_WIDTH+`LSU_OPT_WIDTH+`DATA_WIDTH+`DATA_WIDTH+1+`DATA_WIDTH*3),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+1+1+`YSYX_23060077_REG_WIDTH+`YSYX_23060077_LSU_OPT_WIDTH+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH*3),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -544,8 +544,8 @@ ysyx_23060077_axi_arbiter axi_arbiter_u0(
 );
 
 `ifdef USING_DPI_C
-reg [`DATA_WIDTH-1:0]      commit_pc          	;	// 为了difftest
-reg [`INST_WIDTH-1:0]      commit_inst        	;
+reg [`YSYX_23060077_DATA_WIDTH-1:0]      commit_pc          	;	// 为了difftest
+reg [`YSYX_23060077_INST_WIDTH-1:0]      commit_inst        	;
 
 always @(posedge clock)begin
 	if(reset)begin

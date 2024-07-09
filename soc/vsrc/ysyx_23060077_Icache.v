@@ -5,18 +5,18 @@ module ysyx_23060077_Icache(
 	input                           		reset             	,
 
 	input                           		ifu_valid_i       	,
-	input  			[`INST_WIDTH-1:0]   		ifu_addr_i        	,
+	input  			[`YSYX_23060077_INST_WIDTH-1:0]   		ifu_addr_i        	,
 	output reg                      		ifu_ready_o       	,      
-	output reg 	[`DATA_WIDTH-1:0]   		ifu_data_o        	,  
+	output reg 	[`YSYX_23060077_DATA_WIDTH-1:0]   		ifu_data_o        	,  
 
 	input																ifu_fence_i					,
 
 	// ICache Interface
 	output reg                      		Icache_r_valid_o  	,
-	output reg	[`AXI_ADDR_WIDTH-1:0] 	Icache_r_addr_o   	,
+	output reg	[`YSYX_23060077_AXI_ADDR_WIDTH-1:0] 	Icache_r_addr_o   	,
 	input                           		Icache_r_ready_i  	,
-	input   		[`DATA_WIDTH-1:0]     	Icache_r_data_i   	,
-	output  		[`AXI_LEN_WIDTH-1:0]  	Icache_r_len_o    	,
+	input   		[`YSYX_23060077_DATA_WIDTH-1:0]     	Icache_r_data_i   	,
+	output  		[8-1:0]  	Icache_r_len_o    	,
 	input                           		Icache_r_last_i     
 
 );

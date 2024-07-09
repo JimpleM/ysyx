@@ -5,15 +5,15 @@ module ysyx_23060077_div(
 	input 	                            reset       				,
 
   input                               div_signed 				  ,
-  input       [`DATA_WIDTH-1:0]       dividend     		    , //被除数
-	input       [`DATA_WIDTH-1:0]       divisor				      , //除数
+  input       [`YSYX_23060077_DATA_WIDTH-1:0]       dividend     		    , //被除数
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       divisor				      , //除数
 
   input 	                            flush       				,
   input 	                            div_valid       		,
 	output 	reg                         div_ready       	  ,
   output 	reg                         out_valid       	  ,
-  output  reg [`DATA_WIDTH-1:0]       quotient				    ,
-  output  reg [`DATA_WIDTH-1:0]       remainder				    
+  output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       quotient				    ,
+  output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       remainder				    
 
 );
 

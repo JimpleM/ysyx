@@ -5,15 +5,15 @@ module ysyx_23060077_wallace(
 	input 	                            reset       				,
 
   input       [1:0]                   mul_signed 				  ,
-  input       [`DATA_WIDTH-1:0]       multiplicand     		,
-	input       [`DATA_WIDTH-1:0]       multiplier				  ,
+  input       [`YSYX_23060077_DATA_WIDTH-1:0]       multiplicand     		,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       multiplier				  ,
 
   input 	                            flush       				,
   input 	                            mul_valid       		,
 	output 	reg                         mul_ready       	  ,
   output 	reg                         out_valid       	  ,
-  output  reg [`DATA_WIDTH-1:0]       result_hi				    ,
-  output  reg [`DATA_WIDTH-1:0]       result_ho				    
+  output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       result_hi				    ,
+  output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       result_ho				    
 
 );
 localparam PP_LEN = 68;
@@ -28,8 +28,8 @@ localparam [MUL_STATE_WITDH-1:0] MUL_STAGE3  		= 'd3;
 wire [PP_LEN-1:0] result = pipe6_s[0] + {pipe6_c[0][PP_LEN-2:0],1'b0};
 
 reg   [1:0]             booth_signed;
-reg   [`DATA_WIDTH-1:0] booth_src1  ;
-reg   [`DATA_WIDTH-1:0] booth_src2  ;
+reg   [`YSYX_23060077_DATA_WIDTH-1:0] booth_src1  ;
+reg   [`YSYX_23060077_DATA_WIDTH-1:0] booth_src2  ;
 
 always @(posedge clock) begin
   if(reset)begin

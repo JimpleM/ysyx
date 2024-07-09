@@ -1,9 +1,9 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_id_imm(
-	input 	    [`INST_WIDTH-1:0]   		inst								,
-	output  		[`DATA_WIDTH-1:0]   		imm
+	input 	    [`YSYX_23060077_INST_WIDTH-1:0]   		inst								,
+	output  		[`YSYX_23060077_DATA_WIDTH-1:0]   		imm
 );
-reg [`DATA_WIDTH-1:0]   imm_r;
+reg [`YSYX_23060077_DATA_WIDTH-1:0]   imm_r;
 assign imm = imm_r;
 
 
@@ -25,16 +25,16 @@ assign imm = imm_r;
 // end
 
 
-wire [`DATA_WIDTH-1:0]  imm_typeI;
-wire [`DATA_WIDTH-1:0]  imm_typeU;
-wire [`DATA_WIDTH-1:0]  imm_typeS;
-wire [`DATA_WIDTH-1:0]  imm_typeB;
-wire [`DATA_WIDTH-1:0]  imm_typeJ;
-wire [`DATA_WIDTH-1:0]  imm_typeR;
-wire [`DATA_WIDTH-1:0]  imm_type_NONE;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeI;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeU;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeS;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeB;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeJ;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_typeR;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]  imm_type_NONE;
 
-assign imm_typeR        = {`DATA_WIDTH{1'b0}};
-assign imm_type_NONE    = {`DATA_WIDTH{1'b0}};
+assign imm_typeR        = {`YSYX_23060077_DATA_WIDTH{1'b0}};
+assign imm_type_NONE    = {`YSYX_23060077_DATA_WIDTH{1'b0}};
 
 always @(*) begin
 	case(inst[6:0])

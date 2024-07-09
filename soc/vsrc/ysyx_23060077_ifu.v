@@ -4,38 +4,38 @@ module ysyx_23060077_ifu(
 	input                               clock           		,
 	input                               reset           		,
 
-	input       [`DATA_WIDTH-1:0]     	jump_pc         		,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]     	jump_pc         		,
 	input                               jump_pc_valid   		,
 	input                               ifu_jump           	,
 	input                               exu_finished       	,
 
 	// IFU Interface	
 	output  		                        Icache_r_valid_o		,
-	output  		[`AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o 		,
+	output  		[`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o 		,
 	input   		                        Icache_r_ready_i		,
-	input   		[`DATA_WIDTH-1:0]       Icache_r_data_i 		,
-	output  		[`AXI_LEN_WIDTH-1:0]    Icache_r_len_o  		,
+	input   		[`YSYX_23060077_DATA_WIDTH-1:0]       Icache_r_data_i 		,
+	output  		[8-1:0]    Icache_r_len_o  		,
 	input   		                        Icache_r_last_i 		,
 
 	// output                              ifu_stall    		   ,
 	input 															if_to_id_ready_i		,
 	output 	reg                         if_to_id_valid_o		,
-	output 		 	[`INST_WIDTH-1:0]       ifu_pc_o						,
-	output 		 	[`INST_WIDTH-1:0]       ifu_inst_o
+	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o						,
+	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst_o
 );
 
 
 
 
-reg   	[`DATA_WIDTH-1:0]         pc;
-wire  	[`INST_WIDTH-1:0]         inst;
+reg   	[`YSYX_23060077_DATA_WIDTH-1:0]         pc;
+wire  	[`YSYX_23060077_INST_WIDTH-1:0]         inst;
 
 wire    ifu_fence_i =  (ifu_inst_o[6:0] == 7'b00011_11) ? ifu_inst_o[12] : 1'b0;
 
 wire                        ifu_valid_o ;
-wire    [`INST_WIDTH-1:0]   ifu_addr_o  ;
+wire    [`YSYX_23060077_INST_WIDTH-1:0]   ifu_addr_o  ;
 wire                        ifu_ready_i ;
-wire 		[`DATA_WIDTH-1:0]   ifu_data_i  ;
+wire 		[`YSYX_23060077_DATA_WIDTH-1:0]   ifu_data_i  ;
 
 wire no_jump = (if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump;
 
@@ -76,8 +76,8 @@ end
 assign ifu_pc_o 		= ifu_ready_i ? pc : ifu_pc_o_t;
 assign ifu_inst_o 	= ifu_ready_i ? inst : ifu_inst_o_t;
 
-reg  	[`INST_WIDTH-1:0]       ifu_pc_o_t;
-reg  	[`DATA_WIDTH-1:0]       ifu_inst_o_t;
+reg  	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o_t;
+reg  	[`YSYX_23060077_DATA_WIDTH-1:0]       ifu_inst_o_t;
 
 localparam IFU_STATE_WITDH = 1;
 reg [IFU_STATE_WITDH-1:0] 			icache_state;

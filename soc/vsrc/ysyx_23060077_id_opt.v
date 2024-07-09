@@ -3,10 +3,22 @@ module ysyx_23060077_id_opt(
 	input 	    [6:0]                   opcode						,
 	input 	    [2:0]                   funct3						,
 	input 	    		                   	funct7						,
-	output  reg [`SRC_SEL_WIDTH-1:0]    src_sel						,
-	// output  reg [`LSU_OPT_WIDTH-1:0]    lsu_opt						,
-	output  reg [`ALU_OPT_WIDTH-1:0]    alu_opt						
+	output  reg [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel						,
+	// output  reg [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    lsu_opt						,
+	output  reg [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt						
 );
+`define LUI     7'b01101_??     //lui
+`define AUIPC   7'b00101_??     //auipc
+`define JAL     7'b11011_??     //jal
+`define JALR    7'b11001_??     //jalr
+`define BRANCH  7'b11000_??     //beq,bne,blt,bge,bltu,bgeu
+`define LOAD    7'b00000_1?     //lb,lh,lw,lbu,lhu
+`define STORE   7'b01000_??     //sb,sh,sw
+`define OP_IMM  7'b00100_??     //addi,slti,sltiu,xori,ori,andi,slli,srli,srai
+`define OP      7'b01100_??     //add,sub,sll,slt,ltu,xor,srl,sra,or,and
+`define FENCE   7'b00011_??     //fence,fence.i
+`define SYS     7'b11100_??     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  
+
 
 always @(*)begin
 	alu_opt = `ALU_NONE;

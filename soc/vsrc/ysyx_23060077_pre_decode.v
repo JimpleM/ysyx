@@ -1,7 +1,7 @@
 `include"ysyx_23060077_define.v"
 
 module ysyx_23060077_pre_decode(
-	input       [`INST_WIDTH-1:0]       ifu_inst           	,
+	input       [`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst           	,
 
 	output 		 													ifu_jal 						,
 	output 		 													ifu_jalr 						,

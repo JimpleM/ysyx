@@ -3,20 +3,20 @@ module ysyx_23060077_regfile (
 	input                               clock								,
 	input                               reset								,
 
-	input       [`REG_WIDTH-1:0]        rs1_addr						,
-	output      [`DATA_WIDTH-1:0]       rs1_data						,
+	input       [`YSYX_23060077_REG_WIDTH-1:0]        rs1_addr						,
+	output      [`YSYX_23060077_DATA_WIDTH-1:0]       rs1_data						,
 
-	input       [`REG_WIDTH-1:0]        rs2_addr						,
-	output      [`DATA_WIDTH-1:0]       rs2_data						,
+	input       [`YSYX_23060077_REG_WIDTH-1:0]        rs2_addr						,
+	output      [`YSYX_23060077_DATA_WIDTH-1:0]       rs2_data						,
 
-	input                               reg_rd_en						,
-	input       [`REG_WIDTH-1:0]        reg_rd_addr					,
-	input       [`DATA_WIDTH-1:0]       reg_rd_data
+	input                               							reg_rd_en						,
+	input       [`YSYX_23060077_REG_WIDTH-1:0]        reg_rd_addr					,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       reg_rd_data
 );
 
-localparam REG_COUNT = (1<<`REG_WIDTH);
+localparam REG_COUNT = (1<<`YSYX_23060077_REG_WIDTH);
 
-reg [`DATA_WIDTH-1:0] gpr [REG_COUNT-1:0];
+reg [`YSYX_23060077_DATA_WIDTH-1:0] gpr [REG_COUNT-1:0];
 
 
 // read rs1
@@ -26,7 +26,7 @@ assign rs1_data = gpr[rs1_addr];
 assign rs2_data = gpr[rs2_addr];
 
 integer i;
-wire [`DATA_WIDTH-1:0] reg_rd_data_t = (|reg_rd_addr) ? reg_rd_data : 'd0;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] reg_rd_data_t = (|reg_rd_addr) ? reg_rd_data : 'd0;
 // reg_rd_addr == 5'd0，不能删掉，会有一些指令把无用数据写到0寄存器
 // 用(|reg_rd_addr)代表不为0，节省逻辑电路
 always @(posedge clock) begin

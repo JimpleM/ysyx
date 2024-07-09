@@ -3,19 +3,19 @@ module ysyx_23060077_exu(
 	input 															clock 							,
 	input 															reset 							,
 
-	input 	    [`DATA_WIDTH-1:0]       pc									,
+	input 	    [`YSYX_23060077_DATA_WIDTH-1:0]       pc									,
 
-	input  	    [`DATA_WIDTH-1:0]       src1								,
-	input  	    [`DATA_WIDTH-1:0]       src2								,
+	input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       src1								,
+	input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       src2								,
 
-	input       [`DATA_WIDTH-1:0]       imm									,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       imm									,
 
 	input                               branch							,
 
-	input       [`ALU_OPT_WIDTH-1:0]    alu_opt							,
+	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt							,
 	input 															alu_mul							,
 	input 															alu_div							,
-	input       [`SRC_SEL_WIDTH-1:0]    src_sel							,
+	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
 	input       [2:0]                   funct3							,
 
 	output                              zero_flag						,
@@ -24,15 +24,15 @@ module ysyx_23060077_exu(
 	input 															ex_to_wb						,
 	output 	reg 												exu_stall 					,
 	output 	reg 												exu_finished 				,
-	output 	    [`DATA_WIDTH-1:0]       exu_result
+	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
 // 将每个bit或起来取反
 assign zero_flag = ~(|exu_result);
 
-reg  [`DATA_WIDTH-1:0] alu_a_data;
-reg  [`DATA_WIDTH-1:0] alu_b_data;
-wire [`DATA_WIDTH-1:0] alu_out_data;
-reg  [`DATA_WIDTH-1:0] branch_result;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] branch_result;
 wire carry_flag;
 wire signed_flag;
 
@@ -56,12 +56,12 @@ ysyx_23060077_ex_alu ex_alu(
 
 always @(*) begin
 	case({branch,funct3})
-		{1'b1,3'b000} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
-		{1'b1,3'b001} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
-		{1'b1,3'b100} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-		{1'b1,3'b101} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-		{1'b1,3'b110} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-		{1'b1,3'b111} : branch_result = {{(`DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+		{1'b1,3'b000} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
+		{1'b1,3'b001} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
+		{1'b1,3'b100} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+		{1'b1,3'b101} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+		{1'b1,3'b110} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+		{1'b1,3'b111} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
 		default:    		branch_result = 'd0; 
 	endcase
 end
@@ -80,7 +80,7 @@ always @(posedge clock) begin
 end
 
 reg  [1:0]  mul_signed;
-reg  [`DATA_WIDTH-1:0] mul_result;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
 wire [31:0] result_hi;
 wire [31:0] result_ho;
 wire mul_ready;
@@ -125,7 +125,7 @@ end
 
 
 reg  div_signed;
-reg  [`DATA_WIDTH-1:0] div_result;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
 wire [31:0] quotient;
 wire [31:0] remainder;
 wire div_ready;
@@ -168,7 +168,7 @@ always @(posedge clock) begin
 	end
 end
 
-reg  	[`DATA_WIDTH-1:0] exu_result_buff;
+reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
 
 always @(posedge clock ) begin
 	if(reset)begin

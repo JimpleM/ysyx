@@ -45,7 +45,7 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, "abcd");
   // context_kload(&pcb[1], hello_fun, "efgh");
   // context_uload(&pcb[0], "/bin/dummy",uload_argv,uload_envp);
-  context_uload(&pcb[1], "/bin/hello",uload_argv,uload_envp);
+  context_uload(&pcb[1], "/bin/pal",uload_argv,uload_envp);
   // context_uload(&pcb[1],"/bin/nterm",uload_argv,uload_envp);
 
   switch_boot_pcb();

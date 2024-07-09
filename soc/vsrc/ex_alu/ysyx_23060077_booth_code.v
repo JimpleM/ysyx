@@ -2,8 +2,8 @@
 
 module ysyx_23060077_booth_code(
   input       [1:0]                   booth_signed 				,
-  input       [`DATA_WIDTH-1:0]       booth_src1     				,
-	input       [`DATA_WIDTH-1:0]       booth_src2				    ,
+  input       [`YSYX_23060077_DATA_WIDTH-1:0]       booth_src1     				,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]       booth_src2				    ,
 
   output      [2*LEN-1:0]             partial_product0    ,
   output      [2*LEN-1:0]             partial_product1    ,
