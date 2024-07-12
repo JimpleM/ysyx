@@ -39,7 +39,7 @@
 #ifdef CONFIG_WAVE
     // #define CONFIG_WAVE_PC_BEGIN    0x83004dc4 
     #ifdef NPC_SIM
-        #define CONFIG_WAVE_PC_BEGIN    0x8FFFFFFF
+        #define CONFIG_WAVE_PC_BEGIN    0x80000000
     #else
         #define CONFIG_WAVE_PC_BEGIN    0xa00003e4
     #endif

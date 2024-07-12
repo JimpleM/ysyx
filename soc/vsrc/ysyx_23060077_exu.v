@@ -17,11 +17,11 @@ module ysyx_23060077_exu(
 	input 																						alu_div							,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
 	input       [2:0]                   							funct3							,
-	output                              							zero_flag						,
+	output                              							branch_taken				,
 
 	input 																						id_to_ex						,
 	input 																						ex_to_wb						,
-	
+
 	output 			[`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum						,
 	output 	reg 																			exu_stall 					,
 	output 	reg 																			exu_finished 				,
@@ -40,9 +40,16 @@ ysyx_23060077_adder addder_src1(
 	.overflow		( adder_overflow 					)
 );
 
+ysyx_23060077_bru bru_(
+	.adder_sum 				( adder_sum 		 ),
+	.adder_carry 			( adder_carry 	 ),
+	.adder_overflow		( adder_overflow ),
+	.branch        		( branch         ),
+	.funct3        		( funct3         ),
+	.branch_taken  		( branch_taken   )
+);
 
-// 将每个bit或起来取反
-assign zero_flag = ~(|exu_result);
+
 
 reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data;
 reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data;
@@ -62,6 +69,8 @@ always @(*) begin
 end
 
 
+
+
 ysyx_23060077_ex_alu ex_alu(
 	.alu_opt         (alu_opt),
 	.alu_a_data      (alu_a_data),
@@ -69,17 +78,17 @@ ysyx_23060077_ex_alu ex_alu(
 	.alu_out_data    (alu_out_data)
 );
 
-always @(*) begin
-	case({branch,funct3})
-		{1'b1,3'b000} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
-		{1'b1,3'b001} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
-		{1'b1,3'b100} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-		{1'b1,3'b101} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-		{1'b1,3'b110} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-		{1'b1,3'b111} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-		default:    		branch_result = 'd0; 
-	endcase
-end
+// always @(*) begin
+// 	case({branch,funct3})
+// 		{1'b1,3'b000} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
+// 		{1'b1,3'b001} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
+// 		{1'b1,3'b100} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+// 		{1'b1,3'b101} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+// 		{1'b1,3'b110} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
+// 		{1'b1,3'b111} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
+// 		default:    		branch_result = 'd0; 
+// 	endcase
+// end
 // 上面的单元只运行一拍
 reg  ex_alu_doing;
 always @(posedge clock) begin
@@ -199,7 +208,7 @@ always @(posedge clock ) begin
 		exu_result_buff	<= div_result;
 	end
 	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
-		exu_result_buff	<= branch ? branch_result : alu_out_data;
+		exu_result_buff	<= alu_out_data;
 	end
 end
 

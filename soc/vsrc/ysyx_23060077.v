@@ -141,7 +141,7 @@ wire																			exu_sys						;
 
 wire                        							exu_stall					;
 wire                        							exu_finished			;
-wire                        							zero_flag					;
+wire                        							branch_taken			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_result				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			adder_sum					;
 //lsu
@@ -166,7 +166,7 @@ wire                        							lsu_w_last_i    	;
 
 //wbu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_pc          	;
-wire 																			wbu_zero_flag			;
+wire 																			wbu_branch_taken	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_exu_result			;
 wire                        							wbu_rd_wen_req    ;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		wbu_rd_addr				;
@@ -190,7 +190,7 @@ wire [`YSYX_23060077_INST_WIDTH-1:0]      csr_mpec        	;
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc_add;
-assign wbu_jump_pc = ifu_branch ?(!wbu_zero_flag ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
+assign wbu_jump_pc = ifu_branch ?(wbu_branch_taken ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
 assign jump_pc = ifu_csr_mret ? wb_csr_mpec : ( ifu_csr_ecall ? wb_csr_mtvec :wbu_jump_pc);
 
 // ifu要等idu和exu运行完才能那pc去访存
@@ -372,7 +372,7 @@ ysyx_23060077_exu exu_u0(
 	.alu_div					( exu_alu_div			),
 	.src_sel					( exu_src_sel			),
 	.funct3		    		( exu_funct3    	),
-	.zero_flag				( zero_flag     	),
+	.branch_taken			( branch_taken     ),
 
 	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
 	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
@@ -451,8 +451,12 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_sys,exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,zero_flag,csr_mtvec,csr_mpec,jump_pc_add}),
-	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_sys,wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,wbu_zero_flag,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
+	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_sys,
+	exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,
+	branch_taken,csr_mtvec,csr_mpec,jump_pc_add}),
+	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_sys,
+	wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,
+	wbu_branch_taken,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc_add})
 );
 reg 	wbu_doing;
 wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;
