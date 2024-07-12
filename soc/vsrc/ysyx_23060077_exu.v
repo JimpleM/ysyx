@@ -76,7 +76,9 @@ always @(posedge clock) begin
 		ex_alu_doing	<= 'd0;
 	end
 end
-
+/*
+------------------- mul --------------------------
+*/
 reg  [1:0]  mul_signed;
 reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
 wire [31:0] result_hi;
@@ -108,7 +110,6 @@ ysyx_23060077_wallace wallace_u0(
 	.result_hi			( result_hi			),
 	.result_ho			( result_ho			)
 );
-
 always @(posedge clock) begin
 	if(reset)begin
 		mul_doing	<= 'd0;
@@ -120,8 +121,10 @@ always @(posedge clock) begin
 		mul_doing	<= 'd1;
 	end
 end
-
-
+// --------------------------------------
+/*
+------------------- div --------------------------
+*/
 reg  div_signed;
 reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
 wire [31:0] quotient;
@@ -153,7 +156,6 @@ ysyx_23060077_div div_u0(
   .quotient       ( quotient			),
   .remainder      ( remainder			)
 );
-
 always @(posedge clock) begin
 	if(reset)begin
 		div_doing	<= 'd0;
@@ -165,6 +167,7 @@ always @(posedge clock) begin
 		div_doing	<= 'd1;
 	end
 end
+// --------------------------------------
 
 reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
 
