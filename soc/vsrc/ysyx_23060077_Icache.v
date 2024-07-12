@@ -22,7 +22,7 @@ module ysyx_23060077_Icache(
 );
 
 localparam M = 4;  // b = 2 ^m = 16 块大小
-localparam N = 8;  // k = 2 ^n = 64 块数
+localparam N = 4;  // k = 2 ^n = 64 块数
 localparam CacheLineSize  = 2**M;	// = 2 ^M = 16 Byte 每一行多少个字节，一行为一个块
 localparam BLOCK_SIZE   	= 8*(2**M);	// = 8*2 ^M = 128bit
 localparam BLOCK_NUM    	= 2**N;			// 一个set有多少行

@@ -18,12 +18,29 @@ module ysyx_23060077_exu(
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
 	input       [2:0]                   							funct3							,
 	output                              							zero_flag						,
+
 	input 																						id_to_ex						,
 	input 																						ex_to_wb						,
+	
+	output 			[`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum						,
 	output 	reg 																			exu_stall 					,
 	output 	reg 																			exu_finished 				,
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
+wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
+wire adder_carry;
+wire adder_overflow;
+
+ysyx_23060077_adder addder_src1(
+	.a     			( src1 										),
+	.b					( src_sel[0] ? src2 : imm	),	
+	.is_sub 		( adder_sub								),	
+	.sum     		( adder_sum 							),
+	.carry   		( adder_carry 						),
+	.overflow		( adder_overflow 					)
+);
+
+
 // 将每个bit或起来取反
 assign zero_flag = ~(|exu_result);
 

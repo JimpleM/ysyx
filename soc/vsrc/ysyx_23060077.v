@@ -143,7 +143,7 @@ wire                        							exu_stall					;
 wire                        							exu_finished			;
 wire                        							zero_flag					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_result				;
-
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			adder_sum					;
 //lsu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	lsu_result				;
 wire                        							mem_stall       	;
@@ -376,6 +376,8 @@ ysyx_23060077_exu exu_u0(
 
 	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
 	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
+
+	.adder_sum				( adder_sum				),
 	.exu_stall      	( exu_stall     	),
 	.exu_finished 		( exu_finished		),
 	.exu_result				( exu_result    	)
@@ -384,9 +386,9 @@ ysyx_23060077_exu exu_u0(
 ysyx_23060077_lsu lsu_u0(
 	.clock						( clock		    	),
 	.reset        		( reset         ),
-	.src1     				( exu_src1      ),
+	.adder_sum     		( adder_sum     ),
 	.src2     				( exu_src2      ),
-	.imm          		( exu_imm       ),
+
 	.lsu_opt					( exu_lsu_opt   ),
 	.funct3		    		( exu_funct3    ),
 
