@@ -24,9 +24,9 @@ always @(*)begin
 	alu_opt = `ALU_NONE;
 	casez(opcode)    
 		`LUI   :begin alu_opt = `ALU_ADD;       end     //lui
-		`AUIPC :begin alu_opt = `ALU_ADD;       end     //auipc
-		`JAL   :begin alu_opt = `ALU_ADD;       end     //jal
-		`JALR  :begin alu_opt = `ALU_ADD;       end     //jalr
+		`AUIPC :begin alu_opt = `ALU_PC;       	end     //auipc
+		`JAL   :begin alu_opt = `ALU_PC;       	end     //jal
+		`JALR  :begin alu_opt = `ALU_PC;       end     //jalr
 		`BRANCH:begin 
 			case(funct3)
 				3'b000 :begin alu_opt = `ALU_SUB ;  end     //beq

@@ -30,8 +30,15 @@ module ysyx_23060077_exu(
 wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
 wire adder_carry;
 wire adder_overflow;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] adder_pc;
 
-ysyx_23060077_adder addder_src1(
+
+wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data = src1;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data = src_sel[0] ? src2 : imm;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
+
+//src_sel信号需要优化
+ysyx_23060077_adder addder_src1_u0(
 	.a     			( src1 										),
 	.b					( src_sel[0] ? src2 : imm	),	
 	.is_sub 		( adder_sub								),	
@@ -40,7 +47,16 @@ ysyx_23060077_adder addder_src1(
 	.overflow		( adder_overflow 					)
 );
 
-ysyx_23060077_bru bru_(
+ysyx_23060077_adder addder_pc_u0(
+	.a     			( pc 											),
+	.b					( src_sel[0] ? imm : 'd4	),	
+	.is_sub 		( 1'b0										),	
+	.sum     		( adder_pc 								),
+	.carry   		(  												),
+	.overflow		(  												)
+);
+
+ysyx_23060077_bru bru_u0(
 	.adder_sum 				( adder_sum 		 ),
 	.adder_carry 			( adder_carry 	 ),
 	.adder_overflow		( adder_overflow ),
@@ -49,34 +65,45 @@ ysyx_23060077_bru bru_(
 	.branch_taken  		( branch_taken   )
 );
 
-
-
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data;
-wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] branch_result;
-wire carry_flag;
-wire signed_flag;
-
-always @(*) begin
-	case(src_sel)
-		`SRC_SEL_RS1_2    : begin alu_a_data = src1;  alu_b_data = src2 ; end
-		`SRC_SEL_RS1_IMM  : begin alu_a_data = src1;  alu_b_data = imm  ; end
-		`SRC_SEL_PC_4     : begin alu_a_data = pc  ;  alu_b_data = 32'd4; end
-		`SRC_SEL_PC_IMM   : begin alu_a_data = pc  ;  alu_b_data = imm  ; end
-		default:            begin alu_a_data = 'd0 ;  alu_b_data = 'd0  ; end
-	endcase
-end
-
-
-
-
 ysyx_23060077_ex_alu ex_alu(
 	.alu_opt         (alu_opt),
 	.alu_a_data      (alu_a_data),
-	.alu_b_data      (alu_b_data),
+	.alu_b_data      ( alu_b_data),
+	.adder_sum			 (adder_sum),
+	.adder_pc					(adder_pc),
+	.adder_carry			(adder_carry),
+	.adder_overflow		(adder_overflow),
 	.alu_out_data    (alu_out_data)
 );
+
+
+
+// reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data;
+// reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data;
+// wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
+// reg  [`YSYX_23060077_DATA_WIDTH-1:0] branch_result;
+// wire carry_flag;
+// wire signed_flag;
+
+// always @(*) begin
+// 	case(src_sel)
+// 		`SRC_SEL_RS1_2    : begin alu_a_data = src1;  alu_b_data = src2 ; end
+// 		`SRC_SEL_RS1_IMM  : begin alu_a_data = src1;  alu_b_data = imm  ; end
+// 		`SRC_SEL_PC_4     : begin alu_a_data = pc  ;  alu_b_data = 32'd4; end
+// 		`SRC_SEL_PC_IMM   : begin alu_a_data = pc  ;  alu_b_data = imm  ; end
+// 		default:            begin alu_a_data = 'd0 ;  alu_b_data = 'd0  ; end
+// 	endcase
+// end
+
+
+
+
+// ysyx_23060077_ex_alu ex_alu(
+// 	.alu_opt         (alu_opt),
+// 	.alu_a_data      (alu_a_data),
+// 	.alu_b_data      (alu_b_data),
+// 	.alu_out_data    (alu_out_data)
+// );
 
 // always @(*) begin
 // 	case({branch,funct3})
