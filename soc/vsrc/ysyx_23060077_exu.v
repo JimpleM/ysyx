@@ -106,15 +106,15 @@ wire mul_ready;
 wire mul_out_valid;
 
 wire alu_mul = alu_opt_bus[`YSYX_23060077_ALU_MUL];
-wire [1:0]  mul_signed = 
-({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & 2'b11) |
-({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ]}} & 2'b11) |
-({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]}} & 2'b10);
-// (alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ] & 2'b00);
+wire [1:0]  mul_signed;
+assign mul_signed[1] = ~(alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0] & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]);
+assign mul_signed[0] = ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1];
+
+wire hi_sel = (alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0] | alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]);
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] mul_result = 
-({`YSYX_23060077_DATA_WIDTH{alu_mul &  alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & result_ho ) |
-({`YSYX_23060077_DATA_WIDTH{alu_mul & ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & result_hi ) ;
+({`YSYX_23060077_DATA_WIDTH{alu_mul & ~hi_sel}} & result_ho ) |
+({`YSYX_23060077_DATA_WIDTH{alu_mul &  hi_sel}} & result_hi ) ;
 
 // always @(*) begin
 // 	case({alu_mul,funct3})
@@ -162,12 +162,11 @@ wire div_ready;
 wire div_out_valid;
 
 wire alu_div = alu_opt_bus[`YSYX_23060077_ALU_DIV];
-wire div_signed = alu_div & (alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ] | alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]);
+wire div_signed = ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0];
+
 wire [`YSYX_23060077_DATA_WIDTH-1:0] div_result = 
-({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & quotient  ) |
-({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ]}} & quotient  ) |
-({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]}} & remainder ) |
-({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ]}} & remainder ) ;
+({`YSYX_23060077_DATA_WIDTH{alu_div & ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]}} & quotient  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_div &  alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]}} & remainder ) ;
 
 // always @(*) begin
 // 	case({alu_div,funct3})

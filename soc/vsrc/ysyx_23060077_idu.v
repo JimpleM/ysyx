@@ -40,6 +40,7 @@ wire	FUNCT3_111 				= (funct3 == 3'b111) 			;
 wire 	FUNCT7_0000001		= funct7[0]	;
 wire 	FUNCT7_0100000		= funct7[5]	;
 wire 	FUNCT3_BIT0 			= funct3[0]	;
+wire 	FUNCT3_BIT1 			= funct3[1]	;
 wire 	FUNCT3_BIT2 			= funct3[2]	;
 
 // inst type
@@ -163,12 +164,10 @@ assign alu_opt_bus[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 
 assign alu_opt_bus[`YSYX_23060077_ALU_BRU ] = FUNCT3_BIT0;
 
 // mul,div
-assign alu_opt_bus[`YSYX_23060077_ALU_MUL       ] = TYPE_MUL;
-assign alu_opt_bus[`YSYX_23060077_ALU_DIV       ] = TYPE_DIV;
-assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ] = (funct3[1:0] == 2'b00);
-assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ] = (funct3[1:0] == 2'b01);
-assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ] = (funct3[1:0] == 2'b10);
-assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ] = (funct3[1:0] == 2'b11);
+assign alu_opt_bus[`YSYX_23060077_ALU_MUL       	] = TYPE_MUL;
+assign alu_opt_bus[`YSYX_23060077_ALU_DIV       	] = TYPE_DIV;
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0 ] = FUNCT3_BIT0;
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1 ] = FUNCT3_BIT1;
 
 
 endmodule
