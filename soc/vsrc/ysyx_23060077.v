@@ -144,6 +144,7 @@ wire                        							exu_finished			;
 wire                        							branch_taken			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      exu_result				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			adder_sum					;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]			adder_pc					;
 //lsu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	lsu_result				;
 wire                        							mem_stall       	;
@@ -310,14 +311,14 @@ ysyx_23060077_regfile regfile_u0(
 	.reg_rd_addr		( wbu_rd_addr	),
 	.reg_rd_data		( wbu_rd_data	)
 );
-wire [`YSYX_23060077_DATA_WIDTH-1:0] idu_jump_src1 = idu_jalr ? idu_src1 : idu_pc;
-wire [`YSYX_23060077_DATA_WIDTH-1:0] ex_idu_jump_src1;
 
-assign idu_src1 =	
+wire [`YSYX_23060077_DATA_WIDTH-1:0] idu_src1_t;
+assign idu_src1_t =	
 (|idu_rs1) ? (
 (idu_rs1 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
 (idu_rs1 == wbu_rd_addr) ? wbu_rd_data : idu_rs1_data
 ) : idu_rs1_data;
+assign idu_src1 = idu_jal ? idu_pc : idu_src1_t;
 assign idu_src2 =
 (|idu_rs2) ? (
 (idu_rs2 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
@@ -337,9 +338,9 @@ ysyx_23060077_pipeline#(
 	.stall	( !id_to_ex_ready),
 	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
-	idu_jump_src1,idu_alu_mul,idu_alu_div}),
+	idu_alu_mul,idu_alu_div}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
-	ex_idu_jump_src1,exu_alu_mul,exu_alu_div})
+	exu_alu_mul,exu_alu_div})
 );
 
 always @(posedge clock) begin
@@ -378,6 +379,7 @@ ysyx_23060077_exu exu_u0(
 	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
 
 	.adder_sum				( adder_sum				),
+	.adder_pc					( adder_pc 				),
 	.exu_stall      	( exu_stall     	),
 	.exu_finished 		( exu_finished		),
 	.exu_result				( exu_result    	)
@@ -440,7 +442,7 @@ ysyx_23060077_csr  csr_u0 (
 
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] 			jump_pc_add;
-assign jump_pc_add  = ex_idu_jump_src1 + exu_imm;	
+assign jump_pc_add  = exu_branch ? adder_pc : adder_sum;	
 
 ysyx_23060077_pipeline#(
 	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+1+1+`YSYX_23060077_REG_WIDTH+`YSYX_23060077_LSU_OPT_WIDTH+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH*3),

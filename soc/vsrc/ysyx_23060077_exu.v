@@ -23,6 +23,7 @@ module ysyx_23060077_exu(
 	input 																						ex_to_wb						,
 
 	output 			[`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum						,
+	output 			[`YSYX_23060077_DATA_WIDTH-1:0]       adder_pc						,
 	output 	reg 																			exu_stall 					,
 	output 	reg 																			exu_finished 				,
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
@@ -31,7 +32,7 @@ wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_
 wire adder_zero_flag    ;
 wire adder_signed_flag  ;
 wire adder_unsigned_flag;
-wire [`YSYX_23060077_DATA_WIDTH-1:0] adder_pc;
+// wire [`YSYX_23060077_DATA_WIDTH-1:0] adder_pc;
 
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data = src1;
@@ -51,7 +52,7 @@ ysyx_23060077_adder addder_src1_u0(
 
 ysyx_23060077_adder addder_pc_u0(
 	.a     					( pc 											),
-	.b							( src_sel[0] ? imm : 'd4	),	
+	.b							( src_sel[1] ? imm : 'd4	),	
 	.is_sub 				( 1'b0										),	
 	.sum     				( adder_pc 								),
 	.zero_flag    	(  												),

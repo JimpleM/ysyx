@@ -94,18 +94,18 @@ end
 
 always @(*) begin
 	casez(opcode)
-		`LUI   : src_sel = `SRC_SEL_RS1_IMM ;
-		`AUIPC : src_sel = `SRC_SEL_PC_IMM  ;
-		`JAL   : src_sel = `SRC_SEL_PC_4    ;
-		`JALR  : src_sel = `SRC_SEL_PC_4    ;
-		`BRANCH: src_sel = `SRC_SEL_RS1_2   ;
-		`LOAD  : src_sel = `SRC_SEL_RS1_IMM ;
-		`STORE : src_sel = `SRC_SEL_RS1_IMM ;
-		`OP_IMM: src_sel = `SRC_SEL_RS1_IMM ;
-		`OP    : src_sel = `SRC_SEL_RS1_2   ;
-		`FENCE : src_sel = `SRC_SEL_RS1_IMM ;
-		`SYS   : src_sel = `SRC_SEL_RS1_IMM ;
-		default: src_sel = `SRC_SEL_RS1_IMM ; 
+		`LUI   : src_sel = `SRC_SEL_4_IMM ;
+		`AUIPC : src_sel = `SRC_SEL_IMM_SRC2  ;
+		`JAL   : src_sel = `SRC_SEL_4_IMM    ;
+		`JALR  : src_sel = `SRC_SEL_4_IMM    ;
+		`BRANCH: src_sel = `SRC_SEL_IMM_SRC2   ;
+		`LOAD  : src_sel = `SRC_SEL_4_IMM ;
+		`STORE : src_sel = `SRC_SEL_4_IMM ;
+		`OP_IMM: src_sel = `SRC_SEL_4_IMM ;
+		`OP    : src_sel = `SRC_SEL_4_SRC2   ;
+		`FENCE : src_sel = `SRC_SEL_4_IMM ;
+		`SYS   : src_sel = `SRC_SEL_4_IMM ;
+		default: src_sel = `SRC_SEL_4_IMM ; 
 	endcase
 end
 
