@@ -6,8 +6,8 @@ module ysyx_23060077_ex_alu(
 
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum           ,
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       adder_pc            ,
-  input                                             adder_carry         ,
-  input                                             adder_overflow      ,
+  input                                             signed_flag         ,
+  input                                             unsigned_flag       ,
   output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       alu_out_data
 );
 
@@ -49,8 +49,8 @@ always @(*) begin
     `ALU_ADD  : alu_out_data = adder_sum                       ;
     `ALU_SUB  : alu_out_data = adder_sum                      ;
     `ALU_SLL  : alu_out_data = sll_result                  ;
-    `ALU_SLT  : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},adder_sum[`YSYX_23060077_DATA_WIDTH-1] ^ adder_overflow}  ;
-    `ALU_SLTU : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},~adder_carry}           ;
+    `ALU_SLT  : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},signed_flag}  ;
+    `ALU_SLTU : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},unsigned_flag}           ;
     `ALU_XOR  : alu_out_data = alu_xor                        ;
     `ALU_SRL  : alu_out_data = srl_result                  ;
     `ALU_SRA  : alu_out_data = sra_result                                     ;

@@ -28,8 +28,9 @@ module ysyx_23060077_exu(
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
 wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
-wire adder_carry;
-wire adder_overflow;
+wire adder_zero_flag    ;
+wire adder_signed_flag  ;
+wire adder_unsigned_flag;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] adder_pc;
 
 
@@ -39,83 +40,45 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
 
 //src_sel信号需要优化
 ysyx_23060077_adder addder_src1_u0(
-	.a     			( src1 										),
-	.b					( src_sel[0] ? src2 : imm	),	
-	.is_sub 		( adder_sub								),	
-	.sum     		( adder_sum 							),
-	.carry   		( adder_carry 						),
-	.overflow		( adder_overflow 					)
+	.a     					( alu_a_data 					),
+	.b							( alu_b_data					),	
+	.is_sub 				( adder_sub						),	
+	.sum     				( adder_sum 					),
+	.zero_flag    	( adder_zero_flag    	),
+	.signed_flag  	( adder_signed_flag  	),
+	.unsigned_flag	( adder_unsigned_flag	)
 );
 
 ysyx_23060077_adder addder_pc_u0(
-	.a     			( pc 											),
-	.b					( src_sel[0] ? imm : 'd4	),	
-	.is_sub 		( 1'b0										),	
-	.sum     		( adder_pc 								),
-	.carry   		(  												),
-	.overflow		(  												)
+	.a     					( pc 											),
+	.b							( src_sel[0] ? imm : 'd4	),	
+	.is_sub 				( 1'b0										),	
+	.sum     				( adder_pc 								),
+	.zero_flag    	(  												),
+	.signed_flag  	(  												),
+	.unsigned_flag	(  												)
 );
 
 ysyx_23060077_bru bru_u0(
-	.adder_sum 				( adder_sum 		 ),
-	.adder_carry 			( adder_carry 	 ),
-	.adder_overflow		( adder_overflow ),
-	.branch        		( branch         ),
-	.funct3        		( funct3         ),
-	.branch_taken  		( branch_taken   )
+	.zero_flag    	( adder_zero_flag     ),
+	.signed_flag  	( adder_signed_flag   ),
+	.unsigned_flag	( adder_unsigned_flag ),
+	.branch        	( branch         			),
+	.funct3        	( funct3         			),
+	.branch_taken  	( branch_taken   			)
 );
 
 ysyx_23060077_ex_alu ex_alu(
-	.alu_opt         (alu_opt),
-	.alu_a_data      (alu_a_data),
-	.alu_b_data      ( alu_b_data),
-	.adder_sum			 (adder_sum),
-	.adder_pc					(adder_pc),
-	.adder_carry			(adder_carry),
-	.adder_overflow		(adder_overflow),
-	.alu_out_data    (alu_out_data)
+	.alu_opt        ( alu_opt							),
+	.alu_a_data     ( alu_a_data					),
+	.alu_b_data     ( alu_b_data					),
+	.adder_sum			( adder_sum						),
+	.adder_pc				( adder_pc						),
+	.signed_flag		( adder_signed_flag		),
+	.unsigned_flag	( adder_unsigned_flag	),
+	.alu_out_data   ( alu_out_data				)
 );
 
-
-
-// reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data;
-// reg  [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data;
-// wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
-// reg  [`YSYX_23060077_DATA_WIDTH-1:0] branch_result;
-// wire carry_flag;
-// wire signed_flag;
-
-// always @(*) begin
-// 	case(src_sel)
-// 		`SRC_SEL_RS1_2    : begin alu_a_data = src1;  alu_b_data = src2 ; end
-// 		`SRC_SEL_RS1_IMM  : begin alu_a_data = src1;  alu_b_data = imm  ; end
-// 		`SRC_SEL_PC_4     : begin alu_a_data = pc  ;  alu_b_data = 32'd4; end
-// 		`SRC_SEL_PC_IMM   : begin alu_a_data = pc  ;  alu_b_data = imm  ; end
-// 		default:            begin alu_a_data = 'd0 ;  alu_b_data = 'd0  ; end
-// 	endcase
-// end
-
-
-
-
-// ysyx_23060077_ex_alu ex_alu(
-// 	.alu_opt         (alu_opt),
-// 	.alu_a_data      (alu_a_data),
-// 	.alu_b_data      (alu_b_data),
-// 	.alu_out_data    (alu_out_data)
-// );
-
-// always @(*) begin
-// 	case({branch,funct3})
-// 		{1'b1,3'b000} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, ~(|alu_out_data)} ;
-// 		{1'b1,3'b001} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, (|alu_out_data)}  ;
-// 		{1'b1,3'b100} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-// 		{1'b1,3'b101} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-// 		{1'b1,3'b110} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, alu_out_data[0]}  ;
-// 		{1'b1,3'b111} : branch_result = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}}, !alu_out_data[0]} ;
-// 		default:    		branch_result = 'd0; 
-// 	endcase
-// end
 // 上面的单元只运行一拍
 reg  ex_alu_doing;
 always @(posedge clock) begin
@@ -132,94 +95,94 @@ end
 /*
 ------------------- mul --------------------------
 */
-reg  [1:0]  mul_signed;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
-wire [31:0] result_hi;
-wire [31:0] result_ho;
-wire mul_ready;
-wire mul_out_valid;
-always @(*) begin
-	case({alu_mul,funct3})
-		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
-		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
-		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
-		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
-		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
-	endcase
-end
-reg  mul_doing;
-wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
-wire mul_busy  = alu_mul & !mul_out_valid;
-ysyx_23060077_wallace wallace_u0(
-	.clock       		( clock					),
-	.reset       		( reset					),
-  .mul_signed 		( mul_signed		),
-	.multiplicand		( alu_a_data		),
-	.multiplier			( alu_b_data		),
-	.flush       		( 							),
-	.mul_valid   		( mul_valid 		),
-	.mul_ready   		( mul_ready			),
-	.out_valid   		( mul_out_valid	),
-	.result_hi			( result_hi			),
-	.result_ho			( result_ho			)
-);
-always @(posedge clock) begin
-	if(reset)begin
-		mul_doing	<= 'd0;
-	end
-	else if(mul_out_valid)begin
-		mul_doing	<= 'd0;
-	end
-	else if(mul_valid & mul_ready)begin
-		mul_doing	<= 'd1;
-	end
-end
+// reg  [1:0]  mul_signed;
+// reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
+// wire [31:0] result_hi;
+// wire [31:0] result_ho;
+// wire mul_ready;
+// wire mul_out_valid;
+// always @(*) begin
+// 	case({alu_mul,funct3})
+// 		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
+// 		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
+// 		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
+// 		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
+// 		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
+// 	endcase
+// end
+// reg  mul_doing;
+// wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
+// wire mul_busy  = alu_mul & !mul_out_valid;
+// ysyx_23060077_wallace wallace_u0(
+// 	.clock       		( clock					),
+// 	.reset       		( reset					),
+//   .mul_signed 		( mul_signed		),
+// 	.multiplicand		( alu_a_data		),
+// 	.multiplier			( alu_b_data		),
+// 	.flush       		( 							),
+// 	.mul_valid   		( mul_valid 		),
+// 	.mul_ready   		( mul_ready			),
+// 	.out_valid   		( mul_out_valid	),
+// 	.result_hi			( result_hi			),
+// 	.result_ho			( result_ho			)
+// );
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		mul_doing	<= 'd0;
+// 	end
+// 	else if(mul_out_valid)begin
+// 		mul_doing	<= 'd0;
+// 	end
+// 	else if(mul_valid & mul_ready)begin
+// 		mul_doing	<= 'd1;
+// 	end
+// end
 // --------------------------------------
 /*
 ------------------- div --------------------------
 */
-reg  div_signed;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
-wire [31:0] quotient;
-wire [31:0] remainder;
-wire div_ready;
-wire div_out_valid;
-always @(*) begin
-	case({alu_div,funct3})
-		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
-		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
-		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
-		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
-		default:    		begin div_signed = 'd0; div_result = 'd0; end
-	endcase
-end
-reg  div_doing;
-wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
-wire div_busy  = alu_div & !div_out_valid;
-ysyx_23060077_div div_u0(
-	.clock       		( clock			 		),
-	.reset       		( reset			 		),
-  .div_signed 		( div_signed 		),
-  .dividend     	( alu_a_data 		),
-	.divisor				( alu_b_data 		),
-  .flush          ( 							),	
-  .div_valid      ( div_valid			),
-  .div_ready      ( div_ready 		),
-  .out_valid      ( div_out_valid	),
-  .quotient       ( quotient			),
-  .remainder      ( remainder			)
-);
-always @(posedge clock) begin
-	if(reset)begin
-		div_doing	<= 'd0;
-	end
-	else if(div_out_valid)begin
-		div_doing	<= 'd0;
-	end
-	else if(div_valid & div_ready)begin
-		div_doing	<= 'd1;
-	end
-end
+// reg  div_signed;
+// reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
+// wire [31:0] quotient;
+// wire [31:0] remainder;
+// wire div_ready;
+// wire div_out_valid;
+// always @(*) begin
+// 	case({alu_div,funct3})
+// 		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
+// 		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
+// 		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
+// 		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
+// 		default:    		begin div_signed = 'd0; div_result = 'd0; end
+// 	endcase
+// end
+// reg  div_doing;
+// wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
+// wire div_busy  = alu_div & !div_out_valid;
+// ysyx_23060077_div div_u0(
+// 	.clock       		( clock			 		),
+// 	.reset       		( reset			 		),
+//   .div_signed 		( div_signed 		),
+//   .dividend     	( alu_a_data 		),
+// 	.divisor				( alu_b_data 		),
+//   .flush          ( 							),	
+//   .div_valid      ( div_valid			),
+//   .div_ready      ( div_ready 		),
+//   .out_valid      ( div_out_valid	),
+//   .quotient       ( quotient			),
+//   .remainder      ( remainder			)
+// );
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		div_doing	<= 'd0;
+// 	end
+// 	else if(div_out_valid)begin
+// 		div_doing	<= 'd0;
+// 	end
+// 	else if(div_valid & div_ready)begin
+// 		div_doing	<= 'd1;
+// 	end
+// end
 // --------------------------------------
 
 reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
@@ -228,12 +191,12 @@ always @(posedge clock ) begin
 	if(reset)begin
 		exu_result_buff	<= 'd0;
 	end
-	else if(mul_out_valid)begin
-		exu_result_buff	<= mul_result;
-	end
-	else if(div_out_valid)begin
-		exu_result_buff	<= div_result;
-	end
+	// else if(mul_out_valid)begin
+	// 	exu_result_buff	<= mul_result;
+	// end
+	// else if(div_out_valid)begin
+	// 	exu_result_buff	<= div_result;
+	// end
 	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
 		exu_result_buff	<= alu_out_data;
 	end
@@ -243,12 +206,12 @@ always @(posedge clock ) begin
 	if(reset)begin
 		exu_finished	<= 'd0;
 	end
-	else if(mul_out_valid | div_out_valid)begin
-		exu_finished	<= 'd1;
-	end
-	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
-		exu_finished	<= 'd1;
-	end
+	// else if(mul_out_valid | div_out_valid)begin
+	// 	exu_finished	<= 'd1;
+	// end
+	// else if(!alu_mul & ! alu_div & ex_alu_doing)begin
+	// 	exu_finished	<= 'd1;
+	// end
 	else if(ex_to_wb)begin
 		exu_finished	<= 'd0;
 	end
