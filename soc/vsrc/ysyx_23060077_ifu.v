@@ -66,7 +66,7 @@ always @(posedge clock) begin
 		pc <= jump_pc;
 	end
 	else if(no_jump)begin	// 没有jump情况下且和id握手成功直接访问下一个
-		pc <= ifu_pc_o + 4;
+		pc <= jump_pc;
 	end
 	else begin
 		pc <= pc;
