@@ -94,6 +94,7 @@ always @(posedge clock) begin
 		ex_alu_doing	<= 'd0;
 	end
 end
+
 `ifdef USING_DPI_C
 /*
 ------------------- mul --------------------------
@@ -186,8 +187,8 @@ always @(posedge clock) begin
 end
 // --------------------------------------
 `endif
-reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
 
+reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
 always @(posedge clock ) begin
 	if(reset)begin
 		exu_result_buff	<= 'd0;

@@ -10,5 +10,4 @@ wire cin = in[0];
 assign s = a ^ b ^ cin;
 assign cout = a & b | b & cin | a & cin;
 
-
 endmodule

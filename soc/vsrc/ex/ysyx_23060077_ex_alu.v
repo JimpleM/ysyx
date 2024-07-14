@@ -1,4 +1,4 @@
-`include"ysyx_23060077_define.v"
+// `include"ysyx_23060077_define.v"
 module ysyx_23060077_ex_alu(
   input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus         ,
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       alu_a_data          ,
@@ -10,8 +10,6 @@ module ysyx_23060077_ex_alu(
   input                                             unsigned_flag       ,
   output      [`YSYX_23060077_DATA_WIDTH-1:0]       alu_result
 );
-
-
 
 // logic
 wire [`YSYX_23060077_DATA_WIDTH-1:0] and_result   = alu_a_data & alu_b_data;
@@ -44,7 +42,7 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] sll_result = reverse_bits(shift_temp);
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_mask   = {(`YSYX_23060077_DATA_WIDTH){1'b1}} >> alu_b_data[4:0];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_result = (shift_temp & sra_mask) | ({(`YSYX_23060077_DATA_WIDTH){shift_num[`YSYX_23060077_DATA_WIDTH-1]}} &(~sra_mask));
 
-
+// alu result
 assign alu_result = 
 ({`YSYX_23060077_DATA_WIDTH{alu_opt_bus[`YSYX_23060077_ALU_ADD ]}}  & adder_sum   ) |
 ({`YSYX_23060077_DATA_WIDTH{alu_opt_bus[`YSYX_23060077_ALU_SUB ]}}  & adder_sum   ) |
