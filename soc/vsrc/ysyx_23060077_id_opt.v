@@ -3,7 +3,7 @@ module ysyx_23060077_id_opt(
 	input 	    [6:0]                   							opcode						,
 	input 	    [2:0]                   							funct3						,
 	input 	    		                   								funct7						,
-	output  reg [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel						,
+	// output  reg [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel						,
 	// output  reg [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    lsu_opt						,
 	output  reg [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt						
 );
@@ -92,22 +92,22 @@ always @(*)begin
 end
 
 
-always @(*) begin
-	casez(opcode)
-		`LUI   : src_sel = `SRC_SEL_4_IMM ;
-		`AUIPC : src_sel = `SRC_SEL_IMM_SRC2  ;
-		`JAL   : src_sel = `SRC_SEL_4_IMM    ;
-		`JALR  : src_sel = `SRC_SEL_4_IMM    ;
-		`BRANCH: src_sel = `SRC_SEL_IMM_SRC2   ;
-		`LOAD  : src_sel = `SRC_SEL_4_IMM ;
-		`STORE : src_sel = `SRC_SEL_4_IMM ;
-		`OP_IMM: src_sel = `SRC_SEL_4_IMM ;
-		`OP    : src_sel = `SRC_SEL_4_SRC2   ;
-		`FENCE : src_sel = `SRC_SEL_4_IMM ;
-		`SYS   : src_sel = `SRC_SEL_4_IMM ;
-		default: src_sel = `SRC_SEL_4_IMM ; 
-	endcase
-end
+// always @(*) begin
+// 	casez(opcode)
+// 		`LUI   : src_sel = `SRC_SEL_4_IMM ;
+// 		`AUIPC : src_sel = `SRC_SEL_IMM_SRC2  ;
+// 		`JAL   : src_sel = `SRC_SEL_4_IMM    ;
+// 		`JALR  : src_sel = `SRC_SEL_4_IMM    ;
+// 		`BRANCH: src_sel = `SRC_SEL_IMM_SRC2   ;
+// 		`LOAD  : src_sel = `SRC_SEL_4_IMM ;
+// 		`STORE : src_sel = `SRC_SEL_4_IMM ;
+// 		`OP_IMM: src_sel = `SRC_SEL_4_IMM ;
+// 		`OP    : src_sel = `SRC_SEL_4_SRC2   ;
+// 		`FENCE : src_sel = `SRC_SEL_4_IMM ;
+// 		`SYS   : src_sel = `SRC_SEL_4_IMM ;
+// 		default: src_sel = `SRC_SEL_4_IMM ; 
+// 	endcase
+// end
 
 
 // always @(*) begin

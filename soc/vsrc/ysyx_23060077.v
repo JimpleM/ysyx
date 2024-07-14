@@ -138,7 +138,8 @@ wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
 wire 																			exu_csr_ecall			;
 wire 																			exu_csr_mret 			;
 wire																			exu_sys						;
-
+wire [`YSYX_23060077_DATA_WIDTH-1:0] 			exu_jump_pc				;
+	
 wire                        							exu_stall					;
 wire                        							exu_finished			;
 wire                        							branch_taken			;
@@ -177,8 +178,6 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]			wbu_lsu_result		;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
 wire																			wbu_sys						;
 
-wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_csr_mtvec;
-wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_csr_mpec;
 //csr
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_wr_data				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_rd_data				;
@@ -191,8 +190,6 @@ wire [`YSYX_23060077_INST_WIDTH-1:0]      csr_mpec        	;
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_jump_pc_add;
-// assign wbu_jump_pc = ifu_branch ?(wbu_branch_taken ? wbu_jump_pc_add : ifu_pc+4):wbu_jump_pc_add;
-// assign jump_pc = ifu_csr_mret ? wb_csr_mpec : ( ifu_csr_ecall ? wb_csr_mtvec :wbu_jump_pc);
 
 assign jump_pc = (ifu_branch & ~wbu_branch_taken) | (~ifu_jump)? ifu_pc + 4 : wbu_jump_pc;
 
@@ -339,10 +336,12 @@ ysyx_23060077_pipeline#(
 	.wen		( id_to_ex_valid & id_to_ex_ready ),
 	.stall	( !id_to_ex_ready),
 	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
-	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,idu_csr_mret,idu_sys,
-	idu_alu_mul,idu_alu_div}),
-	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,exu_csr_mret,exu_sys,
-	exu_alu_mul,exu_alu_div})
+	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt,idu_src_sel,
+	idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,
+	idu_csr_mret,idu_sys,idu_alu_mul,idu_alu_div}),
+	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt,exu_src_sel,
+	exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,
+	exu_csr_mret,exu_sys,exu_alu_mul,exu_alu_div})
 );
 
 always @(posedge clock) begin
@@ -417,8 +416,6 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_result				( lsu_result    )
 );
 
-
-
 wire [`YSYX_23060077_CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`YSYX_23060077_CSR_WIDTH];
 assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
 
@@ -453,10 +450,10 @@ ysyx_23060077_bpu bpu_u0(
 	.jump_pc     		( exu_jump_pc   )
 );
 
-wire [`YSYX_23060077_DATA_WIDTH-1:0] 			exu_jump_pc;	
+
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+1+1+`YSYX_23060077_REG_WIDTH+`YSYX_23060077_LSU_OPT_WIDTH+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH*3),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+1+1+`YSYX_23060077_REG_WIDTH+`YSYX_23060077_LSU_OPT_WIDTH+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -466,10 +463,10 @@ ysyx_23060077_pipeline#(
 	.flush	( ),
 	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_sys,
 	exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,
-	branch_taken,csr_mtvec,csr_mpec,exu_jump_pc}),
+	branch_taken,exu_jump_pc}),
 	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_sys,
 	wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,
-	wbu_branch_taken,wb_csr_mtvec,wb_csr_mpec,wbu_jump_pc})
+	wbu_branch_taken,wbu_jump_pc})
 );
 reg 	wbu_doing;
 wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;

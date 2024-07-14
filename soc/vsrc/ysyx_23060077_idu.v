@@ -82,6 +82,9 @@ assign alu_div = 	inst[25] & R_TYPE &  funct3[2];
 // (TYPE_BRANCH|TYPE_OP) ? `SRC_SEL_RS1_2 	:
 // `SRC_SEL_RS1_IMM;
 
+assign src_sel[1] = (TYPE_AUIPC | TYPE_BRANCH);
+assign src_sel[0] = (TYPE_AUIPC | TYPE_BRANCH | TYPE_OP);
+
 //lsu_opt
 assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 
@@ -145,7 +148,7 @@ ysyx_23060077_id_opt id_opt_idu(
     .funct3     (funct3),
     .funct7     (funct7),
     
-    .src_sel    (src_sel  ),
+    // .src_sel    (src_sel  ),
     // .lsu_opt    (lsu_opt  ),
 		.alu_opt    (alu_opt  )
 );
