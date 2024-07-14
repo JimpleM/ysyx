@@ -103,8 +103,6 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_imm		   			;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   idu_alu_opt_bus	  ;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
-wire 																			idu_alu_mul				;
-wire 																			idu_alu_div				;
 wire [2:0]                  							idu_funct3	    	;
 wire 																			idu_csr_ecall			;
 wire 																			idu_csr_mret			;
@@ -129,8 +127,6 @@ wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   exu_alu_opt_bus	  ;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
 wire [2:0]                  							exu_funct3	    	;
-wire 																			exu_alu_mul				;
-wire 																			exu_alu_div				;
 wire                       								exu_branch				;
 wire                       								exu_rd_wen_req		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
@@ -368,7 +364,6 @@ ysyx_23060077_exu exu_u0(
 	.branch							( exu_branch			),
 	.alu_opt_bus				( exu_alu_opt_bus	),
 	.src_sel						( exu_src_sel			),
-	.funct3		    			( exu_funct3    	),
 	.branch_taken				( branch_taken    ),
 
 	.id_to_ex						( id_to_ex_valid & id_to_ex_ready),

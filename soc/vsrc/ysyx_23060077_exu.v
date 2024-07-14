@@ -14,7 +14,6 @@ module ysyx_23060077_exu(
 
 	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
-	input       [2:0]                   							funct3							,
 	output                              							branch_taken				,
 
 	input 																						id_to_ex						,
@@ -35,7 +34,6 @@ alu_opt_bus[`YSYX_23060077_ALU_SLTU] ;
 wire adder_zero_flag    ;
 wire adder_signed_flag  ;
 wire adder_unsigned_flag;
-// wire [`YSYX_23060077_DATA_WIDTH-1:0] adder_pc;
 
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data = src1;
@@ -116,15 +114,6 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] mul_result =
 ({`YSYX_23060077_DATA_WIDTH{alu_mul & ~hi_sel}} & result_ho ) |
 ({`YSYX_23060077_DATA_WIDTH{alu_mul &  hi_sel}} & result_hi ) ;
 
-// always @(*) begin
-// 	case({alu_mul,funct3})
-// 		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
-// 		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
-// 		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
-// 		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
-// 		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
-// 	endcase
-// end
 reg  mul_doing;
 wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
 wire mul_busy  = alu_mul & !mul_out_valid;
@@ -168,15 +157,6 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] div_result =
 ({`YSYX_23060077_DATA_WIDTH{alu_div & ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]}} & quotient  ) |
 ({`YSYX_23060077_DATA_WIDTH{alu_div &  alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1]}} & remainder ) ;
 
-// always @(*) begin
-// 	case({alu_div,funct3})
-// 		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
-// 		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
-// 		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
-// 		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
-// 		default:    		begin div_signed = 'd0; div_result = 'd0; end
-// 	endcase
-// end
 reg  div_doing;
 wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
 wire div_busy  = alu_div & !div_out_valid;
