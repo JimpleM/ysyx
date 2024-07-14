@@ -80,22 +80,6 @@ always @(posedge clock) begin
   end
 end
 
-// always @(posedge clock) begin
-//   if(reset)begin
-//     lsu_result <= 'd0 ;
-//   end
-//   else if(lsu_rd_wen_r)begin
-//   	case({lsu_opt[0],funct3})
-//       {1'b1,3'b000}: lsu_result <= {{(`YSYX_23060077_DATA_WIDTH-8){rdata[7]}}    ,rdata[7:0]} 	;
-//       {1'b1,3'b001}: lsu_result <= {{(`YSYX_23060077_DATA_WIDTH-16){rdata[15]}}  ,rdata[15:0]}	;
-//       {1'b1,3'b010}: lsu_result <= {{(`YSYX_23060077_DATA_WIDTH-32){rdata[31]}}  ,rdata[31:0]}	;
-//       {1'b1,3'b100}: lsu_result <= {{(`YSYX_23060077_DATA_WIDTH-8){1'b0}}        ,rdata[7:0]} 	;
-//       {1'b1,3'b101}: lsu_result <= {{(`YSYX_23060077_DATA_WIDTH-16){1'b0}}       ,rdata[15:0]}	;
-//       default: 			 lsu_result <= 'd0 ; 
-//   	endcase
-//   end
-// end
-
 always @(posedge clock ) begin
   if(reset)begin
     lsu_finished <= 'd0;

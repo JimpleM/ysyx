@@ -11,7 +11,8 @@ module ysyx_23060077_idu(
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        rs1									,
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        rs2									,
 	output   		[`YSYX_23060077_DATA_WIDTH-1:0]       imm									,
-	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt							,
+
+	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
 	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
 	output      [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    lsu_opt							,
 	output 																						alu_mul							,
@@ -40,7 +41,8 @@ wire	FUNCT3_111 				= (funct3 == 3'b111) 			;
 // wire 	FUNCT7_0000000		= funct7	;
 wire 	FUNCT7_0000001		= funct7[0]	;
 wire 	FUNCT7_0100000		= funct7[5]	;
-wire 	FUNCT3_bit2 			= funct3[2]		;
+wire 	FUNCT3_BIT0 			= funct3[0]	;
+wire 	FUNCT3_BIT2 			= funct3[2]	;
 
 // inst type
 wire TYPE_LUI   	= (opcode == 7'b01101_11);
@@ -90,11 +92,20 @@ assign imm	=
 
 
 
-// exu src_sel
+// exu src_sel 
+// src_sel[1] to select pc + imm / pc +4 
+// src_sel[0] to select src1 + src2 / src1 + imm 
+// special: in idu, jal need to modified src1 into pc
+// SRC_SEL_4_IMM     `YSYX_23060077_SRC_SEL_WIDTH'b00
+// SRC_SEL_4_SRC2    `YSYX_23060077_SRC_SEL_WIDTH'b01
+// SRC_SEL_IMM_IMM   `YSYX_23060077_SRC_SEL_WIDTH'b10
+// SRC_SEL_IMM_SRC2  `YSYX_23060077_SRC_SEL_WIDTH'b11
 assign src_sel[1] = (TYPE_AUIPC | TYPE_BRANCH);
 assign src_sel[0] = (TYPE_AUIPC | TYPE_BRANCH | TYPE_OP);
 
-//lsu_opt
+// lsu_opt
+// lsu_opt[0] is load/None
+// lsu_opt[1] is store/None
 assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 
 // inst
@@ -132,24 +143,28 @@ wire INST_OR   	= TYPE_OP	& FUNCT3_110;
 wire INST_AND  	= TYPE_OP	& FUNCT3_111;
 
 
-assign alu_mul = 	FUNCT7_0000001 & R_TYPE & !FUNCT3_bit2;
-assign alu_div = 	FUNCT7_0000001 & R_TYPE &  FUNCT3_bit2;
+assign alu_mul = 	FUNCT7_0000001 & R_TYPE & !FUNCT3_BIT2;
+assign alu_div = 	FUNCT7_0000001 & R_TYPE &  FUNCT3_BIT2;
 
-// alu_opt
-assign alu_opt[`YSYX_23060077_ALU_ADD ] = INST_LUI | INST_ADDI | INST_ADD								;
-assign alu_opt[`YSYX_23060077_ALU_SUB ] = INST_BEQ | INST_BNE  | INST_SLTI | INST_SUB		;
-assign alu_opt[`YSYX_23060077_ALU_SLL ] = INST_SLLI| INST_SLL 													;
-assign alu_opt[`YSYX_23060077_ALU_SLT ] = INST_BLT | INST_BGE  | INST_SLT								;
-assign alu_opt[`YSYX_23060077_ALU_SLTU] = INST_BLTU| INST_BGEU | INST_SLTIU| INST_SLTU	;
-assign alu_opt[`YSYX_23060077_ALU_XOR ] = INST_XORI| INST_XOR														;
-assign alu_opt[`YSYX_23060077_ALU_SRL ] = INST_SRLI| INST_SRL														;
-assign alu_opt[`YSYX_23060077_ALU_SRA ] = INST_SRAI| INST_SRA														;
-assign alu_opt[`YSYX_23060077_ALU_OR  ] = INST_ORI | INST_OR														;
-assign alu_opt[`YSYX_23060077_ALU_AND ] = INST_ANDI| INST_AND														;
-assign alu_opt[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 						;
+// alu_opt_bus
+assign alu_opt_bus[`YSYX_23060077_ALU_ADD ] = INST_LUI | INST_ADDI | INST_ADD								;
+assign alu_opt_bus[`YSYX_23060077_ALU_SUB ] = INST_BEQ | INST_BNE  | INST_SLTI | INST_SUB		;
+assign alu_opt_bus[`YSYX_23060077_ALU_SLL ] = INST_SLLI| INST_SLL 													;
+assign alu_opt_bus[`YSYX_23060077_ALU_SLT ] = INST_BLT | INST_BGE  | INST_SLT								;
+assign alu_opt_bus[`YSYX_23060077_ALU_SLTU] = INST_BLTU| INST_BGEU | INST_SLTIU| INST_SLTU	;
+assign alu_opt_bus[`YSYX_23060077_ALU_XOR ] = INST_XORI| INST_XOR														;
+assign alu_opt_bus[`YSYX_23060077_ALU_SRL ] = INST_SRLI| INST_SRL														;
+assign alu_opt_bus[`YSYX_23060077_ALU_SRA ] = INST_SRAI| INST_SRA														;
+assign alu_opt_bus[`YSYX_23060077_ALU_OR  ] = INST_ORI | INST_OR														;
+assign alu_opt_bus[`YSYX_23060077_ALU_AND ] = INST_ANDI| INST_AND														;
+assign alu_opt_bus[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 						;
 
+// SUB: 	BIT0=INST_BNE 	~BIT0=INST_BEQ
+// SLT: 	BIT0=INST_BGE 	~BIT0=INST_BLT
+// SLTU: 	BIT0=INST_BGEU 	~BIT0:INST_BLTU
+assign alu_opt_bus[`YSYX_23060077_ALU_BRU ] = FUNCT3_BIT0;
 
-// assign alu_opt =
+// assign alu_opt_bus =
 // (TYPE_OP_IMM) ? 
 // ((funct3 == 3'b000) ? `ALU_ADD 	:
 // (funct3 == 3'b010) 	? `ALU_SUB	:
@@ -209,7 +224,7 @@ assign alu_opt[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 				
     
 //     // .src_sel    (src_sel  ),
 //     // .lsu_opt    (lsu_opt  ),
-// 		.alu_opt    (alu_opt  )
+// 		.alu_opt_bus    (alu_opt_bus  )
 // );
 
 endmodule

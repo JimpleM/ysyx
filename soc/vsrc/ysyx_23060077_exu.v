@@ -12,7 +12,7 @@ module ysyx_23060077_exu(
 
 	input                               							branch							,
 
-	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt							,
+	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
 	input 																						alu_mul							,
 	input 																						alu_div							,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
@@ -28,11 +28,11 @@ module ysyx_23060077_exu(
 	output 	reg 																			exu_finished 				,
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
-// wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
+
 wire adder_sub = 
-alu_opt[`YSYX_23060077_ALU_SUB ] |
-alu_opt[`YSYX_23060077_ALU_SLT ] |
-alu_opt[`YSYX_23060077_ALU_SLTU] ;
+alu_opt_bus[`YSYX_23060077_ALU_SUB ] |
+alu_opt_bus[`YSYX_23060077_ALU_SLT ] |
+alu_opt_bus[`YSYX_23060077_ALU_SLTU] ;
 
 wire adder_zero_flag    ;
 wire adder_signed_flag  ;
@@ -70,12 +70,12 @@ ysyx_23060077_bru bru_u0(
 	.signed_flag  	( adder_signed_flag   ),
 	.unsigned_flag	( adder_unsigned_flag ),
 	.branch        	( branch         			),
-	.funct3        	( funct3         			),
+	.alu_opt_bus    ( alu_opt_bus         ),
 	.branch_taken  	( branch_taken   			)
 );
 
 ysyx_23060077_ex_alu ex_alu(
-	.alu_opt        ( alu_opt							),
+	.alu_opt_bus    ( alu_opt_bus					),
 	.alu_a_data     ( alu_a_data					),
 	.alu_b_data     ( alu_b_data					),
 	.adder_sum			( adder_sum						),
