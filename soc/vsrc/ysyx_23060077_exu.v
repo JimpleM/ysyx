@@ -13,8 +13,6 @@ module ysyx_23060077_exu(
 	input                               							branch							,
 
 	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
-	input 																						alu_mul							,
-	input 																						alu_div							,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
 	input       [2:0]                   							funct3							,
 	output                              							branch_taken				,
@@ -42,7 +40,7 @@ wire adder_unsigned_flag;
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_a_data = src1;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_b_data = src_sel[0] ? src2 : imm;
-wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_out_data;
+wire [`YSYX_23060077_DATA_WIDTH-1:0] alu_result;
 
 //src_sel信号需要优化
 ysyx_23060077_adder addder_src1_u0(
@@ -65,7 +63,7 @@ ysyx_23060077_adder addder_pc_u0(
 	.unsigned_flag	(  												)
 );
 
-ysyx_23060077_bru bru_u0(
+ysyx_23060077_ex_bru ex_bru_u0(
 	.zero_flag    	( adder_zero_flag     ),
 	.signed_flag  	( adder_signed_flag   ),
 	.unsigned_flag	( adder_unsigned_flag ),
@@ -74,7 +72,7 @@ ysyx_23060077_bru bru_u0(
 	.branch_taken  	( branch_taken   			)
 );
 
-ysyx_23060077_ex_alu ex_alu(
+ysyx_23060077_ex_alu ex_alu_u0(
 	.alu_opt_bus    ( alu_opt_bus					),
 	.alu_a_data     ( alu_a_data					),
 	.alu_b_data     ( alu_b_data					),
@@ -82,7 +80,7 @@ ysyx_23060077_ex_alu ex_alu(
 	.adder_pc				( adder_pc						),
 	.signed_flag		( adder_signed_flag		),
 	.unsigned_flag	( adder_unsigned_flag	),
-	.alu_out_data   ( alu_out_data				)
+	.alu_result   	( alu_result					)
 );
 
 // 上面的单元只运行一拍
@@ -102,25 +100,35 @@ end
 /*
 ------------------- mul --------------------------
 */
-reg  [1:0]  mul_signed;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
 wire [31:0] result_hi;
 wire [31:0] result_ho;
 wire mul_ready;
 wire mul_out_valid;
-always @(*) begin
-	case({alu_mul,funct3})
-		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
-		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
-		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
-		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
-		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
-	endcase
-end
+
+wire alu_mul = alu_opt_bus[`YSYX_23060077_ALU_MUL];
+wire [1:0]  mul_signed = 
+({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & 2'b11) |
+({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ]}} & 2'b11) |
+({2{alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]}} & 2'b10);
+// (alu_mul & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ] & 2'b00);
+
+wire [`YSYX_23060077_DATA_WIDTH-1:0] mul_result = 
+({`YSYX_23060077_DATA_WIDTH{alu_mul &  alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & result_ho ) |
+({`YSYX_23060077_DATA_WIDTH{alu_mul & ~alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & result_hi ) ;
+
+// always @(*) begin
+// 	case({alu_mul,funct3})
+// 		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
+// 		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
+// 		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
+// 		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
+// 		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
+// 	endcase
+// end
 reg  mul_doing;
 wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
 wire mul_busy  = alu_mul & !mul_out_valid;
-ysyx_23060077_wallace wallace_u0(
+ysyx_23060077_ex_mul ex_mul_u0(
 	.clock       		( clock					),
 	.reset       		( reset					),
   .mul_signed 		( mul_signed		),
@@ -148,25 +156,32 @@ end
 /*
 ------------------- div --------------------------
 */
-reg  div_signed;
-reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
 wire [31:0] quotient;
 wire [31:0] remainder;
 wire div_ready;
 wire div_out_valid;
-always @(*) begin
-	case({alu_div,funct3})
-		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
-		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
-		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
-		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
-		default:    		begin div_signed = 'd0; div_result = 'd0; end
-	endcase
-end
+
+wire alu_div = alu_opt_bus[`YSYX_23060077_ALU_DIV];
+wire div_signed = alu_div & (alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ] | alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]);
+wire [`YSYX_23060077_DATA_WIDTH-1:0] div_result = 
+({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ]}} & quotient  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ]}} & quotient  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ]}} & remainder ) |
+({`YSYX_23060077_DATA_WIDTH{alu_div & alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ]}} & remainder ) ;
+
+// always @(*) begin
+// 	case({alu_div,funct3})
+// 		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
+// 		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
+// 		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
+// 		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
+// 		default:    		begin div_signed = 'd0; div_result = 'd0; end
+// 	endcase
+// end
 reg  div_doing;
 wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
 wire div_busy  = alu_div & !div_out_valid;
-ysyx_23060077_div div_u0(
+ysyx_23060077_ex_div ex_div_u0(
 	.clock       		( clock			 		),
 	.reset       		( reset			 		),
   .div_signed 		( div_signed 		),
@@ -207,7 +222,7 @@ always @(posedge clock ) begin
 	end
 `endif
 	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
-		exu_result_buff	<= alu_out_data;
+		exu_result_buff	<= alu_result;
 	end
 end
 

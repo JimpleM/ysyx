@@ -287,8 +287,6 @@ ysyx_23060077_idu idu_u0(
 	.alu_opt_bus		( idu_alu_opt_bus	),
 	.src_sel				( idu_src_sel	),
 	.lsu_opt				( idu_lsu_opt	),
-	.alu_mul				( idu_alu_mul	),
-	.alu_div				( idu_alu_div	),
 	.funct3		  		( idu_funct3	)
 );
 
@@ -327,7 +325,7 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+3+2),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+3),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -337,10 +335,10 @@ ysyx_23060077_pipeline#(
 	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt_bus,idu_src_sel,
 	idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,
-	idu_csr_mret,idu_sys,idu_alu_mul,idu_alu_div}),
+	idu_csr_mret,idu_sys}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt_bus,exu_src_sel,
 	exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,
-	exu_csr_mret,exu_sys,exu_alu_mul,exu_alu_div})
+	exu_csr_mret,exu_sys})
 );
 
 always @(posedge clock) begin
@@ -361,28 +359,26 @@ end
 wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_finished;
 
 ysyx_23060077_exu exu_u0(
-	.clock						( clock		    		),
-	.reset        		( reset         	),
-	.pc								( exu_pc					),
-	.src1							( exu_src1		    ),
-	.src2							( exu_src2		    ),
-	.imm							( exu_imm					),
-	.branch						( exu_branch			),
-	.alu_opt_bus			( exu_alu_opt_bus	),
-	.alu_mul					( exu_alu_mul			),
-	.alu_div					( exu_alu_div			),
-	.src_sel					( exu_src_sel			),
-	.funct3		    		( exu_funct3    	),
-	.branch_taken			( branch_taken     ),
+	.clock							( clock		    		),
+	.reset        			( reset         	),
+	.pc									( exu_pc					),
+	.src1								( exu_src1		    ),
+	.src2								( exu_src2		    ),
+	.imm								( exu_imm					),
+	.branch							( exu_branch			),
+	.alu_opt_bus				( exu_alu_opt_bus	),
+	.src_sel						( exu_src_sel			),
+	.funct3		    			( exu_funct3    	),
+	.branch_taken				( branch_taken    ),
 
-	.id_to_ex					( id_to_ex_valid & id_to_ex_ready),
-	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
+	.id_to_ex						( id_to_ex_valid & id_to_ex_ready),
+	.ex_to_wb						( ex_to_wb_valid & ex_to_wb_ready),
 
-	.adder_sum				( adder_sum				),
-	.adder_pc					( adder_pc 				),
-	.exu_stall      	( exu_stall     	),
-	.exu_finished 		( exu_finished		),
-	.exu_result				( exu_result    	)
+	.adder_sum					( adder_sum				),
+	.adder_pc						( adder_pc 				),
+	.exu_stall      		( exu_stall     	),
+	.exu_finished 			( exu_finished		),
+	.exu_result					( exu_result    	)
 );
 
 ysyx_23060077_lsu lsu_u0(

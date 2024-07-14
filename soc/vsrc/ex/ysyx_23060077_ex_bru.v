@@ -1,4 +1,4 @@
-module ysyx_23060077_bru(
+module ysyx_23060077_ex_bru(
   input       							   										zero_flag      	,
 	input                                         	signed_flag    	,
   input                                         	unsigned_flag  	,

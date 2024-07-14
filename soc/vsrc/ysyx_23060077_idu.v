@@ -1,23 +1,21 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_idu(
-	input 	    [`YSYX_23060077_INST_WIDTH-1:0]       inst								,
-	input																							idu_jal							,
-	input																							idu_jalr						,
-	input																							idu_branch					,
-	input																							idu_sys							,
+	input 	    [`YSYX_23060077_INST_WIDTH-1:0]       	inst								,
+	input																								idu_jal							,
+	input																								idu_jalr						,
+	input																								idu_branch					,
+	input																								idu_sys							,
 
-	output   		[`YSYX_23060077_REG_WIDTH-1:0]        rd									,
-	output                           									rd_wen							,
-	output   		[`YSYX_23060077_REG_WIDTH-1:0]        rs1									,
-	output   		[`YSYX_23060077_REG_WIDTH-1:0]        rs2									,
-	output   		[`YSYX_23060077_DATA_WIDTH-1:0]       imm									,
+	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rd									,
+	output                           										rd_wen							,
+	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rs1									,
+	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rs2									,
+	output   		[`YSYX_23060077_DATA_WIDTH-1:0]       	imm									,
 
-	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
-	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
-	output      [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    lsu_opt							,
-	output 																						alu_mul							,
-	output 																						alu_div 						,
-	output      [2:0]                   							funct3
+	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    	alu_opt_bus					,
+	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    	src_sel							,
+	output      [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    	lsu_opt							,
+	output      [2:0]                   								funct3
 
 );
 
@@ -47,15 +45,15 @@ wire 	FUNCT3_BIT2 			= funct3[2]	;
 // inst type
 wire TYPE_LUI   	= (opcode == 7'b01101_11);
 wire TYPE_AUIPC 	= (opcode == 7'b00101_11);
-wire TYPE_JAL   	= idu_jal;
-wire TYPE_JALR  	= idu_jalr;
-wire TYPE_BRANCH	= idu_branch;
+wire TYPE_JAL   	= idu_jal;		// 7'b11011_11
+wire TYPE_JALR  	= idu_jalr;		// 7'b11001_11
+wire TYPE_BRANCH	= idu_branch;	// 7'b11000_11
 wire TYPE_LOAD  	= (opcode == 7'b00000_11);
 wire TYPE_STORE 	= (opcode == 7'b01000_11);
 wire TYPE_OP_IMM	= (opcode == 7'b00100_11);
 wire TYPE_OP    	= (opcode == 7'b01100_11);
 wire TYPE_FENCE 	= (opcode == 7'b00011_11);
-wire TYPE_SYS   	= idu_sys;
+wire TYPE_SYS   	= idu_sys;		// 7'b11100_11
 // imm type
 wire I_TYPE 			= TYPE_JALR | TYPE_LOAD | TYPE_OP_IMM | TYPE_SYS;
 wire U_TYPE 			= TYPE_LUI | TYPE_AUIPC;
@@ -128,23 +126,23 @@ wire INST_XORI	= TYPE_OP_IMM & FUNCT3_100;
 wire INST_ORI		= TYPE_OP_IMM & FUNCT3_110;
 wire INST_ANDI	= TYPE_OP_IMM & FUNCT3_111;
 wire INST_SLLI	= TYPE_OP_IMM & FUNCT3_001;
-wire INST_SRLI	= TYPE_OP_IMM & FUNCT3_101 & (~FUNCT7_0100000);
-wire INST_SRAI	= TYPE_OP_IMM & FUNCT3_101 & FUNCT7_0100000		;
+wire INST_SRLI	= TYPE_OP_IMM & FUNCT3_101 & ~FUNCT7_0100000 ;
+wire INST_SRAI	= TYPE_OP_IMM & FUNCT3_101 & 	FUNCT7_0100000 ;
 // op
-wire INST_ADD	 	= TYPE_OP	& FUNCT3_000 & (~FUNCT7_0100000);
-wire INST_SUB	 	= TYPE_OP	& FUNCT3_000 & FUNCT7_0100000		;
+wire INST_ADD	 	= TYPE_OP	& FUNCT3_000 & ~FUNCT7_0100000 ;
+wire INST_SUB	 	= TYPE_OP	& FUNCT3_000 &  FUNCT7_0100000 ;
 wire INST_SLL	 	= TYPE_OP	& FUNCT3_001;
 wire INST_SLT	 	= TYPE_OP	& FUNCT3_010;
 wire INST_SLTU 	= TYPE_OP	& FUNCT3_011;
 wire INST_XOR  	= TYPE_OP	& FUNCT3_100;
-wire INST_SRL  	= TYPE_OP	& FUNCT3_101 & (~FUNCT7_0100000);
-wire INST_SRA  	= TYPE_OP	& FUNCT3_101 & FUNCT7_0100000		;
+wire INST_SRL  	= TYPE_OP	& FUNCT3_101 & ~FUNCT7_0100000 ;
+wire INST_SRA  	= TYPE_OP	& FUNCT3_101 &  FUNCT7_0100000 ;
 wire INST_OR   	= TYPE_OP	& FUNCT3_110;
 wire INST_AND  	= TYPE_OP	& FUNCT3_111;
+// mul,div
+wire TYPE_MUL   = TYPE_OP & FUNCT7_0000001 & ~FUNCT3_BIT2 ;
+wire TYPE_DIV   = TYPE_OP & FUNCT7_0000001 &  FUNCT3_BIT2 ;
 
-
-assign alu_mul = 	FUNCT7_0000001 & R_TYPE & !FUNCT3_BIT2;
-assign alu_div = 	FUNCT7_0000001 & R_TYPE &  FUNCT3_BIT2;
 
 // alu_opt_bus
 assign alu_opt_bus[`YSYX_23060077_ALU_ADD ] = INST_LUI | INST_ADDI | INST_ADD								;
@@ -164,82 +162,15 @@ assign alu_opt_bus[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 
 // SLTU: 	BIT0=INST_BGEU 	~BIT0:INST_BLTU
 assign alu_opt_bus[`YSYX_23060077_ALU_BRU ] = FUNCT3_BIT0;
 
-// assign alu_opt_bus =
-// (TYPE_OP_IMM) ? 
-// ((funct3 == 3'b000) ? `ALU_ADD 	:
-// (funct3 == 3'b010) 	? `ALU_SUB	:
-// (funct3 == 3'b011) 	? `ALU_SLTU	:
-// (funct3 == 3'b100) 	? `ALU_XOR	: 
-// (funct3 == 3'b110) 	? `ALU_OR		:  
-// (funct3 == 3'b111) 	? `ALU_AND	: 
-// (funct3 == 3'b001) 	? `ALU_SLL	: 
-// (funct3 == 3'b101) 	? ((funct7) ? `ALU_SRA : `ALU_SRL):0) :
-// (TYPE_OP)			?
-// ((funct3 == 3'b000)	?	((funct7) ? `ALU_SUB : `ALU_ADD) :
-// (funct3 == 3'b001)	?	`ALU_SLL	:
-// (funct3 == 3'b010)	?	`ALU_SLT	:
-// (funct3 == 3'b011)	?	`ALU_SLTU	:
-// (funct3 == 3'b100)	?	`ALU_XOR	:
-// (funct3 == 3'b101)	?	((funct7) ? `ALU_SRA : `ALU_SRL) :
-// (funct3 == 3'b110)	?	`ALU_OR		:
-// (funct3 == 3'b111)	?	`ALU_AND	: 0)	:
-// (TYPE_BRANCH) ? 
-// ((funct3 == 3'b000) ? `ALU_SUB 	:
-// (funct3 == 3'b001) 	? `ALU_SUB 	:
-// (funct3 == 3'b100) 	? `ALU_SLT 	:
-// (funct3 == 3'b101) 	? `ALU_SLT 	:
-// (funct3 == 3'b110) 	? `ALU_SLTU	:
-// (funct3 == 3'b111) 	? `ALU_SLTU	: 0)	:
-// (TYPE_LUI|TYPE_AUIPC|TYPE_JAL|TYPE_JALR) ? `ALU_ADD : `ALU_NONE;
+// mul,div
+assign alu_opt_bus[`YSYX_23060077_ALU_MUL       ] = TYPE_MUL;
+assign alu_opt_bus[`YSYX_23060077_ALU_DIV       ] = TYPE_DIV;
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_00 ] = (funct3[1:0] == 2'b00);
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_01 ] = (funct3[1:0] == 2'b01);
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_10 ] = (funct3[1:0] == 2'b10);
+assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_11 ] = (funct3[1:0] == 2'b11);
 
-
-
-// ysyx_23060077_mux#(
-//     .NR_KEY      (11), 
-//     .KEY_LEN     (7), 
-//     .DATA_LEN    (`YSYX_23060077_SRC_SEL_WIDTH)
-// )riscv_mux_id_src_sel(
-//     .key              (opcode),//opcode
-//     .default_out      (`SRC_SEL_RS1_IMM),
-//     .out              (src_sel),
-//     .lut({  `LUI   ,{`SRC_SEL_RS1_IMM},
-//             `AUIPC ,{`SRC_SEL_PC_IMM},
-//             `JAL   ,{`SRC_SEL_PC_4},
-//             `JALR  ,{`SRC_SEL_PC_4},
-//             `BRANCH,{`SRC_SEL_RS1_2},
-//             `LOAD  ,{`SRC_SEL_RS1_IMM},
-//             `STORE ,{`SRC_SEL_RS1_IMM},
-//             `OP_IMM,{`SRC_SEL_RS1_IMM},
-//             `OP    ,{`SRC_SEL_RS1_2},
-//             `FENCE ,{`SRC_SEL_RS1_IMM},
-//             `SYS   ,{`SRC_SEL_RS1_IMM}
-//   })
-// );
-
-
-// ysyx_23060077_id_opt id_opt_idu(
-//     .opcode     (opcode),
-//     .funct3     (funct3),
-//     .funct7     (funct7_1000000),
-    
-//     // .src_sel    (src_sel  ),
-//     // .lsu_opt    (lsu_opt  ),
-// 		.alu_opt_bus    (alu_opt_bus  )
-// );
 
 endmodule
 
 
-
-// opcode
-// `define LUI     7'b01101_??     //lui
-// `define AUIPC   7'b00101_??     //auipc
-// `define JAL     7'b11011_??     //jal
-// `define JALR    7'b11001_??     //jalr
-// `define BRANCH  7'b11000_??     //beq,bne,blt,bge,bltu,bgeu
-// `define LOAD    7'b00000_1?     //lb,lh,lw,lbu,lhu
-// `define STORE   7'b01000_??     //sb,sh,sw
-// `define OP_IMM  7'b00100_??     //addi,slti,sltiu,xori,ori,andi,slli,srli,srai
-// `define OP      7'b01100_??     //add,sub,sll,slt,ltu,xor,srl,sra,or,and
-// `define FENCE   7'b00011_??     //fence,fence.i
-// `define SYS     7'b11100_??     //ecall,ebreak,csrrw,csrrs,csrrc,csrrwi,cssrrsi,csrrci  

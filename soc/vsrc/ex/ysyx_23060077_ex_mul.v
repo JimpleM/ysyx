@@ -1,6 +1,5 @@
 // `include"ysyx_23060077_define.v"
-
-module ysyx_23060077_wallace(
+module ysyx_23060077_ex_mul(
 	input 	                                          clock       				,
 	input 	                                          reset       				,
 

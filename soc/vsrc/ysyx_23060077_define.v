@@ -5,7 +5,7 @@
 `define YSYX_23060077_REG_WIDTH            5
 
 
-`define YSYX_23060077_ALU_OPT_WIDTH      12
+`define YSYX_23060077_ALU_OPT_WIDTH      18
 `define YSYX_23060077_ALU_ADD           'd0
 `define YSYX_23060077_ALU_SUB           'd1
 `define YSYX_23060077_ALU_SLL           'd2
@@ -19,6 +19,12 @@
 `define YSYX_23060077_ALU_PC            'd10
 `define YSYX_23060077_ALU_BRU           'd11
 
+`define YSYX_23060077_ALU_MUL           'd12
+`define YSYX_23060077_ALU_DIV           'd13
+`define YSYX_23060077_ALU_MULDIV_00     'd14
+`define YSYX_23060077_ALU_MULDIV_01     'd15
+`define YSYX_23060077_ALU_MULDIV_10     'd16
+`define YSYX_23060077_ALU_MULDIV_11     'd17
 
 `define YSYX_23060077_SRC_SEL_WIDTH      2
 

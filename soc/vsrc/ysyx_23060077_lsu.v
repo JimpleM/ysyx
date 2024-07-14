@@ -34,7 +34,7 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] wdata = src2;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] lsu_address;
 
-ysyx_23060077_agu agu_u0(
+ysyx_23060077_ls_agu ls_agu_u0(
   .agu_en 		  ( |lsu_opt 		), 
   .adder_sum    ( adder_sum   ),
   .lsu_address  ( lsu_address )

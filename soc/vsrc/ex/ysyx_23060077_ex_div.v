@@ -1,6 +1,6 @@
 // `include"ysyx_23060077_define.v"
 
-module ysyx_23060077_div(
+module ysyx_23060077_ex_div(
 	input 	                                          clock       				,
 	input 	                                          reset       				,
 

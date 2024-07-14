@@ -56,12 +56,6 @@ always @(posedge clock) begin
 				pc <= 32'h3000_0000;
 		`endif
 	end
-	// else if(ifu_jump)begin
-	// 		pc <= pc;
-	// end
-	// else if(stall | !exu_finished)begin
-	// 		pc <= pc;
-	// end
 	else if(jump_pc_valid)begin // a bug: 当是jalr ra,会导致jump_pc被更新跳错地方
 		pc <= jump_pc;
 	end

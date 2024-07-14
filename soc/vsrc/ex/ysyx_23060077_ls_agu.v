@@ -1,4 +1,4 @@
-module ysyx_23060077_agu(
+module ysyx_23060077_ls_agu(
   input                                             agu_en 		  ,
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum   ,
   output      [`YSYX_23060077_DATA_WIDTH-1:0]       lsu_address     	

@@ -8,7 +8,7 @@ module ysyx_23060077_ex_alu(
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       adder_pc            ,
   input                                             signed_flag         ,
   input                                             unsigned_flag       ,
-  output      [`YSYX_23060077_DATA_WIDTH-1:0]       alu_out_data
+  output      [`YSYX_23060077_DATA_WIDTH-1:0]       alu_result
 );
 
 
@@ -31,15 +31,11 @@ function [`YSYX_23060077_DATA_WIDTH-1:0] reverse_bits;
   end
 endfunction
 
-// wire shift_sll = (alu_opt_bus == `ALU_SLL);
-// wire shift_srl = (alu_opt_bus == `ALU_SRL);
-// wire shift_sra = (alu_opt_bus == `ALU_SRA);
 wire shift_sll = alu_opt_bus[`YSYX_23060077_ALU_SLL ];
 wire shift_srl = alu_opt_bus[`YSYX_23060077_ALU_SRL ];
 wire shift_sra = alu_opt_bus[`YSYX_23060077_ALU_SRA ];
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] shift_num = shift_sll ? reverse_bits(alu_a_data) : alu_a_data;
-
 wire [`YSYX_23060077_DATA_WIDTH-1:0] shift_temp = shift_num >> alu_b_data[4:0];
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] srl_result = shift_temp;
@@ -48,7 +44,8 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] sll_result = reverse_bits(shift_temp);
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_mask   = {(`YSYX_23060077_DATA_WIDTH){1'b1}} >> alu_b_data[4:0];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_result = (shift_temp & sra_mask) | ({(`YSYX_23060077_DATA_WIDTH){shift_num[`YSYX_23060077_DATA_WIDTH-1]}} &(~sra_mask));
 
-assign alu_out_data = 
+
+assign alu_result = 
 ({`YSYX_23060077_DATA_WIDTH{alu_opt_bus[`YSYX_23060077_ALU_ADD ]}}  & adder_sum   ) |
 ({`YSYX_23060077_DATA_WIDTH{alu_opt_bus[`YSYX_23060077_ALU_SUB ]}}  & adder_sum   ) |
 ({`YSYX_23060077_DATA_WIDTH{alu_opt_bus[`YSYX_23060077_ALU_SLL ]}}  & sll_result  ) |
