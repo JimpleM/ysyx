@@ -7,21 +7,33 @@
 
 // `define USING_DPI_C     // use for make sta
 
+`define YSYX_23060077_ALU_OPT_WIDTH      12
+`define YSYX_23060077_ALU_ADD           'd0
+`define YSYX_23060077_ALU_SUB           'd1
+`define YSYX_23060077_ALU_SLL           'd2
+`define YSYX_23060077_ALU_SLT           'd3
+`define YSYX_23060077_ALU_SLTU          'd4
+`define YSYX_23060077_ALU_XOR           'd5
+`define YSYX_23060077_ALU_SRL           'd6
+`define YSYX_23060077_ALU_SRA           'd7
+`define YSYX_23060077_ALU_OR            'd8
+`define YSYX_23060077_ALU_AND           'd9
+`define YSYX_23060077_ALU_PC            'd10
 
-`define YSYX_23060077_ALU_OPT_WIDTH      11
-`define ALU_NONE        `YSYX_23060077_ALU_OPT_WIDTH'd0
-`define ALU_ADD         `YSYX_23060077_ALU_OPT_WIDTH'd1
-`define ALU_SUB         `YSYX_23060077_ALU_OPT_WIDTH'd2
-`define ALU_SLL         `YSYX_23060077_ALU_OPT_WIDTH'd3
-`define ALU_SLT         `YSYX_23060077_ALU_OPT_WIDTH'd4
-`define ALU_SLTU        `YSYX_23060077_ALU_OPT_WIDTH'd5
-`define ALU_XOR         `YSYX_23060077_ALU_OPT_WIDTH'd6
-`define ALU_SRL         `YSYX_23060077_ALU_OPT_WIDTH'd7
-`define ALU_SRA         `YSYX_23060077_ALU_OPT_WIDTH'd8
-`define ALU_OR          `YSYX_23060077_ALU_OPT_WIDTH'd9
-`define ALU_AND         `YSYX_23060077_ALU_OPT_WIDTH'd10
-`define ALU_SUBU        `YSYX_23060077_ALU_OPT_WIDTH'd11
-`define ALU_PC          `YSYX_23060077_ALU_OPT_WIDTH'd12
+// `define YSYX_23060077_ALU_OPT_WIDTH      11
+// `define ALU_NONE        `YSYX_23060077_ALU_OPT_WIDTH'd0
+// `define ALU_ADD         `YSYX_23060077_ALU_OPT_WIDTH'd1
+// `define ALU_SUB         `YSYX_23060077_ALU_OPT_WIDTH'd2
+// `define ALU_SLL         `YSYX_23060077_ALU_OPT_WIDTH'd3
+// `define ALU_SLT         `YSYX_23060077_ALU_OPT_WIDTH'd4
+// `define ALU_SLTU        `YSYX_23060077_ALU_OPT_WIDTH'd5
+// `define ALU_XOR         `YSYX_23060077_ALU_OPT_WIDTH'd6
+// `define ALU_SRL         `YSYX_23060077_ALU_OPT_WIDTH'd7
+// `define ALU_SRA         `YSYX_23060077_ALU_OPT_WIDTH'd8
+// `define ALU_OR          `YSYX_23060077_ALU_OPT_WIDTH'd9
+// `define ALU_AND         `YSYX_23060077_ALU_OPT_WIDTH'd10
+// `define ALU_SUBU        `YSYX_23060077_ALU_OPT_WIDTH'd11
+// `define ALU_PC          `YSYX_23060077_ALU_OPT_WIDTH'd12
 
 `define YSYX_23060077_SRC_SEL_WIDTH      2
 // `define SRC_SEL_RS1_IMM `YSYX_23060077_SRC_SEL_WIDTH'b00

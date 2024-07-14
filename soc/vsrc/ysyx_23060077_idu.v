@@ -22,13 +22,27 @@ module ysyx_23060077_idu(
 
 assign funct3   = inst[14:12];
 
-wire [6:0]  					opcode  = inst[6:0]		;
-wire 									funct7	= inst[30] 		;
-wire [`YSYX_23060077_REG_WIDTH-1:0]	rs1_t 	= inst[19:15]	;
-wire [`YSYX_23060077_REG_WIDTH-1:0]	rs2_t		= inst[24:20]	;
-wire [`YSYX_23060077_REG_WIDTH-1:0]	rd_t 		= inst[11:7]	;
+wire [6:0]  opcode = inst[6:0]		;
+wire [6:0]  funct7 = inst[31:25]	;
 
+wire	FUNCT3_000 				= (funct3 == 3'b000) 			;
+wire	FUNCT3_001 				= (funct3 == 3'b001) 			;
+wire	FUNCT3_010 				= (funct3 == 3'b010) 			;
+wire	FUNCT3_011 				= (funct3 == 3'b011) 			;
+wire	FUNCT3_100 				= (funct3 == 3'b100) 			;
+wire	FUNCT3_101 				= (funct3 == 3'b101) 			;
+wire	FUNCT3_110 				= (funct3 == 3'b110) 			;
+wire	FUNCT3_111 				= (funct3 == 3'b111) 			;
 
+// wire 	FUNCT7_0000000		= (funct7 == 7'b0000000)	;
+// wire 	FUNCT7_0000001		= (funct7 == 7'b0000001)	;
+// wire 	FUNCT7_0100000		= (funct7 == 7'b0100000)	;
+// wire 	FUNCT7_0000000		= funct7	;
+wire 	FUNCT7_0000001		= funct7[0]	;
+wire 	FUNCT7_0100000		= funct7[5]	;
+wire 	FUNCT3_bit2 			= funct3[2]		;
+
+// inst type
 wire TYPE_LUI   	= (opcode == 7'b01101_11);
 wire TYPE_AUIPC 	= (opcode == 7'b00101_11);
 wire TYPE_JAL   	= idu_jal;
@@ -40,7 +54,7 @@ wire TYPE_OP_IMM	= (opcode == 7'b00100_11);
 wire TYPE_OP    	= (opcode == 7'b01100_11);
 wire TYPE_FENCE 	= (opcode == 7'b00011_11);
 wire TYPE_SYS   	= idu_sys;
-
+// imm type
 wire I_TYPE 			= TYPE_JALR | TYPE_LOAD | TYPE_OP_IMM | TYPE_SYS;
 wire U_TYPE 			= TYPE_LUI | TYPE_AUIPC;
 wire J_TYPE 			= TYPE_JAL;
@@ -49,6 +63,9 @@ wire S_TYPE 			= TYPE_STORE;
 wire R_TYPE 			= TYPE_OP; 
 
 // rs1 rs2 rd
+wire [`YSYX_23060077_REG_WIDTH-1:0]	rs1_t 	= inst[19:15]	;
+wire [`YSYX_23060077_REG_WIDTH-1:0]	rs2_t		= inst[24:20]	;
+wire [`YSYX_23060077_REG_WIDTH-1:0]	rd_t 		= inst[11:7]	;
 wire rs1_sel			= I_TYPE | B_TYPE | S_TYPE | R_TYPE ;
 wire rs2_sel			= B_TYPE | S_TYPE | R_TYPE;
 assign rd_wen			= U_TYPE | J_TYPE | I_TYPE | R_TYPE;
@@ -71,23 +88,65 @@ assign imm	=
 ({{(`YSYX_23060077_DATA_WIDTH){S_TYPE}} & S_TYPE_imm }) |
 ({{(`YSYX_23060077_DATA_WIDTH){TYPE_SYS}} & SYS_imm })  | 'd0;
 
-assign alu_mul = 	inst[25] & R_TYPE & !funct3[2];
-assign alu_div = 	inst[25] & R_TYPE &  funct3[2];
 
 
-// //src_sel 为0时为 SRC_SEL_RS1_IMM
-// assign src_sel = 
-// (TYPE_AUIPC) 					? `SRC_SEL_PC_IMM	:
-// (TYPE_JAL|TYPE_JALR) 	? `SRC_SEL_PC_4 	:
-// (TYPE_BRANCH|TYPE_OP) ? `SRC_SEL_RS1_2 	:
-// `SRC_SEL_RS1_IMM;
-
+// exu src_sel
 assign src_sel[1] = (TYPE_AUIPC | TYPE_BRANCH);
 assign src_sel[0] = (TYPE_AUIPC | TYPE_BRANCH | TYPE_OP);
 
 //lsu_opt
 assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 
+// inst
+wire INST_LUI 	=	TYPE_LUI	;
+wire INST_AUIPC	=	TYPE_AUIPC;
+wire INST_JAL  	=	TYPE_JAL  ;
+wire INST_JALR 	=	TYPE_JALR ;
+// branch
+wire INST_BEQ		= TYPE_BRANCH & FUNCT3_000;
+wire INST_BNE		= TYPE_BRANCH & FUNCT3_001;
+wire INST_BLT		= TYPE_BRANCH & FUNCT3_100;
+wire INST_BGE		= TYPE_BRANCH & FUNCT3_101;
+wire INST_BLTU	= TYPE_BRANCH & FUNCT3_110;
+wire INST_BGEU	= TYPE_BRANCH & FUNCT3_111;
+// op_imm
+wire INST_ADDI	= TYPE_OP_IMM & FUNCT3_000;
+wire INST_SLTI	= TYPE_OP_IMM & FUNCT3_010;
+wire INST_SLTIU	= TYPE_OP_IMM & FUNCT3_011;
+wire INST_XORI	= TYPE_OP_IMM & FUNCT3_100;
+wire INST_ORI		= TYPE_OP_IMM & FUNCT3_110;
+wire INST_ANDI	= TYPE_OP_IMM & FUNCT3_111;
+wire INST_SLLI	= TYPE_OP_IMM & FUNCT3_001;
+wire INST_SRLI	= TYPE_OP_IMM & FUNCT3_101 & (~FUNCT7_0100000);
+wire INST_SRAI	= TYPE_OP_IMM & FUNCT3_101 & FUNCT7_0100000		;
+// op
+wire INST_ADD	 	= TYPE_OP	& FUNCT3_000 & (~FUNCT7_0100000);
+wire INST_SUB	 	= TYPE_OP	& FUNCT3_000 & FUNCT7_0100000		;
+wire INST_SLL	 	= TYPE_OP	& FUNCT3_001;
+wire INST_SLT	 	= TYPE_OP	& FUNCT3_010;
+wire INST_SLTU 	= TYPE_OP	& FUNCT3_011;
+wire INST_XOR  	= TYPE_OP	& FUNCT3_100;
+wire INST_SRL  	= TYPE_OP	& FUNCT3_101 & (~FUNCT7_0100000);
+wire INST_SRA  	= TYPE_OP	& FUNCT3_101 & FUNCT7_0100000		;
+wire INST_OR   	= TYPE_OP	& FUNCT3_110;
+wire INST_AND  	= TYPE_OP	& FUNCT3_111;
+
+
+assign alu_mul = 	FUNCT7_0000001 & R_TYPE & !FUNCT3_bit2;
+assign alu_div = 	FUNCT7_0000001 & R_TYPE &  FUNCT3_bit2;
+
+// alu_opt
+assign alu_opt[`YSYX_23060077_ALU_ADD ] = INST_LUI | INST_ADDI | INST_ADD								;
+assign alu_opt[`YSYX_23060077_ALU_SUB ] = INST_BEQ | INST_BNE  | INST_SLTI | INST_SUB		;
+assign alu_opt[`YSYX_23060077_ALU_SLL ] = INST_SLLI| INST_SLL 													;
+assign alu_opt[`YSYX_23060077_ALU_SLT ] = INST_BLT | INST_BGE  | INST_SLT								;
+assign alu_opt[`YSYX_23060077_ALU_SLTU] = INST_BLTU| INST_BGEU | INST_SLTIU| INST_SLTU	;
+assign alu_opt[`YSYX_23060077_ALU_XOR ] = INST_XORI| INST_XOR														;
+assign alu_opt[`YSYX_23060077_ALU_SRL ] = INST_SRLI| INST_SRL														;
+assign alu_opt[`YSYX_23060077_ALU_SRA ] = INST_SRAI| INST_SRA														;
+assign alu_opt[`YSYX_23060077_ALU_OR  ] = INST_ORI | INST_OR														;
+assign alu_opt[`YSYX_23060077_ALU_AND ] = INST_ANDI| INST_AND														;
+assign alu_opt[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 						;
 
 
 // assign alu_opt =
@@ -143,15 +202,15 @@ assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 // );
 
 
-ysyx_23060077_id_opt id_opt_idu(
-    .opcode     (opcode),
-    .funct3     (funct3),
-    .funct7     (funct7),
+// ysyx_23060077_id_opt id_opt_idu(
+//     .opcode     (opcode),
+//     .funct3     (funct3),
+//     .funct7     (funct7_1000000),
     
-    // .src_sel    (src_sel  ),
-    // .lsu_opt    (lsu_opt  ),
-		.alu_opt    (alu_opt  )
-);
+//     // .src_sel    (src_sel  ),
+//     // .lsu_opt    (lsu_opt  ),
+// 		.alu_opt    (alu_opt  )
+// );
 
 endmodule
 

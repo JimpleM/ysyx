@@ -28,7 +28,12 @@ module ysyx_23060077_exu(
 	output 	reg 																			exu_finished 				,
 	output 	    [`YSYX_23060077_DATA_WIDTH-1:0]       exu_result
 );
-wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
+// wire adder_sub = (alu_opt == `ALU_SUB || alu_opt == `ALU_SLT || alu_opt == `ALU_SLTU);
+wire adder_sub = 
+alu_opt[`YSYX_23060077_ALU_SUB ] |
+alu_opt[`YSYX_23060077_ALU_SLT ] |
+alu_opt[`YSYX_23060077_ALU_SLTU] ;
+
 wire adder_zero_flag    ;
 wire adder_signed_flag  ;
 wire adder_unsigned_flag;

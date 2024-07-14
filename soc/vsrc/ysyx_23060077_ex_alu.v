@@ -8,7 +8,7 @@ module ysyx_23060077_ex_alu(
   input       [`YSYX_23060077_DATA_WIDTH-1:0]       adder_pc            ,
   input                                             signed_flag         ,
   input                                             unsigned_flag       ,
-  output  reg [`YSYX_23060077_DATA_WIDTH-1:0]       alu_out_data
+  output      [`YSYX_23060077_DATA_WIDTH-1:0]       alu_out_data
 );
 
 
@@ -29,9 +29,12 @@ function [`YSYX_23060077_DATA_WIDTH-1:0] reverse_bits;
   end
 endfunction
 
-wire shift_sll = (alu_opt == `ALU_SLL);
-wire shift_srl = (alu_opt == `ALU_SRL);
-wire shift_sra = (alu_opt == `ALU_SRA);
+// wire shift_sll = (alu_opt == `ALU_SLL);
+// wire shift_srl = (alu_opt == `ALU_SRL);
+// wire shift_sra = (alu_opt == `ALU_SRA);
+wire shift_sll = alu_opt[`YSYX_23060077_ALU_SLL ];
+wire shift_srl = alu_opt[`YSYX_23060077_ALU_SRL ];
+wire shift_sra = alu_opt[`YSYX_23060077_ALU_SRA ];
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] shift_num = shift_sll ? reverse_bits(alu_a_data) : alu_a_data;
 
@@ -44,23 +47,35 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0] sll_result = reverse_bits(shift_temp);
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_mask   = {(`YSYX_23060077_DATA_WIDTH){1'b1}} >> alu_b_data[4:0];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] sra_result = (shift_temp & sra_mask) | ({(`YSYX_23060077_DATA_WIDTH){shift_num[`YSYX_23060077_DATA_WIDTH-1]}} &(~sra_mask));
 
-always @(*) begin
-  case(alu_opt)
-    `ALU_ADD  : alu_out_data = adder_sum                       ;
-    `ALU_SUB  : alu_out_data = adder_sum                      ;
-    `ALU_SLL  : alu_out_data = sll_result                  ;
-    `ALU_SLT  : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},signed_flag}  ;
-    `ALU_SLTU : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},unsigned_flag}           ;
-    `ALU_XOR  : alu_out_data = alu_xor                        ;
-    `ALU_SRL  : alu_out_data = srl_result                  ;
-    `ALU_SRA  : alu_out_data = sra_result                                     ;
-    `ALU_OR   : alu_out_data = alu_or                        ;
-    `ALU_AND  : alu_out_data = alu_and                        ;
-    `ALU_SUBU : alu_out_data = adder_sum                       ;
-    `ALU_PC   : alu_out_data = adder_pc     ;
-    default:    alu_out_data = 'd0; 
-  endcase
-end
+assign alu_out_data = 
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_ADD ]}}  & adder_sum   ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SUB ]}}  & adder_sum   ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SLL ]}}  & sll_result  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SLT ]}}  & {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},signed_flag}    ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SLTU]}}  & {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},unsigned_flag}  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_XOR ]}}  & alu_xor     ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SRL ]}}  & srl_result  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_SRA ]}}  & sra_result  ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_OR  ]}}  & alu_or      ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_AND ]}}  & alu_and     ) |
+({`YSYX_23060077_DATA_WIDTH{alu_opt[`YSYX_23060077_ALU_PC  ]}}  & adder_pc    ) ;
+// always @(*) begin
+//   case(alu_opt)
+//     `ALU_ADD  : alu_out_data = adder_sum                       ;
+//     `ALU_SUB  : alu_out_data = adder_sum                      ;
+//     `ALU_SLL  : alu_out_data = sll_result                  ;
+//     `ALU_SLT  : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},signed_flag}  ;
+//     `ALU_SLTU : alu_out_data = {{(`YSYX_23060077_DATA_WIDTH-1){1'b0}},unsigned_flag}           ;
+//     `ALU_XOR  : alu_out_data = alu_xor                        ;
+//     `ALU_SRL  : alu_out_data = srl_result                  ;
+//     `ALU_SRA  : alu_out_data = sra_result                                     ;
+//     `ALU_OR   : alu_out_data = alu_or                        ;
+//     `ALU_AND  : alu_out_data = alu_and                        ;
+//     `ALU_SUBU : alu_out_data = adder_sum                       ;
+//     `ALU_PC   : alu_out_data = adder_pc     ;
+//     default:    alu_out_data = 'd0; 
+//   endcase
+// end
 
 
 // `ifdef USING_DPI_C
