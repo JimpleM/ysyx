@@ -356,7 +356,7 @@ always @(posedge clock) begin
 	end
 end
 
-
+// 有lsu就选择lsu的结果
 wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_finished;
 
 ysyx_23060077_exu exu_u0(

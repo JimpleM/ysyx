@@ -92,111 +92,114 @@ always @(posedge clock) begin
 		ex_alu_doing	<= 'd0;
 	end
 end
+`ifdef USING_DPI_C
 /*
 ------------------- mul --------------------------
 */
-// reg  [1:0]  mul_signed;
-// reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
-// wire [31:0] result_hi;
-// wire [31:0] result_ho;
-// wire mul_ready;
-// wire mul_out_valid;
-// always @(*) begin
-// 	case({alu_mul,funct3})
-// 		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
-// 		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
-// 		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
-// 		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
-// 		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
-// 	endcase
-// end
-// reg  mul_doing;
-// wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
-// wire mul_busy  = alu_mul & !mul_out_valid;
-// ysyx_23060077_wallace wallace_u0(
-// 	.clock       		( clock					),
-// 	.reset       		( reset					),
-//   .mul_signed 		( mul_signed		),
-// 	.multiplicand		( alu_a_data		),
-// 	.multiplier			( alu_b_data		),
-// 	.flush       		( 							),
-// 	.mul_valid   		( mul_valid 		),
-// 	.mul_ready   		( mul_ready			),
-// 	.out_valid   		( mul_out_valid	),
-// 	.result_hi			( result_hi			),
-// 	.result_ho			( result_ho			)
-// );
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		mul_doing	<= 'd0;
-// 	end
-// 	else if(mul_out_valid)begin
-// 		mul_doing	<= 'd0;
-// 	end
-// 	else if(mul_valid & mul_ready)begin
-// 		mul_doing	<= 'd1;
-// 	end
-// end
+reg  [1:0]  mul_signed;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] mul_result;
+wire [31:0] result_hi;
+wire [31:0] result_ho;
+wire mul_ready;
+wire mul_out_valid;
+always @(*) begin
+	case({alu_mul,funct3})
+		{1'b1,3'b000} : begin mul_signed = 2'b11; mul_result = result_ho;end
+		{1'b1,3'b001} : begin mul_signed = 2'b11; mul_result = result_hi;end
+		{1'b1,3'b010} : begin mul_signed = 2'b10; mul_result = result_hi;end
+		{1'b1,3'b011} : begin mul_signed = 2'b00; mul_result = result_hi;end
+		default:    		begin mul_signed = 'd0; mul_result = 'd0; end
+	endcase
+end
+reg  mul_doing;
+wire mul_valid = alu_mul & (!mul_doing) & !mul_out_valid & !exu_finished;
+wire mul_busy  = alu_mul & !mul_out_valid;
+ysyx_23060077_wallace wallace_u0(
+	.clock       		( clock					),
+	.reset       		( reset					),
+  .mul_signed 		( mul_signed		),
+	.multiplicand		( alu_a_data		),
+	.multiplier			( alu_b_data		),
+	.flush       		( 							),
+	.mul_valid   		( mul_valid 		),
+	.mul_ready   		( mul_ready			),
+	.out_valid   		( mul_out_valid	),
+	.result_hi			( result_hi			),
+	.result_ho			( result_ho			)
+);
+always @(posedge clock) begin
+	if(reset)begin
+		mul_doing	<= 'd0;
+	end
+	else if(mul_out_valid)begin
+		mul_doing	<= 'd0;
+	end
+	else if(mul_valid & mul_ready)begin
+		mul_doing	<= 'd1;
+	end
+end
 // --------------------------------------
 /*
 ------------------- div --------------------------
 */
-// reg  div_signed;
-// reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
-// wire [31:0] quotient;
-// wire [31:0] remainder;
-// wire div_ready;
-// wire div_out_valid;
-// always @(*) begin
-// 	case({alu_div,funct3})
-// 		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
-// 		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
-// 		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
-// 		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
-// 		default:    		begin div_signed = 'd0; div_result = 'd0; end
-// 	endcase
-// end
-// reg  div_doing;
-// wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
-// wire div_busy  = alu_div & !div_out_valid;
-// ysyx_23060077_div div_u0(
-// 	.clock       		( clock			 		),
-// 	.reset       		( reset			 		),
-//   .div_signed 		( div_signed 		),
-//   .dividend     	( alu_a_data 		),
-// 	.divisor				( alu_b_data 		),
-//   .flush          ( 							),	
-//   .div_valid      ( div_valid			),
-//   .div_ready      ( div_ready 		),
-//   .out_valid      ( div_out_valid	),
-//   .quotient       ( quotient			),
-//   .remainder      ( remainder			)
-// );
-// always @(posedge clock) begin
-// 	if(reset)begin
-// 		div_doing	<= 'd0;
-// 	end
-// 	else if(div_out_valid)begin
-// 		div_doing	<= 'd0;
-// 	end
-// 	else if(div_valid & div_ready)begin
-// 		div_doing	<= 'd1;
-// 	end
-// end
+reg  div_signed;
+reg  [`YSYX_23060077_DATA_WIDTH-1:0] div_result;
+wire [31:0] quotient;
+wire [31:0] remainder;
+wire div_ready;
+wire div_out_valid;
+always @(*) begin
+	case({alu_div,funct3})
+		{1'b1,3'b100} : begin div_signed = 1'b1; div_result = quotient;end
+		{1'b1,3'b101} : begin div_signed = 1'b0; div_result = quotient;end
+		{1'b1,3'b110} : begin div_signed = 1'b1; div_result = remainder;end
+		{1'b1,3'b111} : begin div_signed = 1'b0; div_result = remainder;end
+		default:    		begin div_signed = 'd0; div_result = 'd0; end
+	endcase
+end
+reg  div_doing;
+wire div_valid = alu_div & (!div_doing) & !div_out_valid & !exu_finished;
+wire div_busy  = alu_div & !div_out_valid;
+ysyx_23060077_div div_u0(
+	.clock       		( clock			 		),
+	.reset       		( reset			 		),
+  .div_signed 		( div_signed 		),
+  .dividend     	( alu_a_data 		),
+	.divisor				( alu_b_data 		),
+  .flush          ( 							),	
+  .div_valid      ( div_valid			),
+  .div_ready      ( div_ready 		),
+  .out_valid      ( div_out_valid	),
+  .quotient       ( quotient			),
+  .remainder      ( remainder			)
+);
+always @(posedge clock) begin
+	if(reset)begin
+		div_doing	<= 'd0;
+	end
+	else if(div_out_valid)begin
+		div_doing	<= 'd0;
+	end
+	else if(div_valid & div_ready)begin
+		div_doing	<= 'd1;
+	end
+end
 // --------------------------------------
-
+`endif
 reg  	[`YSYX_23060077_DATA_WIDTH-1:0] exu_result_buff;
 
 always @(posedge clock ) begin
 	if(reset)begin
 		exu_result_buff	<= 'd0;
 	end
-	// else if(mul_out_valid)begin
-	// 	exu_result_buff	<= mul_result;
-	// end
-	// else if(div_out_valid)begin
-	// 	exu_result_buff	<= div_result;
-	// end
+`ifdef USING_DPI_C
+	else if(mul_out_valid)begin
+		exu_result_buff	<= mul_result;
+	end
+	else if(div_out_valid)begin
+		exu_result_buff	<= div_result;
+	end
+`endif
 	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
 		exu_result_buff	<= alu_out_data;
 	end
@@ -206,12 +209,14 @@ always @(posedge clock ) begin
 	if(reset)begin
 		exu_finished	<= 'd0;
 	end
-	// else if(mul_out_valid | div_out_valid)begin
-	// 	exu_finished	<= 'd1;
-	// end
-	// else if(!alu_mul & ! alu_div & ex_alu_doing)begin
-	// 	exu_finished	<= 'd1;
-	// end
+`ifdef USING_DPI_C
+	else if(mul_out_valid | div_out_valid)begin
+		exu_finished	<= 'd1;
+	end
+	else if(!alu_mul & ! alu_div & ex_alu_doing)begin
+		exu_finished	<= 'd1;
+	end
+`endif
 	else if(ex_to_wb)begin
 		exu_finished	<= 'd0;
 	end

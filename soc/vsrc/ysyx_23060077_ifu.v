@@ -14,7 +14,7 @@ module ysyx_23060077_ifu(
 	output  		[`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   Icache_r_addr_o 		,
 	input   		                        							Icache_r_ready_i		,
 	input   		[`YSYX_23060077_DATA_WIDTH-1:0]       Icache_r_data_i 		,
-	output  		[8-1:0]    Icache_r_len_o  		,
+	output  		[8-1:0]    														Icache_r_len_o  		,
 	input   		                        							Icache_r_last_i 		,
 
 	// output                              ifu_stall    		   ,
@@ -32,9 +32,9 @@ wire  	[`YSYX_23060077_INST_WIDTH-1:0]         inst;
 
 wire    ifu_fence_i =  (ifu_inst_o[6:0] == 7'b00011_11) ? ifu_inst_o[12] : 1'b0;
 
-wire                        ifu_valid_o ;
+wire                        							ifu_valid_o ;
 wire    [`YSYX_23060077_INST_WIDTH-1:0]   ifu_addr_o  ;
-wire                        ifu_ready_i ;
+wire                        							ifu_ready_i ;
 wire 		[`YSYX_23060077_DATA_WIDTH-1:0]   ifu_data_i  ;
 
 wire no_jump = (if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump;
@@ -73,57 +73,57 @@ always @(posedge clock) begin
 	end
 end
 
-assign ifu_pc_o 		= ifu_ready_i ? pc : ifu_pc_o_t;
-assign ifu_inst_o 	= ifu_ready_i ? inst : ifu_inst_o_t;
+// assign ifu_pc_o 		= ifu_ready_i ? pc : ifu_pc_o_t;
+// assign ifu_inst_o 	= ifu_ready_i ? inst : ifu_inst_o_t;
 
-reg  	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o_t;
-reg  	[`YSYX_23060077_DATA_WIDTH-1:0]       ifu_inst_o_t;
+// reg  	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o_t;
+// reg  	[`YSYX_23060077_DATA_WIDTH-1:0]       ifu_inst_o_t;
 
-localparam IFU_STATE_WITDH = 1;
-reg [IFU_STATE_WITDH-1:0] 			icache_state;
-localparam [IFU_STATE_WITDH-1:0] ICACHE_IDLE   		= 'd0;
-localparam [IFU_STATE_WITDH-1:0] ICACHE_RD_CACHE  = 'd1;
-// 节省一个周期，主频会下降一点，但把icache流水化后主频会提高
-always @(*) begin
-	case(icache_state)
-		ICACHE_IDLE:begin
-			if_to_id_valid_o  = ifu_ready_i;
-		end
-		ICACHE_RD_CACHE:begin
-			if_to_id_valid_o 	= 1'b1;
-		end
-	endcase
-end
+// localparam IFU_STATE_WITDH = 1;
+// reg [IFU_STATE_WITDH-1:0] 			icache_state;
+// localparam [IFU_STATE_WITDH-1:0] ICACHE_IDLE   		= 'd0;
+// localparam [IFU_STATE_WITDH-1:0] ICACHE_RD_CACHE  = 'd1;
+// // 节省一个周期，主频会下降一点，但把icache流水化后主频会提高
+// always @(*) begin
+// 	case(icache_state)
+// 		ICACHE_IDLE:begin
+// 			if_to_id_valid_o  = ifu_ready_i;
+// 		end
+// 		ICACHE_RD_CACHE:begin
+// 			if_to_id_valid_o 	= 1'b1;
+// 		end
+// 	endcase
+// end
 
-always @(posedge clock) begin
-	if(reset)begin
-		icache_state	<= ICACHE_IDLE;
-		`ifdef NPC_SIM
-				ifu_pc_o_t <= 32'h8000_0000;
-		`else
-				ifu_pc_o_t <= 32'h3000_0000;
-		`endif
-		ifu_inst_o_t	<= 'd0;
-	end
-	else begin
-		case(icache_state)
-			ICACHE_IDLE:begin
-				if(ifu_ready_i)begin
-					ifu_pc_o_t	<= pc;
-					ifu_inst_o_t	<= inst;
-					if(!if_to_id_ready_i)begin
-						icache_state	<= ICACHE_RD_CACHE;
-					end
-				end
-			end
-			ICACHE_RD_CACHE:begin
-				if(if_to_id_ready_i & if_to_id_valid_o)begin
-					icache_state	<= ICACHE_IDLE;
-				end
-			end
-		endcase
-	end
-end
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		icache_state	<= ICACHE_IDLE;
+// 		`ifdef NPC_SIM
+// 				ifu_pc_o_t <= 32'h8000_0000;
+// 		`else
+// 				ifu_pc_o_t <= 32'h3000_0000;
+// 		`endif
+// 		ifu_inst_o_t	<= 'd0;
+// 	end
+// 	else begin
+// 		case(icache_state)
+// 			ICACHE_IDLE:begin
+// 				if(ifu_ready_i)begin
+// 					ifu_pc_o_t	<= pc;
+// 					ifu_inst_o_t	<= inst;
+// 					if(!if_to_id_ready_i)begin
+// 						icache_state	<= ICACHE_RD_CACHE;
+// 					end
+// 				end
+// 			end
+// 			ICACHE_RD_CACHE:begin
+// 				if(if_to_id_ready_i & if_to_id_valid_o)begin
+// 					icache_state	<= ICACHE_IDLE;
+// 				end
+// 			end
+// 		endcase
+// 	end
+// end
 
 reg ifu_valid_o_r;
 always @(posedge clock) begin
@@ -140,6 +140,21 @@ always @(posedge clock) begin
 		else if(ifu_ready_i)begin
 			ifu_valid_o_r	<= 1'b0;
 		end
+	end
+end
+
+always @(posedge clock) begin
+	if(ifu_ready_i)begin				//收到Icache读取的指令，更新
+		if_to_id_valid_o	<= 'd1;	//发出握手
+
+		ifu_pc_o				<= pc;
+		ifu_inst_o			<= inst;
+	end
+	else if(if_to_id_ready_i)begin	//接收到握手，维持pc和inst
+		if_to_id_valid_o	<= 'd0;
+
+		ifu_pc_o				<= ifu_pc_o;
+		ifu_inst_o			<= ifu_inst_o;
 	end
 end
 

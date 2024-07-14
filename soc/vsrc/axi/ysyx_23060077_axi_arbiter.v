@@ -66,21 +66,21 @@ localparam AXI_SIZE_4       = 3'b010;
 localparam AXI_SIZE_8       = 3'b011;
 
 // CPU Interface
-wire                                					cpu_r_valid_o   ;
-wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   cpu_r_addr_o    ;
-wire                                					cpu_r_ready_i   ;
-wire    [`YSYX_23060077_DATA_WIDTH-1:0]       cpu_r_data_i    ;
-wire    [3-1:0]       												cpu_r_size_o    ;
-wire    [8-1:0]        												cpu_r_len_o     ;
-wire                                					cpu_r_last_i    ;
+wire                                		    cpu_r_valid_o   ;
+wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]     cpu_r_addr_o    ;
+wire                                		    cpu_r_ready_i   ;
+wire    [`YSYX_23060077_DATA_WIDTH-1:0]         cpu_r_data_i    ;
+wire    [3-1:0]       							cpu_r_size_o    ;
+wire    [8-1:0]        							cpu_r_len_o     ;
+wire                                		    cpu_r_last_i    ;
 
-wire                                					cpu_w_valid_o   ;
-wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   cpu_w_addr_o    ;
-wire                                					cpu_w_ready_i   ;
-wire    [`YSYX_23060077_DATA_WIDTH-1:0]       cpu_w_data_o    ;
-wire    [3-1:0]       												cpu_w_size_o    ;
-wire    [8-1:0]        												cpu_w_len_o     ;
-wire                                					cpu_w_last_i    ;
+wire                                		    cpu_w_valid_o   ;
+wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]     cpu_w_addr_o    ;
+wire                                		    cpu_w_ready_i   ;
+wire    [`YSYX_23060077_DATA_WIDTH-1:0]         cpu_w_data_o    ;
+wire    [3-1:0]       							cpu_w_size_o    ;
+wire    [8-1:0]        							cpu_w_len_o     ;
+wire                                		    cpu_w_last_i    ;
 
 localparam AXI_ARB_STATE_WIDTH = 2;
 reg [AXI_ARB_STATE_WIDTH-1:0] arbiter_state;
@@ -146,33 +146,33 @@ end
 
 wire                                					arb_axi_aw_ready_i;
 wire                                					arb_axi_aw_valid_o;
-wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   arb_axi_aw_addr_o ;
-wire    [4-1:0]         											arb_axi_aw_id_o   ;
-wire    [8-1:0]        												arb_axi_aw_len_o  ;
-wire    [3-1:0]       												arb_axi_aw_size_o ;
-wire    [2-1:0]      													arb_axi_aw_burst_o;
+wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]             arb_axi_aw_addr_o ;
+wire    [4-1:0]         								arb_axi_aw_id_o   ;
+wire    [8-1:0]        									arb_axi_aw_len_o  ;
+wire    [3-1:0]       									arb_axi_aw_size_o ;
+wire    [2-1:0]      									arb_axi_aw_burst_o;
 wire                                					arb_axi_w_ready_i ;
 wire                                					arb_axi_w_valid_o ;
-wire    [`YSYX_23060077_AXI_DATA_WIDTH-1:0]   arb_axi_w_data_o  ;
-wire    [8-1:0]       												arb_axi_w_strb_o  ;
+wire    [`YSYX_23060077_AXI_DATA_WIDTH-1:0]             arb_axi_w_data_o  ;
+wire    [8-1:0]       									arb_axi_w_strb_o  ;
 wire                                					arb_axi_w_last_o  ;
 wire                                					arb_axi_b_ready_o ;
 wire                                					arb_axi_b_valid_i ;
-wire    [2-1:0]       												arb_axi_b_resp_i  ;
-wire    [4-1:0]         											arb_axi_b_id_i    ;
+wire    [2-1:0]       									arb_axi_b_resp_i  ;
+wire    [4-1:0]         								arb_axi_b_id_i    ;
 wire                                					arb_axi_ar_ready_i;
 wire                                					arb_axi_ar_valid_o;
-wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   arb_axi_ar_addr_o ;
-wire    [4-1:0]         											arb_axi_ar_id_o   ;
-wire    [8-1:0]        												arb_axi_ar_len_o  ;
-wire    [3-1:0]       												arb_axi_ar_size_o ;
-wire    [2-1:0]      													arb_axi_ar_burst_o;
+wire    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]             arb_axi_ar_addr_o ;
+wire    [4-1:0]         								arb_axi_ar_id_o   ;
+wire    [8-1:0]        									arb_axi_ar_len_o  ;
+wire    [3-1:0]       									arb_axi_ar_size_o ;
+wire    [2-1:0]      									arb_axi_ar_burst_o;
 wire                                					arb_axi_r_ready_o ;
 wire                                					arb_axi_r_valid_i ;
-wire    [2-1:0]       												arb_axi_r_resp_i  ;
-wire    [`YSYX_23060077_AXI_DATA_WIDTH-1:0]   arb_axi_r_data_i  ;
+wire    [2-1:0]       									arb_axi_r_resp_i  ;
+wire    [`YSYX_23060077_AXI_DATA_WIDTH-1:0]             arb_axi_r_data_i  ;
 wire                                					arb_axi_r_last_i  ;
-wire    [4-1:0]         											arb_axi_r_id_i    ;
+wire    [4-1:0]         								arb_axi_r_id_i    ;
 
 
 ysyx_23060077_axi axi_u0 (
