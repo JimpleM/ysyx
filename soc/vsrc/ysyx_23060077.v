@@ -178,7 +178,7 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_wr_data				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_rd_data				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_mstatus     	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_mtvec       	;
-wire [`YSYX_23060077_INST_WIDTH-1:0]      csr_mpec        	;
+wire [`YSYX_23060077_INST_WIDTH-1:0]      csr_mepc        	;
 
 
 
@@ -412,21 +412,21 @@ assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
 ysyx_23060077_csr  csr_u0 (
 	.clock          ( clock         ),
 	.reset          ( reset         ),
-	.csr_wr_addr    ( csr_imm   		),
+	.csr_addr    		( csr_imm   		),
 	.csr_wr_data    ( csr_wr_data  	),
-	.csr_rd_addr    ( csr_imm   		),
 	.csr_rd_data    ( csr_rd_data   ),
 
 	.csr_ecall_i    ( exu_csr_ecall ),
 	.csr_mret_i     ( exu_csr_mret  ),
 
 	.sys 						( exu_sys				),
+	.ex_to_wb				( ex_to_wb_valid & ex_to_wb_ready),
 	.funct3         ( exu_funct3    ),
 	.csr_pc         ( exu_pc        ),
 
 	.csr_mstatus    ( csr_mstatus   ),
 	.csr_mtvec      ( csr_mtvec     ),
-	.csr_mpec       ( csr_mpec      )
+	.csr_mepc       ( csr_mepc      )
 );
 
 ysyx_23060077_bpu bpu_u0(
@@ -436,7 +436,7 @@ ysyx_23060077_bpu bpu_u0(
 	.exu_csr_ecall	( exu_csr_ecall ), 
 	.exu_csr_mret 	( exu_csr_mret 	),	
 	.csr_mtvec    	( csr_mtvec     ), 
-	.csr_mpec     	( csr_mpec      ), 
+	.csr_mepc     	( csr_mepc      ), 
 	.jump_pc     		( exu_jump_pc   )
 );
 
