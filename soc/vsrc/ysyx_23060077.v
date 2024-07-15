@@ -101,6 +101,7 @@ wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs1		   			;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs2		   			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_imm		   			;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   idu_alu_opt_bus	  ;
+wire [`YSYX_23060077_CSR_OPT_WIDTH-1:0]   idu_csr_opt_bus	  ;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
 wire [2:0]                  							idu_funct3	    	;
@@ -124,14 +125,13 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src1					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src2					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_imm		    		;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   exu_alu_opt_bus	  ;
+wire [`YSYX_23060077_CSR_OPT_WIDTH-1:0]   exu_csr_opt_bus	  ;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
 wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
 wire [2:0]                  							exu_funct3	    	;
 wire                       								exu_branch				;
 wire                       								exu_rd_wen_req		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
-wire 																			exu_csr_ecall			;
-wire 																			exu_csr_mret 			;
 wire																			exu_sys						;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] 			exu_jump_pc				;
 
@@ -275,12 +275,15 @@ ysyx_23060077_idu idu_u0(
 	.idu_jalr				( idu_jalr		),
 	.idu_branch			( idu_branch	),
 	.idu_sys				( idu_sys			),
+	.idu_csr_ecall	( idu_csr_ecall ),
+	.idu_csr_mret		( idu_csr_mret  ),
 	.rd							( idu_rd_addr	),
 	.rd_wen					( idu_rd_wen_req	),
 	.rs1						( idu_rs1			),
 	.rs2						( idu_rs2			),
 	.imm						( idu_imm			),
 	.alu_opt_bus		( idu_alu_opt_bus	),
+	.csr_opt_bus		( idu_csr_opt_bus	),
 	.src_sel				( idu_src_sel	),
 	.lsu_opt				( idu_lsu_opt	),
 	.funct3		  		( idu_funct3	)
@@ -321,7 +324,7 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+3),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+1+`YSYX_23060077_CSR_OPT_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -330,11 +333,11 @@ ysyx_23060077_pipeline#(
 	.stall	( !id_to_ex_ready),
 	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt_bus,idu_src_sel,
-	idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,idu_csr_ecall,
-	idu_csr_mret,idu_sys}),
+	idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,
+	idu_sys,idu_csr_opt_bus}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt_bus,exu_src_sel,
-	exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,exu_csr_ecall,
-	exu_csr_mret,exu_sys})
+	exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,
+	exu_sys,exu_csr_opt_bus})
 );
 
 always @(posedge clock) begin
@@ -406,24 +409,19 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_result				( lsu_result    )
 );
 
-wire [`YSYX_23060077_CSR_WIDTH-1:0] csr_imm = exu_imm[5+:`YSYX_23060077_CSR_WIDTH];
-assign csr_wr_data = exu_funct3[2] ? {27'd0,exu_imm[4:0]} : exu_src1;
-
 ysyx_23060077_csr  csr_u0 (
 	.clock          ( clock         ),
 	.reset          ( reset         ),
-	.csr_addr    		( csr_imm   		),
-	.csr_wr_data    ( csr_wr_data  	),
-	.csr_rd_data    ( csr_rd_data   ),
+	.csr_imm 				( exu_imm 			),
+	.csr_src1 			( exu_src1			),
+	.csr_pc         ( exu_pc        ),
 
-	.csr_ecall_i    ( exu_csr_ecall ),
-	.csr_mret_i     ( exu_csr_mret  ),
+	.csr_opt_bus		( exu_csr_opt_bus ),
 
 	.sys 						( exu_sys				),
 	.ex_to_wb				( ex_to_wb_valid & ex_to_wb_ready),
-	.funct3         ( exu_funct3    ),
-	.csr_pc         ( exu_pc        ),
 
+	.csr_rd_data    ( csr_rd_data   ),
 	.csr_mstatus    ( csr_mstatus   ),
 	.csr_mtvec      ( csr_mtvec     ),
 	.csr_mepc       ( csr_mepc      )
@@ -433,8 +431,8 @@ ysyx_23060077_bpu bpu_u0(
 	.exu_branch   	( exu_branch    ), 
 	.adder_pc     	( adder_pc      ), 
 	.adder_sum    	( adder_sum     ), 
-	.exu_csr_ecall	( exu_csr_ecall ), 
-	.exu_csr_mret 	( exu_csr_mret 	),	
+	.exu_csr_ecall	( exu_csr_opt_bus[`YSYX_23060077_CSR_ECALL] ), 
+	.exu_csr_mret 	( exu_csr_opt_bus[`YSYX_23060077_CSR_MRET ] ),	
 	.csr_mtvec    	( csr_mtvec     ), 
 	.csr_mepc     	( csr_mepc      ), 
 	.jump_pc     		( exu_jump_pc   )

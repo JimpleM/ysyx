@@ -1,7 +1,6 @@
 
 `define YSYX_23060077_INST_WIDTH          32
 `define YSYX_23060077_DATA_WIDTH          32
-`define YSYX_23060077_CSR_WIDTH           12
 `define YSYX_23060077_REG_WIDTH            5
 
 
@@ -27,11 +26,20 @@
 
 `define YSYX_23060077_SRC_SEL_WIDTH      2
 
+// csr reg addr
+`define YSYX_23060077_CSR_ADDR_WIDTH     12
+`define YSYX_23060077_CSR_OPT_WIDTH      6
+`define YSYX_23060077_CSR_ECALL         'd0
+`define YSYX_23060077_CSR_MRET          'd1
+`define YSYX_23060077_CSR_ZIMM          'd2
+`define YSYX_23060077_CSR_01            'd3
+`define YSYX_23060077_CSR_10            'd4
+`define YSYX_23060077_CSR_11            'd5
+
 `define YSYX_23060077_LSU_OPT_WIDTH      2
 
 
-// csr reg addr
-`define YSYX_23060077_CSR_ADDR_WIDTH      12
+
 
 `define YSYX_23060077_AXI_ADDR_WIDTH          32
 `define YSYX_23060077_AXI_DATA_WIDTH          64

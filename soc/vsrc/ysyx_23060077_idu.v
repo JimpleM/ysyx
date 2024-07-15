@@ -5,6 +5,8 @@ module ysyx_23060077_idu(
 	input																								idu_jalr						,
 	input																								idu_branch					,
 	input																								idu_sys							,
+	input																								idu_csr_ecall				,
+	input																								idu_csr_mret				,
 
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rd									,
 	output                           										rd_wen							,
@@ -13,6 +15,7 @@ module ysyx_23060077_idu(
 	output   		[`YSYX_23060077_DATA_WIDTH-1:0]       	imm									,
 
 	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    	alu_opt_bus					,
+	output 			[`YSYX_23060077_CSR_OPT_WIDTH-1:0]      csr_opt_bus					,
 	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    	src_sel							,
 	output      [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    	lsu_opt							,
 	output      [2:0]                   								funct3
@@ -168,6 +171,14 @@ assign alu_opt_bus[`YSYX_23060077_ALU_MUL       	] = TYPE_MUL;
 assign alu_opt_bus[`YSYX_23060077_ALU_DIV       	] = TYPE_DIV;
 assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0 ] = FUNCT3_BIT0;
 assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1 ] = FUNCT3_BIT1;
+
+// csr
+assign csr_opt_bus[`YSYX_23060077_CSR_ECALL	] = idu_csr_ecall;
+assign csr_opt_bus[`YSYX_23060077_CSR_MRET 	] = idu_csr_mret;
+assign csr_opt_bus[`YSYX_23060077_CSR_ZIMM 	] = FUNCT3_BIT2;
+assign csr_opt_bus[`YSYX_23060077_CSR_01   	] = (~FUNCT3_BIT1) & 	 FUNCT3_BIT0 ;
+assign csr_opt_bus[`YSYX_23060077_CSR_10   	] =   FUNCT3_BIT1  & (~FUNCT3_BIT0);
+assign csr_opt_bus[`YSYX_23060077_CSR_11   	] = 	FUNCT3_BIT1  & 	 FUNCT3_BIT0 ;
 
 
 endmodule
