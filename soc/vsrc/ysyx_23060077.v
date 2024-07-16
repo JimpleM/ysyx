@@ -151,7 +151,7 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_pc          	;
 wire [`YSYX_23060077_WBU_OPT_WIDTH-1:0]   wbu_opt_bus				;
 wire 																			wbu_branch_taken	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_exu_result			;
-wire                        							wbu_rd_wen_req    ;
+wire                        							wbu_rd_wen    		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		wbu_rd_addr				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_data		  	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			wbu_lsu_result		;
@@ -177,7 +177,7 @@ ysyx_23060077_ifu ifu_u0(
 	.wbu_branch_taken	( wbu_branch_taken 	),
 	.jump_pc_valid  	( wbu_pc == ifu_pc  ),	// pc更新信号需要调整！！
 	.ifu_predecode		( ifu_predecode			),
-	.exu_finished     ( wbu_doing&(wbu_pc == ifu_pc)),	// 需要等待wbu运行到当前pc值
+	.exu_finished     ( (wbu_pc == ifu_pc)),	// 需要等待wbu运行到当前pc值
 
 	.if_to_id_ready_i	( if_to_id_ready 		),
 	.if_to_id_valid_o	( if_to_id_valid		),
@@ -232,7 +232,8 @@ always @(posedge clock) begin
 	if(reset)begin
 		id_to_ex_valid	<= 'd0;
 	end
-	else begin// 不用阻塞等待后级的结果，因为ex不传递结果到wbu无法从id传到ex
+	else begin
+		// 不用阻塞等待后级的结果，因为ex不传递结果到wbu无法从id传到ex
 		//与ifu握手完就可以传输了，idu直接在拉高那个周期执行
 		// if(idu_stall)begin
 		if(if_to_id_valid & if_to_id_ready)begin
@@ -246,32 +247,32 @@ end
 
 
 ysyx_23060077_idu idu_u0(
-	.inst						( idu_inst	  ),
-	.idu_predecode	( idu_predecode ),
-	.rd							( idu_rd_addr	),
-	.rs1						( idu_rs1			),
-	.rs2						( idu_rs2			),
-	.imm						( idu_imm			),
+	.inst						( idu_inst	  		),
+	.idu_predecode	( idu_predecode 	),
+	.rd							( idu_rd_addr			),
+	.rs1						( idu_rs1					),
+	.rs2						( idu_rs2					),
+	.imm						( idu_imm					),
 	.alu_opt_bus		( idu_alu_opt_bus	),
 	.exu_opt_bus		( idu_exu_opt_bus	),
 	.wbu_opt_bus		( idu_wbu_opt_bus ),
-	.src_sel				( idu_src_sel	)
+	.src_sel				( idu_src_sel			)
 );
 
 ysyx_23060077_regfile regfile_u0(
-	.clock					( clock		    ),
-	.reset      		( reset       ),
+	.clock					( clock		    		),
+	.reset      		( reset       		),
 	// .rs1_busy  			( rs1_busy  	),
 	// .rs2_busy 			( rs2_busy 		),
 	// .rd_busy				( rd_busy 		),
 
-	.rs1_addr				( idu_rs1	    ),
-	.rs1_data				( idu_rs1_data),
-	.rs2_addr				( idu_rs2	    ),
-	.rs2_data				( idu_rs2_data),
-	.reg_rd_en			( wbu_rd_wen  ),
-	.reg_rd_addr		( wbu_rd_addr	),
-	.reg_rd_data		( wbu_rd_data	)
+	.rs1_addr				( idu_rs1	    		),
+	.rs1_data				( idu_rs1_data		),
+	.rs2_addr				( idu_rs2	    		),
+	.rs2_data				( idu_rs2_data		),
+	.reg_rd_en			( wbu_rd_wen  		),
+	.reg_rd_addr		( wbu_rd_addr			),
+	.reg_rd_data		( wbu_rd_data			)
 );
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] idu_src1_t;
@@ -382,7 +383,7 @@ ysyx_23060077_csr  csr_u0 (
 	.csr_src1 			( exu_src1			),
 	.csr_pc         ( exu_pc        ),
 
-	.exu_opt_bus		( exu_opt_bus  ),
+	.exu_opt_bus		( exu_opt_bus  	),
 
 	.ex_to_wb				( ex_to_wb_valid & ex_to_wb_ready),
 
@@ -419,30 +420,20 @@ ysyx_23060077_pipeline#(
 	.dout		( {wbu_pc,wb_exu_result,wbu_lsu_result,wbu_rd_csr_data,wbu_jump_pc,
 	wbu_rd_addr,wbu_branch_taken,wbu_opt_bus})
 );
-reg 	wbu_doing;
-wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;
+// 上面没有stall的话wbu只会运行一个周期
 wire ex_to_wb_ready = !wbu_rd_wen;
-always @(posedge clock) begin
-		if(reset)begin
-			wbu_doing <= 'd0;
-		end
-		else begin
-			if(ex_to_wb_valid & ex_to_wb_ready)begin
-				wbu_doing <= 'd1;
-			end
-			else begin
-				wbu_doing <= 'd0;
-			end
-		end
-	end
 
 ysyx_23060077_wbu wbu_u0(
+	.clock						( clock		    			),
+	.reset        		( reset         		),
 	.wbu_opt_bus			( wbu_opt_bus				),
 	.exu_result				( wb_exu_result			),
 	.lsu_result				( wbu_lsu_result   	),
 	.csr_result     	( wbu_rd_csr_data  	),
 
-	.wbu_rd_wen_req		( wbu_rd_wen_req		),
+	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
+
+	.wbu_rd_wen				( wbu_rd_wen				),
 	.wbu_result				( wbu_rd_data      	)
 );
 

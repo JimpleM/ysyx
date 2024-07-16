@@ -6,13 +6,14 @@
 `define YSYX_23060077_AXI_ADDR_WIDTH    32
 `define YSYX_23060077_AXI_DATA_WIDTH    64
 
-`define YSYX_23060077_PRE_OPT_WIDTH      6
+`define YSYX_23060077_PRE_OPT_WIDTH      7
 `define YSYX_23060077_PRE_JAL           'd0
 `define YSYX_23060077_PRE_JALR          'd1
 `define YSYX_23060077_PRE_BRANCH        'd2
-`define YSYX_23060077_PRE_SYS           'd3
-`define YSYX_23060077_PRE_ECALL         'd4
-`define YSYX_23060077_PRE_MRET          'd5
+`define YSYX_23060077_PRE_FENCE_I       'd3
+`define YSYX_23060077_PRE_SYS           'd4
+`define YSYX_23060077_PRE_ECALL         'd5
+`define YSYX_23060077_PRE_MRET          'd6
 
 `define YSYX_23060077_ALU_OPT_WIDTH      17
 `define YSYX_23060077_ALU_ADD           'd0

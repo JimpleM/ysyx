@@ -32,7 +32,7 @@ module ysyx_23060077_ifu(
 reg   	[`YSYX_23060077_DATA_WIDTH-1:0]         pc;
 wire  	[`YSYX_23060077_INST_WIDTH-1:0]         inst;
 
-wire    ifu_fence_i =  (ifu_inst_o[6:0] == 7'b00011_11) ? ifu_inst_o[12] : 1'b0;
+wire    ifu_fence_i =  ifu_predecode[`YSYX_23060077_PRE_FENCE_I];
 
 wire                        							ifu_valid_o ;
 wire    [`YSYX_23060077_INST_WIDTH-1:0]   ifu_addr_o  ;
