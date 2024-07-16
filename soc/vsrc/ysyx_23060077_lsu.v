@@ -54,7 +54,7 @@ wire wen = store & !lsu_finished;
 
 wire lsu_rd_wen_r;
 wire lsu_rd_wen_w;
-
+// 读操作对有符号数进行扩展
 wire rdata_bit8   = (~exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2]) & rdata[7];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata_8bits = {{(`YSYX_23060077_DATA_WIDTH-8){rdata_bit8}} ,rdata[7:0]};
 wire rdata_bit16  = (~exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2]) & rdata[15];

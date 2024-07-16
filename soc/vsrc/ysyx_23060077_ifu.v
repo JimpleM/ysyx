@@ -4,10 +4,18 @@ module ysyx_23060077_ifu(
 	input                               							clock           		,
 	input                               							reset           		,
 
-	input       [`YSYX_23060077_DATA_WIDTH-1:0]     	jump_pc         		,
+	input       [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_jump_pc         ,
+	input 																						wbu_branch_taken		,
 	input                               							jump_pc_valid   		,
-	input                               							ifu_jump           	,
+	input 			[`YSYX_23060077_PRE_OPT_WIDTH-1:0] 		ifu_predecode				,
 	input                               							exu_finished       	,
+
+	input 																						if_to_id_ready_i		,
+	output 	reg                         							if_to_id_valid_o		,
+
+	// output                              ifu_stall    		   ,
+	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o						,
+	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst_o					,
 
 	// IFU Interface	
 	output  		                        							Icache_r_valid_o		,
@@ -15,13 +23,7 @@ module ysyx_23060077_ifu(
 	input   		                        							Icache_r_ready_i		,
 	input   		[`YSYX_23060077_DATA_WIDTH-1:0]       Icache_r_data_i 		,
 	output  		[8-1:0]    														Icache_r_len_o  		,
-	input   		                        							Icache_r_last_i 		,
-
-	// output                              ifu_stall    		   ,
-	input 																						if_to_id_ready_i		,
-	output 	reg                         							if_to_id_valid_o		,
-	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_pc_o						,
-	output 		 	[`YSYX_23060077_INST_WIDTH-1:0]       ifu_inst_o
+	input   		                        							Icache_r_last_i 		
 );
 
 
@@ -36,6 +38,17 @@ wire                        							ifu_valid_o ;
 wire    [`YSYX_23060077_INST_WIDTH-1:0]   ifu_addr_o  ;
 wire                        							ifu_ready_i ;
 wire 		[`YSYX_23060077_DATA_WIDTH-1:0]   ifu_data_i  ;
+
+wire ifu_jump = 
+ifu_predecode[`YSYX_23060077_PRE_JAL   ]	|
+ifu_predecode[`YSYX_23060077_PRE_JALR  ]	|
+ifu_predecode[`YSYX_23060077_PRE_BRANCH]	|
+ifu_predecode[`YSYX_23060077_PRE_ECALL ]	|
+ifu_predecode[`YSYX_23060077_PRE_MRET  ]	;
+
+wire [`YSYX_23060077_DATA_WIDTH-1:0] jump_pc = 
+(ifu_predecode[`YSYX_23060077_PRE_BRANCH] & ~wbu_branch_taken)| (~ifu_jump)? ifu_pc_o + 4 : wbu_jump_pc;
+
 
 wire no_jump = (if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump;
 
@@ -180,6 +193,21 @@ import "DPI-C" function void ifu_inst_arrived();
 always @(posedge clock)begin
 	if(Icache_r_last_i)begin
 		ifu_inst_arrived();
+	end
+end
+
+import "DPI-C" function void ifu_jump_stall(input int index,input bit valid);
+always @(posedge clock)begin
+	if(ifu_jump)begin
+		if(ifu_predecode[`YSYX_23060077_PRE_JAL])begin
+			ifu_jump_stall(32'd0,Icache_r_last_i);
+		end
+		if(ifu_predecode[`YSYX_23060077_PRE_JALR])begin
+			ifu_jump_stall(32'd1,Icache_r_last_i);
+		end
+		if(ifu_predecode[`YSYX_23060077_PRE_BRANCH])begin
+			ifu_jump_stall(32'd2,Icache_r_last_i);
+		end
 	end
 end
 `endif

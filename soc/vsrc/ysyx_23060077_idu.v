@@ -1,12 +1,7 @@
 `include"ysyx_23060077_define.v"
 module ysyx_23060077_idu(
 	input 	    [`YSYX_23060077_INST_WIDTH-1:0]       	inst								,
-	input																								idu_jal							,
-	input																								idu_jalr						,
-	input																								idu_branch					,
-	input																								idu_sys							,
-	input																								idu_csr_ecall				,
-	input																								idu_csr_mret				,
+	input 			[`YSYX_23060077_PRE_OPT_WIDTH-1:0] 			idu_predecode				,
 
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rd									,
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rs1									,
@@ -49,15 +44,15 @@ wire 	FUNCT3_BIT2 			= funct3[2]	;
 // inst type
 wire TYPE_LUI   	= (opcode == 7'b01101_11);
 wire TYPE_AUIPC 	= (opcode == 7'b00101_11);
-wire TYPE_JAL   	= idu_jal;		// 7'b11011_11
-wire TYPE_JALR  	= idu_jalr;		// 7'b11001_11
-wire TYPE_BRANCH	= idu_branch;	// 7'b11000_11
+wire TYPE_JAL   	= idu_predecode[`YSYX_23060077_PRE_JAL   ];	// 7'b11011_11
+wire TYPE_JALR  	= idu_predecode[`YSYX_23060077_PRE_JALR  ];	// 7'b11001_11
+wire TYPE_BRANCH	= idu_predecode[`YSYX_23060077_PRE_BRANCH];	// 7'b11000_11
 wire TYPE_LOAD  	= (opcode == 7'b00000_11);
 wire TYPE_STORE 	= (opcode == 7'b01000_11);
 wire TYPE_OP_IMM	= (opcode == 7'b00100_11);
 wire TYPE_OP    	= (opcode == 7'b01100_11);
 wire TYPE_FENCE 	= (opcode == 7'b00011_11);
-wire TYPE_SYS   	= idu_sys;		// 7'b11100_11
+wire TYPE_SYS   	= idu_predecode[`YSYX_23060077_PRE_SYS   ];		// 7'b11100_11
 // imm type
 wire I_TYPE 			= TYPE_JALR | TYPE_LOAD | TYPE_OP_IMM | TYPE_SYS;
 wire U_TYPE 			= TYPE_LUI | TYPE_AUIPC;
@@ -159,7 +154,8 @@ assign alu_opt_bus[`YSYX_23060077_ALU_PC  ] = INST_AUIPC | INST_JAL | INST_JALR 
 // SUB: 	BIT0=INST_BNE 	~BIT0=INST_BEQ
 // SLT: 	BIT0=INST_BGE 	~BIT0=INST_BLT
 // SLTU: 	BIT0=INST_BGEU 	~BIT0:INST_BLTU
-assign alu_opt_bus[`YSYX_23060077_ALU_BRU ] = FUNCT3_BIT0;
+assign alu_opt_bus[`YSYX_23060077_ALU_BRANCH			] = TYPE_BRANCH;
+assign alu_opt_bus[`YSYX_23060077_ALU_BRU_FUNC3		] = FUNCT3_BIT0;
 
 // mul,div
 assign alu_opt_bus[`YSYX_23060077_ALU_MUL       	] = TYPE_MUL;
@@ -170,8 +166,9 @@ assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1 ] = FUNCT3_BIT1;
 // exu_lsu exu_csr
 assign exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD    	] = TYPE_LOAD;
 assign exu_opt_bus[`YSYX_23060077_EX_LSU_STORE   	] = TYPE_STORE;
-assign exu_opt_bus[`YSYX_23060077_EX_CSR_ECALL		] = idu_csr_ecall;
-assign exu_opt_bus[`YSYX_23060077_EX_CSR_MRET 		] = idu_csr_mret;
+assign exu_opt_bus[`YSYX_23060077_EX_SYS   				] = TYPE_SYS;
+assign exu_opt_bus[`YSYX_23060077_EX_CSR_ECALL		] = idu_predecode[`YSYX_23060077_PRE_ECALL ];
+assign exu_opt_bus[`YSYX_23060077_EX_CSR_MRET 		] = idu_predecode[`YSYX_23060077_PRE_MRET  ];
 assign exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2 		] = FUNCT3_BIT2;
 assign exu_opt_bus[`YSYX_23060077_EX_00       		] = (~FUNCT3_BIT1) & (~FUNCT3_BIT0);
 assign exu_opt_bus[`YSYX_23060077_EX_01       		] = (~FUNCT3_BIT1) & 	 FUNCT3_BIT0 ;

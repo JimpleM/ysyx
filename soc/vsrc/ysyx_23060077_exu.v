@@ -4,13 +4,10 @@ module ysyx_23060077_exu(
 	input 																						reset 							,
 
 	input 	    [`YSYX_23060077_DATA_WIDTH-1:0]       pc									,
-
 	input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       src1								,
 	input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       src2								,
-
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       imm									,
 
-	input                               							branch							,
 
 	input       [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    alu_opt_bus					,
 	input       [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    src_sel							,
@@ -62,11 +59,11 @@ ysyx_23060077_adder addder_pc_u0(
 );
 
 ysyx_23060077_ex_bru ex_bru_u0(
+	.alu_opt_bus    ( alu_opt_bus         ),
 	.zero_flag    	( adder_zero_flag     ),
 	.signed_flag  	( adder_signed_flag   ),
 	.unsigned_flag	( adder_unsigned_flag ),
-	.branch        	( branch         			),
-	.alu_opt_bus    ( alu_opt_bus         ),
+
 	.branch_taken  	( branch_taken   			)
 );
 
