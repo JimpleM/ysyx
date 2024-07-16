@@ -101,10 +101,9 @@ wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs1		   			;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		idu_rs2		   			;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	idu_imm		   			;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   idu_alu_opt_bus	  ;
-wire [`YSYX_23060077_CSR_OPT_WIDTH-1:0]   idu_csr_opt_bus	  ;
+wire [`YSYX_23060077_EXU_OPT_WIDTH-1:0]   idu_exu_opt_bus	  ;
+wire [`YSYX_23060077_WBU_OPT_WIDTH-1:0]   idu_wbu_opt_bus		;
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   idu_src_sel	    	;
-wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   idu_lsu_opt	    	;
-wire [2:0]                  							idu_funct3	    	;
 wire 																			idu_csr_ecall			;
 wire 																			idu_csr_mret			;
 wire																			idu_sys						;
@@ -125,10 +124,9 @@ wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src1					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_src2					;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	exu_imm		    		;
 wire [`YSYX_23060077_ALU_OPT_WIDTH-1:0]   exu_alu_opt_bus	  ;
-wire [`YSYX_23060077_CSR_OPT_WIDTH-1:0]   exu_csr_opt_bus	  ;
+wire [`YSYX_23060077_WBU_OPT_WIDTH-1:0]   exu_wbu_opt_bus		;
+wire [`YSYX_23060077_EXU_OPT_WIDTH-1:0]   exu_opt_bus	  		;		
 wire [`YSYX_23060077_SRC_SEL_WIDTH-1:0]   exu_src_sel	    	;
-wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   exu_lsu_opt	    	;
-wire [2:0]                  							exu_funct3	    	;
 wire                       								exu_branch				;
 wire                       								exu_rd_wen_req		;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		exu_rd_addr				;
@@ -163,15 +161,14 @@ wire                        							lsu_w_last_i    	;
 
 //wbu
 wire [`YSYX_23060077_DATA_WIDTH-1:0]      wbu_pc          	;
+wire [`YSYX_23060077_WBU_OPT_WIDTH-1:0]   wbu_opt_bus				;
 wire 																			wbu_branch_taken	;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			wb_exu_result			;
 wire                        							wbu_rd_wen_req    ;
 wire [`YSYX_23060077_REG_WIDTH-1:0]   		wbu_rd_addr				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_data		  	;
-wire [`YSYX_23060077_LSU_OPT_WIDTH-1:0]   wbu_lsu_opt				;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]			wbu_lsu_result		;
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	wbu_rd_csr_data		;
-wire																			wbu_sys						;
 
 //csr
 wire [`YSYX_23060077_DATA_WIDTH-1:0]     	csr_wr_data				;
@@ -278,15 +275,13 @@ ysyx_23060077_idu idu_u0(
 	.idu_csr_ecall	( idu_csr_ecall ),
 	.idu_csr_mret		( idu_csr_mret  ),
 	.rd							( idu_rd_addr	),
-	.rd_wen					( idu_rd_wen_req	),
 	.rs1						( idu_rs1			),
 	.rs2						( idu_rs2			),
 	.imm						( idu_imm			),
 	.alu_opt_bus		( idu_alu_opt_bus	),
-	.csr_opt_bus		( idu_csr_opt_bus	),
-	.src_sel				( idu_src_sel	),
-	.lsu_opt				( idu_lsu_opt	),
-	.funct3		  		( idu_funct3	)
+	.exu_opt_bus		( idu_exu_opt_bus	),
+	.wbu_opt_bus		( idu_wbu_opt_bus ),
+	.src_sel				( idu_src_sel	)
 );
 
 ysyx_23060077_regfile regfile_u0(
@@ -310,13 +305,13 @@ ysyx_23060077_regfile regfile_u0(
 wire [`YSYX_23060077_DATA_WIDTH-1:0] idu_src1_t;
 assign idu_src1_t =	
 (|idu_rs1) ? (
-(idu_rs1 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
+(idu_rs1 == exu_rd_addr) ? ((exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD ] | exu_opt_bus[`YSYX_23060077_EX_LSU_STORE]) ? lsu_result : exu_result) :
 (idu_rs1 == wbu_rd_addr) ? wbu_rd_data : idu_rs1_data
 ) : idu_rs1_data;
 assign idu_src1 = idu_jal ? idu_pc : idu_src1_t;
 assign idu_src2 =
 (|idu_rs2) ? (
-(idu_rs2 == exu_rd_addr) ? ((|exu_lsu_opt) ? lsu_result : exu_result) :
+(idu_rs2 == exu_rd_addr) ? ((exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD ] | exu_opt_bus[`YSYX_23060077_EX_LSU_STORE]) ? lsu_result : exu_result) :
 (idu_rs2 == wbu_rd_addr) ? wbu_rd_data : idu_rs2_data
 ) : idu_rs2_data;
 
@@ -324,7 +319,9 @@ reg id_to_ex_valid;
 reg id_to_ex_ready;
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+3+`YSYX_23060077_LSU_OPT_WIDTH+1+1+`YSYX_23060077_REG_WIDTH+1+`YSYX_23060077_CSR_OPT_WIDTH),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*5+`YSYX_23060077_ALU_OPT_WIDTH+`YSYX_23060077_SRC_SEL_WIDTH+
+	1+1+`YSYX_23060077_REG_WIDTH+1+`YSYX_23060077_EXU_OPT_WIDTH
+	+`YSYX_23060077_WBU_OPT_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_id_to_ex(
 	.clock	( clock ),
@@ -333,11 +330,11 @@ ysyx_23060077_pipeline#(
 	.stall	( !id_to_ex_ready),
 	.flush	( ex_to_wb_valid & ex_to_wb_ready),// 与后级交互完就清空，不清空会导致ex_to_wb_valid一直拉高
 	.din		( {idu_pc,idu_inst,idu_src1,idu_src2,idu_imm,idu_alu_opt_bus,idu_src_sel,
-	idu_funct3,idu_lsu_opt,idu_branch,idu_rd_wen_req,idu_rd_addr,
-	idu_sys,idu_csr_opt_bus}),
+	idu_branch,idu_rd_wen_req,idu_rd_addr,
+	idu_sys,idu_exu_opt_bus,idu_wbu_opt_bus}),
 	.dout		( {exu_pc,exu_inst,exu_src1,exu_src2,exu_imm,exu_alu_opt_bus,exu_src_sel,
-	exu_funct3,exu_lsu_opt,exu_branch,exu_rd_wen_req,exu_rd_addr,
-	exu_sys,exu_csr_opt_bus})
+	exu_branch,exu_rd_wen_req,exu_rd_addr,
+	exu_sys,exu_opt_bus,exu_wbu_opt_bus})
 );
 
 always @(posedge clock) begin
@@ -355,7 +352,7 @@ always @(posedge clock) begin
 end
 
 // 有lsu就选择lsu的结果
-wire ex_to_wb_valid = (exu_lsu_opt[0]^exu_lsu_opt[1]) ? lsu_finished : exu_finished;
+wire ex_to_wb_valid = (exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD ] | exu_opt_bus[`YSYX_23060077_EX_LSU_STORE]) ? lsu_finished : exu_finished;
 
 ysyx_23060077_exu exu_u0(
 	.clock							( clock		    		),
@@ -382,11 +379,14 @@ ysyx_23060077_exu exu_u0(
 ysyx_23060077_lsu lsu_u0(
 	.clock						( clock		    	),
 	.reset        		( reset         ),
+
 	.adder_sum     		( adder_sum     ),
 	.src2     				( exu_src2      ),
-
-	.lsu_opt					( exu_lsu_opt   ),
-	.funct3		    		( exu_funct3    ),
+	.exu_opt_bus			( exu_opt_bus  	),
+	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
+	.mem_stall      	( mem_stall     ),
+	.lsu_finished     ( lsu_finished  ),
+	.lsu_result				( lsu_result    ),
 
 	.lsu_r_valid_o  	( lsu_r_valid_o ),
 	.lsu_r_addr_o   	( lsu_r_addr_o  ),
@@ -401,12 +401,7 @@ ysyx_23060077_lsu lsu_u0(
 	.lsu_w_data_o   	( lsu_w_data_o  ),
 	.lsu_w_size_o   	( lsu_w_size_o  ),
 	.lsu_w_len_o    	( lsu_w_len_o   ),
-	.lsu_w_last_i   	( lsu_w_last_i  ),
-
-	.ex_to_wb					( ex_to_wb_valid & ex_to_wb_ready),
-	.mem_stall      	( mem_stall     ),
-	.lsu_finished     ( lsu_finished  ),
-	.lsu_result				( lsu_result    )
+	.lsu_w_last_i   	( lsu_w_last_i  )
 );
 
 ysyx_23060077_csr  csr_u0 (
@@ -416,7 +411,7 @@ ysyx_23060077_csr  csr_u0 (
 	.csr_src1 			( exu_src1			),
 	.csr_pc         ( exu_pc        ),
 
-	.csr_opt_bus		( exu_csr_opt_bus ),
+	.exu_opt_bus		( exu_opt_bus  ),
 
 	.sys 						( exu_sys				),
 	.ex_to_wb				( ex_to_wb_valid & ex_to_wb_ready),
@@ -431,8 +426,7 @@ ysyx_23060077_bpu bpu_u0(
 	.exu_branch   	( exu_branch    ), 
 	.adder_pc     	( adder_pc      ), 
 	.adder_sum    	( adder_sum     ), 
-	.exu_csr_ecall	( exu_csr_opt_bus[`YSYX_23060077_CSR_ECALL] ), 
-	.exu_csr_mret 	( exu_csr_opt_bus[`YSYX_23060077_CSR_MRET ] ),	
+	.exu_opt_bus		( exu_opt_bus		), 
 	.csr_mtvec    	( csr_mtvec     ), 
 	.csr_mepc     	( csr_mepc      ), 
 	.jump_pc     		( exu_jump_pc   )
@@ -441,7 +435,8 @@ ysyx_23060077_bpu bpu_u0(
 
 
 ysyx_23060077_pipeline#(
-	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+1+1+`YSYX_23060077_REG_WIDTH+`YSYX_23060077_LSU_OPT_WIDTH+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH),
+	.WIDTH          (`YSYX_23060077_DATA_WIDTH*2+`YSYX_23060077_REG_WIDTH+
+	`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_DATA_WIDTH+1+`YSYX_23060077_DATA_WIDTH+`YSYX_23060077_WBU_OPT_WIDTH),
 	.RESET_VAL      ('d0)
 )pipeline_ex_to_wb(
 	.clock	( clock ),
@@ -449,12 +444,12 @@ ysyx_23060077_pipeline#(
 	.wen		( ex_to_wb_valid & ex_to_wb_ready ),
 	.stall	( ),
 	.flush	( ),
-	.din		( {exu_pc,exu_result,exu_rd_wen_req,exu_sys,
-	exu_rd_addr,exu_lsu_opt,lsu_result,csr_rd_data,
-	branch_taken,exu_jump_pc}),
-	.dout		( {wbu_pc,wb_exu_result,wbu_rd_wen_req,wbu_sys,
-	wbu_rd_addr,wbu_lsu_opt,wbu_lsu_result,wbu_rd_csr_data,
-	wbu_branch_taken,wbu_jump_pc})
+	.din		( {exu_pc,exu_result,
+	exu_rd_addr,lsu_result,csr_rd_data,
+	branch_taken,exu_jump_pc,exu_wbu_opt_bus}),
+	.dout		( {wbu_pc,wb_exu_result,
+	wbu_rd_addr,wbu_lsu_result,wbu_rd_csr_data,
+	wbu_branch_taken,wbu_jump_pc,wbu_opt_bus})
 );
 reg 	wbu_doing;
 wire 	wbu_rd_wen = wbu_rd_wen_req & wbu_doing;
@@ -474,13 +469,13 @@ always @(posedge clock) begin
 	end
 
 ysyx_23060077_wbu wbu_u0(
-	.lsu_opt					( wbu_lsu_opt     	),
-	.wbu_sys					( wbu_sys						),
+	.wbu_opt_bus			( wbu_opt_bus				),
 	.exu_result				( wb_exu_result			),
 	.lsu_result				( wbu_lsu_result   	),
 	.csr_result     	( wbu_rd_csr_data  	),
-	.wbu_result				( wbu_rd_data      	)
 
+	.wbu_rd_wen_req		( wbu_rd_wen_req		),
+	.wbu_result				( wbu_rd_data      	)
 );
 
 

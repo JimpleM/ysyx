@@ -5,9 +5,12 @@ module ysyx_23060077_lsu(
 
   input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       adder_sum  			    ,
   input  	    [`YSYX_23060077_DATA_WIDTH-1:0]       src2  			   			,
+  input 			[`YSYX_23060077_EXU_OPT_WIDTH-1:0]    exu_opt_bus					,
+  input                                             ex_to_wb       			,
+  output                                            mem_stall 		 			,
+  output  reg                                       lsu_finished  	 		,
+  output 	reg [`YSYX_23060077_DATA_WIDTH-1:0]       lsu_result          ,
 
-  input       [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    lsu_opt 		   			,
-  input       [2:0]                                 funct3  		   			,
   // LSU Interface
   output                                            lsu_r_valid_o 			,
   output 	    [`YSYX_23060077_AXI_ADDR_WIDTH-1:0]   lsu_r_addr_o  			,
@@ -22,54 +25,45 @@ module ysyx_23060077_lsu(
   output      [`YSYX_23060077_DATA_WIDTH-1:0]       lsu_w_data_o  			,
   output 	    [3-1:0]                               lsu_w_size_o   			,
   output      [8-1:0]                               lsu_w_len_o    			,
-  input                                             lsu_w_last_i   			,
-
-  input                                             ex_to_wb       			,
-  output                                            mem_stall 		 			,
-  output  reg                                       lsu_finished  	 		,
-  output 	reg [`YSYX_23060077_DATA_WIDTH-1:0]       lsu_result
+  input                                             lsu_w_last_i   			
 );
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] wdata = src2;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] lsu_address;
 
+wire load  = exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD ];
+wire store = exu_opt_bus[`YSYX_23060077_EX_LSU_STORE];
+
 ysyx_23060077_ls_agu ls_agu_u0(
-  .agu_en 		  ( |lsu_opt 		), 
+  .agu_en 		  ( load | store), 
   .adder_sum    ( adder_sum   ),
   .lsu_address  ( lsu_address )
 );
 
-// lsu_opt = {TYPE_STORE,TYPE_LOAD}; 0为load 1 为store
+wire [2:0] size =
+({3{exu_opt_bus[`YSYX_23060077_EX_00]}} & 3'd0) |
+({3{exu_opt_bus[`YSYX_23060077_EX_01]}} & 3'd1) |
+({3{exu_opt_bus[`YSYX_23060077_EX_10]}} & 3'd2) ;
 
-wire [2:0] rsize = lsu_opt[0]?(
-(funct3[1:0] == 2'b00) ? 3'd0 :
-(funct3[1:0] == 2'b01) ? 3'd1 :
-(funct3[1:0] == 2'b10) ? 3'd2 : 
-3'd0 ) : 3'd0;
+wire [2:0] rsize = load  ? size : 3'd0;
+wire [2:0] wmask = store ? size : 3'd0;
 
-wire [2:0] wmask = lsu_opt[1]?(
-(funct3[1:0] == 2'b00) ? 3'd0 :
-(funct3[1:0] == 2'b01) ? 3'd1 :
-(funct3[1:0] == 2'b10) ? 3'd2 :
-3'd0 ) : 3'd0;
-
-wire ren = lsu_opt[0] & !lsu_finished;
-wire wen = lsu_opt[1] & !lsu_finished;
+wire ren = load  & !lsu_finished;
+wire wen = store & !lsu_finished;
 
 wire lsu_rd_wen_r;
 wire lsu_rd_wen_w;
 
-wire rdata_bit8   = !funct3[2] & rdata[7];
+wire rdata_bit8   = (~exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2]) & rdata[7];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata_8bits = {{(`YSYX_23060077_DATA_WIDTH-8){rdata_bit8}} ,rdata[7:0]};
-wire rdata_bit16  = !funct3[2] & rdata[15];
+wire rdata_bit16  = (~exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2]) & rdata[15];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata_16bits= {{(`YSYX_23060077_DATA_WIDTH-16){rdata_bit16}},rdata[15:0]};
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata_32bits= rdata;
 wire [`YSYX_23060077_DATA_WIDTH-1:0] rdata_result = 
-(funct3[1:0] == 2'b00) ? rdata_8bits  :
-(funct3[1:0] == 2'b01) ? rdata_16bits :
-(funct3[1:0] == 2'b10) ? rdata_32bits : 
-'d0;
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_00]}} & rdata_8bits ) |
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_01]}} & rdata_16bits) |
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_10]}} & rdata_32bits) ;
 
 always @(posedge clock) begin
   if(reset)begin

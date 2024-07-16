@@ -8,7 +8,7 @@ module ysyx_23060077_csr(
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_src1 						,
 	input       [`YSYX_23060077_DATA_WIDTH-1:0]       csr_pc        			,
 
-	input 			[`YSYX_23060077_CSR_OPT_WIDTH-1:0]    csr_opt_bus					,
+	input 			[`YSYX_23060077_EXU_OPT_WIDTH-1:0]    exu_opt_bus					,
 
 	input              																sys      						, 
 	input 																						ex_to_wb						,
@@ -47,20 +47,20 @@ reg  [`YSYX_23060077_DATA_WIDTH-1:0] csr_reg	[CSR_REG_COUNT-1:0];
 wire [`YSYX_23060077_DATA_WIDTH-1:0] csr_din	[CSR_REG_COUNT-1:0];
 reg csr_reg_wen [CSR_REG_COUNT-1:0];
 
-wire csr_ecall	= csr_opt_bus[`YSYX_23060077_CSR_ECALL];
-wire csr_mret 	= csr_opt_bus[`YSYX_23060077_CSR_MRET ];
+wire csr_ecall	= exu_opt_bus[`YSYX_23060077_EX_CSR_ECALL];
+wire csr_mret 	= exu_opt_bus[`YSYX_23060077_EX_CSR_MRET ];
 
 wire [`YSYX_23060077_CSR_ADDR_WIDTH-1:0]  csr_addr = csr_imm[5+:`YSYX_23060077_CSR_ADDR_WIDTH];
-wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_wr_data = csr_opt_bus[`YSYX_23060077_CSR_ZIMM ] ? {27'd0,csr_imm[4:0]} : csr_src1;
+wire [`YSYX_23060077_DATA_WIDTH-1:0]      csr_wr_data = exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2 ] ? {27'd0,csr_imm[4:0]} : csr_src1;
 
 assign csr_mstatus 		= csr_reg[CSR_MSTATUS  ];
 assign csr_mtvec 			= csr_reg[CSR_MTVEC    ];
 assign csr_mepc 			= csr_reg[CSR_MEPC     ];
 
 wire [`YSYX_23060077_DATA_WIDTH-1:0] csr_wr_data_t =
-({`YSYX_23060077_DATA_WIDTH{csr_opt_bus[`YSYX_23060077_CSR_01]}} & 	 		csr_wr_data								) |
-({`YSYX_23060077_DATA_WIDTH{csr_opt_bus[`YSYX_23060077_CSR_10]}} & ( csr_wr_data  | csr_rd_data	)	) |
-({`YSYX_23060077_DATA_WIDTH{csr_opt_bus[`YSYX_23060077_CSR_11]}} & ((~csr_wr_data) & csr_rd_data) ) ;
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_01]}} & 	 		csr_wr_data								) |
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_10]}} & ( csr_wr_data  | csr_rd_data	)	) |
+({`YSYX_23060077_DATA_WIDTH{exu_opt_bus[`YSYX_23060077_EX_11]}} & ((~csr_wr_data) & csr_rd_data) ) ;
 
 reg csr_finished;
 wire enable = sys;

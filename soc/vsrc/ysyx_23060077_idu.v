@@ -9,22 +9,22 @@ module ysyx_23060077_idu(
 	input																								idu_csr_mret				,
 
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rd									,
-	output                           										rd_wen							,
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rs1									,
 	output   		[`YSYX_23060077_REG_WIDTH-1:0]        	rs2									,
 	output   		[`YSYX_23060077_DATA_WIDTH-1:0]       	imm									,
 
 	output      [`YSYX_23060077_ALU_OPT_WIDTH-1:0]    	alu_opt_bus					,
-	output 			[`YSYX_23060077_CSR_OPT_WIDTH-1:0]      csr_opt_bus					,
-	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    	src_sel							,
-	output      [`YSYX_23060077_LSU_OPT_WIDTH-1:0]    	lsu_opt							,
-	output      [2:0]                   								funct3
+	output 			[`YSYX_23060077_EXU_OPT_WIDTH-1:0]      exu_opt_bus					,
+	output 			[`YSYX_23060077_WBU_OPT_WIDTH-1:0]      wbu_opt_bus					,
+
+	output      [`YSYX_23060077_SRC_SEL_WIDTH-1:0]    	src_sel							
 
 );
 
-assign funct3   = inst[14:12];
+
 
 wire [6:0]  opcode = inst[6:0]		;
+wire [2:0]  funct3 = inst[14:12]	;
 wire [6:0]  funct7 = inst[31:25]	;
 
 wire	FUNCT3_000 				= (funct3 == 3'b000) 			;
@@ -72,7 +72,7 @@ wire [`YSYX_23060077_REG_WIDTH-1:0]	rs2_t		= inst[24:20]	;
 wire [`YSYX_23060077_REG_WIDTH-1:0]	rd_t 		= inst[11:7]	;
 wire rs1_sel			= I_TYPE | B_TYPE | S_TYPE | R_TYPE ;
 wire rs2_sel			= B_TYPE | S_TYPE | R_TYPE;
-assign rd_wen			= U_TYPE | J_TYPE | I_TYPE | R_TYPE;
+wire  rd_wen			= U_TYPE | J_TYPE | I_TYPE | R_TYPE;
 assign rs1 = rs1_sel ? rs1_t 	: 'd0;
 assign rs2 = rs2_sel ? rs2_t 	: 'd0;
 assign rd  = rd_wen  ? rd_t 	: 'd0;
@@ -104,11 +104,6 @@ assign imm	=
 // SRC_SEL_IMM_SRC2  `YSYX_23060077_SRC_SEL_WIDTH'b11
 assign src_sel[1] = (TYPE_AUIPC | TYPE_BRANCH);
 assign src_sel[0] = (TYPE_AUIPC | TYPE_BRANCH | TYPE_OP);
-
-// lsu_opt
-// lsu_opt[0] is load/None
-// lsu_opt[1] is store/None
-assign lsu_opt = {TYPE_STORE,TYPE_LOAD};
 
 // inst
 wire INST_LUI 	=	TYPE_LUI	;
@@ -172,13 +167,26 @@ assign alu_opt_bus[`YSYX_23060077_ALU_DIV       	] = TYPE_DIV;
 assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT0 ] = FUNCT3_BIT0;
 assign alu_opt_bus[`YSYX_23060077_ALU_MULDIV_BIT1 ] = FUNCT3_BIT1;
 
-// csr
-assign csr_opt_bus[`YSYX_23060077_CSR_ECALL	] = idu_csr_ecall;
-assign csr_opt_bus[`YSYX_23060077_CSR_MRET 	] = idu_csr_mret;
-assign csr_opt_bus[`YSYX_23060077_CSR_ZIMM 	] = FUNCT3_BIT2;
-assign csr_opt_bus[`YSYX_23060077_CSR_01   	] = (~FUNCT3_BIT1) & 	 FUNCT3_BIT0 ;
-assign csr_opt_bus[`YSYX_23060077_CSR_10   	] =   FUNCT3_BIT1  & (~FUNCT3_BIT0);
-assign csr_opt_bus[`YSYX_23060077_CSR_11   	] = 	FUNCT3_BIT1  & 	 FUNCT3_BIT0 ;
+// exu_lsu exu_csr
+assign exu_opt_bus[`YSYX_23060077_EX_LSU_LOAD    	] = TYPE_LOAD;
+assign exu_opt_bus[`YSYX_23060077_EX_LSU_STORE   	] = TYPE_STORE;
+assign exu_opt_bus[`YSYX_23060077_EX_CSR_ECALL		] = idu_csr_ecall;
+assign exu_opt_bus[`YSYX_23060077_EX_CSR_MRET 		] = idu_csr_mret;
+assign exu_opt_bus[`YSYX_23060077_EX_FUN3_BIT2 		] = FUNCT3_BIT2;
+assign exu_opt_bus[`YSYX_23060077_EX_00       		] = (~FUNCT3_BIT1) & (~FUNCT3_BIT0);
+assign exu_opt_bus[`YSYX_23060077_EX_01       		] = (~FUNCT3_BIT1) & 	 FUNCT3_BIT0 ;
+assign exu_opt_bus[`YSYX_23060077_EX_10       		] =   FUNCT3_BIT1  & (~FUNCT3_BIT0);
+assign exu_opt_bus[`YSYX_23060077_EX_11       		] = 	FUNCT3_BIT1  & 	 FUNCT3_BIT0 ;
+
+// wbu_opt
+assign wbu_opt_bus[`YSYX_23060077_WBU_CSR       	] = TYPE_SYS	;
+assign wbu_opt_bus[`YSYX_23060077_WBU_LSU       	] = TYPE_LOAD	;
+assign wbu_opt_bus[`YSYX_23060077_WBU_EXU       	] = TYPE_LUI | TYPE_AUIPC | TYPE_JAL | TYPE_JALR | TYPE_OP_IMM | TYPE_OP	;
+
+
+  
+
+
 
 
 endmodule
