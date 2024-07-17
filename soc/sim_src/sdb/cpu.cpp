@@ -260,9 +260,9 @@ static void execute(uint64_t n) {
           npc_state.state = NPC_ABORT;
         }
       }
-
+#ifdef NPC_SIM
       device_update();
-      
+#endif
       cpu_lpc  = cpu_pc;
       
       if (cpu_inst == 0x00100073){

@@ -53,7 +53,7 @@ static void send_key(uint8_t scancode, bool is_keydown){
     }
 }
 void keyboard_update();
-
+#ifdef NPC_SIM
 // int keyboard_update_adapter(void* data) {
 //     while(1){
 //         SDL_Delay(100);
@@ -61,7 +61,7 @@ void keyboard_update();
 //     }
 //     return 0;  // 返回一个整数值
 // }
-
+#endif
 uint32_t keyboard_read(){
   uint32_t temp = key_dequeue();
   if(temp & KEYDOWN_MASK){
@@ -73,7 +73,10 @@ uint32_t keyboard_read(){
 
 void keyboard_init(){
   init_keymap();
+  #ifdef NPC_SIM
+    // ysyxnpc才需要这里的device去模拟硬件层接收到外设信息
     // SDL_CreateThread(keyboard_update_adapter,"keyboard_update",NULL);
+  #endif
 }
 
 
