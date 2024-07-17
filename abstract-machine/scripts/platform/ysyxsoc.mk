@@ -7,8 +7,10 @@ AM_SRCS := riscv/ysyxsoc/start.S \
            riscv/ysyxsoc/gpu.c \
            riscv/ysyxsoc/cte.c \
            riscv/ysyxsoc/trap.S \
-           riscv/ysyxsoc/vme.c \
-           riscv/ysyxsoc/mpe.c
+           platform/dummy/vme.c \
+           platform/dummy/mpe.c
+          #  riscv/ysyxsoc/vme.c \
+          #  riscv/ysyxsoc/mpe.c
 
 CFLAGS    += -fdata-sections -ffunction-sections
 

@@ -115,76 +115,11 @@ localparam [ICACHE_STATE_WITDH-1:0] ICACHE_FENCE  		= 'd4;
 // 	end
 // end
 
-
-// wire [1:0] tag_hit_idx = 
-// (tag_hit_buf == 4'b0001) ?	2'd0	:
-// (tag_hit_buf == 4'b0010) ?	2'd1	:
-// (tag_hit_buf == 4'b0100) ?	2'd2	:
-// (tag_hit_buf == 4'b1000) ?	2'd3	:	2'd0;
-
-// wire [1:0] tag_hit_idx = 
-// (tag_hit == 4'b0001) ?	2'd0	:
-// (tag_hit == 4'b0010) ?	2'd1	:
-// (tag_hit == 4'b0100) ?	2'd2	:
-// (tag_hit == 4'b1000) ?	2'd3	:	2'd0;
-
-// wire  [BLOCK_SIZE-1:0] 	cache_read_data = 
-// (tag_hit_idx == 2'd0) ? cache_data0[cache_index]	:
-// (tag_hit_idx == 2'd1) ? cache_data1[cache_index]	:
-// (tag_hit_idx == 2'd2) ? cache_data2[cache_index]	:
-// (tag_hit_idx == 2'd3) ? cache_data3[cache_index]	: 'd0;
-
 wire  [BLOCK_SIZE-1:0] 	cache_read_data_hit = 
 ({BLOCK_SIZE{tag_hit[0]}} & cache_read_data[0] ) |
 ({BLOCK_SIZE{tag_hit[1]}} & cache_read_data[1] ) |
 ({BLOCK_SIZE{tag_hit[2]}} & cache_read_data[2] ) |
 ({BLOCK_SIZE{tag_hit[3]}} & cache_read_data[3] );
-
-
-
-
-// always @(*) begin
-// 	case(icache_state)
-// 		ICACHE_IDLE:begin
-// 			ifu_ready_o			= 'd0;
-// 			ifu_data_o			= 'd0;
-// 			Icache_r_valid_o	= 'd0;
-// 			Icache_r_addr_o		= 'd0;
-// 		end
-// 		ICACHE_RD_CACHE:begin
-// 			ifu_ready_o			= 'd1;
-// 			case(cache_offset[M-1:2])
-// 				2'd0:ifu_data_o = cache_read_data[0+:32] ;
-// 				2'd1:ifu_data_o = cache_read_data[32+:32];
-// 				2'd2:ifu_data_o = cache_read_data[64+:32];
-// 				2'd3:ifu_data_o = cache_read_data[96+:32];
-// 			endcase
-// 		end
-// 		ICACHE_RD_AXI:begin	// todo 优化方向：当offset==当前读到的第n个数时直接赋值输出，按照概率能优化2个周期
-// 			Icache_r_valid_o	= 'd1;
-// 			Icache_r_addr_o		= {ifu_addr_i[31:4],4'd0};
-
-// 			if(Icache_r_last_i)begin
-// 				ifu_ready_o		= 'd1;
-// 				case(cache_offset[M-1:2])
-// 					2'd0:ifu_data_o = cache_write_data[32+:32];
-// 					2'd1:ifu_data_o = cache_write_data[64+:32];
-// 					2'd2:ifu_data_o = cache_write_data[96+:32];
-// 					2'd3:ifu_data_o = Icache_r_data_i;
-// 				endcase
-// 			end
-// 		end
-// 		default:begin
-// 			ifu_ready_o			= 'd0;
-// 			ifu_data_o			= 'd0;
-// 			Icache_r_valid_o	= 'd0;
-// 			Icache_r_addr_o		= 'd0;
-// 		end
-// 	endcase
-// end
-
-
-
 
 always @(posedge clock ) begin
 	if(reset)begin
@@ -195,17 +130,6 @@ always @(posedge clock ) begin
 	end
 end
 
-// always @(posedge clock) begin
-// 	if(Icache_r_last_i)begin
-// 		tag_ram[cache_index][random_data_cnt]				<= cache_tag;
-// 		case(random_data_cnt)
-// 			2'd0:cache_data0[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
-// 			2'd1:cache_data1[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
-// 			2'd2:cache_data2[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
-// 			2'd3:cache_data3[cache_index] 				<= {Icache_r_data_i,cache_write_data[127:32]};
-// 		endcase
-// 	end
-// end
 always @(posedge clock) begin
 	if(reset)begin
 		for(i=0; i<TAG_NUM;i++)begin
@@ -222,26 +146,6 @@ always @(posedge clock) begin
 	end
 end
 
-// always @(posedge clock) begin
-// 	if(Icache_r_last_i)begin
-// 		tag_ram[cache_index][random_data_cnt]		<= cache_tag;
-// 	end
-// end
-
-// always @(posedge clock) begin
-// 	if(reset | ifu_fence_i)begin
-// 		for(i=0; i<BLOCK_NUM; i++)begin
-// 			for(j=0; j<TAG_NUM;j++)begin
-// 				tag_ram_valid[i][j]				= 'd0;
-// 			end
-// 		end
-// 	end
-// 	else begin
-// 		if(Icache_r_last_i)begin
-// 			tag_ram_valid[cache_index][random_data_cnt]	<= 'd1;
-// 		end
-// 	end
-// end
 
 always @(posedge clock) begin
 	if(reset)begin
