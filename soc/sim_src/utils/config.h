@@ -32,7 +32,10 @@
 #ifndef NPC_SIM
 #define CONFIG_NVBOARD
 #endif
-#define CONFIG_VGA
+// 测试nanos-lite的时候才用
+#ifdef NPC_SIM
+// #define CONFIG_VGA
+#endif
 
 // #define CONFIG_WAVE
 

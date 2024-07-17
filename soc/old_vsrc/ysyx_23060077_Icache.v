@@ -59,13 +59,37 @@ wire [TAG_NUM-1:0] tag_hit = {
 (tag_ram[cache_index][2'd1] == cache_tag & tag_valid_ram[cache_index][2'd1] == 1'b1),
 (tag_ram[cache_index][2'd0] == cache_tag & tag_valid_ram[cache_index][2'd0] == 1'b1)	};
 
+// reg [TAG_NUM-1:0] tag_hit_buf;
+// reg ifu_valid_i_buf;
+
+// always @(posedge clock) begin
+// 	if(reset)begin
+// 		tag_hit_buf	<= 'd0;
+// 		ifu_valid_i_buf	<= 'd0;
+// 	end
+// 	else if(ifu_ready_o)begin
+// 		ifu_valid_i_buf	<= 'd0;
+// 		tag_hit_buf	<= tag_hit;
+// 	end
+// 	else begin
+// 		tag_hit_buf	<= tag_hit;
+// 		ifu_valid_i_buf	<= ifu_valid_i;
+// 	end
+// end
+
+
+// wire [1:0] tag_hit_idx = 
+// (tag_hit_buf == 4'b0001) ?	2'd0	:
+// (tag_hit_buf == 4'b0010) ?	2'd1	:
+// (tag_hit_buf == 4'b0100) ?	2'd2	:
+// (tag_hit_buf == 4'b1000) ?	2'd3	:	2'd0;
+
 wire [1:0] tag_hit_idx = 
 (tag_hit == 4'b0001) ?	2'd0	:
 (tag_hit == 4'b0010) ?	2'd1	:
 (tag_hit == 4'b0100) ?	2'd2	:
 (tag_hit == 4'b1000) ?	2'd3	:	2'd0;
 
-// wire tag_hit = (tag_ram[cache_index] == cache_tag & tag_valid_ram[cache_index] == 1'b1);
 wire  [BLOCK_SIZE-1:0] 	cache_read_data = 
 (tag_hit_idx == 2'd0) ? cache_data0[cache_index]	:
 (tag_hit_idx == 2'd1) ? cache_data1[cache_index]	:
@@ -184,6 +208,8 @@ always @(posedge clock) begin
 	else begin
 		case(icache_state)
 		ICACHE_IDLE:begin
+			// if(ifu_valid_i_buf == 1'b1)begin
+			// 	if(tag_hit_buf != 'd0)begin
 			if(ifu_valid_i == 1'b1)begin
 				if(tag_hit != 'd0)begin
 					icache_state	<= ICACHE_RD_CACHE;

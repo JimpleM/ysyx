@@ -84,7 +84,7 @@ extern "C" void mrom_read(uint32_t addr, uint32_t *data) {
 extern "C" void device_skip(svBit ren,uint32_t raddr, svBit wen,uint32_t waddr) {
 	if(ren){
 		if(in_device(raddr)){
-			printf("skip");
+			// printf("skip");
 			device_flag = 1;
 		}
 	}

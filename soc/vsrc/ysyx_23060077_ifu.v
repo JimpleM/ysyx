@@ -141,7 +141,7 @@ always @(posedge clock) begin
 		if((if_to_id_ready_i & if_to_id_valid_o)& !ifu_jump)begin		// 没有jump的情况下直接请求下一个
 			ifu_valid_o_r	<= 1'b1;
 		end
-		else if(exu_finished)begin	// 有jump等exu运行完
+		else if(exu_finished & ifu_jump)begin	// 有jump等exu运行完
 			ifu_valid_o_r	<= 1'b1;
 		end
 		else if(ifu_ready_i)begin

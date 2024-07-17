@@ -123,12 +123,12 @@ always @(posedge aclk ) begin
             end
             ARB_IFU:begin
                 if(cpu_r_ready_i & cpu_r_last_i)begin
-                    if(lsu_r_valid_i)begin
-                        arbiter_state <= ARB_LSU;
-                    end
-                    else begin
+                    // if(lsu_r_valid_i)begin
+                    //     arbiter_state <= ARB_LSU;
+                    // end
+                    // else begin
                         arbiter_state <= ARB_IDLE;
-                    end
+                    // end
                 end
             end
             ARB_LSU:begin
