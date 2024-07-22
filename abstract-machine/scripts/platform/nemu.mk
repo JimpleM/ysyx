@@ -19,22 +19,26 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
              --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
+$(shell mkdir -p $(NEMU_HOME)/build/cache_sim)
+$(shell mkdir -p $(NEMU_HOME)/build/branch_sim)
 
-ifeq ($(cache_sim),1)
+ifeq ($(sim),1)
   ### 传递nemu的flags，用于传递一些文件路径或运行模式
-  #$(info cache_sim provided)
+  #需要提取ysyxsoc的cache或branch，替换image
   IMAGE := $(patsubst %-nemu,%-ysyxnpc,$(IMAGE))
   #$(warning $(IMAGE))
   NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
   # NEMUFLAGS += -b 
   NEMUFLAGS += -e $(IMAGE).elf
-  NEMUFLAGS += -c $(NEMU_HOME)/cache_sim/$(shell basename $(IMAGE)).txt
+  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))_cache.txt
+  NEMUFLAGS += -j $(NEMU_HOME)/build/branch_sim/$(shell basename $(IMAGE))_branch.txt
 else 
   ### 传递nemu的flags，用于传递一些文件路径或运行模式
   NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
   # NEMUFLAGS += -b 
   NEMUFLAGS += -e $(IMAGE).elf
-  NEMUFLAGS += -c $(NEMU_HOME)/cache_sim/$(shell basename $(IMAGE)).txt
+  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))_cache.txt
+  NEMUFLAGS += -j $(NEMU_HOME)/build/branch_sim/$(shell basename $(IMAGE))_branch.txt
 endif
 
 

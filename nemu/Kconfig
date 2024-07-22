@@ -250,3 +250,6 @@ endmenu
 config CACHE_SIM
   bool "Generate cache sim txt"
   default n
+config BRANCH_SIM
+  bool "Generate branch sim txt"
+  default n

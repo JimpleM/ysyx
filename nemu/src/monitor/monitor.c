@@ -39,6 +39,7 @@ static void welcome() {
 #ifndef CONFIG_TARGET_AM
 #include <getopt.h>
 #include <cache_sim.h>
+#include <branch_sim.h>
 
 void sdb_set_batch_mode();
 
@@ -47,6 +48,7 @@ static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static char *elf_file = NULL;
 static char *cahce_file = NULL;
+static char *branch_file = NULL;
 static int difftest_port = 1234;
 
 
@@ -81,10 +83,11 @@ static int parse_args(int argc, char *argv[]) {
     {"help"     , no_argument      , NULL, 'h'},
     {"elf"      , required_argument, NULL, 'e'},
     {"cache"    , required_argument, NULL, 'c'},
+    {"branch"   , required_argument, NULL, 'j'},
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, "-bhl:d:p:e:c:", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, "-bhl:d:p:e:c:j:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
@@ -92,6 +95,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'd': diff_so_file = optarg; break;
       case 'e': elf_file = optarg; break;
       case 'c': cahce_file = optarg; break;
+      case 'j': branch_file = optarg; break;
       case 1: img_file = optarg; printf("%s\n",img_file); return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -150,7 +154,8 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize cache_sim */
   IFDEF(CONFIG_CACHE_SIM, init_cache_sim(cahce_file));
 
-
+  /* Initialize branch_sim */
+  IFDEF(CONFIG_BRANCH_SIM, init_branch_sim(branch_file));
 
 #ifndef CONFIG_ISA_loongarch32r
   IFDEF(CONFIG_ITRACE, init_disasm(
