@@ -17,7 +17,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
-
+#include <cache_sim.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -42,6 +42,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   //   puts(_this->logbuf);
   // }
   // printf("%x\n",_this->pc);
+  IFDEF(CONFIG_CACHE_SIM, cache_sim_txt(_this->pc));
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){

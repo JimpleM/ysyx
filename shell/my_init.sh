@@ -37,3 +37,20 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 40
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 100
 sudo update-alternatives --config g++
 
+
+#verilator
+sudo apt-get install git perl python3 make autoconf g++ flex bison ccache
+sudo apt-get install libgoogle-perftools-dev numactl perl-doc
+sudo apt-get install libfl-dev
+sudo apt-get install zlibc zlib1g zlib1g-dev
+
+git clone https://github.com/verilator/verilator
+
+unset VERILATOR_ROOT
+cd verilator
+git checkout v5.008 
+
+autoconf         # Create ./configure script
+./configure      # Configure and create Makefile
+make -j `nproc`  # Build Verilator itself (if error, try just 'make')
+sudo make install
