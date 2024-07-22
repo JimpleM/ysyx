@@ -20,6 +20,7 @@
  */
 #include <regex.h>
 #include <memory/paddr.h>
+#include <sdb.h>
 
 #define TOKENS_NUM  128
 enum {

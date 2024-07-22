@@ -18,7 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory/paddr.h>
-#include "sdb.h"
+#include <sdb.h>
 #include "cpu/difftest.h"
 #include "ringbuffer.h"
 #include "utils.h"
