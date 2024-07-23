@@ -43,7 +43,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   //   puts(_this->logbuf);
   // }
   // printf("%x\n",_this->pc);
-  IFDEF(CONFIG_CACHE_SIM, cache_sim_txt(_this->pc));
+  IFDEF(CONFIG_CACHE_SIM, Icache_sim_txt(_this->pc));
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){

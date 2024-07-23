@@ -5,8 +5,8 @@
 
 
 void init_cache_sim(const char *cahce_file);
-void cache_sim_txt(vaddr_t pc);
-
+void Icache_sim_txt(vaddr_t pc);
+void Dcache_sim_txt(int type, vaddr_t addr);
 
 
 #endif
