@@ -7,7 +7,7 @@ typedef enum {JAL,JALR,BRANCH}JumpType;
 
 void init_branch_sim(const char *branch_file);
 void branch_sim_txt(JumpType type, vaddr_t pc ,vaddr_t dnpc);
-
+void branch_sim_result();
 
 
 #endif
