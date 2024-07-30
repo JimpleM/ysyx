@@ -1,5 +1,6 @@
 CC = gcc
-CXX = g++
+CXX = riscv64-linux-gnu-g++
+OBJDUMP = riscv64-linux-gnu-objdump
 
 WORK_DIR = $(shell pwd)
 DST_DIR = $(WORK_DIR)/build
@@ -11,7 +12,7 @@ INCFLAGS += $(addprefix -I, $(INC_PATH))
 
 # 定义编译器标志
 CFLAGS = -Wall -Wextra -g $(INCFLAGS)
-CXXFLAGS = -Wall -Wextra -g $(INCFLAGS)
+CXXFLAGS = -Wall -Wextra -g $(INCFLAGS) -march=rv64g -mcmodel=medany -mstrict-align
 
 # 定义源文件变量
 SRCS_C = $(wildcard src/*.c)
@@ -43,7 +44,8 @@ $(DST_DIR)/$(TARGET): $(OBJS)
 # 运行可执行文件的规则
 run: all
 	@echo "Running the program..."
-	$(DST_DIR)/$(TARGET)
+	$(OBJDUMP) -h -t -d $(DST_DIR)/$(TARGET) > b.txt
+#	$(DST_DIR)/$(TARGET)
 
 # 清理规则，清理构建目录和可执行文件
 clean:
