@@ -1,13 +1,39 @@
-# Building microbench-run [riscv32e-ysyxsoc]
-# Building am-archive [riscv32e-ysyxsoc]
+# Building microbench-run [riscv32-ysyxsoc]
++ CXX src/dinic/dinic.cc
++ CXX src/ssort/ssort.cc
++ CC src/queen/queen.c
++ CC src/md5/md5.c
++ CC src/lzip/quicklz.c
++ CC src/lzip/lzip.c
++ CXX src/15pz/15pz.cc
++ CC src/bench.c
++ CC src/sieve/sieve.c
++ CC src/bf/bf.c
++ CC src/fib/fib.c
++ CC src/qsort/qsort.c
+# Building am-archive [riscv32-ysyxsoc]
 + CC src/riscv/ysyxsoc/trm.c
-+ AR -> build/am-riscv32e-ysyxsoc.a
-# Building klib-archive [riscv32e-ysyxsoc]
-+ LD -> build/microbench-riscv32e-ysyxsoc.elf
-# Creating image [riscv32e-ysyxsoc]
-+ OBJCOPY -> build/microbench-riscv32e-ysyxsoc.bin
++ CC src/riscv/ysyxsoc/ioe.c
++ CC src/riscv/ysyxsoc/timer.c
++ CC src/riscv/ysyxsoc/input.c
++ CC src/riscv/ysyxsoc/serial.c
++ CC src/riscv/ysyxsoc/gpu.c
++ CC src/riscv/ysyxsoc/cte.c
++ CC src/riscv/ysyxsoc/vme.c
++ CC src/riscv/ysyxsoc/mpe.c
++ AR -> build/am-riscv32-ysyxsoc.a
+# Building klib-archive [riscv32-ysyxsoc]
++ CC src/stdlib.c
++ CC src/int64.c
++ CC src/string.c
++ CC src/cpp.c
++ CC src/stdio.c
++ AR -> build/klib-riscv32-ysyxsoc.a
++ LD -> build/microbench-riscv32-ysyxsoc.elf
+# Creating image [riscv32-ysyxsoc]
++ OBJCOPY -> build/microbench-riscv32-ysyxsoc.bin
 Archive ar -rcs VysyxSoCFull__ALL.a VysyxSoCFull.o VysyxSoCFull___024root__DepSet_h4d156741__0.o VysyxSoCFull___024root__DepSet_h4d156741__1.o VysyxSoCFull___024root__DepSet_h0188974b__0.o VysyxSoCFull___024root__DepSet_h0188974b__1.o VysyxSoCFull___024root__DepSet_h0188974b__2.o VysyxSoCFull___024root__DepSet_h0188974b__3.o VysyxSoCFull___024unit__DepSet_h308b0958__0.o VysyxSoCFull__Dpi.o VysyxSoCFull__Trace__0.o VysyxSoCFull__Trace__1.o VysyxSoCFull__Trace__2.o VysyxSoCFull__Trace__3.o VysyxSoCFull__Trace__4.o VysyxSoCFull__ConstPool_0.o VysyxSoCFull___024root__Slow.o VysyxSoCFull___024root__DepSet_h4d156741__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__0__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__1__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__2__Slow.o VysyxSoCFull___024root__DepSet_h0188974b__3__Slow.o VysyxSoCFull___024unit__Slow.o VysyxSoCFull___024unit__DepSet_h460a3d32__0__Slow.o VysyxSoCFull__Syms.o VysyxSoCFull__Trace__0__Slow.o VysyxSoCFull__Trace__1__Slow.o VysyxSoCFull__Trace__2__Slow.o VysyxSoCFull__Trace__3__Slow.o VysyxSoCFull__Trace__4__Slow.o
-[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32e-ysyxsoc.bin, size = 31468[0m
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/init.cpp:42 load_img] The image is /home/jimple/Documents/ysyx/ysyx-workbench/am-kernels/benchmarks/microbench/build/microbench-riscv32-ysyxsoc.bin, size = 30788[0m
 f
 ======= Running MicroBench [input *train*] =======
 [qsort] Quick sort: * Passed.
@@ -34,45 +60,46 @@ f
 MicroBench PASS
 Scored time: 0.000 ms
 Total  time: 0.000 ms
-[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:288 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa0004f84[0m
+[1;34m[/home/jimple/Documents/ysyx/ysyx-workbench/soc/sim_src/sdb/cpu.cpp:300 cpu_exec] NPC: [1;32mHIT GOOD TRAP[0m at pc = 0xa0004f84[0m
 ----------------------------------------------------------
-| Total clock amount                   |       542412135 |
-| Total instructions amount            |        63155555 |
-| Average cycles of each instruction   |           8.589 |
+| Total clock amount                   |       554569132 |
+| Total instructions amount            |        63152016 |
+| Average cycles of each instruction   |           8.781 |
 ----------------------------------------------------------
 ----------------------------------------------------------
 |  Inst  |    Amount    |    cycles    |  AVG  | percent |
 ----------------------------------------------------------
-| LUI    |       665662 |      1984831 |  2.98 |   1.05% |
-| AUIPC  |       851218 |      4893532 |  5.75 |   1.35% |
-| JAL    |       990113 |     14011628 | 14.15 |   1.57% |
-| JALR   |      1097767 |     28468856 | 25.93 |   1.74% |
-| BRANCH |      8638094 |    160222334 | 18.55 |  13.68% |
-| LOAD   |     10839596 |     54317145 |  5.01 |  17.16% |
-| STORE  |      5145422 |     44726224 |  8.69 |   8.15% |
-| OP_IMM |     19604496 |    148147594 |  7.56 |  31.04% |
-| OP     |     15323187 |     85637764 |  5.59 |  24.26% |
+| LUI    |       665662 |      1997282 |  3.00 |   1.05% |
+| AUIPC  |       851184 |      5471044 |  6.43 |   1.35% |
+| JAL    |       989991 |     14282816 | 14.43 |   1.57% |
+| JALR   |      1097779 |     27792426 | 25.32 |   1.74% |
+| BRANCH |      8637633 |    159959559 | 18.52 |  13.68% |
+| LOAD   |     10838649 |     58524046 |  5.40 |  17.16% |
+| STORE  |      5144634 |     44581065 |  8.67 |   8.15% |
+| OP_IMM |     19603273 |    153751011 |  7.84 |  31.04% |
+| OP     |     15323211 |     88207653 |  5.76 |  24.26% |
 | FENCE  |            0 |            0 |  0.00 |   0.00% |
-| SYS    |            1 |            2 |  2.00 |   0.00% |
+| SYS    |            1 |            3 |  3.00 |   0.00% |
 ----------------------------------------------------------
 |  Module  |        Counter       |        Clock         |
 ----------------------------------------------------------
-|  SUMMARY |             63155556 |            542409910 |
+|  SUMMARY |             63152017 |            554566905 |
 ----------------------------------------------------------
-|   IFU    |               363508 |                    0 |
-|   EXU    |             63155555 |                    0 |
-|  LSU_R   |       221992690(clk) |          20.480(Avg) |
-|  LSU_W   |        96397598(clk) |          18.735(Avg) |
+|   IFU    |               362785 |                    0 |
+|   EXU    |             63152016 |                    0 |
+|  LSU_R   |       222449366(clk) |          20.524(Avg) |
+|  LSU_W   |        96612359(clk) |          18.779(Avg) |
 ----------------------------------------------------------
-|    jal   |                 3355 |             14011628 |
-|    jalr  |                 2901 |             28468856 |
-|  branch  |                29827 |            160222334 |
+|    jal   |                21556 |             14282816 |
+|    jalr  |                 6582 |             27792426 |
+|  branch  |                62560 |            159959559 |
 ----------------------------------------------------------
-|  I_hit   |             62792048 |             62792048 |
-|  I_miss  |               363508 |             15212070 |
+|  I_hit   |             62789232 |             62789232 |
+|  I_miss  |                    0 |             15367610 |
 ----------------------------------------------------------
-|   Icache hit percent     |                 99.424%     |
-|           AMAT           |                   1.235     |
+|   Icache hit percent     |                100.000%     |
+|           AMAT           |                   1.245     |
 ----------------------------------------------------------
 [1;31mtotal_inst_cnt is not equal to sum_inst
+[0m[1;31mtotal_inst_cnt is not equal to Icache axi read times
 [0m
