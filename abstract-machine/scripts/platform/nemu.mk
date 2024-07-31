@@ -30,14 +30,14 @@ ifeq ($(sim),1)
   NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
   # NEMUFLAGS += -b 
   NEMUFLAGS += -e $(IMAGE).elf
-  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))_
+  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))
   NEMUFLAGS += -j $(NEMU_HOME)/build/branch_sim/$(shell basename $(IMAGE))_branch.txt
 else 
   ### 传递nemu的flags，用于传递一些文件路径或运行模式
   NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/nemu-log.txt 
   # NEMUFLAGS += -b 
   NEMUFLAGS += -e $(IMAGE).elf
-  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))_
+  NEMUFLAGS += -c $(NEMU_HOME)/build/cache_sim/$(shell basename $(IMAGE))
   NEMUFLAGS += -j $(NEMU_HOME)/build/branch_sim/$(shell basename $(IMAGE))_branch.txt
 endif
 

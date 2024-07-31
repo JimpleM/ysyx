@@ -1,12 +1,12 @@
 #include <cache_sim.h>
 
+#ifdef CONFIG_CACHE_SIM
 static FILE *Icache_fp;
 static FILE *Dcache_fp;
 static uint32_t lst_pc = 0;
 static uint32_t lst_pc_start = 0;
 static uint32_t pc_count = 0;
 static char cache_file_name[128];
-
 
 void init_cache_sim(const char *cache_file){
   if(cache_file == NULL){
@@ -46,3 +46,8 @@ void Dcache_sim_txt(int type, vaddr_t addr){
     fprintf(Dcache_fp,"s 0x%8x\n",addr);
   }
 }
+#else
+void init_cache_sim(const char *cache_file){}
+void Icache_sim_txt(vaddr_t pc){}
+void Dcache_sim_txt(int type, vaddr_t addr){}
+#endif
