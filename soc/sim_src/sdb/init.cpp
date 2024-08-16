@@ -5,9 +5,13 @@
 #include "trace.h"
 
 #include "device_lib.h"
-#include <nvboard.h>
+
 #include <getopt.h>
 #include <stdio.h>
+
+#ifdef CONFIG_NVBOARD
+  #include <nvboard.h>
+#endif
 
 static char *img_file = NULL;
 static char *diff_so_file = NULL;

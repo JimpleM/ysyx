@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <common.h>
-#include </home/jimple/Documents/ysyx/ysyx-workbench/nemu/src/monitor/sdb/sdb.h>
+#include <sdb.h>
 
 
 void test_expr(){

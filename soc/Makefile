@@ -21,7 +21,7 @@ VERILATOR_FLAGS += --trace --cc --exe --build -O3
 VERILATOR_FLAGS += --x-assign fast --x-initial fast
 VERILATOR_FLAGS += ${VERILATOR_INC_PATH}
 VERILATOR_FLAGS += --top ${TOPNAME}
-VERILATOR_FLAGS += --no-timing
+# VERILATOR_FLAGS += --no-timing
 VERILATOR_FLAGS += --timescale "1ns/1ns"
 VERILATOR_FLAGS += --autoflush
 VERILATOR_FLAGS += +define+USING_DPI_C	#仿真环境要使用DPIC，方便sta去掉dpic
@@ -62,10 +62,10 @@ VSRCS += $(YSYXSOC_HOME)/build/ysyxSoCFull.v
 VSRCS += $(YSYXNPC_HOME)/vsrc/ysyxnpc.v
 
 SIM_SRCS := $(shell find $(abspath $(SOC_HOME)/sim_src) -name "*.cpp" -or -name "*.cc")
-SIM_SRCS += $(SRC_AUTO_BIND)
+# SIM_SRCS += $(SRC_AUTO_BIND)
 
 # rules for NVBoard
-include $(NVBOARD_HOME)/scripts/nvboard.mk
+# include $(NVBOARD_HOME)/scripts/nvboard.mk
 
 #g++ include路径
 INC_PATH += $(SOC_HOME)/sim_src/include

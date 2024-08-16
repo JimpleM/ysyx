@@ -18,7 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory/paddr.h>
-#include "sdb.h"
+#include <sdb.h>
 #include "cpu/difftest.h"
 #include "ringbuffer.h"
 #include "utils.h"
@@ -234,8 +234,8 @@ static int cmd_d(char *args) {
 }
 
 static int cmd_i(char *args) {
-  show_all_iringbuf();
-  show_all_ftrace();
+  IFDEF(CONFIG_IRINGBUF, show_all_iringbuf());
+  IFDEF(CONFIG_FTRACE, show_all_ftrace());
   return 0;
 }
 

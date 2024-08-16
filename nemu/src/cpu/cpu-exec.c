@@ -17,7 +17,8 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
-
+#include <cache_sim.h>
+#include <branch_sim.h>
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -42,6 +43,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   //   puts(_this->logbuf);
   // }
   // printf("%x\n",_this->pc);
+  IFDEF(CONFIG_CACHE_SIM, Icache_sim_txt(_this->pc));
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 #ifdef CONFIG_WATCHPOINT
   if(check_diff()){
@@ -138,6 +140,8 @@ static void statistic() {
   Log("total guest instructions = " NUMBERIC_FMT, g_nr_guest_inst);
   if (g_timer > 0) Log("simulation frequency = " NUMBERIC_FMT " inst/s", g_nr_guest_inst * 1000000 / g_timer);
   else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
+
+  IFDEF(CONFIG_BRANCH_SIM, branch_sim_result());
 }
 
 void assert_fail_msg() {

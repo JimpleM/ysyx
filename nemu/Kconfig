@@ -216,18 +216,18 @@ endmenu
 
 config TEST_EXPR
   bool "test-expr"
-  default y
+  default n
 
 menu "trace_and_difftest"
 config WATCHPOINT
   bool "Enable Trigger the watchpoint"
-  default y
+  default n
 config IRINGBUF
   bool "Enable ringbuf trace"
-  default y
+  default n
 config MTRACE
   bool "Enable memory trace"
-  default y
+  default n
 config MTRACE_START_ADDR
   depends on MTRACE
   hex "When Mtrace is enabled (start address)"
@@ -238,12 +238,18 @@ config MTRACE_END_ADDR
   default 0x87ffffff
 config FTRACE
   bool "Enable function trace"
-  default y
+  default n
 config DTRACE
   bool "Enable device trace"
-  default y
+  default n
 config ETRACE
   bool "Enable exception trace"
-  default y
-
+  default n
 endmenu
+
+config CACHE_SIM
+  bool "Generate cache sim txt"
+  default n
+config BRANCH_SIM
+  bool "Generate branch sim txt"
+  default n

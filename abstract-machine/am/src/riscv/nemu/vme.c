@@ -28,12 +28,12 @@ static inline uintptr_t get_satp() {
 bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   pgalloc_usr = pgalloc_f;
   pgfree_usr = pgfree_f;
-
+  printf("pgalloc:%d Byte\n",PGSIZE);
   kas.ptr = pgalloc_f(PGSIZE);
-
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
+    printf("vme_init: as->ptr:%x va:[%x %x]\n",kas.ptr,segments[i].start,segments[i].end);
     for (; va < segments[i].end; va += PGSIZE) {
       map(&kas, va, va, PAGE_READ|PAGE_WRITE|PAGE_EXEC|PAGE_USER);
     }
@@ -59,10 +59,7 @@ void unprotect(AddrSpace *as) {
 
 
 void __am_get_cur_as(Context *c) {
-  if (vme_enable && c->pdir != NULL) {
-    c->pdir = (void *)get_satp();
-  }
-  // c->pdir = (vme_enable ? (void *)get_satp() : NULL);
+  c->pdir = (vme_enable ? (void *)get_satp() : NULL);
 }
 
 void __am_switch(Context *c) {
