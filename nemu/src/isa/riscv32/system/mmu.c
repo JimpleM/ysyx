@@ -45,6 +45,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   pte1.val = paddr_read(pte1_addr,sizeof(paddr_t));
   if(pte1.V == 0){
     // printf("vaddr: 0x%x, pte1: 0x%x\n",vaddr,pte1.val);
+    Assert(0,"vaddr: 0x%x, pte1: 0x%x\n",vaddr,pte1.val);
     nemu_state.state = NEMU_ABORT;
     return vaddr;
   }

@@ -8,7 +8,13 @@ void __am_switch(Context *c);
 
 // 终端处理
 Context* __am_irq_handle(Context *c) {
-  __am_get_cur_as(c);
+  // printf("__am_irq_handle Context:%x\n",c);
+  // uintptr_t satp;
+  // asm volatile("csrr %0, satp" : "=r"(satp));
+  // printf("satp:%x\n",satp);
+  // if(c->pdir != NULL){
+    __am_get_cur_as(c);
+  // }
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
