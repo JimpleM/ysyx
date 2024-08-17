@@ -1,10 +1,30 @@
-*.*
-*
-!*/
-!Makefile
-!*.mk
-!*.[cSh]
-!*.cc
-!.gitignore
-!README.md
-!Kconfig
+##############################by jiangxin
+
+doxygen/
+
+# Vim
+*.swp
+
+# Codeblocks
+bin/
+obj/
+
+# Visual Studio
+Debug/
+Release/
+
+# Eclipse
+.cproject
+.project
+.settings/
+
+# IDEA
+.idea/
+
+# Makefile
+*.o
+*.exe
+
+# CMake
+cmake-build-debug/
+build/
