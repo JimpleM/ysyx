@@ -28,9 +28,9 @@ uint32_t device_read(uint32_t addr){
         return mmio_read(addr,4);
     }else{
         // Assert(0,"no device addr %8x",addr);
-        // printf("no device read addr %8x",addr);
-        // npc_state.halt_pc = cpu_pc;
-        // npc_state.state = NPC_ABORT;
+        printf("no device read addr %8x",addr);
+        npc_state.halt_pc = cpu_pc;
+        npc_state.state = NPC_ABORT;
     }
     return 0;
 }

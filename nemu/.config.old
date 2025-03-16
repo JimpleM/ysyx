@@ -108,4 +108,4 @@ CONFIG_FTRACE=y
 # end of trace_and_difftest
 
 # CONFIG_CACHE_SIM is not set
-# CONFIG_BRANCH_SIM is not set
+CONFIG_BRANCH_SIM=y
