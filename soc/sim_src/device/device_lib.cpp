@@ -19,7 +19,6 @@ extern NPCState npc_state;
 extern uint32_t cpu_pc;
 
 extern TOP_NAME* top;
-//@Attention device_read和device_write会触发三次，这个问题还没有解决，这里通过一些特殊手段暂时度过
 uint32_t device_read(uint32_t addr){
     if(addr == RTC_ADDR || addr == RTC_ADDR + 4){
         return timer_read(addr);
@@ -29,9 +28,9 @@ uint32_t device_read(uint32_t addr){
         return mmio_read(addr,4);
     }else{
         // Assert(0,"no device addr %8x",addr);
-        printf("no device read addr %8x",addr);
-        npc_state.halt_pc = cpu_pc;
-        npc_state.state = NPC_ABORT;
+        // printf("no device read addr %8x",addr);
+        // npc_state.halt_pc = cpu_pc;
+        // npc_state.state = NPC_ABORT;
     }
     return 0;
 }
@@ -51,7 +50,7 @@ void device_write(uint32_t addr, uint32_t data){
         }
         else if(addr != 0){
             // Assert(0,"no device addr %8x",addr);
-            printf("no device addr %8x",addr);
+            printf("no device write addr %8x",addr);
             npc_state.halt_pc = cpu_pc;
             npc_state.state = NPC_ABORT;
         }
